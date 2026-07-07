@@ -1,3 +1,4 @@
-from src.core.config import APP_NAME
-def test_name():
-    assert APP_NAME=="Falcon AI Decision Engine"
+from src.core.config import VERSION
+
+def test_version():
+ assert VERSION=="0.0.3"

@@ -1,7 +1,7 @@
 # Changelog
 
-## v0.0.2
-- Added engine
-- Added config
-- Added logger
-- Added initial test
+## v0.0.3
+- Added project structure
+- Added base brain
+- Added exchange adapter
+- Added CI placeholder
