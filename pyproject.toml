@@ -1,0 +1,7 @@
+[project]
+name = "falcon-ai-decision-engine"
+version = "0.0.1"
+description = "Explainable AI Trading Decision Engine"
+requires-python = ">=3.12"
+
+dependencies = []
