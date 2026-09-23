@@ -1,3 +1,5 @@
-# Falcon AI Decision Engine
+# Revenue Machine
 
-Production-oriented trading decision engine.
+Zero-click, revenue-gated automation engine.
+
+Primary KPI: Verified Revenue / Day.
