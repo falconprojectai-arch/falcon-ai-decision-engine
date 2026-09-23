@@ -1,7 +1,13 @@
 [project]
-name = "falcon-ai-decision-engine"
-version = "0.0.1"
-description = "Explainable AI Trading Decision Engine"
+name = "revenue-machine"
+version = "0.1.0"
+description = "Zero-click, revenue-gated automation engine"
 requires-python = ">=3.12"
-
 dependencies = []
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
