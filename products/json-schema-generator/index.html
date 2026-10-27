@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Generate a JSON Schema from a JSON example directly in your browser. Free, private, and dependency-free.">
+  <title>Free JSON Schema Generator — Private, Browser-Based</title>
+  <style>
+    :root{color-scheme:light dark;font:16px/1.5 system-ui,sans-serif}
+    body{max-width:980px;margin:0 auto;padding:24px}
+    h1{line-height:1.15}
+    .muted{opacity:.75}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    textarea{box-sizing:border-box;width:100%;min-height:320px;padding:12px;border:1px solid #888;border-radius:10px;font:14px/1.5 ui-monospace,monospace}
+    button{padding:10px 14px;border:0;border-radius:8px;cursor:pointer;font-weight:650}
+    .actions{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
+    #status{min-height:1.5em}
+    footer{margin-top:28px;border-top:1px solid #888;padding-top:16px}
+    @media(max-width:700px){.grid{grid-template-columns:1fr}body{padding:16px}textarea{min-height:240px}}
+  </style>
+</head>
+<body>
+  <header>
+    <p class="muted">Free developer utility · No sign-up · No upload</p>
+    <h1>JSON Schema Generator</h1>
+    <p>Paste a JSON example and generate a JSON Schema draft. Everything runs locally in your browser; your JSON is not sent to a server.</p>
+  </header>
+  <main>
+    <div class="grid">
+      <section>
+        <h2>1. Example JSON</h2>
+        <textarea id="input" spellcheck="false" aria-label="Example JSON">{
+  "name": "Ada",
+  "active": true,
+  "score": 98,
+  "tags": ["math", "logic"],
+  "profile": {
+    "city": "London"
+  }
+}</textarea>
+      </section>
+      <section>
+        <h2>2. Generated schema</h2>
+        <textarea id="output" spellcheck="false" aria-label="Generated JSON Schema" readonly></textarea>
+      </section>
+    </div>
+    <div class="actions">
+      <button id="generate" type="button">Generate schema</button>
+      <button id="copy" type="button">Copy schema</button>
+      <button id="download" type="button">Download .json</button>
+      <button id="example" type="button">Load example</button>
+    </div>
+    <p id="status" role="status" aria-live="polite" class="muted"></p>
+  </main>
+  <section>
+    <h2>How it works</h2>
+    <ol>
+      <li>Paste one valid JSON value.</li>
+      <li>Select <strong>Generate schema</strong>.</li>
+      <li>Copy the result or download it as a JSON file.</li>
+    </ol>
+    <p class="muted">This tool infers types and object properties from one sample. It cannot infer every valid value, required-field policy, or all possible array item variants from a single example; review the generated schema before using it in production.</p>
+  </section>
+  <footer class="muted">
+    <p>Free tool. No analytics, account, external library, or network request is required for generation.</p>
+  </footer>
+<script>
+(function(){
+  const input=document.getElementById('input');
+  const output=document.getElementById('output');
+  const status=document.getElementById('status');
+  const example=input.value;
+  function infer(value){
+    if(value===null) return {type:'null'};
+    if(Array.isArray(value)){
+      const schemas=value.map(infer);
+      const unique=new Map(schemas.map(s=>[JSON.stringify(s),s]));
+      return {type:'array',items:unique.size===0?{}:unique.size===1?[...unique.values()][0]:{anyOf:[...unique.values()]}};
+    }
+    if(typeof value==='object'){
+      const properties={};
+      for(const key of Object.keys(value)) properties[key]=infer(value[key]);
+      return {type:'object',properties,additionalProperties:true};
+    }
+    if(typeof value==='number') return {type:Number.isInteger(value)?'integer':'number'};
+    return {type:typeof value};
+  }
+  function generate(){
+    try{
+      const value=JSON.parse(input.value);
+      const schema={$schema:'https://json-schema.org/draft/2020-12/schema',...infer(value)};
+      output.value=JSON.stringify(schema,null,2);
+      status.textContent='Schema generated. Review inferred types and required-field rules before production use.';
+    }catch(e){output.value='';status.textContent='Invalid JSON: '+e.message;}
+  }
+  document.getElementById('generate').addEventListener('click',generate);
+  document.getElementById('copy').addEventListener('click',async()=>{
+    if(!output.value){generate();if(!output.value)return;}
+    try{await navigator.clipboard.writeText(output.value);status.textContent='Schema copied.';}
+    catch(e){output.focus();output.select();status.textContent='Clipboard access unavailable; schema selected for manual copying.';}
+  });
+  document.getElementById('download').addEventListener('click',()=>{
+    if(!output.value){generate();if(!output.value)return;}
+    const blob=new Blob([output.value+'\n'],{type:'application/json'});
+    const url=URL.createObjectURL(blob);const a=document.createElement('a');
+    a.href=url;a.download='schema.json';a.click();URL.revokeObjectURL(url);
+    status.textContent='Download requested.';
+  });
+  document.getElementById('example').addEventListener('click',()=>{input.value=example;generate();});
+  generate();
+})();
+</script>
+</body>
+</html>
