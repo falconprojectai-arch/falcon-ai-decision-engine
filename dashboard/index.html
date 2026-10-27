@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Revenue Machine — اتاق کنترل</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1020;--panel:#121a2d;--panel2:#172238;--line:#26344d;--text:#edf3ff;--muted:#9aabc6;--blue:#7aa7ff;--green:#5bd6a2;--amber:#f2c66d;--red:#ff8585}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top right,#18294a 0,#0b1020 55%);color:var(--text);font-family:Tahoma,"Segoe UI",sans-serif;line-height:1.7}
+.wrap{max-width:1180px;margin:auto;padding:24px}.top{display:flex;justify-content:space-between;gap:18px;align-items:center;flex-wrap:wrap;margin-bottom:22px}.brand{display:flex;gap:12px;align-items:center}.mark{width:44px;height:44px;border-radius:14px;background:#263f6b;display:grid;place-items:center;color:#a9c6ff;font-weight:bold;font-size:20px}.eyebrow{font-size:12px;color:var(--blue);letter-spacing:.5px}.sub{color:var(--muted);font-size:13px}.status{border:1px solid #315f57;background:#102c2b;color:#7de4bd;border-radius:999px;padding:7px 12px;font-size:12px;white-space:nowrap}
+h1{font-size:25px;margin:0}h2{font-size:17px;margin:0 0 14px}h3{font-size:14px;margin:0 0 8px}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:18px 0}.card{background:linear-gradient(145deg,var(--panel),#10182a);border:1px solid var(--line);border-radius:16px;padding:17px;min-width:0}.metric{font-size:25px;font-weight:700;letter-spacing:-.5px;margin:5px 0}.label{color:var(--muted);font-size:12px}.layout{display:grid;grid-template-columns:1.15fr .85fr;gap:14px;margin-top:14px}.stack{display:grid;gap:14px}.row{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.pill{font-size:11px;padding:3px 8px;border-radius:8px;white-space:nowrap}.done{background:#12362e;color:var(--green)}.active{background:#2d2b1e;color:var(--amber)}.queued{background:#1b2940;color:#a9c6ff}.blocked{background:#3b222a;color:var(--red)}.bar{height:7px;border-radius:99px;background:#26344d;overflow:hidden;margin:10px 0 5px}.bar span{display:block;height:100%;background:linear-gradient(90deg,#638fff,#5bd6a2);border-radius:99px}.item{padding:12px 0;border-top:1px solid var(--line)}.item:first-of-type{border-top:0;padding-top:0}.item p{margin:4px 0 0;color:var(--muted);font-size:12px}.timeline{border-right:1px solid #344563;margin-right:6px;padding-right:18px}.event{position:relative;padding:0 0 17px}.event:before{content:"";position:absolute;right:-23px;top:7px;width:9px;height:9px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 4px #17243b}.event small{color:var(--muted)}a{color:#a9c6ff;text-decoration:none}a:hover{text-decoration:underline}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}button{font:inherit;border:1px solid #385079;background:#1c2e4d;color:var(--text);padding:8px 12px;border-radius:10px;cursor:pointer}button:hover{background:#263f66}textarea{width:100%;min-height:90px;background:#0b1324;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:11px;font:inherit;resize:vertical}.note{color:var(--muted);font-size:12px}.footer{margin:20px 0 4px;color:var(--muted);font-size:11px;text-align:center}.alert{border-right:3px solid var(--amber);background:#241f16;padding:12px;border-radius:8px;color:#f4dfb1;font-size:12px}.smalllink{font-size:12px}.hide{display:none}
+@media(max-width:850px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.layout{grid-template-columns:1fr}.wrap{padding:15px}h1{font-size:21px}}
+@media(max-width:420px){.metric{font-size:21px}.card{padding:13px}.grid{gap:8px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+<div class="brand"><div class="mark">RM</div><div><div class="eyebrow">REVENUE MACHINE / CONTROL ROOM</div><h1>اتاق کنترل پروژه</h1><div class="sub">مرکز پیگیری ساخت محصول، انتشار، جذب کاربر و درآمد واقعی</div></div></div>
+<div class="status">● داشبورد ثبت وضعیت · بدون اتصال زنده به اجرا</div>
+</header>
+<section class="grid">
+<div class="card"><div class="label">درآمد تأییدشده</div><div class="metric">$0.00</div><div class="sub">تا این گزارش هیچ پرداختی تأیید نشده</div></div>
+<div class="card"><div class="label">محصول آمادهٔ اولیه</div><div class="metric">۱</div><div class="sub">JSON Schema Generator</div></div>
+<div class="card"><div class="label">وضعیت انتشار عمومی</div><div class="metric">در انتظار</div><div class="sub">میزبانی عمومی هنوز تأیید نشده</div></div>
+<div class="card"><div class="label">هزینهٔ شروع</div><div class="metric">$0</div><div class="sub">هدف: ابزارهای رایگان و بدون اشتراک</div></div>
+</section>
+<div class="layout">
+<div class="stack">
+<section class="card">
+<div class="row"><h2>وضعیت پروژه‌ها</h2><span class="pill active">آخرین snapshot</span></div>
+<div class="item">
+<div class="row"><div><h3>۱. JSON Schema Generator</h3><div class="sub">ابزار مرورگری؛ تبدیل نمونهٔ JSON به JSON Schema</div></div><span class="pill done">فایل ساخته شد</span></div>
+<div class="bar"><span style="width:65%"></span></div><div class="sub">۶۵٪ تخمینی از مسیر MVP — نیازمند تست و انتشار عمومی</div>
+<div class="actions"><a class="smalllink" href="https://github.com/falconprojectai-arch/falcon-ai-decision-engine/blob/main/products/json-schema-generator/index.html" target="_blank" rel="noreferrer">مشاهدهٔ کد محصول ↗</a></div>
+</div>
+<div class="item">
+<div class="row"><div><h3>۲. صفحهٔ معرفی و جذب کاربر</h3><div class="sub">توضیح ارزش ابزار، نمونه، راهنمای استفاده و مسیر بازخورد</div></div><span class="pill active">مرحلهٔ بعد</span></div>
+<div class="bar"><span style="width:15%"></span></div><div class="sub">هنوز صفحهٔ معرفی و مسیر جذب کاربر نهایی نشده</div>
+</div>
+<div class="item">
+<div class="row"><div><h3>۳. درآمدزایی</h3><div class="sub">بررسی مدل پرداخت بدون هزینهٔ اولیه و مناسب دسترسی واقعی کاربر</div></div><span class="pill blocked">مسدود تا بررسی</span></div>
+<div class="bar"><span style="width:5%"></span></div><div class="sub">درگاه پرداخت، پشتیبانی کشور/حساب و دریافت درآمد بررسی و تأیید نشده است.</div>
+</div>
+</section>
+<section class="card">
+<h2>گزارش کارها و تصمیم‌ها</h2>
+<div class="timeline">
+<div class="event"><small>ثبت‌شده در پروژه</small><h3>ساخت نسخهٔ اولیهٔ JSON Schema Generator</h3><div class="sub">فایل مستقل HTML در مخزن GitHub ثبت شده؛ اجرای مرورگری و بدون ارسال JSON به سرور طراحی شده.</div></div>
+<div class="event"><small>پیکربندی شده، اجرا تأیید نشده</small><h3>Zero-Cost Revenue Scout</h3><div class="sub">اتوماسیون روزانه برای یافتن مسیرهای درآمد کم‌هزینه تنظیم شده؛ هنوز اجرای موفق یا درآمدزایی آن تأیید نشده.</div></div>
+<div class="event"><small>وضعیت فعلی</small><h3>نیاز اصلی: انتشار + جذب کاربر + سنجش</h3><div class="sub">تا قبل از بازدید و استفادهٔ واقعی، درآمد یا تقاضای بازار را نباید مفروض دانست.</div></div>
+</div>
+</section>
+<section class="card">
+<h2>یادداشت‌ها و ایده‌های تو</h2>
+<div class="sub">یادداشت در همین مرورگر ذخیره می‌شود؛ این یادداشت به مخزن یا من وصل نمی‌شود.</div>
+<textarea id="notes" placeholder="ایده، اولویت، ایراد یا پیشنهادی که می‌خواهی در برنامه لحاظ شود…"></textarea>
+<div class="actions"><button id="save">ذخیرهٔ یادداشت روی این دستگاه</button><button id="clear">پاک کردن</button><span id="saved" class="note"></span></div>
+</section>
+</div>
+<div class="stack">
+<section class="card">
+<h2>برنامهٔ بعدی</h2>
+<div class="item"><div class="row"><h3>گام ۱ — تست و بازبینی محصول</h3><span class="pill active">بعدی</span></div><p>بررسی سناریوهای معتبر/نامعتبر، خطاها و تجربهٔ موبایل؛ اصلاح متن محدودیت‌های تولید schema.</p></div>
+<div class="item"><div class="row"><h3>گام ۲ — صفحهٔ معرفی</h3><span class="pill queued">صف بعد</span></div><p>نمونهٔ واضح، راهنمای سریع، لینک محصول و کانال بازخورد.</p></div>
+<div class="item"><div class="row"><h3>گام ۳ — انتشار رایگان</h3><span class="pill queued">پس از بررسی</span></div><p>آماده‌سازی انتشار از طریق میزبانی رایگان؛ تأیید نهایی وابسته به تنظیمات واقعی پلتفرم است.</p></div>
+<div class="item"><div class="row"><h3>گام ۴ — جذب کاربر واقعی</h3><span class="pill queued">پس از انتشار</span></div><p>توزیع در انجمن‌ها و فهرست‌های مجاز، بدون اسپم یا ادعای ساختگی؛ ثبت بازدید و بازخورد.</p></div>
+<div class="item"><div class="row"><h3>گام ۵ — درآمدزایی</h3><span class="pill queued">بعد از اعتبارسنجی</span></div><p>فقط پس از مشاهدهٔ تقاضا، انتخاب مدل درآمدی و بررسی امکان دریافت قانونی/عملی وجه.</p></div>
+</section>
+<section class="card">
+<h2>قواعد کنترل و شفافیت</h2>
+<div class="item"><h3>هیچ درآمدی بدون مدرک ثبت نمی‌شود</h3><p>بازدید، کلیک یا علاقه‌مندی معادل درآمد نیست؛ فقط پرداخت قابل تأیید درآمد محسوب می‌شود.</p></div>
+<div class="item"><h3>توقف قبل از اقدام حساس</h3><p>ساخت حساب، کیف پول، وارد کردن اطلاعات هویتی/بانکی/مالیاتی، پرداخت یا اشتراک و تعهد بیرونی مهم، نیازمند اطلاع‌رسانی و تأیید صریح توست.</p></div>
+<div class="item"><h3>محدودیت «لایو»</h3><p>این صفحه خودش وضعیت اجرای من را به‌صورت لحظه‌ای دریافت نمی‌کند. تغییرات واقعی باید با گزارش یا به‌روزرسانی فایل ثبت شوند؛ اتصال خودکار نیازمند زیرساخت و مجوزهای جداگانه است.</p></div>
+</section>
+<section class="card">
+<h2>لینک‌های مستقیم</h2>
+<div class="item"><a href="https://github.com/falconprojectai-arch/falcon-ai-decision-engine" target="_blank" rel="noreferrer">مخزن اصلی پروژه در GitHub ↗</a></div>
+<div class="item"><a href="https://github.com/falconprojectai-arch/falcon-ai-decision-engine/blob/main/products/json-schema-generator/index.html" target="_blank" rel="noreferrer">فایل ابزار JSON Schema Generator ↗</a></div>
+<div class="item"><a href="https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions" target="_blank" rel="noreferrer">بررسی اجراهای خودکار GitHub Actions ↗</a></div>
+</section>
+</div>
+</div>
+<div class="footer">نسخهٔ اولیهٔ داشبورد · داده‌ها snapshot هستند و تا زمان ثبت گزارش جدید خودکار به‌روزرسانی نمی‌شوند.</div>
+</div>
+<script>
+const notes=document.getElementById('notes'), saved=document.getElementById('saved');
+try{notes.value=localStorage.getItem('rm-control-notes')||''}catch(e){}
+document.getElementById('save').addEventListener('click',()=>{try{localStorage.setItem('rm-control-notes',notes.value);saved.textContent='ذخیره شد.'}catch(e){saved.textContent='ذخیرهٔ محلی در این محیط در دسترس نیست.'}});
+document.getElementById('clear').addEventListener('click',()=>{notes.value='';try{localStorage.removeItem('rm-control-notes')}catch(e){}saved.textContent='یادداشت پاک شد.'});
+</script>
+</body></html>
