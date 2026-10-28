@@ -56,3 +56,18 @@ Do not treat repository commits, successful CI, page publication, impressions al
 - The validator is intentionally a subset, not a full JSON Schema implementation. It supports `type`, `required`, `properties`, `additionalProperties: false`, `items`, `enum`, `const`, numeric bounds, string length/pattern, and array length. It does not support `$ref`/`$defs`, schema composition (`allOf`, `anyOf`, `oneOf`, `not`), `format` assertions, boolean schemas, or schema-valued `additionalProperties`. Unknown keywords are ignored, and regex behavior follows JavaScript's engine.
 - A PASS only confirms the documented subset. Do not use this MVP as the sole gate for production, security-sensitive, or compliance-critical data until it uses a well-tested full validator.
 - Recent hardening fixes structural comparison for `const`/`enum` (object key order no longer changes equality) and clears an old report before a new run, so a schema error cannot leave a stale report available for download. The deployed-browser smoke test now exercises these two cases.
+
+## Distribution update (2026-10-29 — channel tracker + multilingual research)
+- **Dashboard:** added a channel-by-channel tracker with a direct channel link and a direct product-introduction link for every row. It separates published, pending review, failed/removed, and researched-but-not-submitted opportunities. [Open dashboard](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/).
+- **DEV Community:** article published; traffic and conversions remain unmeasured.
+- **DevXTools:** submitted, correction sent after initial placeholder-email mistake; awaiting approval/clarification.
+- **The Tool Directory:** free submission succeeded; awaiting approval/publication.
+- **Reddit r/SideProject:** prior post was removed; marked unsuccessful. Do not repost to evade moderation.
+- **DevPages:** relevant free submission page identified, but no submission has been made.
+- **Awesome JSON Schema:** relevant specialist list identified at https://github.com/sourcemeta/awesome-jsonschema; no pull request submitted yet. Next step is to check contribution criteria and add value rather than submit a bare promotional link.
+- **Spanish-language research:** found relevant API/JSON resource collections, including https://desarrolloweb.com/colecciones/herramientas-api-json. No outreach or listing submission has been made.
+- **Persian-language research:** found API education/resource sites including https://roocket.ir/articles/6-tools-for-api-management/ and https://gapgpt.app/blog/%D9%86%D8%AD%D9%88%D9%87-%D8%AA%D8%B3%D8%AA-%D8%A7%DB%8C-%D9%BE%DB%8C-%D8%A2%DB%8C-%D9%87%D8%A7%DB%8C-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%A8%D8%A7-%D8%A7%D8%A8%D8%B2%D8%A7%D8%B1%D9%87%D8%A7/852/. These are research leads, not partnerships or accepted listings.
+- **French-language research:** no clearly suitable French-language listing channel confirmed in this pass. The globally relevant JSON Schema specialist list is a stronger next test than forcing localization where audience fit is uncertain.
+- **Innovative low-cost hypothesis:** contribute a narrowly useful example/test case to a specialist JSON Schema resource list, and create language-specific educational landing snippets only when there is a matching audience. Prefer searchable evergreen resources and UTM-tagged links over mass posting. No new channel is counted as successful until its listing/post is visible and confirmed.
+- **Metrics:** no qualified traffic, independent customer, repeat-use signal, or verified payment recorded. The current static dashboard has no connected live analytics; do not infer conversions.
+
