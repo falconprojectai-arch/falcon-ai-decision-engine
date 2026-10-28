@@ -32,6 +32,7 @@ def load_candidates(path: Path) -> list[Opportunity]:
             monetization_confirmed=bool(item.get("monetization_confirmed", False)),
             estimated_cost_usd=float(item.get("estimated_cost_usd", 0.0)),
             estimated_revenue_usd=float(item.get("estimated_revenue_usd", 0.0)),
+            estimated_success_probability=float(item.get("estimated_success_probability", 0.0)),
             estimated_minutes=item.get("estimated_minutes", 0),
         ))
     return candidates
