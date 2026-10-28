@@ -88,7 +88,7 @@ $('download').addEventListener('click',()=>{if(!window.lastContractReport)run();
 run();
 })();
 </script>
-</body></html>
+<section style="max-width:1100px;margin:26px auto 0;border:1px solid #888;border-radius:10px;padding:16px"><h2>Want a second pair of eyes?</h2><p>This free tool checks a subset of JSON Schema rules. For a human-reviewed PASS/FAIL report across up to 10 redacted payloads, see the <a href="../dev-agent-toolbox/payment.html">API & AI-Agent Contract Review</a> (9 USDT; TRC20/BEP20 only; no card checkout), or read the <a href="../dev-agent-toolbox/contract-review-checklist.html">free contract checklist</a>.</p><p>Never send secrets, personal data, or confidential production payloads.</p></section></body></html>
 ,errors=[]){
  if(!s||typeof s!=='object'||Array.isArray(s)){errors.push(path+': schema node must be an object');return errors}
  if('const'in s&&JSON.stringify(value)!==JSON.stringify(s.const))errors.push(path+': must equal const value');
