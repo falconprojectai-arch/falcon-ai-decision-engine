@@ -1,6 +1,7 @@
 """Command-line runner for local opportunity-feed dry runs."""
 import argparse
 import json
+from datetime import datetime, timezone
 from pathlib import Path
 
 from .engine import RevenueMachine
@@ -32,6 +33,7 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Run Revenue Machine V1 in dry-run mode.")
     parser.add_argument("feed", nargs="?", type=Path, help="Path to a JSON array of opportunity candidates")
     parser.add_argument("--rss", dest="rss_url", help="Fetch a public HTTPS RSS/Atom feed in dry-run mode")
+    parser.add_argument("--report-out", type=Path, help="Also save this run report as JSON at the given path")
     args = parser.parse_args(argv)
     if bool(args.feed) == bool(args.rss_url):
         parser.error("Provide exactly one JSON feed path or --rss HTTPS_URL.")
@@ -49,6 +51,9 @@ def main(argv: list[str] | None = None) -> int:
     awaiting_approval = sum(plan.approved and not plan.executed for plan in plans)
     report = {
         "mode": "dry-run",
+        "status": "report_recorded",
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "input_source": f"rss:{args.rss_url}" if args.rss_url else str(args.feed),
         "opportunities": {
             "collected": len(candidates),
             "removed_invalid": removed,
@@ -69,7 +74,16 @@ def main(argv: list[str] | None = None) -> int:
         ],
         "note": "Counts describe this run only. No external work was executed. Approved items still await explicit authorization and a configured worker; revenue remains zero until verified payment evidence is integrated.",
     }
-    print(json.dumps(report, ensure_ascii=False, indent=2))
+    rendered = json.dumps(report, ensure_ascii=False, indent=2) + "\\n"
+    if args.report_out:
+        try:
+            args.report_out.parent.mkdir(parents=True, exist_ok=True)
+            temporary_path = args.report_out.with_suffix(args.report_out.suffix + ".tmp")
+            temporary_path.write_text(rendered, encoding="utf-8")
+            temporary_path.replace(args.report_out)
+        except OSError as exc:
+            parser.error(f"Could not write report: {exc}")
+    print(rendered, end="")
     return 0
 
 
