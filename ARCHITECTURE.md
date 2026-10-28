@@ -25,6 +25,6 @@
 - Never count a revenue claim as revenue.
 - Never execute an opportunity rejected by the filter.
 - Worker behavior remains dry-run only until a specific adapter is configured and tested.
-- A payment must be verified, positive, and tied to the same opportunity before it is counted.
+- A payment must be positive, tied to the same opportunity, and include provider name, provider payment ID, verification timestamp, and verification source before it can be counted. A metadata-complete record is still not proof of a live provider check: only a tested provider adapter may populate these fields after independently querying provider records.
 - External network actions, credentials, spending, and reinvestment must be implemented as separate adapters with explicit limits and tests.
 - A successful GitHub Pages deployment means the dashboard was published; it does not prove the revenue engine is generating income.
