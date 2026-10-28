@@ -47,10 +47,17 @@ jobs:
               raise SystemExit("Timestamp placeholder was not replaced")
           path.write_text(content, encoding="utf-8")
           PY
-      - name: Upload dashboard
+      - name: Assemble Pages site
+        run: |
+          set -eu
+          rm -rf site
+          mkdir -p site/products/json-contract-tester
+          cp -R dashboard/. site/
+          cp products/json-contract-tester/index.html site/products/json-contract-tester/index.html
+      - name: Upload dashboard and product
         uses: actions/upload-pages-artifact@v3
         with:
-          path: "./dashboard"
+          path: "./site"
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
