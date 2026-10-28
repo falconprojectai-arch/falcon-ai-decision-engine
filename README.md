@@ -15,6 +15,13 @@ A small, testable foundation for low-cost automation with a strict revenue gate.
 - **Automated tests:** validates the policy and payment rules on every push and pull request.
 - **Dashboard:** static Persian RTL project status page, published through GitHub Pages.
 
+## Live experiment
+
+- [JSON Contract Tester (browser-only MVP)](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/)
+- [Product hypothesis and validation gates](OPPORTUNITY_JSON_CONTRACT_TESTER.md)
+
+The hosted URL has not yet been independently confirmed reachable from this session. The source is committed in the repository; treat public deployment as pending until the page is verified in a normal browser.
+
 ## Run locally
 
 Requires Python 3.12+.
