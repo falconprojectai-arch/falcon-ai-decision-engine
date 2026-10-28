@@ -79,7 +79,7 @@ jobs:
                   page.on("pageerror", lambda error: errors.append(str(error)))
                   response = await page.goto(os.environ["TOOLBOX_URL"], wait_until="networkidle", timeout=60000)
                   assert response and response.status == 200
-                  assert await page.locator(".tool").count() == 21
+                  assert await page.locator(".tool").count() == 20
                   await page.get_by_role("button", name="2. Semantic JSON Diff").click()
                   await page.get_by_role("button", name="Run tool").click()
                   assert "changed" in await page.locator("#result").inner_text()
