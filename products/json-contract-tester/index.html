@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Free, private browser tool to test JSON outputs against a JSON Schema contract. Validate batches of AI-agent or API responses without uploading data.">
+<title>JSON Contract Tester — Validate AI and API Outputs</title>
+<style>
+:root{color-scheme:light dark;font:16px/1.5 system-ui,sans-serif}*{box-sizing:border-box}body{max-width:1100px;margin:auto;padding:22px}h1{line-height:1.15}p{max-width:78ch}.muted{opacity:.72}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.pane{min-width:0}textarea{width:100%;min-height:290px;padding:12px;border:1px solid #888;border-radius:10px;font:13px/1.5 ui-monospace,monospace}button{padding:9px 13px;border:1px solid #888;border-radius:8px;cursor:pointer;margin:8px 8px 8px 0;font-weight:650}.actions{display:flex;flex-wrap:wrap;gap:6px}.result{border:1px solid #888;border-radius:10px;padding:12px;margin:12px 0}.pass{border-inline-start:5px solid #2b9b69}.fail{border-inline-start:5px solid #c44}.small{font-size:13px}.case{padding:8px 0;border-top:1px solid #888;overflow-wrap:anywhere}.case:first-child{border-top:0}@media(max-width:720px){body{padding:14px}.grid{grid-template-columns:1fr}textarea{min-height:220px}}
+</style>
+</head>
+<body>
+<header><p class="muted">Free developer utility · No account · No upload</p><h1>JSON Contract Tester</h1><p>Check multiple JSON outputs against one JSON Schema before shipping API responses or AI-agent results. All validation runs locally in this browser.</p></header>
+<main>
+<div class="grid">
+<section class="pane"><h2>1. JSON Schema</h2><textarea id="schema" spellcheck="false" aria-label="JSON Schema">{
+  "type": "object",
+  "required": ["ok", "result"],
+  "properties": {
+    "ok": { "type": "boolean" },
+    "result": { "type": "string", "minLength": 1 }
+  },
+  "additionalProperties": false
+}</textarea></section>
+<section class="pane"><h2>2. Test outputs (one JSON value per line)</h2><textarea id="cases" spellcheck="false" aria-label="JSON outputs">{"ok":true,"result":"done"}
+{"ok":"yes","result":"done"}
+{"ok":true,"extra":1}</textarea></section>
+</div>
+<div class="actions"><button id="run">Run contract tests</button><button id="sample">Load sample</button><button id="download">Download report</button></div>
+<p id="status" role="status" aria-live="polite" class="muted"></p><section id="results" aria-live="polite"></section>
+</main>
+<section><h2>Supported validation rules</h2><p class="muted small">This lightweight MVP supports type, required, properties, additionalProperties=false, items, enum, const, minimum, maximum, minLength, maxLength, pattern, minItems, and maxItems. It is not a complete implementation of every JSON Schema draft keyword; validate critical production contracts with a full JSON Schema validator too.</p></section>
+<footer class="muted small"><p>Privacy: inputs stay in this browser; this page does not send them to a server. The tool is free and has no analytics or sign-up.</p></footer>
+<script>
+(function(){
+const $=id=>document.getElementById(id), schemaInput=$('schema'), casesInput=$('cases'), results=$('results'), status=$('status');
+const sampleSchema={type:'object',required:['ok','result'],properties:{ok:{type:'boolean'},result:{type:'string',minLength:1}},additionalProperties:false};
+const sampleCases=[{ok:true,result:'done'},{ok:'yes',result:'done'},{ok:true,extra:1}];
+function check(value,s,path='$',errors=[]){
+ if(!s||typeof s!=='object'||Array.isArray(s)){errors.push(path+': schema node must be an object');return errors}
+ if('const'in s&&JSON.stringify(value)!==JSON.stringify(s.const))errors.push(path+': must equal const value');
+ if(Array.isArray(s.enum)&&!s.enum.some(v=>JSON.stringify(v)===JSON.stringify(value)))errors.push(path+': value is not in enum');
+ const types=Array.isArray(s.type)?s.type:[s.type];
+ if(s.type){const matches=t=>t==='null'?value===null:t==='array'?Array.isArray(value):t==='object'?value!==null&&typeof value==='object'&&!Array.isArray(value):t==='integer'?typeof value==='number'&&Number.isInteger(value):t==='number'?typeof value==='number'&&Number.isFinite(value):typeof value===t;
+ if(!types.some(matches)){errors.push(path+': expected '+types.join(' or '));return errors}}
+ if(typeof value==='string'){if(Number.isInteger(s.minLength)&&value.length<s.minLength)errors.push(path+': shorter than minLength '+s.minLength);if(Number.isInteger(s.maxLength)&&value.length>s.maxLength)errors.push(path+': longer than maxLength '+s.maxLength);if(s.pattern){try{if(!(new RegExp(s.pattern)).test(value))errors.push(path+': does not match pattern')}catch(e){errors.push(path+': invalid pattern in schema')}}}
+ if(typeof value==='number'){if(typeof s.minimum==='number'&&value<s.minimum)errors.push(path+': below minimum '+s.minimum);if(typeof s.maximum==='number'&&value>s.maximum)errors.push(path+': above maximum '+s.maximum)}
+ if(Array.isArray(value)){if(Number.isInteger(s.minItems)&&value.length<s.minItems)errors.push(path+': fewer than minItems '+s.minItems);if(Number.isInteger(s.maxItems)&&value.length>s.maxItems)errors.push(path+': more than maxItems '+s.maxItems);if(s.items&&typeof s.items==='object')value.forEach((v,i)=>check(v,s.items,path+'['+i+']',errors))}
+ if(value!==null&&typeof value==='object'&&!Array.isArray(value)){
+  if(Array.isArray(s.required))s.required.forEach(k=>{if(!Object.prototype.hasOwnProperty.call(value,k))errors.push(path+': missing required property "'+k+'"')});
+  if(s.properties&&typeof s.properties==='object')Object.keys(s.properties).forEach(k=>{if(Object.prototype.hasOwnProperty.call(value,k))check(value[k],s.properties[k],path+'.'+k,errors)});
+  if(s.additionalProperties===false&&s.properties&&typeof s.properties==='object')Object.keys(value).forEach(k=>{if(!Object.prototype.hasOwnProperty.call(s.properties,k))errors.push(path+': unexpected property "'+k+'"')});
+ }
+ return errors;
+}
+function run(){
+ results.replaceChildren();let schema;try{schema=JSON.parse(schemaInput.value);if(!schema||typeof schema!=='object'||Array.isArray(schema))throw new Error('Schema must be a JSON object.')}catch(e){status.textContent='Schema error: '+e.message;return}
+ const lines=casesInput.value.split(/\r?\n/).map((v,i)=>({text:v.trim(),line:i+1})).filter(x=>x.text);
+ if(!lines.length){status.textContent='Add at least one JSON output, one per line.';return}
+ let passed=0;const report=[];
+ lines.forEach(item=>{let value,errors=[];try{value=JSON.parse(item.text);check(value,schema,'$',errors)}catch(e){errors=['Invalid JSON: '+e.message]}
+ const ok=errors.length===0;if(ok)passed++;report.push({line:item.line,passed:ok,errors});
+ const box=document.createElement('div');box.className='result '+(ok?'pass':'fail');
+ const title=document.createElement('strong');title.textContent='Line '+item.line+': '+(ok?'PASS':'FAIL');box.appendChild(title);
+ if(errors.length){const ul=document.createElement('ul');errors.forEach(msg=>{const li=document.createElement('li');li.textContent=msg;ul.appendChild(li)});box.appendChild(ul)}else{const p=document.createElement('p');p.textContent='Output matches the supported rules in this schema.';box.appendChild(p)}
+ results.appendChild(box);
+ });
+ window.lastContractReport={generatedAt:new Date().toISOString(),passed,total:lines.length,results:report,limitation:'Subset validator; not a full JSON Schema implementation.'};
+ status.textContent=passed+' of '+lines.length+' outputs passed. No data was uploaded.';
+}
+$('run').addEventListener('click',run);
+$('sample').addEventListener('click',()=>{schemaInput.value=JSON.stringify(sampleSchema,null,2);casesInput.value=sampleCases.map(v=>JSON.stringify(v)).join('\n');run()});
+$('download').addEventListener('click',()=>{if(!window.lastContractReport)run();if(!window.lastContractReport)return;const blob=new Blob([JSON.stringify(window.lastContractReport,null,2)+'\n'],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='contract-test-report.json';a.click();URL.revokeObjectURL(url)});
+run();
+})();
+</script>
+</body></html>
