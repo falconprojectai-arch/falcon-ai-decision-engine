@@ -37,5 +37,8 @@ Do not treat repository commits, successful CI, page publication, impressions al
 
 ## Current limitations
 - The deployment workflow succeeds, but the public URL has not been independently tested in a normal browser from this environment.
-- The current automated checks inspect source and repository CI; they are not a full interactive browser test.
-- There is no privacy-preserving server-side usage telemetry, so true page visits cannot currently be counted by the product itself.
+- Repository CI checks source-level invariants; they do not yet execute the page in a real browser or test the UI end to end.
+- There is no usage telemetry, so product-side page visits, repeat usage, and conversion cannot currently be measured. Do not add tracking until the privacy trade-off is justified and clearly disclosed.
+- The validator is intentionally a subset, not a full JSON Schema implementation. It supports `type`, `required`, `properties`, `additionalProperties: false`, `items`, `enum`, `const`, numeric bounds, string length/pattern, and array length. It does not support `$ref`/`$defs`, schema composition (`allOf`, `anyOf`, `oneOf`, `not`), `format` assertions, boolean schemas, or schema-valued `additionalProperties`. Unknown keywords are ignored, and regex behavior follows JavaScript's engine.
+- A PASS only confirms the documented subset. Do not use this MVP as the sole gate for production, security-sensitive, or compliance-critical data until it uses a well-tested full validator.
+- Recent hardening fixes structural comparison for `const`/`enum` (object key order no longer changes equality) and clears an old report before a new run, so a schema error cannot leave a stale report available for download. Source tests assert these behaviors, but a real-browser interaction test is still needed.
