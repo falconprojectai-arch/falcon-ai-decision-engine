@@ -1,11 +1,13 @@
 """Deterministic revenue-gated core."""
 from collections.abc import Iterable
 from dataclasses import dataclass
-from .filter import approve
+
+from .filter import approve, qualification_reasons
 from .models import Opportunity, VerifiedRevenue
 from .scanner import scan
 from .verifier import verify
 from .worker import DryRunWorker, WorkPlan
+
 
 @dataclass(frozen=True)
 class Evaluation:
@@ -15,8 +17,10 @@ class Evaluation:
     currency: str = "USD"
     reason: str = ""
 
+
 class RevenueMachine:
     """Plan supplied candidates safely; no network or money movement."""
+
     def __init__(self) -> None:
         self.worker = DryRunWorker()
 
@@ -24,11 +28,20 @@ class RevenueMachine:
         return [self.worker.plan(candidate) for candidate in scan(candidates)]
 
     def evaluate(self, opportunity: Opportunity, payment: VerifiedRevenue | None = None) -> Evaluation:
+        blockers = qualification_reasons(opportunity)
+        if blockers:
+            return Evaluation(opportunity.name, False, reason="Qualification blocked: " + "; ".join(blockers) + ".")
         if not approve(opportunity):
-            return Evaluation(opportunity.name, False, reason="Rejected by low-risk, no-capital, no-manual-work policy.")
+            return Evaluation(opportunity.name, False, reason="Opportunity failed qualification.")
         if payment is None:
-            return Evaluation(opportunity.name, True, reason="Approved for evaluation; no verified payment supplied.")
+            return Evaluation(opportunity.name, True, reason="Qualified for a dry-run evaluation; no verified payment supplied.")
         if payment.opportunity != opportunity.name:
             return Evaluation(opportunity.name, True, reason="Payment opportunity mismatch; revenue not counted.")
         counted = verify(payment)
-        return Evaluation(opportunity.name, True, counted, payment.currency, "Verified payment counted." if counted > 0 else "Unverified or non-positive payment; revenue not counted.")
+        return Evaluation(
+            opportunity.name,
+            True,
+            counted,
+            payment.currency,
+            "Verified payment counted." if counted > 0 else "Unverified or non-positive payment; revenue not counted.",
+        )
