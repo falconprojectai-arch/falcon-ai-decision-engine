@@ -49,17 +49,17 @@ h1{font-size:25px;margin:0}h2{font-size:17px;margin:0 0 14px}h3{font-size:14px;m
 </div>
 </section>
 <section class="card" id="opportunities">
-<div class="row"><h2>رصد فرصت‌ها</h2><span class="pill active">ثبت آمار: آماده‌سازی</span></div>
+<div class="row"><h2>رصد فرصت‌ها</h2><span class="pill active" id="report-status">در انتظار گزارش ثبت‌شده</span></div>
 <p class="sub">این بخش برای ردیابی مسیر هر فرصت است. عددهای زیر تا زمان اتصال گزارش اجرای موتور عمداً «—» هستند؛ صفر یا آمار ساختگی نمایش داده نمی‌شود.</p>
 <div class="opportunity-grid">
-<div class="mini-stat"><div class="label">فرصت‌های جمع‌آوری‌شده</div><div class="metric">—</div><div class="sub">کل موارد ورودی در آخرین اجرا</div></div>
-<div class="mini-stat"><div class="label">موارد حذف‌شده</div><div class="metric">—</div><div class="sub">ورودی نامعتبر یا بدون نام/منبع</div></div>
-<div class="mini-stat"><div class="label">پذیرفته‌شده توسط فیلتر</div><div class="metric">—</div><div class="sub">کم‌ریسک، بدون سرمایه و بدون کار دستی</div></div>
-<div class="mini-stat"><div class="label">ردشده توسط فیلتر</div><div class="metric">—</div><div class="sub">پرریسک یا نیازمند سرمایه/کار دستی</div></div>
-<div class="mini-stat"><div class="label">منتظر مجوز اجرا</div><div class="metric">—</div><div class="sub">پذیرفته‌شده در آزمایش؛ هنوز اجرا نشده</div></div>
-<div class="mini-stat"><div class="label">بررسی‌نشده / ریسک نامشخص</div><div class="metric">—</div><div class="sub">به‌صورت پیش‌فرض مسدود می‌ماند</div></div>
+<div class="mini-stat"><div class="label">فرصت‌های جمع‌آوری‌شده</div><div class="metric" data-opportunity-metric="collected">—</div><div class="sub">کل موارد ورودی در آخرین اجرا</div></div>
+<div class="mini-stat"><div class="label">موارد حذف‌شده</div><div class="metric" data-opportunity-metric="removed_invalid">—</div><div class="sub">ورودی نامعتبر یا بدون نام/منبع</div></div>
+<div class="mini-stat"><div class="label">پذیرفته‌شده توسط فیلتر</div><div class="metric" data-opportunity-metric="accepted_by_filter">—</div><div class="sub">کم‌ریسک، بدون سرمایه و بدون کار دستی</div></div>
+<div class="mini-stat"><div class="label">ردشده توسط فیلتر</div><div class="metric" data-opportunity-metric="rejected_by_filter">—</div><div class="sub">پرریسک یا نیازمند سرمایه/کار دستی</div></div>
+<div class="mini-stat"><div class="label">منتظر مجوز اجرا</div><div class="metric" data-opportunity-metric="awaiting_execution_approval">—</div><div class="sub">پذیرفته‌شده در آزمایش؛ هنوز اجرا نشده</div></div>
+<div class="mini-stat"><div class="label">بررسی‌نشده / ریسک نامشخص</div><div class="metric" data-opportunity-metric="unreviewed_or_not_low_risk">—</div><div class="sub">به‌صورت پیش‌فرض مسدود می‌ماند</div></div>
 </div>
-<div class="alert">وضعیت فعلی: خروجی موتور اکنون این شمارنده‌ها را در گزارش JSON هر اجرا ثبت می‌کند. داشبورد هنوز به گزارش زنده یا ذخیرهٔ مرکزی وصل نیست؛ اعداد پس از اتصال/ثبت گزارش واقعی نمایش داده خواهند شد. هیچ فرصت پذیرفته‌شده‌ای بدون مجوز صریح و worker پیکربندی‌شده اجرا نمی‌شود.</div>
+<div class="alert" id="report-note">داشبورد برای نمایش آمار به فایل گزارش ثبت‌شده در مخزن مراجعه می‌کند. تا زمانی که گزارش واقعی در آن مسیر منتشر نشده باشد، عددها «—» می‌مانند. این اتصال زنده نیست و هیچ فرصت پذیرفته‌شده‌ای بدون مجوز صریح و worker پیکربندی‌شده اجرا نمی‌شود.</div><div class="sub" id="report-generated"></div>
 <div class="actions"><a class="smalllink" href="https://github.com/falconprojectai-arch/falcon-ai-decision-engine/blob/main/revenue_machine/cli.py" target="_blank" rel="noreferrer">منطق گزارش فرصت‌ها ↗</a> · <a class="smalllink" href="https://github.com/falconprojectai-arch/falcon-ai-decision-engine/blob/main/tests/test_cli.py" target="_blank" rel="noreferrer">تست شمارنده‌ها ↗</a></div>
 </section>
 <section class="card">
@@ -104,6 +104,16 @@ h1{font-size:25px;margin:0}h2{font-size:17px;margin:0 0 14px}h3{font-size:14px;m
 <div class="footer">داشبورد نسخهٔ به‌روزشده · وضعیت‌های موتور از گزارش‌های ثبت‌شده هستند و اتصال لحظه‌ای به اجرای موتور هنوز فعال نیست.</div>
 </div>
 <script>
+const reportUrl='https://raw.githubusercontent.com/falconprojectai-arch/falcon-ai-decision-engine/main/reports/latest_opportunities.json';
+const reportStatus=document.getElementById('report-status');
+fetch(reportUrl,{cache:'no-store'}).then(response=>{if(!response.ok)throw new Error('No published report');return response.json()}).then(report=>{
+  if(report.status!=='report_recorded'||!report.opportunities||!report.generated_at)throw new Error('No valid report');
+  const keys=['collected','removed_invalid','accepted_by_filter','rejected_by_filter','awaiting_execution_approval','unreviewed_or_not_low_risk'];
+  for(const key of keys){const node=document.querySelector('[data-opportunity-metric="'+key+'"]');const value=report.opportunities[key];if(node&&Number.isFinite(value)&&value>=0)node.textContent=new Intl.NumberFormat('fa-IR').format(value);}
+  reportStatus.textContent='گزارش ثبت‌شده · dry-run';
+  const note=document.getElementById('report-note');note.textContent='آمار زیر مربوط به یک اجرای آزمایشی ثبت‌شده است؛ به‌معنای اجرای خودکار یا درآمد نیست.';
+  const generated=document.getElementById('report-generated');generated.textContent='زمان گزارش: '+report.generated_at+' · منبع: '+String(report.input_source||'نامشخص');
+}).catch(()=>{reportStatus.textContent='در انتظار گزارش ثبت‌شده';});
 const updated=document.getElementById('last-updated');
 if(updated){const stamp=updated.getAttribute('datetime');const parsed=new Date(stamp);if(!Number.isNaN(parsed.getTime())){updated.textContent=new Intl.DateTimeFormat('fa-IR-u-ca-gregory',{dateStyle:'medium',timeStyle:'medium',hour12:false,timeZone:'Asia/Tehran'}).format(parsed)+' (تهران)';}}
 const notes=document.getElementById('notes'), saved=document.getElementById('saved');
