@@ -8,7 +8,7 @@ A small, testable foundation for low-cost automation with a strict revenue gate.
 
 - **Scanner input layer:** validates a supplied JSON feed and can fetch bounded public HTTPS RSS/Atom feeds in dry-run mode.
 - **RSS/Atom safety:** enforces HTTPS, rejects local/private-address destinations, limits downloads to 1 MB and 8 seconds, caps results at 50 items, and marks discoveries as medium-risk plus capital/manual-work-required until reviewed.
-- **Opportunity filter:** rejects opportunities that require upfront capital, manual work, or medium/high risk.
+- **Opportunity filter:** rejects opportunities that require upfront capital, manual work, or medium/high risk. Missing risk classifications default to medium risk, so unreviewed candidates are blocked by default.
 - **Dry-run worker:** produces an auditable plan without external side effects.
 - **Revenue gate:** counts only positive, verified payments that match the opportunity being evaluated.
 - **Automated tests:** validates the policy and payment rules on every push and pull request.
