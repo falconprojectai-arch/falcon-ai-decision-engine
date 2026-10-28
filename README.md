@@ -10,7 +10,7 @@ A small, testable foundation for low-cost automation with a strict revenue gate.
 - **RSS/Atom safety:** enforces HTTPS, rejects local/private-address destinations, limits downloads to 1 MB and 8 seconds, caps results at 50 items, and marks discoveries as medium-risk plus capital/manual-work-required until reviewed.
 - **Opportunity filter:** rejects opportunities that require upfront capital, manual work, or medium/high risk. Missing risk classifications default to medium risk, so unreviewed candidates are blocked by default.
 - **Dry-run worker:** produces an auditable plan without external side effects.
-- **Revenue gate:** counts only positive, verified payments that match the opportunity being evaluated.
+- **Revenue gate:** requires a positive matching payment plus provider name, provider payment ID, verification timestamp, and verification-source metadata. A self-reported `verified=True` flag alone does not count. These metadata fields are not proof of a live check; a tested provider adapter must populate them only after independently querying provider records.
 - **Automated tests:** validates the policy and payment rules on every push and pull request.
 - **Dashboard:** static Persian RTL project status page, published through GitHub Pages.
 
