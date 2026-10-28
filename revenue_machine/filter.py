@@ -32,9 +32,11 @@ def qualification_reasons(opportunity: Opportunity) -> list[str]:
         reasons.append("estimated revenue must be finite and non-negative")
     if math.isfinite(cost) and math.isfinite(revenue) and revenue <= cost:
         reasons.append("estimated gross revenue does not exceed estimated cost")
-    if isinstance(opportunity.estimated_minutes, bool) or opportunity.estimated_minutes < 0:
-        reasons.append("estimated minutes must be a non-negative integer")
-    elif not isinstance(opportunity.estimated_minutes, int):
+    if (
+        isinstance(opportunity.estimated_minutes, bool)
+        or not isinstance(opportunity.estimated_minutes, int)
+        or opportunity.estimated_minutes < 0
+    ):
         reasons.append("estimated minutes must be a non-negative integer")
     return reasons
 
