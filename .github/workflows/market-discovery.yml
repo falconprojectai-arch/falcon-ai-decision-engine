@@ -1,0 +1,91 @@
+name: Scheduled Market Discovery
+
+on:
+  schedule:
+    - cron: "23 5 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: market-discovery
+  cancel-in-progress: false
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run bounded discovery scans
+        shell: bash
+        run: |
+          set -u
+          mkdir -p reports/market-discovery
+          python - <<'PY'
+          import json
+          import os
+          import subprocess
+          import sys
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          config = json.loads(Path("config/market_feeds.json").read_text(encoding="utf-8"))
+          output_dir = Path("reports/market-discovery")
+          summary = {
+              "generated_at": datetime.now(timezone.utc).isoformat(),
+              "mode": "discovery-only",
+              "verified_revenue_usd": 0,
+              "feeds": [],
+              "limitations": [
+                  "RSS titles are untrusted leads, not verified opportunities.",
+                  "No work is executed and no payment is attempted.",
+                  "No item counts as revenue without independent payment-provider verification."
+              ]
+          }
+          failures = 0
+          for feed in config["feeds"]:
+              if not feed.get("enabled", False):
+                  continue
+              report_path = output_dir / f'{feed["id"]}.json'
+              cmd = [
+                  sys.executable, "-m", "revenue_machine",
+                  "--rss", feed["url"],
+                  "--report-out", str(report_path)
+              ]
+              result = subprocess.run(cmd, text=True, capture_output=True, timeout=15)
+              entry = {
+                  "id": feed["id"],
+                  "category": feed.get("category", "uncategorized"),
+                  "exit_code": result.returncode,
+                  "report_file": str(report_path) if report_path.exists() else None,
+                  "error": (result.stderr or "").strip()[-1000:] if result.returncode else None
+              }
+              if result.returncode:
+                  failures += 1
+              elif report_path.exists():
+                  report = json.loads(report_path.read_text(encoding="utf-8"))
+                  entry["collected"] = report["opportunities"]["collected"]
+                  entry["approved"] = report["opportunities"]["accepted_by_filter"]
+                  entry["rejected"] = report["opportunities"]["rejected_by_filter"]
+              summary["feeds"].append(entry)
+          summary["status"] = "partial" if failures and len(summary["feeds"]) > failures else ("failed" if failures else "completed")
+          summary["failed_feeds"] = failures
+          summary_path = output_dir / "summary.json"
+          summary_path.write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+          print(json.dumps(summary, ensure_ascii=False, indent=2))
+          PY
+      - name: Upload discovery report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: market-discovery-${{ github.run_number }}
+          path: reports/market-discovery/
+          if-no-files-found: warn
+          retention-days: 14
