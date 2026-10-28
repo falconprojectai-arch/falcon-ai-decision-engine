@@ -17,3 +17,20 @@ def test_cli_reports_dry_run_and_never_counts_claims(tmp_path: Path, capsys):
     assert report["approved"] == 1
     assert report["executed"] == 0
     assert report["verified_revenue"] == 0
+
+
+def test_cli_can_run_rss_feed_in_dry_run(monkeypatch, capsys):
+    from revenue_machine import cli
+    from revenue_machine.models import Opportunity, RiskLevel
+
+    monkeypatch.setattr(cli.rss, "fetch_feed", lambda url: [
+        Opportunity(name="discovered", channel="rss:example.org", risk=RiskLevel.MEDIUM,
+                    requires_capital=True, requires_manual_work=True)
+    ])
+    assert main(["--rss", "https://example.org/feed.xml"]) == 0
+    report = json.loads(capsys.readouterr().out)
+    assert report["mode"] == "dry-run"
+    assert report["candidates_seen"] == 1
+    assert report["approved"] == 0
+    assert report["executed"] == 0
+    assert report["verified_revenue"] == 0
