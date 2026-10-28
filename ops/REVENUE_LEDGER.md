@@ -29,7 +29,7 @@ This file defines the minimum manual control for the first paid offer. The CSV a
 ## Operational limits
 
 - The static website does not verify blockchain transactions or persist submitted orders.
-- FormSubmit must be activated by the mailbox owner before its first form submission can be received. This requires the owner to open the real activation email; do not fake a submission to trigger it.
+- FormSubmit activation and inbox delivery were confirmed on 2026-10-28 using a harmless no-payment message. The temporary activation form was removed afterward. Real orders still require independent on-chain verification; an email notification is not payment proof.
 - No card checkout is enabled. Do not imply universal payment availability or bypass geographic, sanctions, or processor restrictions.
 - The public CSV is a schema/template only. Do not write actual customer payment records to the public repository; keep a private copy in a secure location.
 
