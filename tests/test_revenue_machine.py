@@ -12,6 +12,7 @@ def candidate(name="demo", **overrides):
         "monetization_confirmed": True,
         "estimated_cost_usd": 0.0,
         "estimated_revenue_usd": 1.0,
+        "estimated_success_probability": 1.0,
         "estimated_minutes": 0,
     }
     fields.update(overrides)
@@ -91,3 +92,10 @@ def test_non_positive_unit_economics_blocks_candidate():
 def test_fake_or_invalid_economics_block_candidate():
     assert not RevenueMachine().evaluate(candidate(estimated_cost_usd=float("nan"))).approved
     assert not RevenueMachine().evaluate(candidate(estimated_minutes=-1)).approved
+    assert not RevenueMachine().evaluate(candidate(estimated_success_probability=1.1)).approved
+    assert not RevenueMachine().evaluate(candidate(estimated_success_probability=float("nan"))).approved
+
+
+def test_probability_weighted_expected_revenue_must_exceed_cost():
+    assert not RevenueMachine().evaluate(candidate(estimated_revenue_usd=10, estimated_success_probability=0.1, estimated_cost_usd=2)).approved
+    assert RevenueMachine().evaluate(candidate(estimated_revenue_usd=10, estimated_success_probability=0.5, estimated_cost_usd=2)).approved
