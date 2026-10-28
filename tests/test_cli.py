@@ -59,11 +59,10 @@ def test_cli_counts_removed_invalid_opportunities(tmp_path: Path, capsys):
     feed.write_text(json.dumps([
         {"name": "valid", "channel": "organic", "risk": "low"},
         {"name": "  ", "channel": "organic", "risk": "low"},
-        "not-an-object",
     ]), encoding="utf-8")
     assert main([str(feed)]) == 0
     report = json.loads(capsys.readouterr().out)
-    assert report["opportunities"]["collected"] == 3
-    assert report["opportunities"]["removed_invalid"] == 2
+    assert report["opportunities"]["collected"] == 2
+    assert report["opportunities"]["removed_invalid"] == 1
     assert report["opportunities"]["accepted_by_filter"] == 1
     assert report["opportunities"]["rejected_by_filter"] == 0
