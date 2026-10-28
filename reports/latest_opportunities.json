@@ -1,0 +1,15 @@
+{
+  "status": "no_run_recorded",
+  "generated_at": null,
+  "input_source": null,
+  "mode": "dry-run",
+  "opportunities": {
+    "collected": null,
+    "removed_invalid": null,
+    "accepted_by_filter": null,
+    "rejected_by_filter": null,
+    "awaiting_execution_approval": null,
+    "unreviewed_or_not_low_risk": null
+  },
+  "note": "Placeholder only. Replace with an actual CLI report before dashboard metrics are displayed."
+}
