@@ -12,7 +12,7 @@ def test_scanner_keeps_only_valid_opportunities():
 
 def test_worker_is_dry_run_and_never_executes_external_work():
     worker = DryRunWorker()
-    plan = worker.plan(Opportunity(name="demo", channel="organic", risk=RiskLevel.LOW, evidence_url="https://provider.example/terms", evidence_checked_at="2026-10-28T12:00:00+00:00", terms_confirmed=True, monetization_confirmed=True, estimated_revenue_usd=1.0))
+    plan = worker.plan(Opportunity(name="demo", channel="organic", risk=RiskLevel.LOW, evidence_url="https://provider.example/terms", evidence_checked_at="2026-10-28T12:00:00+00:00", terms_confirmed=True, monetization_confirmed=True, estimated_revenue_usd=1.0, estimated_success_probability=1.0))
     assert plan.approved is True
     assert plan.mode == "dry-run"
     assert plan.executed is False
