@@ -57,6 +57,7 @@ jobs:
           cp -R dashboard/. site/
           cp products/json-contract-tester/index.html site/products/json-contract-tester/index.html
           cp products/dev-agent-toolbox/index.html site/products/dev-agent-toolbox/index.html
+          cp products/dev-agent-toolbox/payment.html site/products/dev-agent-toolbox/payment.html
       - name: Upload dashboard and product
         uses: actions/upload-pages-artifact@v3
         with:
