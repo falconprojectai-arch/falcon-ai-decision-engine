@@ -30,8 +30,23 @@ def qualification_reasons(opportunity: Opportunity) -> list[str]:
         reasons.append("estimated cost must be finite and non-negative")
     if not math.isfinite(revenue) or revenue < 0:
         reasons.append("estimated revenue must be finite and non-negative")
-    if math.isfinite(cost) and math.isfinite(revenue) and revenue <= cost:
-        reasons.append("estimated gross revenue does not exceed estimated cost")
+    probability = opportunity.estimated_success_probability
+    if (
+        not isinstance(probability, (int, float))
+        or isinstance(probability, bool)
+        or not math.isfinite(probability)
+        or probability < 0
+        or probability > 1
+    ):
+        reasons.append("estimated success probability must be between 0 and 1")
+    elif (
+        math.isfinite(cost)
+        and cost >= 0
+        and math.isfinite(revenue)
+        and revenue >= 0
+        and probability * revenue <= cost
+    ):
+        reasons.append("probability-weighted expected revenue does not exceed estimated cost")
     if (
         isinstance(opportunity.estimated_minutes, bool)
         or not isinstance(opportunity.estimated_minutes, int)
