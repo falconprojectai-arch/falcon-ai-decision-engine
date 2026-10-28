@@ -24,6 +24,7 @@ class Opportunity:
     monetization_confirmed: bool = False
     estimated_cost_usd: float = 0.0
     estimated_revenue_usd: float = 0.0
+    estimated_success_probability: float = 0.0
     estimated_minutes: int = 0
 
 
