@@ -2,6 +2,22 @@ from revenue_machine import RevenueMachine
 from revenue_machine.models import Opportunity, RiskLevel, VerifiedRevenue
 
 
+def candidate(name="demo", **overrides):
+    fields = {
+        "channel": "organic",
+        "risk": RiskLevel.LOW,
+        "evidence_url": "https://provider.example/terms",
+        "evidence_checked_at": "2026-10-28T12:00:00+00:00",
+        "terms_confirmed": True,
+        "monetization_confirmed": True,
+        "estimated_cost_usd": 0.0,
+        "estimated_revenue_usd": 1.0,
+        "estimated_minutes": 0,
+    }
+    fields.update(overrides)
+    return Opportunity(name=name, **fields)
+
+
 def payment(opportunity="demo", amount=12.5, verified=True, **overrides):
     fields = {
         "provider": "example-provider",
@@ -13,27 +29,27 @@ def payment(opportunity="demo", amount=12.5, verified=True, **overrides):
     return VerifiedRevenue(opportunity, amount, "USD", verified, **fields)
 
 
-def test_low_risk_no_capital_opportunity_is_approved_but_not_revenue():
-    result = RevenueMachine().evaluate(Opportunity(name="demo", channel="organic", risk=RiskLevel.LOW))
+def test_evidence_backed_low_risk_opportunity_is_approved_but_not_revenue():
+    result = RevenueMachine().evaluate(candidate())
     assert result.approved is True
     assert result.counted_revenue == 0
 
 
 def test_capital_or_manual_work_is_rejected():
     machine = RevenueMachine()
-    assert not machine.evaluate(Opportunity(name="capital", channel="x", requires_capital=True, risk=RiskLevel.LOW)).approved
-    assert not machine.evaluate(Opportunity(name="manual", channel="x", requires_manual_work=True, risk=RiskLevel.LOW)).approved
+    assert not machine.evaluate(candidate("capital", requires_capital=True)).approved
+    assert not machine.evaluate(candidate("manual", requires_manual_work=True)).approved
 
 
 def test_medium_and_high_risk_are_rejected():
     machine = RevenueMachine()
-    assert not machine.evaluate(Opportunity(name="medium", channel="x", risk=RiskLevel.MEDIUM)).approved
-    assert not machine.evaluate(Opportunity(name="high", channel="x", risk=RiskLevel.HIGH)).approved
+    assert not machine.evaluate(candidate("medium", risk=RiskLevel.MEDIUM)).approved
+    assert not machine.evaluate(candidate("high", risk=RiskLevel.HIGH)).approved
 
 
 def test_only_positive_matching_payments_with_evidence_metadata_count():
     machine = RevenueMachine()
-    opportunity = Opportunity(name="demo", channel="organic", risk=RiskLevel.LOW)
+    opportunity = candidate()
     assert machine.evaluate(opportunity, payment()).counted_revenue == 12.5
     assert machine.evaluate(opportunity, payment(verified=False)).counted_revenue == 0
     assert machine.evaluate(opportunity, payment(amount=-2)).counted_revenue == 0
@@ -47,12 +63,31 @@ def test_only_positive_matching_payments_with_evidence_metadata_count():
 
 def test_self_reported_verified_boolean_is_not_enough():
     machine = RevenueMachine()
-    opportunity = Opportunity(name="demo", channel="organic", risk=RiskLevel.LOW)
     self_reported = VerifiedRevenue("demo", 12.5, "USD", True)
-    assert machine.evaluate(opportunity, self_reported).counted_revenue == 0
+    assert machine.evaluate(candidate(), self_reported).counted_revenue == 0
 
 
 def test_unreviewed_opportunity_defaults_to_medium_risk_and_is_rejected():
     opportunity = Opportunity(name="unreviewed", channel="unknown-source")
     assert opportunity.risk is RiskLevel.MEDIUM
-    assert RevenueMachine().evaluate(opportunity).approved is False
+    result = RevenueMachine().evaluate(opportunity)
+    assert result.approved is False
+    assert "risk is not explicitly classified as low" in result.reason
+
+
+def test_missing_evidence_terms_or_monetization_blocks_candidate():
+    result = RevenueMachine().evaluate(candidate(evidence_url="", terms_confirmed=False, monetization_confirmed=False))
+    assert not result.approved
+    assert "missing HTTPS evidence URL" in result.reason
+    assert "terms/eligibility not confirmed" in result.reason
+    assert "monetization path not confirmed" in result.reason
+
+
+def test_non_positive_unit_economics_blocks_candidate():
+    assert not RevenueMachine().evaluate(candidate(estimated_revenue_usd=0)).approved
+    assert not RevenueMachine().evaluate(candidate(estimated_cost_usd=2, estimated_revenue_usd=1)).approved
+
+
+def test_fake_or_invalid_economics_block_candidate():
+    assert not RevenueMachine().evaluate(candidate(estimated_cost_usd=float("nan"))).approved
+    assert not RevenueMachine().evaluate(candidate(estimated_minutes=-1)).approved
