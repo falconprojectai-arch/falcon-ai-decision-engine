@@ -95,6 +95,31 @@ jobs:
                   await browser.close()
           asyncio.run(main())
           PY
+      - name: Smoke-test payment page in Chromium
+        env:
+          PAYMENT_URL: ${{ steps.deployment.outputs.page_url }}products/dev-agent-toolbox/payment.html
+        run: |
+          python - <<'PY'
+          import asyncio, os
+          from playwright.async_api import async_playwright
+
+          async def main():
+              async with async_playwright() as p:
+                  browser = await p.chromium.launch()
+                  page = await browser.new_page()
+                  errors = []
+                  page.on("pageerror", lambda error: errors.append(str(error)))
+                  response = await page.goto(os.environ["PAYMENT_URL"], wait_until="networkidle", timeout=60000)
+                  assert response and response.status == 200, f"Unexpected HTTP response: {response.status if response else 'none'}"
+                  assert await page.title() == "API & Agent Contract Review — Payment"
+                  assert await page.get_by_text("TYEEz4te11EYecrhNTFLY5enoMm7qPmjFd").count() == 1
+                  assert await page.get_by_text("0x48bf49eca7f6ef784ff524a8f58e156232746ca6").count() == 1
+                  assert await page.get_by_role("link", name="Email to arrange review").count() == 1
+                  assert not errors, f"Browser JavaScript errors: {errors}"
+                  await browser.close()
+
+          asyncio.run(main())
+          PY
       - name: Smoke-test deployed product in Chromium
         env:
           PRODUCT_URL: ${{ steps.deployment.outputs.page_url }}products/json-contract-tester/
