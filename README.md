@@ -4,6 +4,16 @@ A small, testable foundation for low-cost automation with a strict revenue gate.
 
 **Primary KPI:** independently verified revenue per day. Claims, clicks, leads, and unverified payment messages do not count as revenue.
 
+## Paid API/Agent Contract Review
+
+A small manual service is available for a first validation: one JSON Schema or documented contract, up to 10 redacted sample payloads, a PASS/FAIL summary, and practical recommendations. Launch price: **$9 USD equivalent in USDT**, with delivery within 2 business days after payment and materials are confirmed.
+
+- Payment page: https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/dev-agent-toolbox/payment.html
+- Current payment rails: USDT on TRC20 or BEP20, manually verified.
+- Card checkout is **not enabled**. Do not imply that every buyer can pay; buyers who cannot use crypto should not send payment.
+- Never submit production secrets or personal/confidential payloads.
+- A transfer is not counted as revenue until it is independently verified and recorded.
+
 ## Current V1 core
 
 - **Scanner input layer:** validates a supplied JSON feed and can fetch bounded public HTTPS RSS/Atom feeds in dry-run mode.
