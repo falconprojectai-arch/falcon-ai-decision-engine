@@ -1,0 +1,26 @@
+[
+  {
+    "name": "sample-organic-tool",
+    "channel": "organic",
+    "requires_capital": false,
+    "requires_manual_work": false,
+    "risk": "low",
+    "revenue_claim": 0
+  },
+  {
+    "name": "sample-paid-campaign",
+    "channel": "ads",
+    "requires_capital": true,
+    "requires_manual_work": false,
+    "risk": "low",
+    "revenue_claim": 100
+  },
+  {
+    "name": "sample-manual-service",
+    "channel": "service",
+    "requires_capital": false,
+    "requires_manual_work": true,
+    "risk": "low",
+    "revenue_claim": 25
+  }
+]
