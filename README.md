@@ -8,7 +8,7 @@ A small, testable foundation for low-cost automation with a strict revenue gate.
 
 - **Scanner input layer:** validates a supplied JSON feed and can fetch bounded public HTTPS RSS/Atom feeds in dry-run mode.
 - **RSS/Atom safety:** enforces HTTPS, rejects local/private-address destinations, limits downloads to 1 MB and 8 seconds, caps results at 50 items, and marks discoveries as medium-risk plus capital/manual-work-required until reviewed.
-- **Opportunity qualification:** blocks candidates without an HTTPS evidence URL, review timestamp, confirmed terms/eligibility, confirmed monetization path, and finite non-negative estimates where expected revenue exceeds expected cost. Candidates requiring capital or recurring manual work, or not explicitly classified as low-risk, are blocked.
+- **Opportunity qualification:** blocks candidates without an HTTPS evidence URL, review timestamp, confirmed terms/eligibility, confirmed monetization path, and finite non-negative estimates and a success-probability estimate from 0 to 1, where probability-weighted expected revenue exceeds estimated cost. Candidates requiring capital or recurring manual work, or not explicitly classified as low-risk, are blocked.
 - **Evidence limitation:** these qualification fields are review metadata, not proof that a source was independently queried. A live source adapter must fetch and validate provider records before setting them. Estimated revenue is not counted as actual revenue.
 - **Dry-run worker:** produces an auditable plan without external side effects.
 - **Revenue gate:** requires a positive matching payment plus provider name, provider payment ID, verification timestamp, and verification-source metadata. A self-reported `verified=True` flag alone does not count. These metadata fields are not proof of a live check; a tested provider adapter must populate them only after independently querying provider records.
@@ -29,7 +29,7 @@ python -m revenue_machine examples/opportunities.json --report-out reports/lates
 
 Use `--report-out PATH` to save the exact JSON report from a run, including an ISO-8601 timestamp and input source. Use `--ledger-out PATH` to append every run as a JSON Lines record without overwriting earlier runs. The append-only ledger validates required metrics and rejects non-finite values; it is a local audit trail, not a live dashboard feed or payment-provider verification. The dashboard can display the latest report only after that report file is committed to the public repository; saving locally does not publish it automatically. Reports contain dry-run metrics only.
 
-The sample JSON feed is intentionally synthetic. The RSS option contacts the specified public HTTPS feed, but only parses candidate titles and prints a dry-run report; it does not execute work or claim revenue. Feed items remain blocked until reviewed and deliberately reclassified with evidence and unit-economics metadata.
+The sample JSON feed is intentionally synthetic. The RSS option contacts the specified public HTTPS feed, but only parses candidate titles and prints a dry-run report; it does not execute work or claim revenue. Feed items remain blocked until reviewed and deliberately reclassified with evidence unit-economics metadata, and a success-probability estimate. The probability is an estimate for ranking/qualification only, never actual revenue.
 
 ## Important limits
 
