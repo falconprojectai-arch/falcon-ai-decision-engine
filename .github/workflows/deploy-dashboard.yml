@@ -64,6 +64,10 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+      - name: Install browser-test dependencies
+        run: |
+          python -m pip install --upgrade pip playwright
+          python -m playwright install --with-deps chromium
       - name: Smoke-test developer toolbox in Chromium
         env:
           TOOLBOX_URL: ${{ steps.deployment.outputs.page_url }}products/dev-agent-toolbox/
@@ -90,10 +94,6 @@ jobs:
                   await browser.close()
           asyncio.run(main())
           PY
-      - name: Install browser-test dependencies
-        run: |
-          python -m pip install --upgrade pip playwright
-          python -m playwright install --with-deps chromium
       - name: Smoke-test deployed product in Chromium
         env:
           PRODUCT_URL: ${{ steps.deployment.outputs.page_url }}products/json-contract-tester/
