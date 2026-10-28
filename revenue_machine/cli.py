@@ -5,6 +5,7 @@ from pathlib import Path
 
 from .engine import RevenueMachine
 from .models import Opportunity, RiskLevel
+from .scanner import scan
 from . import rss
 
 
@@ -39,12 +40,26 @@ def main(argv: list[str] | None = None) -> int:
     except (OSError, json.JSONDecodeError, TypeError, ValueError) as exc:
         parser.error(str(exc))
 
-    plans = RevenueMachine().plan_candidates(candidates)
+    valid_candidates = list(scan(candidates))
+    removed = len(candidates) - len(valid_candidates)
+    plans = RevenueMachine().plan_candidates(valid_candidates)
+    approved = sum(plan.approved for plan in plans)
+    rejected = len(plans) - approved
+    unreviewed = sum(candidate.risk is not RiskLevel.LOW for candidate in valid_candidates)
+    awaiting_approval = sum(plan.approved and not plan.executed for plan in plans)
     report = {
         "mode": "dry-run",
+        "opportunities": {
+            "collected": len(candidates),
+            "removed_invalid": removed,
+            "accepted_by_filter": approved,
+            "rejected_by_filter": rejected,
+            "awaiting_execution_approval": awaiting_approval,
+            "unreviewed_or_not_low_risk": unreviewed,
+        },
         "candidates_seen": len(candidates),
         "plans_created": len(plans),
-        "approved": sum(plan.approved for plan in plans),
+        "approved": approved,
         "executed": sum(plan.executed for plan in plans),
         "verified_revenue": 0,
         "plans": [
@@ -52,7 +67,7 @@ def main(argv: list[str] | None = None) -> int:
              "mode": plan.mode, "executed": plan.executed, "reason": plan.reason}
             for plan in plans
         ],
-        "note": "No external work was executed. Revenue remains zero until verified payment evidence is integrated.",
+        "note": "Counts describe this run only. No external work was executed. Approved items still await explicit authorization and a configured worker; revenue remains zero until verified payment evidence is integrated.",
     }
     print(json.dumps(report, ensure_ascii=False, indent=2))
     return 0
