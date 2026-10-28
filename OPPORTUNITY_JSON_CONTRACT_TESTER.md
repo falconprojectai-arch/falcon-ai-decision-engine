@@ -22,6 +22,3 @@ Target: developers integrating LLM/agent outputs into APIs or automation who nee
 3. Inputs are not transmitted off-device.
 4. No revenue is counted until a real payment is independently verified.
 5. Next investment decision requires actual demand evidence; search popularity and a successful build are not demand evidence.
-
-## Payment constraint
-The operator is in Iran and currently has only a crypto wallet. Do not integrate a third-party crypto processor that excludes Iran. CoinGate and BitPay publicly list Iran as unsupported/restricted. A direct wallet payment option should not be deployed until a wallet address is provided and lawful/operational receipt, network, confirmations, refund policy, and buyer trust are addressed. No account-country misrepresentation.
