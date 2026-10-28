@@ -21,7 +21,7 @@ A small, testable foundation for low-cost automation with a strict revenue gate.
 - [Product hypothesis and validation gates](OPPORTUNITY_JSON_CONTRACT_TESTER.md)
 - [Demand validation sprint plan](VALIDATION_JSON_CONTRACT_TESTER.md)
 
-The hosted URL has not yet been independently confirmed reachable from this session. The source is committed in the repository; treat public deployment as pending until the page is verified in a normal browser.
+The deployed product now passes a Chromium smoke test in GitHub Actions (HTTP 200, expected sample results, structural `const` comparison, stale-report clearing, and no uncaught browser errors). This is a focused desktop smoke test, not exhaustive browser/device coverage. Demand is not yet validated; see [the validation sprint plan](VALIDATION_JSON_CONTRACT_TESTER.md).
 
 ## Run locally
 
