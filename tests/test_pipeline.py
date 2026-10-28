@@ -5,7 +5,7 @@ from revenue_machine.worker import DryRunWorker
 
 
 def test_scanner_keeps_only_valid_opportunities():
-    valid = Opportunity(name="valid", channel="organic", risk=RiskLevel.LOW, evidence_url="https://provider.example/terms", evidence_checked_at="2026-10-28T12:00:00+00:00", terms_confirmed=True, monetization_confirmed=True, estimated_revenue_usd=1.0)
+    valid = Opportunity(name="valid", channel="organic", risk=RiskLevel.LOW, evidence_url="https://provider.example/terms", evidence_checked_at="2026-10-28T12:00:00+00:00", terms_confirmed=True, monetization_confirmed=True, estimated_revenue_usd=1.0, estimated_success_probability=1.0)
     blank = Opportunity(name="  ", channel="organic")
     assert list(scan([valid, blank, "not-an-opportunity"])) == [valid]
 
