@@ -28,7 +28,7 @@ h1{font-size:25px;margin:0}h2{font-size:17px;margin:0 0 14px}h3{font-size:14px;m
 <div class="layout">
 <div class="stack">
 <section class="card">
-<div class="row"><h2>وضعیت پروژه‌ها</h2><span class="pill done">به‌روزرسانی ۲۸ اکتبر ۲۰۲۶</span></div>
+<div class="row"><h2>وضعیت پروژه‌ها</h2><span class="pill done">آخرین تغییر داشبورد: <time id="last-updated" datetime="__DASHBOARD_UPDATED_AT__">زمان انتشار محاسبه می‌شود…</time></span></div>
 <div class="item">
 <div class="row"><div><h3>۱. JSON Schema Generator</h3><div class="sub">ابزار مرورگری؛ تبدیل نمونهٔ JSON به JSON Schema</div></div><span class="pill done">فایل ساخته شد</span></div>
 <div class="bar"><span style="width:65%"></span></div><div class="sub">۶۵٪ تخمینی از مسیر MVP — نیازمند تست و انتشار عمومی</div>
@@ -66,7 +66,7 @@ h1{font-size:25px;margin:0}h2{font-size:17px;margin:0 0 14px}h3{font-size:14px;m
 <div class="stack">
 <section class="card">
 <h2>برنامهٔ بعدی</h2>
-<div class="item"><div class="row"><h3>گام ۱ — اتصال منبع فرصت‌ها</h3><span class="pill active">بعدی</span></div><p>ساخت آداپتر ورودی RSS/API با محدودیت نرخ، ثبت منبع و حالت آزمایشی؛ بدون اقدام خودکار یا ادعای درآمد.</p></div>
+<div class="item"><div class="row"><h3>گام ۱ — آداپتر RSS/Atom (نسخهٔ محافظه‌کار)</h3><span class="pill active">بعدی</span></div><p>پارسر RSS/Atom اضافه شده؛ ورودی‌ها پرریسک و نیازمند بررسی علامت‌گذاری می‌شوند. محدودیت HTTPS، اندازهٔ فایل و زمان درخواست اعمال می‌شود. هنوز تست CI نهایی لازم است.</p></div>
 <div class="item"><div class="row"><h3>گام ۲ — تست محصول و ثبت گزارش</h3><span class="pill queued">صف بعد</span></div><p>تست سناریوهای خطا و خروجی؛ ثبت وضعیت قابل ردیابی در CI.</p></div>
 <div class="item"><div class="row"><h3>گام ۳ — صفحهٔ معرفی</h3><span class="pill queued">صف بعد</span></div><p>نمونهٔ واضح، راهنمای سریع، لینک محصول و کانال بازخورد.</p></div>
 <div class="item"><div class="row"><h3>گام ۴ — انتشار رایگان</h3><span class="pill queued">پس از بررسی</span></div><p>آماده‌سازی انتشار از طریق میزبانی رایگان؛ تأیید نهایی وابسته به تنظیمات واقعی پلتفرم است.</p></div>
@@ -90,6 +90,8 @@ h1{font-size:25px;margin:0}h2{font-size:17px;margin:0 0 14px}h3{font-size:14px;m
 <div class="footer">داشبورد نسخهٔ به‌روزشده · وضعیت‌های موتور از گزارش‌های ثبت‌شده هستند و اتصال لحظه‌ای به اجرای موتور هنوز فعال نیست.</div>
 </div>
 <script>
+const updated=document.getElementById('last-updated');
+if(updated){const stamp=updated.getAttribute('datetime');const parsed=new Date(stamp);if(!Number.isNaN(parsed.getTime())){updated.textContent=new Intl.DateTimeFormat('fa-IR-u-ca-gregory',{dateStyle:'medium',timeStyle:'medium',hour12:false,timeZone:'Asia/Tehran'}).format(parsed)+' (تهران)';}}
 const notes=document.getElementById('notes'), saved=document.getElementById('saved');
 try{notes.value=localStorage.getItem('rm-control-notes')||''}catch(e){}
 document.getElementById('save').addEventListener('click',()=>{try{localStorage.setItem('rm-control-notes',notes.value);saved.textContent='ذخیره شد.'}catch(e){saved.textContent='ذخیرهٔ محلی در این محیط در دسترس نیست.'}});
