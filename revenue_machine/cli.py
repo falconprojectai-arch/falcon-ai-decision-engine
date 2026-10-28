@@ -21,7 +21,7 @@ def load_candidates(path: Path) -> list[Opportunity]:
             channel=str(item.get("channel", "")),
             requires_capital=bool(item.get("requires_capital", False)),
             requires_manual_work=bool(item.get("requires_manual_work", False)),
-            risk=RiskLevel(str(item.get("risk", "low")).lower()),
+            risk=RiskLevel(str(item.get("risk", "medium")).lower()),
             revenue_claim=float(item.get("revenue_claim", 0.0)),
         ))
     return candidates
