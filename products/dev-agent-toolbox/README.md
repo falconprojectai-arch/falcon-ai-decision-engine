@@ -25,8 +25,6 @@ A free, browser-only suite for common developer and AI-agent debugging tasks. In
 19. PII Scrubber
 20. Prompt Token Estimator
 
-The current page also includes an OpenAPI endpoint index utility; it is intentionally lightweight and accepts JSON OpenAPI documents, not YAML.
-
 ## Limits and safety
 
 - JWT decoding is not signature verification and must not be used for authentication decisions.
