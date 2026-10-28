@@ -48,3 +48,24 @@ def test_usdt_addresses_and_networks_match_operator_provided_values():
     assert "data-copy=\"trc-address\"" in source
     assert "data-copy=\"bep-address\"" in source
     assert "payment does not unlock features" in source
+
+
+def test_crypto_notice_is_brand_neutral_and_warns_about_network_mismatch():
+    source = PAGE.read_text(encoding="utf-8")
+    assert "Toobit" not in source
+    assert "recipient's current receiving address" in source
+    assert "supports the selected network" in source
+    assert "Crypto transfers are generally irreversible" in source
+
+
+def test_validator_exposes_core_rules_and_error_paths():
+    source = PAGE.read_text(encoding="utf-8")
+    for keyword in (
+        "required", "properties", "additionalProperties", "items", "enum",
+        "const", "minimum", "maximum", "minLength", "maxLength", "pattern",
+        "minItems", "maxItems", "Invalid JSON:", "Schema error:",
+    ):
+        assert keyword in source
+    assert "Download report" in source
+    assert "contract-test-report.json" in source
+    assert "inputs stay in this browser" in source
