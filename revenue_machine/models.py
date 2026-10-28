@@ -14,7 +14,7 @@ class Opportunity:
     channel: str
     requires_capital: bool = False
     requires_manual_work: bool = False
-    risk: RiskLevel = RiskLevel.LOW
+    risk: RiskLevel = RiskLevel.MEDIUM
     revenue_claim: float = 0.0
 
 
