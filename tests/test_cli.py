@@ -17,6 +17,12 @@ def test_cli_reports_dry_run_and_never_counts_claims(tmp_path: Path, capsys):
     assert report["approved"] == 1
     assert report["executed"] == 0
     assert report["verified_revenue"] == 0
+    assert report["opportunities"]["collected"] == 2
+    assert report["opportunities"]["removed_invalid"] == 0
+    assert report["opportunities"]["accepted_by_filter"] == 1
+    assert report["opportunities"]["rejected_by_filter"] == 1
+    assert report["opportunities"]["awaiting_execution_approval"] == 1
+    assert report["opportunities"]["unreviewed_or_not_low_risk"] == 1
 
 
 def test_cli_can_run_rss_feed_in_dry_run(monkeypatch, capsys):
@@ -45,3 +51,19 @@ def test_cli_defaults_missing_risk_to_medium_and_blocks_it(tmp_path: Path, capsy
     assert report["approved"] == 0
     assert report["executed"] == 0
     assert report["verified_revenue"] == 0
+
+
+
+def test_cli_counts_removed_invalid_opportunities(tmp_path: Path, capsys):
+    feed = tmp_path / "mixed.json"
+    feed.write_text(json.dumps([
+        {"name": "valid", "channel": "organic", "risk": "low"},
+        {"name": "  ", "channel": "organic", "risk": "low"},
+        "not-an-object",
+    ]), encoding="utf-8")
+    assert main([str(feed)]) == 0
+    report = json.loads(capsys.readouterr().out)
+    assert report["opportunities"]["collected"] == 3
+    assert report["opportunities"]["removed_invalid"] == 2
+    assert report["opportunities"]["accepted_by_filter"] == 1
+    assert report["opportunities"]["rejected_by_filter"] == 0
