@@ -34,3 +34,14 @@ def test_cli_can_run_rss_feed_in_dry_run(monkeypatch, capsys):
     assert report["approved"] == 0
     assert report["executed"] == 0
     assert report["verified_revenue"] == 0
+
+
+def test_cli_defaults_missing_risk_to_medium_and_blocks_it(tmp_path: Path, capsys):
+    feed = tmp_path / "unreviewed.json"
+    feed.write_text(json.dumps([{"name": "unknown", "channel": "unknown-source"}]), encoding="utf-8")
+    assert main([str(feed)]) == 0
+    report = json.loads(capsys.readouterr().out)
+    assert report["candidates_seen"] == 1
+    assert report["approved"] == 0
+    assert report["executed"] == 0
+    assert report["verified_revenue"] == 0
