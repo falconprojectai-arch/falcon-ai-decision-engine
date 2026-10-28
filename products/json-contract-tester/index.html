@@ -28,7 +28,7 @@
 <div class="actions"><button id="run">Run contract tests</button><button id="sample">Load sample</button><button id="download">Download report</button></div>
 <p id="status" role="status" aria-live="polite" class="muted"></p><section id="results" aria-live="polite"></section>
 </main>
-<section><h2>Supported validation rules</h2><p class="muted small">This lightweight MVP supports type, required, properties, additionalProperties=false, items, enum, const, minimum, maximum, minLength, maxLength, pattern, minItems, and maxItems. It is not a complete implementation of every JSON Schema draft keyword; validate critical production contracts with a full JSON Schema validator too.</p></section>
+<section><h2>Supported rules and current limitations</h2><p class="muted small">Supported: type, required, properties, additionalProperties=false, items, enum, const, minimum, maximum, minLength, maxLength, pattern, minItems, and maxItems. Limits: one JSON value per non-empty line; object/array schema nodes only; no $ref/$defs, composition (allOf/anyOf/oneOf/not), format checks, boolean schemas, or additionalProperties schemas. Pattern uses this browser's JavaScript regular-expression engine. Unknown keywords are ignored. A PASS means only that the value matches the rules listed here, not that it is valid under the full JSON Schema specification. Use a full validator for production or security-critical contracts.</p></section>
 <section id="support" aria-labelledby="support-title" style="margin-top:28px;padding:18px;border:1px solid #888;border-radius:12px">
 <h2 id="support-title">Support this free tool (optional)</h2>
 <p>If this utility saves you time, you can optionally support future improvements with USDT. The tool remains free; payment does not unlock features or create a service obligation.</p>
@@ -42,7 +42,54 @@
 const $=id=>document.getElementById(id), schemaInput=$('schema'), casesInput=$('cases'), results=$('results'), status=$('status');
 const sampleSchema={type:'object',required:['ok','result'],properties:{ok:{type:'boolean'},result:{type:'string',minLength:1}},additionalProperties:false};
 const sampleCases=[{ok:true,result:'done'},{ok:'yes',result:'done'},{ok:true,extra:1}];
-function check(value,s,path='$',errors=[]){
+function sameJson(a,b){
+ if(a===b)return true;
+ if(a===null||b===null||typeof a!=='object'||typeof b!=='object')return false;
+ if(Array.isArray(a)!==Array.isArray(b))return false;
+ const ak=Object.keys(a),bk=Object.keys(b);
+ return ak.length===bk.length&&ak.every(k=>Object.prototype.hasOwnProperty.call(b,k)&&sameJson(a[k],b[k]));
+}
+function check(value,s,path='
+ if(!s||typeof s!=='object'||Array.isArray(s)){errors.push(path+': schema node must be an object');return errors}
+ if('const'in s&&!sameJson(value,s.const))errors.push(path+': must equal const value');
+ if(Array.isArray(s.enum)&&!s.enum.some(v=>sameJson(v,value)))errors.push(path+': value is not in enum');
+ const types=Array.isArray(s.type)?s.type:[s.type];
+ if(s.type){const matches=t=>t==='null'?value===null:t==='array'?Array.isArray(value):t==='object'?value!==null&&typeof value==='object'&&!Array.isArray(value):t==='integer'?typeof value==='number'&&Number.isInteger(value):t==='number'?typeof value==='number'&&Number.isFinite(value):typeof value===t;
+ if(!types.some(matches)){errors.push(path+': expected '+types.join(' or '));return errors}}
+ if(typeof value==='string'){if(Number.isInteger(s.minLength)&&value.length<s.minLength)errors.push(path+': shorter than minLength '+s.minLength);if(Number.isInteger(s.maxLength)&&value.length>s.maxLength)errors.push(path+': longer than maxLength '+s.maxLength);if(s.pattern){try{if(!(new RegExp(s.pattern)).test(value))errors.push(path+': does not match pattern')}catch(e){errors.push(path+': invalid pattern in schema')}}}
+ if(typeof value==='number'){if(typeof s.minimum==='number'&&value<s.minimum)errors.push(path+': below minimum '+s.minimum);if(typeof s.maximum==='number'&&value>s.maximum)errors.push(path+': above maximum '+s.maximum)}
+ if(Array.isArray(value)){if(Number.isInteger(s.minItems)&&value.length<s.minItems)errors.push(path+': fewer than minItems '+s.minItems);if(Number.isInteger(s.maxItems)&&value.length>s.maxItems)errors.push(path+': more than maxItems '+s.maxItems);if(s.items&&typeof s.items==='object')value.forEach((v,i)=>check(v,s.items,path+'['+i+']',errors))}
+ if(value!==null&&typeof value==='object'&&!Array.isArray(value)){
+  if(Array.isArray(s.required))s.required.forEach(k=>{if(!Object.prototype.hasOwnProperty.call(value,k))errors.push(path+': missing required property "'+k+'"')});
+  if(s.properties&&typeof s.properties==='object')Object.keys(s.properties).forEach(k=>{if(Object.prototype.hasOwnProperty.call(value,k))check(value[k],s.properties[k],path+'.'+k,errors)});
+  if(s.additionalProperties===false&&s.properties&&typeof s.properties==='object')Object.keys(value).forEach(k=>{if(!Object.prototype.hasOwnProperty.call(s.properties,k))errors.push(path+': unexpected property "'+k+'"')});
+ }
+ return errors;
+}
+function run(){
+ window.lastContractReport=null;results.replaceChildren();let schema;try{schema=JSON.parse(schemaInput.value);if(!schema||typeof schema!=='object'||Array.isArray(schema))throw new Error('Schema must be a JSON object.')}catch(e){status.textContent='Schema error: '+e.message;return}
+ const lines=casesInput.value.split(/\r?\n/).map((v,i)=>({text:v.trim(),line:i+1})).filter(x=>x.text);
+ if(!lines.length){status.textContent='Add at least one JSON output, one per line.';return}
+ let passed=0;const report=[];
+ lines.forEach(item=>{let value,errors=[];try{value=JSON.parse(item.text);check(value,schema,'$',errors)}catch(e){errors=['Invalid JSON: '+e.message]}
+ const ok=errors.length===0;if(ok)passed++;report.push({line:item.line,passed:ok,errors});
+ const box=document.createElement('div');box.className='result '+(ok?'pass':'fail');
+ const title=document.createElement('strong');title.textContent='Line '+item.line+': '+(ok?'PASS':'FAIL');box.appendChild(title);
+ if(errors.length){const ul=document.createElement('ul');errors.forEach(msg=>{const li=document.createElement('li');li.textContent=msg;ul.appendChild(li)});box.appendChild(ul)}else{const p=document.createElement('p');p.textContent='Output matches the supported rules in this schema.';box.appendChild(p)}
+ results.appendChild(box);
+ });
+ window.lastContractReport={generatedAt:new Date().toISOString(),passed,total:lines.length,results:report,limitation:'Subset validator; not a full JSON Schema implementation.'};
+ status.textContent=passed+' of '+lines.length+' outputs passed. No data was uploaded.';
+}
+document.querySelectorAll('[data-copy]').forEach(button=>button.addEventListener('click',async()=>{const text=document.getElementById(button.dataset.copy).textContent.trim();try{await navigator.clipboard.writeText(text);$('copy-status').textContent='Address copied.'}catch(e){$('copy-status').textContent='Copy unavailable. Press and hold the address to copy it.'}}));
+$('run').addEventListener('click',run);
+$('sample').addEventListener('click',()=>{schemaInput.value=JSON.stringify(sampleSchema,null,2);casesInput.value=sampleCases.map(v=>JSON.stringify(v)).join('\n');run()});
+$('download').addEventListener('click',()=>{if(!window.lastContractReport)run();if(!window.lastContractReport)return;const blob=new Blob([JSON.stringify(window.lastContractReport,null,2)+'\n'],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='contract-test-report.json';a.click();URL.revokeObjectURL(url)});
+run();
+})();
+</script>
+</body></html>
+,errors=[]){
  if(!s||typeof s!=='object'||Array.isArray(s)){errors.push(path+': schema node must be an object');return errors}
  if('const'in s&&JSON.stringify(value)!==JSON.stringify(s.const))errors.push(path+': must equal const value');
  if(Array.isArray(s.enum)&&!s.enum.some(v=>JSON.stringify(v)===JSON.stringify(value)))errors.push(path+': value is not in enum');
