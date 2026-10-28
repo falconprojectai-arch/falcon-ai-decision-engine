@@ -62,3 +62,43 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+      - name: Install browser-test dependencies
+        run: |
+          python -m pip install --upgrade pip playwright
+          python -m playwright install --with-deps chromium
+      - name: Smoke-test deployed product in Chromium
+        env:
+          PRODUCT_URL: ${{ steps.deployment.outputs.page_url }}products/json-contract-tester/
+        run: |
+          python - <<'PY'
+          import asyncio
+          import os
+          from playwright.async_api import async_playwright
+
+          async def main():
+              async with async_playwright() as p:
+                  browser = await p.chromium.launch()
+                  page = await browser.new_page()
+                  errors = []
+                  page.on("pageerror", lambda error: errors.append(str(error)))
+                  response = await page.goto(os.environ["PRODUCT_URL"], wait_until="networkidle", timeout=60000)
+                  assert response and response.status == 200, f"Unexpected HTTP response: {response.status if response else 'none'}"
+                  assert await page.title() == "JSON Contract Tester — Validate AI and API Outputs"
+                  assert await page.locator("#status").inner_text() == "1 of 3 outputs passed. No data was uploaded."
+                  assert await page.locator(".result.pass").count() == 1
+                  assert await page.locator(".result.fail").count() == 2
+
+                  await page.locator("#schema").fill('{"const":{"a":1,"b":2}}')
+                  await page.locator("#cases").fill('{"b":2,"a":1}')
+                  await page.get_by_role("button", name="Run contract tests").click()
+                  assert await page.locator("#status").inner_text() == "1 of 1 outputs passed. No data was uploaded."
+
+                  await page.locator("#schema").fill("{")
+                  await page.get_by_role("button", name="Run contract tests").click()
+                  assert (await page.locator("#status").inner_text()).startswith("Schema error:")
+                  assert await page.evaluate("window.lastContractReport") is None
+                  assert not errors, f"Browser JavaScript errors: {errors}"
+                  await browser.close()
+
+          asyncio.run(main())
+          PY
