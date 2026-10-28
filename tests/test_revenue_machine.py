@@ -3,15 +3,15 @@ from revenue_machine.models import Opportunity, RiskLevel, VerifiedRevenue
 
 
 def test_low_risk_no_capital_opportunity_is_approved_but_not_revenue():
-    result = RevenueMachine().evaluate(Opportunity(name="demo", channel="organic"))
+    result = RevenueMachine().evaluate(Opportunity(name="demo", channel="organic", risk=RiskLevel.LOW))
     assert result.approved is True
     assert result.counted_revenue == 0
 
 
 def test_capital_or_manual_work_is_rejected():
     machine = RevenueMachine()
-    assert not machine.evaluate(Opportunity(name="capital", channel="x", requires_capital=True)).approved
-    assert not machine.evaluate(Opportunity(name="manual", channel="x", requires_manual_work=True)).approved
+    assert not machine.evaluate(Opportunity(name="capital", channel="x", requires_capital=True, risk=RiskLevel.LOW)).approved
+    assert not machine.evaluate(Opportunity(name="manual", channel="x", requires_manual_work=True, risk=RiskLevel.LOW)).approved
 
 
 def test_medium_and_high_risk_are_rejected():
