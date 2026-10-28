@@ -74,7 +74,7 @@ def main(argv: list[str] | None = None) -> int:
         ],
         "note": "Counts describe this run only. No external work was executed. Approved items still await explicit authorization and a configured worker; revenue remains zero until verified payment evidence is integrated.",
     }
-    rendered = json.dumps(report, ensure_ascii=False, indent=2) + "\\n"
+    rendered = json.dumps(report, ensure_ascii=False, indent=2) + "\n"
     if args.report_out:
         try:
             args.report_out.parent.mkdir(parents=True, exist_ok=True)
