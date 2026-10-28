@@ -84,3 +84,20 @@ def test_cli_writes_traceable_report_file(tmp_path: Path, capsys):
     assert saved_report["input_source"] == str(feed)
     assert saved_report["generated_at"].endswith("+00:00")
     assert saved_report["opportunities"]["collected"] == 1
+
+
+def test_cli_appends_run_to_audit_ledger(tmp_path: Path, capsys):
+    feed = tmp_path / "opportunities.json"
+    ledger = tmp_path / "runs.jsonl"
+    feed.write_text(json.dumps([
+        {"name": "candidate", "channel": "organic", "risk": "low"}
+    ]), encoding="utf-8")
+
+    assert main([str(feed), "--ledger-out", str(ledger)]) == 0
+    capsys.readouterr()
+    assert main([str(feed), "--ledger-out", str(ledger)]) == 0
+    capsys.readouterr()
+    records = [json.loads(line) for line in ledger.read_text(encoding="utf-8").splitlines()]
+    assert len(records) == 2
+    assert all(record["mode"] == "dry-run" for record in records)
+    assert all(record["verified_revenue"] == 0 for record in records)
