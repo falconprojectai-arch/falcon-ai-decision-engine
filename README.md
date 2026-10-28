@@ -19,6 +19,7 @@ A small, testable foundation for low-cost automation with a strict revenue gate.
 
 - [JSON Contract Tester (browser-only MVP)](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/)
 - [Product hypothesis and validation gates](OPPORTUNITY_JSON_CONTRACT_TESTER.md)
+- [Demand validation sprint plan](VALIDATION_JSON_CONTRACT_TESTER.md)
 
 The hosted URL has not yet been independently confirmed reachable from this session. The source is committed in the repository; treat public deployment as pending until the page is verified in a normal browser.
 
