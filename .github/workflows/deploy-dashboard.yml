@@ -114,7 +114,10 @@ jobs:
                   assert await page.title() == "API & Agent Contract Review — Payment"
                   assert await page.get_by_text("TYEEz4te11EYecrhNTFLY5enoMm7qPmjFd").count() == 1
                   assert await page.get_by_text("0x48bf49eca7f6ef784ff524a8f58e156232746ca6").count() == 1
-                  assert await page.get_by_role("link", name="Email to arrange review").count() == 1
+                  assert await page.locator("#tx-form").count() == 1
+                  assert await page.locator("#txid").count() == 1
+                  assert await page.locator("#contact").count() == 1
+                  assert await page.get_by_role("button", name="Prepare payment confirmation").count() == 1
                   assert not errors, f"Browser JavaScript errors: {errors}"
                   await browser.close()
 
