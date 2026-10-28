@@ -9,6 +9,8 @@ A small, testable foundation for low-cost automation with a strict revenue gate.
 A small manual service is available for a first validation: one JSON Schema or documented contract, up to 10 redacted sample payloads, a PASS/FAIL summary, and practical recommendations. Launch price: **$9 USD equivalent in USDT**, with delivery within 2 business days after payment and materials are confirmed.
 
 - Payment page: https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/dev-agent-toolbox/payment.html
+- Free JSON contract tester: https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/
+- Free API/AI-agent contract checklist and limited preflight request: https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/dev-agent-toolbox/contract-review-checklist.html
 - Current payment rails: USDT on TRC20 or BEP20, manually verified.
 - Card checkout is **not enabled**. Do not imply that every buyer can pay; buyers who cannot use crypto should not send payment.
 - Never submit production secrets or personal/confidential payloads.
