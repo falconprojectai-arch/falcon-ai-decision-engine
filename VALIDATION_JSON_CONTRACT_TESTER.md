@@ -25,6 +25,13 @@ Do not treat repository commits, successful CI, page publication, impressions al
 3. Use a second community only if the first allows the post and the first attempt yields no meaningful signal.
 4. Do not scrape member lists, mass-DM, automate comments, or repost against community rules.
 
+## First real-world channel to test
+- **Primary candidate:** [r/SideProject](https://www.reddit.com/r/SideProject/), because it is explicitly oriented toward sharing side projects and receiving constructive feedback. Check the live rules and pinned posts immediately before publishing; community norms can change. Its own stated purpose and third-party recent guidance support it as a reasonable first test, but neither guarantees reach or acceptance. [Community context](https://www.reddit.com/r/SideProject/) · [Show HN rules for comparison](https://news.ycombinator.com/showhn.html).
+- **Do not use Show HN as the first channel yet.** Its official guidelines expect a personally built, non-trivial project that is ready for people to try and that the maker can discuss. First prove the live page works and improve the tool enough to justify that bar.
+- **Post format:** explain the exact job (compare several AI/API JSON outputs against a contract), disclose that this is a small subset validator, link the live demo, and ask for one concrete failure case or missing rule. Do not claim user counts, time savings, or demand without evidence.
+- **Measurement:** capture the post URL and timestamp; after 48 hours and again at day 7, record visible views if available, substantive comments, independent testers, reproducible bugs, and repeat-use signals. A view or upvote alone is not validation.
+- **Execution status:** channel research and test criteria are prepared; no community post has been submitted from this workflow, so there are no market results to report yet.
+
 ## Launch message
 > I made a free browser-only JSON Contract Tester for checking multiple AI-agent/API JSON outputs against one JSON Schema. It runs locally in the browser, has no sign-up or upload, and can download a JSON report. It currently supports a documented subset of JSON Schema, not the full spec. I'd value feedback on whether this is useful in your workflow and what fails on real examples: https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/
 
