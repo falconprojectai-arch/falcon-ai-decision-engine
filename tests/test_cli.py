@@ -66,3 +66,21 @@ def test_cli_counts_removed_invalid_opportunities(tmp_path: Path, capsys):
     assert report["opportunities"]["removed_invalid"] == 1
     assert report["opportunities"]["accepted_by_filter"] == 1
     assert report["opportunities"]["rejected_by_filter"] == 0
+
+
+def test_cli_writes_traceable_report_file(tmp_path: Path, capsys):
+    feed = tmp_path / "opportunities.json"
+    output = tmp_path / "reports" / "latest.json"
+    feed.write_text(json.dumps([
+        {"name": "candidate", "channel": "organic", "risk": "low"}
+    ]), encoding="utf-8")
+
+    assert main([str(feed), "--report-out", str(output)]) == 0
+    stdout_report = json.loads(capsys.readouterr().out)
+    saved_report = json.loads(output.read_text(encoding="utf-8"))
+
+    assert saved_report == stdout_report
+    assert saved_report["status"] == "report_recorded"
+    assert saved_report["input_source"] == str(feed)
+    assert saved_report["generated_at"].endswith("+00:00")
+    assert saved_report["opportunities"]["collected"] == 1
