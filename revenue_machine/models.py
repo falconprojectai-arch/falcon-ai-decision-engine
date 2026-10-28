@@ -20,11 +20,32 @@ class Opportunity:
 
 @dataclass(frozen=True)
 class VerifiedRevenue:
+    """Payment record; verification metadata is required before accounting.
+
+    These fields describe evidence from a provider adapter. They are not, by
+    themselves, proof that a provider API was queried; live adapters must
+    populate them only after independently checking provider records.
+    """
     opportunity: str
     amount: float
     currency: str
     verified: bool
+    provider: str = ""
+    provider_payment_id: str = ""
+    verified_at: str = ""
+    verification_source: str = ""
 
     @property
     def is_real(self) -> bool:
-        return self.verified and self.amount > 0
+        evidence_fields = (
+            self.provider,
+            self.provider_payment_id,
+            self.verified_at,
+            self.verification_source,
+        )
+        return (
+            self.verified
+            and self.amount > 0
+            and bool(self.currency.strip())
+            and all(value.strip() for value in evidence_fields)
+        )
