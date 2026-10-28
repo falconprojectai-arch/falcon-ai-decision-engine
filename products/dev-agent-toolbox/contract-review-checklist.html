@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="A practical API and AI-agent JSON contract checklist: required fields, types, enums, nulls, extra keys, edge cases, and schema drift. Includes a free browser tester.">
+<meta name="robots" content="index,follow">
+<title>API & AI-Agent JSON Contract Checklist | Falcon</title>
+<style>
+:root{color-scheme:light dark;font:16px/1.65 system-ui,sans-serif}*{box-sizing:border-box}body{max-width:820px;margin:auto;padding:24px}h1{line-height:1.15;max-width:22ch}h2{margin-top:2rem}.muted{opacity:.72}.panel{border:1px solid #888;border-radius:12px;padding:16px;margin:18px 0}.cta{display:inline-block;padding:10px 14px;border:1px solid #888;border-radius:8px;color:inherit;text-decoration:none;margin:4px 6px 4px 0}li{margin:.55rem 0}code{overflow-wrap:anywhere}
+</style>
+</head>
+<body>
+<p class="muted"><a href="../">← Dev & Agent Toolbox</a></p>
+<header><p class="muted">Free practical checklist · For API developers and AI-agent builders</p><h1>7 checks before trusting a JSON API or AI-agent response</h1><p>A response can be valid JSON and still break your integration. Use this short checklist to catch common contract mismatches before shipping. It is a practical preflight, not a substitute for full production tests.</p></header>
+<main>
+<section class="panel"><h2>1. Required fields</h2><p>Check that every required field exists in successful, error, and partial-response cases. Do not assume a field will always be present just because it appeared in one example.</p></section>
+<section class="panel"><h2>2. Field types</h2><p>Test strings versus numbers, booleans versus string values such as <code>"true"</code>, arrays versus objects, and integer versus decimal values where the consumer expects a specific type.</p></section>
+<section class="panel"><h2>3. Null, missing, and empty are different</h2><p>Decide whether <code>null</code>, a missing key, <code>""</code>, <code>[]</code>, and <code>{}</code> are all acceptable. Clients often handle these states differently.</p></section>
+<section class="panel"><h2>4. Enum and status values</h2><p>Enumerate allowed states and test unknown or newly added values. A downstream switch statement may fail when an API adds a status the client does not recognize.</p></section>
+<section class="panel"><h2>5. Extra fields and sensitive data</h2><p>Decide whether additional properties are permitted. Check that debug traces, internal prompts, access tokens, and personal data do not leak into public responses.</p></section>
+<section class="panel"><h2>6. Boundary and failure cases</h2><p>Include empty arrays, long strings, zero values, missing nested objects, malformed JSON, timeouts, rate-limit responses, and errors that use a different schema from success responses.</p></section>
+<section class="panel"><h2>7. Schema drift over time</h2><p>Keep representative payloads from real versions and rerun them when the provider, model, prompt, tool definition, or API version changes. A successful HTTP status alone does not prove the response matches your contract.</p></section>
+<section class="panel"><h2>Try it with redacted sample data</h2><p>Use the free browser-based tester to compare multiple outputs against a JSON Schema. It runs locally in your browser, but currently supports a subset of JSON Schema rules—not every specification feature—so do not treat a PASS as a full compliance or security guarantee.</p><p><a class="cta" href="../json-contract-tester/">Open the free JSON Contract Tester</a></p></section>
+<section class="panel"><h2>Need a second pair of eyes?</h2><p>The manual API & AI-Agent Contract Review covers one JSON Schema or documented contract and up to 10 representative, redacted payloads. You receive a concise PASS/FAIL table and practical recommendations within 2 business days after payment and materials are confirmed.</p><p><strong>Launch price: 9 USDT.</strong> Current payment options are USDT on TRC20 or BEP20 only; card checkout is not available. Do not pay if you cannot use one of these networks.</p><p><a class="cta" href="./payment.html">Review scope and payment options</a> <a class="cta" href="mailto:falcon.project.ai@gmail.com?subject=API%20contract%20review%20question">Ask a question by email</a></p><p class="muted">Never send production secrets, credentials, personal data, or confidential customer payloads. Use redacted examples. This service is not a security audit or a guarantee of production correctness.</p></section>
+</main>
+<footer class="muted"><p>Falcon AI Decision Engine · <a href="https://github.com/falconprojectai-arch/falcon-ai-decision-engine">Source repository</a></p></footer>
+</body></html>
