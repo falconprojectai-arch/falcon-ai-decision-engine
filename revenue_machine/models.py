@@ -16,6 +16,15 @@ class Opportunity:
     requires_manual_work: bool = False
     risk: RiskLevel = RiskLevel.MEDIUM
     revenue_claim: float = 0.0
+    # Qualification evidence must be supplied by a reviewer or future source adapter.
+    # These fields are not proof of live provider verification on their own.
+    evidence_url: str = ""
+    evidence_checked_at: str = ""
+    terms_confirmed: bool = False
+    monetization_confirmed: bool = False
+    estimated_cost_usd: float = 0.0
+    estimated_revenue_usd: float = 0.0
+    estimated_minutes: int = 0
 
 
 @dataclass(frozen=True)
