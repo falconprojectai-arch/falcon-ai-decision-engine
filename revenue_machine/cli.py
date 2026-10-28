@@ -26,6 +26,13 @@ def load_candidates(path: Path) -> list[Opportunity]:
             requires_manual_work=bool(item.get("requires_manual_work", False)),
             risk=RiskLevel(str(item.get("risk", "medium")).lower()),
             revenue_claim=float(item.get("revenue_claim", 0.0)),
+            evidence_url=str(item.get("evidence_url", "")),
+            evidence_checked_at=str(item.get("evidence_checked_at", "")),
+            terms_confirmed=bool(item.get("terms_confirmed", False)),
+            monetization_confirmed=bool(item.get("monetization_confirmed", False)),
+            estimated_cost_usd=float(item.get("estimated_cost_usd", 0.0)),
+            estimated_revenue_usd=float(item.get("estimated_revenue_usd", 0.0)),
+            estimated_minutes=item.get("estimated_minutes", 0),
         ))
     return candidates
 
