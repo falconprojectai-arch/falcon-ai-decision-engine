@@ -89,3 +89,28 @@ def test_const_and_enum_compare_json_objects_independent_of_key_order():
     assert "function sameJson(a,b)" in source
     assert "sameJson(value,s.const)" in source
     assert "sameJson(v,value)" in source
+
+
+def test_inline_javascript_parses_with_node(tmp_path):
+    import re
+    import subprocess
+
+    source = PAGE.read_text(encoding="utf-8")
+    scripts = re.findall(r"<script>(.*?)</script>", source, flags=re.DOTALL)
+    assert len(scripts) == 1
+    script_path = tmp_path / "product.js"
+    script_path.write_text(scripts[0], encoding="utf-8")
+    result = subprocess.run(
+        ["node", "--check", str(script_path)],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode == 0, result.stderr
+
+
+def test_validator_function_has_intact_signature_and_single_definition():
+    source = PAGE.read_text(encoding="utf-8")
+    assert "function check(value,s,path='$',errors=[])" in source
+    assert source.count("function check(value,s,path=") == 1
+    assert "function check(value,s,path='\n" not in source
