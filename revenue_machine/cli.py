@@ -5,6 +5,7 @@ from pathlib import Path
 
 from .engine import RevenueMachine
 from .models import Opportunity, RiskLevel
+from . import rss
 
 
 def load_candidates(path: Path) -> list[Opportunity]:
@@ -28,10 +29,13 @@ def load_candidates(path: Path) -> list[Opportunity]:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Run Revenue Machine V1 in dry-run mode.")
-    parser.add_argument("feed", type=Path, help="Path to a JSON array of opportunity candidates")
+    parser.add_argument("feed", nargs="?", type=Path, help="Path to a JSON array of opportunity candidates")
+    parser.add_argument("--rss", dest="rss_url", help="Fetch a public HTTPS RSS/Atom feed in dry-run mode")
     args = parser.parse_args(argv)
+    if bool(args.feed) == bool(args.rss_url):
+        parser.error("Provide exactly one JSON feed path or --rss HTTPS_URL.")
     try:
-        candidates = load_candidates(args.feed)
+        candidates = rss.fetch_feed(args.rss_url) if args.rss_url else load_candidates(args.feed)
     except (OSError, json.JSONDecodeError, TypeError, ValueError) as exc:
         parser.error(str(exc))
 
