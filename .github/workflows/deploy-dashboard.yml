@@ -30,6 +30,23 @@ jobs:
         uses: actions/configure-pages@v5
         with:
           enablement: true
+      - name: Stamp dashboard change time
+        run: |
+          timestamp="$(git log -1 --format=%cI -- dashboard/index.html)"
+          if [ -z "$timestamp" ]; then
+            echo "Could not determine dashboard change timestamp" >&2
+            exit 1
+          fi
+          python - "$timestamp" <<'PY'
+          from pathlib import Path
+          import sys
+          path = Path("dashboard/index.html")
+          content = path.read_text(encoding="utf-8")
+          content = content.replace("__DASHBOARD_UPDATED_AT__", sys.argv[1])
+          if "__DASHBOARD_UPDATED_AT__" in content:
+              raise SystemExit("Timestamp placeholder was not replaced")
+          path.write_text(content, encoding="utf-8")
+          PY
       - name: Upload dashboard
         uses: actions/upload-pages-artifact@v3
         with:
