@@ -23,10 +23,10 @@ python -m pip install pytest
 python -m pytest -q
 python -m revenue_machine examples/opportunities.json
 python -m revenue_machine --rss https://example.org/feed.xml
-python -m revenue_machine examples/opportunities.json --report-out reports/latest_opportunities.json
+python -m revenue_machine examples/opportunities.json --report-out reports/latest_opportunities.json --ledger-out reports/run_history.jsonl
 ```
 
-Use `--report-out PATH` to save the exact JSON report from a run, including an ISO-8601 timestamp and input source. The dashboard can display the latest report only after that report file is committed to the public repository; saving locally does not publish it automatically. Reports contain dry-run metrics only.\n\nThe sample JSON feed is intentionally synthetic. The RSS option contacts the specified public HTTPS feed, but only parses candidate titles and prints a dry-run report; it does not execute work or claim revenue. Feed items remain blocked until reviewed and deliberately reclassified.
+Use `--report-out PATH` to save the exact JSON report from a run, including an ISO-8601 timestamp and input source. Use `--ledger-out PATH` to append every run as a JSON Lines record without overwriting earlier runs. The append-only ledger validates required metrics and rejects non-finite values; it is a local audit trail, not a live dashboard feed or payment-provider verification. The dashboard can display the latest report only after that report file is committed to the public repository; saving locally does not publish it automatically. Reports contain dry-run metrics only.\n\nThe sample JSON feed is intentionally synthetic. The RSS option contacts the specified public HTTPS feed, but only parses candidate titles and prints a dry-run report; it does not execute work or claim revenue. Feed items remain blocked until reviewed and deliberately reclassified.
 
 ## Important limits
 
