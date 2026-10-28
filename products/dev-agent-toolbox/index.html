@@ -25,7 +25,6 @@ const T=[
 ["Secret Redactor","Redact common API keys, bearer tokens, and credential assignments.",'Authorization: Bearer abcdefghijklmnop123456\nOPENAI_API_KEY=sk-test-12345678901234567890\npassword: supersecret',""],
 ["PII Scrubber","Mask email addresses, phone-like strings, and IPv4 addresses.",'User test@example.com called from 202-555-0198 at 192.168.1.20',""],
 ["Prompt Token Estimator","Estimate tokens by characters/4; not model-exact or for billing.",'You are a careful agent. Read input, call the right tool, return a concise result.',""],
-["OpenAPI Endpoint Index","List endpoints from an OpenAPI JSON document.",'{"openapi":"3.0.0","paths":{"/users":{"get":{"operationId":"listUsers","summary":"List users"},"post":{"operationId":"createUser","summary":"Create user"}}}}',""]
 ];
 let active=0;const nav=document.querySelector("#tools"),inp=document.querySelector("#input"),extra=document.querySelector("#extra"),out=document.querySelector("#result");
 T.forEach((t,i)=>{const b=document.createElement("button");b.className="tool";b.textContent=(i+1)+". "+t[0];b.setAttribute("aria-pressed",i===0?"true":"false");b.onclick=()=>select(i);nav.appendChild(b)});
