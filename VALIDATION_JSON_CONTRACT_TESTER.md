@@ -32,6 +32,12 @@ Do not treat repository commits, successful CI, page publication, impressions al
 - **Measurement:** capture the post URL and timestamp; after 48 hours and again at day 7, record visible views if available, substantive comments, independent testers, reproducible bugs, and repeat-use signals. A view or upvote alone is not validation.
 - **Execution status:** channel research and test criteria are prepared; no community post has been submitted from this workflow, so there are no market results to report yet.
 
+## Distribution log (2026-10-29)
+- **DEV Community:** the author published [7 Checks Before Trusting an API or AI-Agent JSON Response](https://dev.to/falconprojectaiarch/7-checks-before-trusting-an-api-or-ai-agent-json-response-1mii). This is a published article, not evidence of qualified traffic or demand.
+- **DevXTools:** a free listing was submitted for review. The first attempt accidentally used a placeholder contact email; a corrected submission with `falcon.project.ai@gmail.com` was sent afterward. Approval is not confirmed, and the directory has not confirmed whether it will disregard the first submission.
+- **The Tool Directory:** a free standard listing was submitted successfully for review at https://thetooldirectory.com/submit-a-tool/. No paid placement was selected. Approval/publication is not confirmed.
+- **Metrics:** no independently verified customer payment, qualified-visit count, repeat-use signal, or substantive external feedback has been recorded as part of this sprint. Do not infer traffic from submissions or article publication.
+
 ## Launch message
 > I made a free browser-only JSON Contract Tester for checking multiple AI-agent/API JSON outputs against one JSON Schema. It runs locally in the browser, has no sign-up or upload, and can download a JSON report. It currently supports a documented subset of JSON Schema, not the full spec. I'd value feedback on whether this is useful in your workflow and what fails on real examples: https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/
 
