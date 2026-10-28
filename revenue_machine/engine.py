@@ -1,10 +1,11 @@
-"""Minimal deterministic core for the Revenue Machine V1 pipeline."""
+"""Deterministic revenue-gated core."""
+from collections.abc import Iterable
 from dataclasses import dataclass
-
 from .filter import approve
 from .models import Opportunity, VerifiedRevenue
+from .scanner import scan
 from .verifier import verify
-
+from .worker import DryRunWorker, WorkPlan
 
 @dataclass(frozen=True)
 class Evaluation:
@@ -14,45 +15,20 @@ class Evaluation:
     currency: str = "USD"
     reason: str = ""
 
-
 class RevenueMachine:
-    """Evaluate opportunities and count only verified positive payments.
+    """Plan supplied candidates safely; no network or money movement."""
+    def __init__(self) -> None:
+        self.worker = DryRunWorker()
 
-    This core does not perform web scanning, execute third-party work, or move money.
-    Those integrations must be added behind explicit adapters and tested separately.
-    """
+    def plan_candidates(self, candidates: Iterable[Opportunity]) -> list[WorkPlan]:
+        return [self.worker.plan(candidate) for candidate in scan(candidates)]
 
-    def evaluate(
-        self,
-        opportunity: Opportunity,
-        payment: VerifiedRevenue | None = None,
-    ) -> Evaluation:
+    def evaluate(self, opportunity: Opportunity, payment: VerifiedRevenue | None = None) -> Evaluation:
         if not approve(opportunity):
-            return Evaluation(
-                opportunity=opportunity.name,
-                approved=False,
-                reason="Rejected by low-risk, no-capital, no-manual-work policy.",
-            )
-
+            return Evaluation(opportunity.name, False, reason="Rejected by low-risk, no-capital, no-manual-work policy.")
         if payment is None:
-            return Evaluation(
-                opportunity=opportunity.name,
-                approved=True,
-                reason="Approved for evaluation; no verified payment supplied.",
-            )
-
+            return Evaluation(opportunity.name, True, reason="Approved for evaluation; no verified payment supplied.")
         if payment.opportunity != opportunity.name:
-            return Evaluation(
-                opportunity=opportunity.name,
-                approved=True,
-                reason="Payment opportunity mismatch; revenue not counted.",
-            )
-
+            return Evaluation(opportunity.name, True, reason="Payment opportunity mismatch; revenue not counted.")
         counted = verify(payment)
-        return Evaluation(
-            opportunity=opportunity.name,
-            approved=True,
-            counted_revenue=counted,
-            currency=payment.currency,
-            reason="Verified payment counted." if counted > 0 else "Unverified or non-positive payment; revenue not counted.",
-        )
+        return Evaluation(opportunity.name, True, counted, payment.currency, "Verified payment counted." if counted > 0 else "Unverified or non-positive payment; revenue not counted.")
