@@ -88,44 +88,4 @@ $('download').addEventListener('click',()=>{if(!window.lastContractReport)run();
 run();
 })();
 </script>
-<section style="max-width:1100px;margin:26px auto 0;border:1px solid #888;border-radius:10px;padding:16px"><h2>Want a second pair of eyes?</h2><p>This free tool checks a subset of JSON Schema rules. For a human-reviewed PASS/FAIL report across up to 10 redacted payloads, see the <a href="../dev-agent-toolbox/payment.html">API & AI-Agent Contract Review</a> (9 USDT; TRC20/BEP20 only; no card checkout), or read the <a href="../dev-agent-toolbox/contract-review-checklist.html">free contract checklist</a>.</p><p>Never send secrets, personal data, or confidential production payloads.</p></section></body></html>
-,errors=[]){
- if(!s||typeof s!=='object'||Array.isArray(s)){errors.push(path+': schema node must be an object');return errors}
- if('const'in s&&JSON.stringify(value)!==JSON.stringify(s.const))errors.push(path+': must equal const value');
- if(Array.isArray(s.enum)&&!s.enum.some(v=>JSON.stringify(v)===JSON.stringify(value)))errors.push(path+': value is not in enum');
- const types=Array.isArray(s.type)?s.type:[s.type];
- if(s.type){const matches=t=>t==='null'?value===null:t==='array'?Array.isArray(value):t==='object'?value!==null&&typeof value==='object'&&!Array.isArray(value):t==='integer'?typeof value==='number'&&Number.isInteger(value):t==='number'?typeof value==='number'&&Number.isFinite(value):typeof value===t;
- if(!types.some(matches)){errors.push(path+': expected '+types.join(' or '));return errors}}
- if(typeof value==='string'){if(Number.isInteger(s.minLength)&&value.length<s.minLength)errors.push(path+': shorter than minLength '+s.minLength);if(Number.isInteger(s.maxLength)&&value.length>s.maxLength)errors.push(path+': longer than maxLength '+s.maxLength);if(s.pattern){try{if(!(new RegExp(s.pattern)).test(value))errors.push(path+': does not match pattern')}catch(e){errors.push(path+': invalid pattern in schema')}}}
- if(typeof value==='number'){if(typeof s.minimum==='number'&&value<s.minimum)errors.push(path+': below minimum '+s.minimum);if(typeof s.maximum==='number'&&value>s.maximum)errors.push(path+': above maximum '+s.maximum)}
- if(Array.isArray(value)){if(Number.isInteger(s.minItems)&&value.length<s.minItems)errors.push(path+': fewer than minItems '+s.minItems);if(Number.isInteger(s.maxItems)&&value.length>s.maxItems)errors.push(path+': more than maxItems '+s.maxItems);if(s.items&&typeof s.items==='object')value.forEach((v,i)=>check(v,s.items,path+'['+i+']',errors))}
- if(value!==null&&typeof value==='object'&&!Array.isArray(value)){
-  if(Array.isArray(s.required))s.required.forEach(k=>{if(!Object.prototype.hasOwnProperty.call(value,k))errors.push(path+': missing required property "'+k+'"')});
-  if(s.properties&&typeof s.properties==='object')Object.keys(s.properties).forEach(k=>{if(Object.prototype.hasOwnProperty.call(value,k))check(value[k],s.properties[k],path+'.'+k,errors)});
-  if(s.additionalProperties===false&&s.properties&&typeof s.properties==='object')Object.keys(value).forEach(k=>{if(!Object.prototype.hasOwnProperty.call(s.properties,k))errors.push(path+': unexpected property "'+k+'"')});
- }
- return errors;
-}
-function run(){
- results.replaceChildren();let schema;try{schema=JSON.parse(schemaInput.value);if(!schema||typeof schema!=='object'||Array.isArray(schema))throw new Error('Schema must be a JSON object.')}catch(e){status.textContent='Schema error: '+e.message;return}
- const lines=casesInput.value.split(/\r?\n/).map((v,i)=>({text:v.trim(),line:i+1})).filter(x=>x.text);
- if(!lines.length){status.textContent='Add at least one JSON output, one per line.';return}
- let passed=0;const report=[];
- lines.forEach(item=>{let value,errors=[];try{value=JSON.parse(item.text);check(value,schema,'$',errors)}catch(e){errors=['Invalid JSON: '+e.message]}
- const ok=errors.length===0;if(ok)passed++;report.push({line:item.line,passed:ok,errors});
- const box=document.createElement('div');box.className='result '+(ok?'pass':'fail');
- const title=document.createElement('strong');title.textContent='Line '+item.line+': '+(ok?'PASS':'FAIL');box.appendChild(title);
- if(errors.length){const ul=document.createElement('ul');errors.forEach(msg=>{const li=document.createElement('li');li.textContent=msg;ul.appendChild(li)});box.appendChild(ul)}else{const p=document.createElement('p');p.textContent='Output matches the supported rules in this schema.';box.appendChild(p)}
- results.appendChild(box);
- });
- window.lastContractReport={generatedAt:new Date().toISOString(),passed,total:lines.length,results:report,limitation:'Subset validator; not a full JSON Schema implementation.'};
- status.textContent=passed+' of '+lines.length+' outputs passed. No data was uploaded.';
-}
-document.querySelectorAll('[data-copy]').forEach(button=>button.addEventListener('click',async()=>{const text=document.getElementById(button.dataset.copy).textContent.trim();try{await navigator.clipboard.writeText(text);$('copy-status').textContent='Address copied.'}catch(e){$('copy-status').textContent='Copy unavailable. Press and hold the address to copy it.'}}));
-$('run').addEventListener('click',run);
-$('sample').addEventListener('click',()=>{schemaInput.value=JSON.stringify(sampleSchema,null,2);casesInput.value=sampleCases.map(v=>JSON.stringify(v)).join('\n');run()});
-$('download').addEventListener('click',()=>{if(!window.lastContractReport)run();if(!window.lastContractReport)return;const blob=new Blob([JSON.stringify(window.lastContractReport,null,2)+'\n'],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='contract-test-report.json';a.click();URL.revokeObjectURL(url)});
-run();
-})();
-</script>
-</body></html>
+<section style="max-width:1100px;margin:26px auto 0;border:1px solid #888;border-radius:10px;padding:16px"><h2>Want a second pair of eyes?</h2><p>This free tool checks a subset of JSON Schema rules. For a human-reviewed PASS/FAIL report across up to 10 redacted payloads, see the <a href="../dev-agent-toolbox/payment.html">API & AI-Agent Contract Review</a> (4 USDT; TRC20/BEP20 only; no card checkout), or read the <a href="../dev-agent-toolbox/contract-review-checklist.html">free contract checklist</a>.</p><p>Never send secrets, personal data, or confidential production payloads.</p></section></body></html>
