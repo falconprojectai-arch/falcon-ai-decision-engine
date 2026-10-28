@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "purpose": "Discovery only. RSS titles are untrusted leads, not qualified or monetizable opportunities.",
+  "feeds": [
+    {
+      "id": "hacker-news-ai-tools",
+      "url": "https://hnrss.org/newest?q=AI%20tool",
+      "category": "developer-tools",
+      "enabled": true
+    },
+    {
+      "id": "hacker-news-micro-saas",
+      "url": "https://hnrss.org/newest?q=micro-SaaS",
+      "category": "digital-products",
+      "enabled": true
+    }
+  ]
+}
