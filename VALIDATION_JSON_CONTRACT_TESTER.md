@@ -36,6 +36,7 @@ Do not treat repository commits, successful CI, page publication, impressions al
 - **DEV Community:** the author published [7 Checks Before Trusting an API or AI-Agent JSON Response](https://dev.to/falconprojectaiarch/7-checks-before-trusting-an-api-or-ai-agent-json-response-1mii). This is a published article, not evidence of qualified traffic or demand.
 - **DevXTools:** a free listing was submitted for review. The first attempt accidentally used a placeholder contact email; a corrected submission with `falcon.project.ai@gmail.com` was sent afterward. Approval is not confirmed, and the directory has not confirmed whether it will disregard the first submission.
 - **The Tool Directory:** a free standard listing was submitted successfully for review at https://thetooldirectory.com/submit-a-tool/. No paid placement was selected. Approval/publication is not confirmed.
+- **Lead intake:** the FormSubmit activation link was successfully confirmed on 2026-10-29, and the service displayed “Form Activated.” A harmless test submission and a preflight-form email were visible in the inbox; these are setup/test events, not independent customer leads or revenue.
 - **Metrics:** no independently verified customer payment, qualified-visit count, repeat-use signal, or substantive external feedback has been recorded as part of this sprint. Do not infer traffic from submissions or article publication.
 
 ## Launch message
