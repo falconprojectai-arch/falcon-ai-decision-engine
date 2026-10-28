@@ -22,7 +22,7 @@ def test_medium_and_high_risk_are_rejected():
 
 def test_only_verified_positive_matching_payment_counts():
     machine = RevenueMachine()
-    opportunity = Opportunity(name="demo", channel="organic")
+    opportunity = Opportunity(name="demo", channel="organic", risk=RiskLevel.LOW)
     assert machine.evaluate(opportunity, VerifiedRevenue("demo", 12.5, "USD", True)).counted_revenue == 12.5
     assert machine.evaluate(opportunity, VerifiedRevenue("demo", 12.5, "USD", False)).counted_revenue == 0
     assert machine.evaluate(opportunity, VerifiedRevenue("demo", -2, "USD", True)).counted_revenue == 0
