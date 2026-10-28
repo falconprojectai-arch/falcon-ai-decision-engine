@@ -43,9 +43,9 @@ Do not treat repository commits, successful CI, page publication, impressions al
 - **Revenue:** report only independently verified, received payments; optional wallet support is not evidence of demand by itself.
 
 ## Current limitations
-- The deployment workflow succeeds, but the public URL has not been independently tested in a normal browser from this environment.
-- Repository CI checks source-level invariants; they do not yet execute the page in a real browser or test the UI end to end.
+- The deployed public URL now passes a Chromium smoke test in GitHub Actions: HTTP 200, expected default sample (1 PASS / 2 FAIL), structural `const` equality with reordered object keys, clearing stale reports after a schema error, and no uncaught browser JavaScript errors. [Browser-test workflow](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/40629537101).
+- This is a focused desktop Chromium smoke test, not exhaustive cross-browser/mobile/accessibility testing or a full JSON Schema conformance suite.
 - There is no usage telemetry, so product-side page visits, repeat usage, and conversion cannot currently be measured. Do not add tracking until the privacy trade-off is justified and clearly disclosed.
 - The validator is intentionally a subset, not a full JSON Schema implementation. It supports `type`, `required`, `properties`, `additionalProperties: false`, `items`, `enum`, `const`, numeric bounds, string length/pattern, and array length. It does not support `$ref`/`$defs`, schema composition (`allOf`, `anyOf`, `oneOf`, `not`), `format` assertions, boolean schemas, or schema-valued `additionalProperties`. Unknown keywords are ignored, and regex behavior follows JavaScript's engine.
 - A PASS only confirms the documented subset. Do not use this MVP as the sole gate for production, security-sensitive, or compliance-critical data until it uses a well-tested full validator.
-- Recent hardening fixes structural comparison for `const`/`enum` (object key order no longer changes equality) and clears an old report before a new run, so a schema error cannot leave a stale report available for download. Source tests assert these behaviors, but a real-browser interaction test is still needed.
+- Recent hardening fixes structural comparison for `const`/`enum` (object key order no longer changes equality) and clears an old report before a new run, so a schema error cannot leave a stale report available for download. The deployed-browser smoke test now exercises these two cases.
