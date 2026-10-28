@@ -28,7 +28,7 @@ def test_worker_blocks_rejected_opportunities():
 
 def test_engine_connects_scanner_filter_and_dry_run_worker():
     plans = RevenueMachine().plan_candidates([
-        Opportunity(name="allowed", channel="organic", risk=RiskLevel.LOW, evidence_url="https://provider.example/terms", evidence_checked_at="2026-10-28T12:00:00+00:00", terms_confirmed=True, monetization_confirmed=True, estimated_revenue_usd=1.0),
+        Opportunity(name="allowed", channel="organic", risk=RiskLevel.LOW, evidence_url="https://provider.example/terms", evidence_checked_at="2026-10-28T12:00:00+00:00", terms_confirmed=True, monetization_confirmed=True, estimated_revenue_usd=1.0, estimated_success_probability=1.0),
         Opportunity(name="blocked", channel="organic", requires_capital=True, risk=RiskLevel.LOW),
     ])
     assert [p.approved for p in plans] == [True, False]
