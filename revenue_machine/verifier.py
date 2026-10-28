@@ -1,6 +1,11 @@
+"""Verified-revenue accounting gate."""
+import math
+
 from .models import VerifiedRevenue
 
 
 def verify(revenue: VerifiedRevenue) -> float:
-    """Return counted revenue only when payment is independently verified."""
-    return revenue.amount if revenue.is_real else 0.0
+    """Count only independently verified, finite, positive payment amounts."""
+    if not revenue.is_real or not math.isfinite(revenue.amount):
+        return 0.0
+    return revenue.amount
