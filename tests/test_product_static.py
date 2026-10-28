@@ -69,3 +69,23 @@ def test_validator_exposes_core_rules_and_error_paths():
     assert "Download report" in source
     assert "contract-test-report.json" in source
     assert "inputs stay in this browser" in source
+
+
+def test_validator_documents_subset_and_prevents_stale_report_download():
+    source = PAGE.read_text(encoding="utf-8")
+    for limitation in (
+        "composition (allOf/anyOf/oneOf/not)",
+        "no $ref/$defs",
+        "boolean schemas",
+        "JavaScript regular-expression engine",
+        "full JSON Schema specification",
+    ):
+        assert limitation in source
+    assert "window.lastContractReport=null" in source
+
+
+def test_const_and_enum_compare_json_objects_independent_of_key_order():
+    source = PAGE.read_text(encoding="utf-8")
+    assert "function sameJson(a,b)" in source
+    assert "sameJson(value,s.const)" in source
+    assert "sameJson(v,value)" in source
