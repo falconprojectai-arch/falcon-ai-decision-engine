@@ -71,3 +71,21 @@ Do not treat repository commits, successful CI, page publication, impressions al
 - **Innovative low-cost hypothesis:** contribute a narrowly useful example/test case to a specialist JSON Schema resource list, and create language-specific educational landing snippets only when there is a matching audience. Prefer searchable evergreen resources and UTM-tagged links over mass posting. No new channel is counted as successful until its listing/post is visible and confirmed.
 - **Metrics:** no qualified traffic, independent customer, repeat-use signal, or verified payment recorded. The current static dashboard has no connected live analytics; do not infer conversions.
 
+
+
+## Multilingual and unconventional acquisition research (2026-10-29)
+
+The control-room dashboard now tracks these additional paths, with a link to the product page on each row:
+- **Qiita (Japanese developers):** relevant JSON Schema/tool discussions surfaced in search; no account, post, or listing submission has been made.
+- **Free-Work forum (French):** relevant developer-tools discussion surfaced; no reply submitted. Only contribute if forum rules permit a useful tool mention.
+- **OnSubmit French developer tools:** relevant directory/category surfaced; submission and acceptance are not confirmed.
+- **Desarrolloweb (Spanish API/JSON resources):** relevant curated resource page surfaced; no contact or inclusion request sent.
+- **Multilingual problem-led landing pages:** proposed experiment, not yet implemented. Build small Spanish/French/Japanese pages around concrete search intents (missing required field, wrong type, malformed agent output), each with a runnable example, honest subset-support disclosure, and direct tester link. Use separate UTM parameters and track qualified feedback, not just page views. This is a lower-cost, more automatable route than relying only on manually approved directory submissions.
+
+Channel state definitions:
+- **Published/successful:** the content or form submission is confirmed, not necessarily traffic or conversion.
+- **Pending review:** submission is confirmed but public acceptance is not.
+- **Queued/research:** a relevant channel was found, but no submission or contact is confirmed.
+- **Failed:** a prior attempt was removed or rejected; do not repeat in a way that evades rules.
+
+No new channel currently provides verified customer acquisition or revenue. Do not report any of these research results as leads or sales. Continue to prioritize channels with public submission rules, no mandatory paid placement, a relevant developer audience, and a verifiable status page. Do not scrape member lists, mass-message people, or automate unsolicited replies.
