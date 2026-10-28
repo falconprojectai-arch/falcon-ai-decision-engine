@@ -27,7 +27,7 @@ Scanner -> Opportunity Filter -> Worker -> Revenue Verifier -> Scale Controller.
 1. Every candidate is filtered before execution.
 2. Rejected candidates never reach a worker.
 3. Worker remains dry-run until an adapter is explicitly configured and tested.
-4. Revenue is zero unless payment verification is explicit and tied to the same opportunity.
+4. Revenue is zero unless a positive payment matches the opportunity and includes provider, provider payment ID, verification timestamp, and verification source metadata. Those fields must be populated only by a tested provider adapter after an independent provider check.
 5. Unit tests pass on every push and pull request.
 6. External actions remain disabled by default until an adapter is configured and tested.
 
