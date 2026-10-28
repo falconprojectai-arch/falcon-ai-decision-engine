@@ -7,7 +7,7 @@ from revenue_machine.cli import main
 def test_cli_reports_dry_run_and_never_counts_claims(tmp_path: Path, capsys):
     feed = tmp_path / "opportunities.json"
     feed.write_text(json.dumps([
-        {"name": "allowed", "channel": "organic", "risk": "low", "revenue_claim": 999, "evidence_url": "https://provider.example/terms", "evidence_checked_at": "2026-10-28T12:00:00+00:00", "terms_confirmed": True, "monetization_confirmed": True, "estimated_revenue_usd": 1.0},
+        {"name": "allowed", "channel": "organic", "risk": "low", "revenue_claim": 999, "evidence_url": "https://provider.example/terms", "evidence_checked_at": "2026-10-28T12:00:00+00:00", "terms_confirmed": True, "monetization_confirmed": True, "estimated_revenue_usd": 1.0, "estimated_success_probability": 1.0},
         {"name": "blocked", "channel": "ads", "requires_capital": True},
     ]), encoding="utf-8")
     assert main([str(feed)]) == 0
