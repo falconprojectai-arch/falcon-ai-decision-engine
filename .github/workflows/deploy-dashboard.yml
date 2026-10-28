@@ -64,6 +64,32 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+      - name: Smoke-test developer toolbox in Chromium
+        env:
+          TOOLBOX_URL: ${{ steps.deployment.outputs.page_url }}products/dev-agent-toolbox/
+        run: |
+          python - <<'PY'
+          import asyncio, os
+          from playwright.async_api import async_playwright
+          async def main():
+              async with async_playwright() as p:
+                  browser = await p.chromium.launch()
+                  page = await browser.new_page()
+                  errors = []
+                  page.on("pageerror", lambda error: errors.append(str(error)))
+                  response = await page.goto(os.environ["TOOLBOX_URL"], wait_until="networkidle", timeout=60000)
+                  assert response and response.status == 200
+                  assert await page.locator(".tool").count() == 21
+                  await page.get_by_role("button", name="2. Semantic JSON Diff").click()
+                  await page.get_by_role("button", name="Run tool").click()
+                  assert "changed" in await page.locator("#result").inner_text()
+                  await page.get_by_role("button", name="8. UUID Generator").click()
+                  await page.get_by_role("button", name="Run tool").click()
+                  assert len((await page.locator("#result").inner_text()).splitlines()) == 5
+                  assert not errors, f"Browser JavaScript errors: {errors}"
+                  await browser.close()
+          asyncio.run(main())
+          PY
       - name: Install browser-test dependencies
         run: |
           python -m pip install --upgrade pip playwright
