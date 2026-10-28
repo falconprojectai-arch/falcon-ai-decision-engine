@@ -28,3 +28,9 @@ def test_only_verified_positive_matching_payment_counts():
     assert machine.evaluate(opportunity, VerifiedRevenue("demo", -2, "USD", True)).counted_revenue == 0
     mismatch = machine.evaluate(opportunity, VerifiedRevenue("other", 99, "USD", True))
     assert mismatch.counted_revenue == 0
+
+
+def test_unreviewed_opportunity_defaults_to_medium_risk_and_is_rejected():
+    opportunity = Opportunity(name="unreviewed", channel="unknown-source")
+    assert opportunity.risk is RiskLevel.MEDIUM
+    assert RevenueMachine().evaluate(opportunity).approved is False
