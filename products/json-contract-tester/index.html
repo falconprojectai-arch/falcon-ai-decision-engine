@@ -29,6 +29,13 @@
 <p id="status" role="status" aria-live="polite" class="muted"></p><section id="results" aria-live="polite"></section>
 </main>
 <section><h2>Supported validation rules</h2><p class="muted small">This lightweight MVP supports type, required, properties, additionalProperties=false, items, enum, const, minimum, maximum, minLength, maxLength, pattern, minItems, and maxItems. It is not a complete implementation of every JSON Schema draft keyword; validate critical production contracts with a full JSON Schema validator too.</p></section>
+<section id="support" aria-labelledby="support-title" style="margin-top:28px;padding:18px;border:1px solid #888;border-radius:12px">
+<h2 id="support-title">Support this free tool (optional)</h2>
+<p>If this utility saves you time, you can optionally support future improvements with USDT. The tool remains free; payment does not unlock features or create a service obligation.</p>
+<h3>USDT · TRC20 (TRON)</h3><p><code id="trc-address" style="overflow-wrap:anywhere">TYEEz4te11EYecrhNTFLY5enoMm7qPmjFd</code></p><button type="button" data-copy="trc-address">Copy TRC20 address</button>
+<h3>USDT · BEP20 (BNB Smart Chain)</h3><p><code id="bep-address" style="overflow-wrap:anywhere">0x48bf49eca7f6ef784ff524a8f58e156232746ca6</code></p><button type="button" data-copy="bep-address">Copy BEP20 address</button>
+<p class="small muted">Important: select USDT and the exact same network. Crypto transfers are generally irreversible. Before sending, confirm the current receiving address and supported network in the recipient's Toobit account; exchanges may update deposit addresses. Never send until the address is confirmed.</p><p id="copy-status" class="small" role="status" aria-live="polite"></p>
+</section>
 <footer class="muted small"><p>Privacy: inputs stay in this browser; this page does not send them to a server. The tool is free and has no analytics or sign-up.</p></footer>
 <script>
 (function(){
@@ -67,6 +74,7 @@ function run(){
  window.lastContractReport={generatedAt:new Date().toISOString(),passed,total:lines.length,results:report,limitation:'Subset validator; not a full JSON Schema implementation.'};
  status.textContent=passed+' of '+lines.length+' outputs passed. No data was uploaded.';
 }
+document.querySelectorAll('[data-copy]').forEach(button=>button.addEventListener('click',async()=>{const text=document.getElementById(button.dataset.copy).textContent.trim();try{await navigator.clipboard.writeText(text);$('copy-status').textContent='Address copied.'}catch(e){$('copy-status').textContent='Copy unavailable. Press and hold the address to copy it.'}}));
 $('run').addEventListener('click',run);
 $('sample').addEventListener('click',()=>{schemaInput.value=JSON.stringify(sampleSchema,null,2);casesInput.value=sampleCases.map(v=>JSON.stringify(v)).join('\n');run()});
 $('download').addEventListener('click',()=>{if(!window.lastContractReport)run();if(!window.lastContractReport)return;const blob=new Blob([JSON.stringify(window.lastContractReport,null,2)+'\n'],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='contract-test-report.json';a.click();URL.revokeObjectURL(url)});
