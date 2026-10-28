@@ -8,6 +8,7 @@ from .engine import RevenueMachine
 from .models import Opportunity, RiskLevel
 from .scanner import scan
 from . import rss
+from .ledger import append_report
 
 
 def load_candidates(path: Path) -> list[Opportunity]:
@@ -34,6 +35,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("feed", nargs="?", type=Path, help="Path to a JSON array of opportunity candidates")
     parser.add_argument("--rss", dest="rss_url", help="Fetch a public HTTPS RSS/Atom feed in dry-run mode")
     parser.add_argument("--report-out", type=Path, help="Also save this run report as JSON at the given path")
+    parser.add_argument("--ledger-out", type=Path, help="Append each run report to a JSON Lines audit ledger")
     args = parser.parse_args(argv)
     if bool(args.feed) == bool(args.rss_url):
         parser.error("Provide exactly one JSON feed path or --rss HTTPS_URL.")
@@ -83,6 +85,11 @@ def main(argv: list[str] | None = None) -> int:
             temporary_path.replace(args.report_out)
         except OSError as exc:
             parser.error(f"Could not write report: {exc}")
+    if args.ledger_out:
+        try:
+            append_report(args.ledger_out, report)
+        except (OSError, TypeError, ValueError) as exc:
+            parser.error(f"Could not append audit ledger: {exc}")
     print(rendered, end="")
     return 0
 
