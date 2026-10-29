@@ -112,3 +112,9 @@ No new channel currently provides verified customer acquisition or revenue. Do n
 - **French route:** the localized French product page is live. No accepted French directory listing was verified in this run.
 
 This run produced no new public acceptance, customer lead, qualified-traffic count, repeat-use signal, or verified payment. Verified revenue remains **$0**. The highest-value next step is a quality-controlled contribution to one specialist list or an explicitly permitted directory submission; do not submit to channels that require a user account, identity, payment, or approval that is not already available.
+
+## Deployment verification correction (2026-10-29)
+
+- A live fetch of the dashboard succeeded, but the claimed localized product URLs for Spanish, French, and Japanese returned **404** from GitHub Pages in this run. They must not be treated as live acquisition assets or successful channels until deployment exposes them publicly.
+- State correction: Spanish/French/Japanese localized pages = **blocked / deployment not verified**. The repository contains localized source files, but source presence is not public availability.
+- Verified revenue remains **$0** and no customer acquisition is claimed.
