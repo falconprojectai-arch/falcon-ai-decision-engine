@@ -197,5 +197,13 @@ This run produced no new public acceptance, customer lead, qualified-traffic cou
 
 - Added a behavioral regression test that extracts the actual `pointerJoin` and `schemaJoin` functions from the product source, runs them under Node.js, and verifies correct escaping for both `/` and `~`.
 - The first run of that new test failed because the test harness itself over-escaped its extraction regex. This failure was inspected in the GitHub Actions log, the harness was corrected, and the corrected test passed in [run 40876175706](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/40876175706).
-- GitHub Pages deployment of the merged dashboard and product completed its deploy step successfully in [run 40876121032](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/40876121032). A fresh live fetch then returned the merged audit text. The same workflow's post-deploy Chromium smoke tests were still running at the last check.
+- GitHub Pages deployment of the merged dashboard and product completed its deploy step successfully in [run 40876121032](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/40876121032). A fresh live fetch then returned the merged audit text. The follow-up deployment workflow [run 40876301513](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/40876301513) completed successfully, including Chromium smoke tests for the developer toolbox, payment page, and JSON Contract Tester.
 - No new independent feedback, traffic counts, or verified payment were found. Verified revenue remains $0.
+
+
+## Final verification — 2026-10-29
+
+- [Deploy control dashboard run 40876301513](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/40876301513) completed successfully. All three post-deploy Chromium smoke-test steps passed.
+- A fresh fetch of the public dashboard returned the updated timestamp and the runtime JSON Pointer regression run link; the public product page also returned its expected title and description.
+- The runtime regression test passed in [run 40876175706](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/40876175706). The earlier harness-only failure is retained in the audit trail and was corrected.
+- The connected interface still does not expose GitHub Traffic counts. No new independent feedback or verified payment was found. Verified revenue remains $0.
