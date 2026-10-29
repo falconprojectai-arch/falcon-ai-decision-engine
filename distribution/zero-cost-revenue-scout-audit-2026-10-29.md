@@ -82,4 +82,13 @@ The current [directory page](https://launch.ignlab.net/) states that submissions
 
 
 - **Runtime regression test:** one initial run failed because the test harness's own extraction regex was over-escaped. The failure was inspected from the job log, the harness was corrected, and the next run passed. This failure was in the test harness, not evidence of a new product-code failure.
-- **Deployment:** [Deploy control dashboard run 40876121032](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/40876121032) completed the Pages deployment step. A fresh public fetch then confirmed the merged dashboard audit content. Chromium smoke tests in that workflow were still running at the last check.
+- **Deployment:** [Deploy control dashboard run 40876121032](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/40876121032) completed the Pages deployment step. A fresh public fetch then confirmed the merged dashboard audit content. The follow-up deployment workflow [run 40876301513](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/40876301513) completed successfully, including Chromium smoke tests for the developer toolbox, payment page, and JSON Contract Tester.
+
+
+## Final status after deployment verification
+
+- The corrected runtime JSON Pointer regression test passed in [run 40876175706](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/40876175706).
+- The public dashboard and product were redeployed. [Deploy run 40876301513](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/40876301513) completed successfully and all three Chromium smoke-test steps passed.
+- The live dashboard fetch returned the updated audit and regression-test link; the public product URL returned the expected title and description.
+- Both daily Zero-Cost Revenue Scout automations were updated to require at least 10 minutes of genuine productive work per run, with explicit honesty if the runtime cannot be measured or maintained.
+- Independent feedback remains one known public Issue #13 comment; GitHub Traffic metrics remain unavailable; no qualified lead or verified payment was found. Verified revenue remains $0.
