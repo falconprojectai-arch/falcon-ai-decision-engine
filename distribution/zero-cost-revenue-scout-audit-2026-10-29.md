@@ -4,7 +4,7 @@
 
 - Product: [JSON Contract Tester](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/)
 - Source repository: https://github.com/falconprojectai-arch/falcon-ai-decision-engine
-- PR #15: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/pull/15
+- PR #15: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/pull/15 (merged 2026-10-29; squash commit b001ae9)
 - Verified revenue: **$0**
 - Verified product analytics: **unavailable in the connected GitHub interface**. Do not invent visits, unique visitors, referrers, clones, or conversion.
 - Independent actionable feedback verified: **one known public comment** on Issue #13. No new independent feedback was discovered in this audit.
@@ -12,10 +12,11 @@
 
 ## Code and CI evidence
 
-- PR #15 is open, not merged. Its review-submission list and inline review threads were empty when checked; its only top-level comment in the fetched list was the project's own status update.
-- The latest inspected workflow run for commit `5e466d1cce87ca09df2d14bc2956950a6d23ea20` was [run 40874122696](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/40874122696), completed with conclusion **success**.
+- PR #15 has now been merged. Before merge, its review-submission list and inline review threads were empty; its only top-level comment in the fetched list was the project's own status update.
+- The latest pre-merge workflow runs for the product/test and docs heads were [run 40875213502](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/40875213502) and [run 40875623211](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/40875623211), both completed with conclusion **success**.
 - A green workflow establishes that the repository's configured checks passed for that commit. It does not establish merge, independent review, external deployment of the branch, customer usage, or revenue.
 - The product is intentionally a subset validator. It must not be marketed as a complete JSON Schema implementation.
+- After merge, the default-branch source was checked and contains the corrected slash-escape regex and regression test. The live GitHub Pages page still showed older content immediately after merge; deployment remains pending verification.
 
 ## Feedback record
 
@@ -66,3 +67,14 @@ The current [directory page](https://launch.ignlab.net/) states that submissions
 5. Recheck independent feedback in issue comments and review threads.
 6. Retrieve GitHub Traffic only if the connected tool exposes it; otherwise report the precise limitation and keep counts blank.
 7. Record revenue only from independently verifiable received-payment evidence.
+
+
+
+## Later run update — merge and independent hypothesis (2026-10-29)
+
+- **Merge:** PR #15 merged successfully as [b001ae9](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/commit/b001ae9fbf50ca5a5abf072f1171b649207b1778). This includes structured diagnostics, the JSON Pointer escaping fix, a regression assertion, the audit docs, and two listing drafts.
+- **Post-merge deployment:** the main-branch source was verified, but the public GitHub Pages fetch immediately after merge still showed the older dashboard text. Do not mark the dashboard or product fix as live until a fresh fetch confirms the updated copy/code is deployed.
+- **Additional distribution prep:** a free DevTools Daily editorial-listing draft was created at `distribution/devtoolsdaily-submission.md`. The current official policy confirms a free editorial queue and optional paid priority/sponsorship. No submission was made; no paid option was selected.
+- **Earlier listings:** public search did not surface matching entries for DevXTools or The Tool Directory. Search absence is inconclusive; keep both as pending until a public URL or direct decision is verified.
+- **Independent-income evidence:** public Reddit threads contain qualitative examples of missed lead follow-up, repetitive data re-entry, scheduling, and admin burden. Comments emphasize one specific business outcome, not generic AI, and also warn that client acquisition and maintenance are hard. This supports only a hypothesis for a narrowly scoped lead-follow-up workflow; it is not market-size data or proof of willingness to pay. No outreach or sale occurred.
+- **Current conclusion:** PR merge and CI are engineering progress. Public deployment, product usage, qualified leads, and revenue remain unverified. Verified revenue remains **$0**.
