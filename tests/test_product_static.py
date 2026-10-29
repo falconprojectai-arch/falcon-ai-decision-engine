@@ -125,11 +125,11 @@ def test_json_pointer_join_escapes_tilde_and_slash():
     import subprocess
 
     source = PAGE.read_text(encoding="utf-8")
-    pointer = re.search(r"function pointerJoin\\(base,part\\)\\{[^}]*\\}", source)
-    schema = re.search(r"function schemaJoin\\(base,part\\)\\{[^}]*\\}", source)
+    pointer = re.search(r"function pointerJoin\(base,part\)\{[^}]*\}", source)
+    schema = re.search(r"function schemaJoin\(base,part\)\{[^}]*\}", source)
     assert pointer and schema, "Pointer helpers must be present in the product source"
     script = (
-        pointer.group(0) + "\\n" + schema.group(0) + "\\n"
+        pointer.group(0) + "\n" + schema.group(0) + "\n"
         + "console.log(JSON.stringify(["
         + "pointerJoin('/items','a/b~c'),"
         + "schemaJoin('#/properties','a/b~c')"
