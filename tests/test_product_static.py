@@ -114,6 +114,7 @@ def test_validator_function_has_intact_signature_and_single_definition():
     assert "function check(value,s,path='',schemaPath='#',errors=[])" in source
     assert source.count("function check(value,s,path=") == 1
     assert "function pointerJoin(base,part)" in source
+    assert r"replace(/\//g,'~1')" in source
     assert "function issue(errors,instancePath,schemaPath,keyword,message,expected,actual)" in source
     assert "reportVersion:'1.1'" in source
     assert "instancePath" in source and "schemaPath" in source and "sampleIndex" in source
