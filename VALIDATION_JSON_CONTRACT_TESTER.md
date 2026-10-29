@@ -100,3 +100,15 @@ No new channel currently provides verified customer acquisition or revenue. Do n
 - **Browser automation constraint:** the browser workflow refused to start with a custom step limit because this account does not have the TinyFish beta. Its instructions require asking before retrying with the default 150-step limit. Therefore DevPages/DevTools Daily submissions remain unsubmitted for now; do not label them pending review.
 - **Multilingual strategy:** prioritize the localized pages as useful landing destinations, then submit to language-specific communities only where self-promotion is permitted and accounts are already available. Do not mass-post or treat translation alone as proof of demand.
 - **Current outcome gate:** these commits and pages are distribution infrastructure, not audience or revenue results. No new verified leads, qualified-traffic count, repeat-use signal, or payment is recorded.
+
+
+## Distribution audit (2026-10-29)
+
+- **DevPages:** current submission page states that submissions are free and manually reviewed. No account, payment, or credentials were available/required for research, but no submission was made from this run; state remains **researched-not-submitted**. Channel: https://devpages.io/submit-a-tool · Product: https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/
+- **Awesome JSON Schema:** current repository is a curated specialist list with a Development Tools section. It is a strong-fit evergreen channel, but adding a bare promotional link without a contribution-quality match would be weak; no PR was submitted. State remains **researched-not-submitted**. Channel: https://github.com/sourcemeta/awesome-jsonschema · Product: https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/
+- **Spanish route:** the localized Spanish product page is live and is the preferred destination for Spanish-language resource outreach. No accepted listing or publication was verified in this run. State remains **researched-not-submitted** for the Spanish resource channel.
+- **Persian route:** the localized Persian page is not yet present in the repository tree, so no Persian publication is claimed. Existing Persian educational sources remain research leads only; do not count them as submissions.
+- **Japanese route:** the localized Japanese product page is live. Qiita remains a research lead only; no account/post/public listing was created.
+- **French route:** the localized French product page is live. No accepted French directory listing was verified in this run.
+
+This run produced no new public acceptance, customer lead, qualified-traffic count, repeat-use signal, or verified payment. Verified revenue remains **$0**. The highest-value next step is a quality-controlled contribution to one specialist list or an explicitly permitted directory submission; do not submit to channels that require a user account, identity, payment, or approval that is not already available.
