@@ -213,3 +213,13 @@ This run produced no new public acceptance, customer lead, qualified-traffic cou
 
 - Gmail search for `JSON Contract Tester` returned two threads, both GitHub notifications (Issue #13 and a CI failure), not directory replies.
 - Targeted searches for `devxtools`, `thetooldirectory`, `directory submission`, and `Ignlab` returned no matching thread records in the available search results. This is not evidence of rejection; submission statuses remain unchanged.
+
+
+## Mandatory feedback and traffic audit — 2026-10-29 22:37 Asia/Tehran
+
+- **External feedback verified:** GitHub Issue #13 comment by **shigeki7777** (independent of the project owner), comment ID **6492617263**, URL: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/issues/13#issuecomment-6492617263. The actionable recommendations were: preserve exact JSON Pointer/sample/expected/actual diagnostics; add machine-readable JSON or JUnit export; test a mixed batch with valid, missing-required, wrong-type, and nested failures; optionally obtain an independent second pass through GEC. The comment timestamp field was unavailable through the connected GitHub response, so no date is invented; the issue timeline confirms it was present during this audit.
+- **Owner-authored material distinguished:** Issue #14 comment ID **6467784038** is authored by **falconprojectai-arch** and is therefore not independent external feedback. It records a hypothesis about n8n JSON Schema/tool-input failures, not customer validation.
+- **PR/review audit:** PR #15 has one owner-authored timeline comment (ID **6496757499**) and **0 submitted reviews / 0 inline review threads** returned by the connected GitHub tool. No independent review feedback was verified.
+- **GitHub traffic audit:** Views, unique visitors, referrers, popular paths, and clones were **not available** through the connected GitHub tool interface in this run. Retrieval time: 2026-10-29 22:37 Asia/Tehran. No counts were inferred, and no rolling-period comparison was made.
+- **Evidence-based next action:** use the existing structured diagnostics work to add a machine-readable export (JSON first, JUnit only if it can be implemented without weakening privacy or correctness), then validate the mixed-batch scenario and record a public reproducible example. GEC is a research lead only; no external job was posted.
+- **Revenue:** verified $0. CI and repository activity are not revenue.
