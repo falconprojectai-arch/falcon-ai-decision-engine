@@ -144,3 +144,12 @@ This run produced no new public acceptance, customer lead, qualified-traffic cou
 
 - **Pull request opened:** [PR #15 — Add structured diagnostics to JSON Contract Tester](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/pull/15). Status: open, not merged; review submissions and inline review threads were empty at the time checked.
 - **CI status at retrieval:** GitHub Actions run [40872730284](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/40872730284) was queued; combined commit status had no reported status checks yet. This is not a passing test result.
+
+
+## CI failure and correction (2026-10-29)
+
+- The first PR workflow run [40872766957](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/40872766957) failed: 39 tests passed and one static assertion still expected the old `check(value,s,path='$',errors=[])` function signature.
+- Updated `tests/test_product_static.py` to assert the new structured-diagnostics signature and required fields. The correction is committed on the same branch at `cff32f1a3c90002fda5860288c9e7c32b016f99f`.
+- A successful rerun has not yet been observed; do not call this fixed until CI passes.
+- External feedback record: [shigeki7777's comment on Issue #13](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/issues/13#issuecomment-6492617263). It specifically requests JSON Pointer, sample index, expected/actual constraint, machine-readable JSON/JUnit, and a mixed-batch test. Author login verified; GitHub connector did not return a creation timestamp, so date remains unavailable rather than inferred.
+- Pull request #15 has no review submissions, inline review threads, or issue comments at the latest check.
