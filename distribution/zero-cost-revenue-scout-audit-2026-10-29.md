@@ -82,7 +82,7 @@ The current [directory page](https://launch.ignlab.net/) states that submissions
 
 
 - **Runtime regression test:** one initial run failed because the test harness's own extraction regex was over-escaped. The failure was inspected from the job log, the harness was corrected, and the next run passed. This failure was in the test harness, not evidence of a new product-code failure.
-- **Deployment:** [Deploy control dashboard run 40876121032](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/40876121032) completed the Pages deployment step. A fresh public fetch then confirmed the merged dashboard audit content. The follow-up deployment workflow [run 40876301513](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/40876301513) completed successfully, including Chromium smoke tests for the developer toolbox, payment page, and JSON Contract Tester.
+- **Deployment:** [Deploy control dashboard run 40876121032](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/40876121032) completed the Pages deployment step. A fresh public fetch then confirmed the merged dashboard audit content. The follow-up deployment workflows [run 40876301513](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/40876301513) and [run 40876653528](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/40876653528) completed successfully, including Chromium smoke tests for the developer toolbox, payment page, and JSON Contract Tester. The latest live dashboard also contains the Gmail response audit.
 
 
 ## Final status after deployment verification
