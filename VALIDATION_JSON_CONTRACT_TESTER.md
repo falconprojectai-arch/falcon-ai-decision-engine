@@ -129,3 +129,55 @@ This run produced no new public acceptance, customer lead, qualified-traffic cou
 - **Action boundary:** no paid automation, account creation, unsolicited contact, or unverified submission was used. Localized page deployment still requires a fresh live URL check before any channel points to those pages.
 - **Results:** no new public post/listing, customer lead, qualified-traffic count, repeat-use signal, or verified payment. Verified revenue remains **$0**.
 - **Next highest-value action:** fix and verify the Spanish/Persian landing-page deployment before any localized outreach; then make one quality-controlled, rules-compliant submission to a free directory only if the form is usable without account identity or approval.
+
+
+## Structured diagnostics implementation attempt (2026-10-29)
+
+- **Code change staged on branch**: `feat/contract-tester-structured-diagnostics`; commit `b683795d529c134a0f583b93e9944293ed48cafc` updates `products/json-contract-tester/index.html`.
+- **Implemented in source (not yet merged/deployed)**: report version `1.1`; per-sample index and input line; structured error objects with `keyword`, JSON Pointer-style `instancePath`, `schemaPath`, `message`, `expected`, and `actual`; summary counts for passed/failed/total. Invalid JSON gets an explicit `invalid_json` diagnostic.
+- **Scope limitation**: these diagnostics improve reporting but do not add full JSON Schema support or CI output integration beyond the downloadable JSON report. No test run or deployed behavior is claimed yet.
+- **Feedback source**: [Issue #13](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/issues/13), public request for better actionable failure detail and machine-readable output. The requester’s comment history and exact author/date were not independently re-fetched in this pass; do not infer new feedback.
+- **Daily feedback audit**: repository issues #13 and #14 were inspected; search returned recent repository issues and PRs #1/#2. No new actionable external feedback was verified beyond the known issue #13 request. PR review comments/discussions and community comments outside these GitHub search results were not exhaustively checked. **Audit status: partial**.
+- **GitHub Traffic**: unavailable through the currently connected GitHub tool surface; no API/UI permission path for views, unique visitors, referrers, popular paths, or clones was exposed in this run. No values inferred and no comparison made.
+- **Channels**: no channel submission or acceptance changed in this run. Existing channel statuses remain as previously logged; each must be independently rechecked before any status is upgraded.
+- **Revenue**: $0 verified. Branch/commit activity is progress, not revenue.
+
+- **Pull request opened:** [PR #15 — Add structured diagnostics to JSON Contract Tester](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/pull/15). Status: open, not merged; review submissions and inline review threads were empty at the time checked.
+- **CI status at retrieval:** GitHub Actions run [40872730284](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/40872730284) was queued; combined commit status had no reported status checks yet. This is not a passing test result.
+
+
+## CI failure and correction (2026-10-29)
+
+- The first PR workflow run [40872766957](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/40872766957) failed: 39 tests passed and one static assertion still expected the old `check(value,s,path='$',errors=[])` function signature.
+- Updated `tests/test_product_static.py` to assert the new structured-diagnostics signature and required fields. The correction is committed on the same branch at `cff32f1a3c90002fda5860288c9e7c32b016f99f`.
+- A successful rerun has not yet been observed; do not call this fixed until CI passes.
+- External feedback record: [shigeki7777's comment on Issue #13](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/issues/13#issuecomment-6492617263). It specifically requests JSON Pointer, sample index, expected/actual constraint, machine-readable JSON/JUnit, and a mixed-batch test. Author login verified; GitHub connector did not return a creation timestamp, so date remains unavailable rather than inferred.
+- Pull request #15 has no review submissions, inline review threads, or issue comments at the latest check.
+
+
+## CI rerun verified (2026-10-29)
+
+- The corrected PR commit has a completed successful GitHub Actions run: [run 40873113917](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/40873113917), workflow “Test Revenue Machine”. This resolves the previously open question about whether the corrected test suite reran successfully.
+- PR #15 remains open and unmerged. At this check, there are no submitted reviews or inline review threads; passing CI is not equivalent to approval, merge, or deployment.
+- GitHub Traffic metrics remain unavailable through the connected interface; visits, unique visitors, referrers, popular paths, and clones remain unverified.
+- Revenue remains $0 verified. No independent customer payment or new substantive external feedback was observed in this check.
+
+
+## New zero-cost distribution candidate (2026-10-29)
+
+- **Ignlab Launch:** its public landing page says submissions are free, require no account, and are reviewed before publication: https://launch.ignlab.net/ . This is a newly researched candidate, not a submitted listing. No browser automation was run because the browser agent is metered; preserving the zero-cost constraint takes priority over automating a free form.
+- Prepared listing copy is stored at `distribution/ignlab-launch-submission.md`. The draft accurately describes the browser-only JSON Contract Tester as a subset validator and avoids unverified usage or revenue claims.
+- Next action: submit manually only if the free submission form is still available and the listing description/links are accurate; then record the submission receipt and public listing URL separately. Submission is not acceptance, traffic, or revenue.
+- Source: [Ignlab Launch](https://launch.ignlab.net/) and its stated submission FAQ. The directory's claims are site-authored and do not guarantee discovery or conversion.
+
+
+## Evidence audit and follow-up (2026-10-29 — later run)
+
+- **Live page check:** a fresh fetch of the public JSON Contract Tester URL returned the expected title and product description. This proves reachability only; no visitor count or usage analytics were exposed.
+- **Daily feedback audit:** Issue #13's public comment by `shigeki7777` remains the only actionable independent external feedback verified in this run. It asks for exact JSON Pointer, sample index, expected/actual values, machine-readable output, and a mixed batch. PR #15 has one project-authored status comment, zero submitted reviews, and zero inline review threads at the last check; do not count the project's own comment as feedback.
+- **Traffic limitation:** the connected GitHub interface still does not expose authorized Views, Unique visitors, Referrers, Popular paths, or Clones metrics. No counts or comparisons are invented.
+- **Bug found and fixed in the PR branch:** `pointerJoin` and `schemaJoin` had a malformed slash-escape expression. Both were corrected to use the valid JavaScript regex `/\//g`; a static regression assertion was added to `tests/test_product_static.py`. The corrected branch passed the configured GitHub Actions workflow: [run 40875213502](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/40875213502). The fix is not part of the default branch until PR #15 is merged.
+- **Free listing research:** Ignlab Launch currently states that submissions are free and do not require an account; a listing draft exists but was not submitted because the extracted form did not expose usable controls and browser automation is metered. DevTools Daily's current policy confirms a free editorial queue; paid priority and sponsorship are optional and were not used. A separate draft is at `distribution/devtoolsdaily-submission.md`. Both channels remain researched-not-submitted.
+- **Independent income track:** three public Reddit discussions show qualitative complaints around slow lead follow-up, manual copying between systems, and scheduling/admin overhead. Multiple commenters emphasize selling a specific business outcome rather than generic AI automation. This is a hypothesis signal, not representative market research or verified willingness to pay. No outreach or sale occurred. Proposed validation: choose one low-risk niche/workflow and show a narrowly scoped demo before building a general product.
+- **Verified revenue:** $0. No customer payment or independently verified conversion was found.
+- **Next action:** after confirming the latest CI on the updated head, recheck PR #15 and decide whether the validated code change is ready to merge; separately recheck whether earlier directory submissions became public. Do not pay for priority listing or treat submission as success.

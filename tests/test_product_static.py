@@ -111,6 +111,10 @@ def test_inline_javascript_parses_with_node(tmp_path):
 
 def test_validator_function_has_intact_signature_and_single_definition():
     source = PAGE.read_text(encoding="utf-8")
-    assert "function check(value,s,path='$',errors=[])" in source
+    assert "function check(value,s,path='',schemaPath='#',errors=[])" in source
     assert source.count("function check(value,s,path=") == 1
-    assert "function check(value,s,path='\n" not in source
+    assert "function pointerJoin(base,part)" in source
+    assert r"replace(/\//g,'~1')" in source
+    assert "function issue(errors,instancePath,schemaPath,keyword,message,expected,actual)" in source
+    assert "reportVersion:'1.1'" in source
+    assert "instancePath" in source and "schemaPath" in source and "sampleIndex" in source
