@@ -151,7 +151,7 @@ This run produced no new public acceptance, customer lead, qualified-traffic cou
 - The first PR workflow run [40872766957](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/40872766957) failed: 39 tests passed and one static assertion still expected the old `check(value,s,path='$',errors=[])` function signature.
 - Updated `tests/test_product_static.py` to assert the new structured-diagnostics signature and required fields. The correction is committed on the same branch at `cff32f1a3c90002fda5860288c9e7c32b016f99f`.
 - A successful rerun has not yet been observed; do not call this fixed until CI passes.
-- External feedback record: [shigeki7777's comment on Issue #13](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/issues/13#issuecomment-6492617263). It specifically requests JSON Pointer, sample index, expected/actual constraint, machine-readable JSON/JUnit, and a mixed-batch test. Author login verified; GitHub connector did not return a creation timestamp, so date remains unavailable rather than inferred.
+- External feedback record: [shigeki7777's comment on Issue #13](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/issues/13#issuecomment-6492617263). It specifically requests JSON Pointer, sample index, expected/actual constraint, machine-readable JSON/JUnit, and a mixed-batch test. Author login verified; the public Issue #13 page shows the comment date as Oct 29, 2026, although the comments connector itself omitted `created_at`.
 - Pull request #15 has no review submissions, inline review threads, or issue comments at the latest check.
 
 
