@@ -191,3 +191,11 @@ This run produced no new public acceptance, customer lead, qualified-traffic cou
 - CI on the last pre-merge documentation head passed: [run 40875623211](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/40875623211). A workflow run for the squash merge commit was not returned by the PR-only workflow-run lookup.
 - Free listing drafts for Ignlab Launch and DevTools Daily are in the repository; neither has been submitted. The DevTools Daily free editorial queue is documented; paid priority and sponsorship were not used.
 - No new independent feedback, traffic count, customer conversion, or payment was verified. Revenue remains $0.
+
+
+## Runtime JSON Pointer regression test and live deployment (2026-10-29)
+
+- Added a behavioral regression test that extracts the actual `pointerJoin` and `schemaJoin` functions from the product source, runs them under Node.js, and verifies correct escaping for both `/` and `~`.
+- The first run of that new test failed because the test harness itself over-escaped its extraction regex. This failure was inspected in the GitHub Actions log, the harness was corrected, and the corrected test passed in [run 40876175706](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/40876175706).
+- GitHub Pages deployment of the merged dashboard and product completed its deploy step successfully in [run 40876121032](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/40876121032). A fresh live fetch then returned the merged audit text. The same workflow's post-deploy Chromium smoke tests were still running at the last check.
+- No new independent feedback, traffic counts, or verified payment were found. Verified revenue remains $0.
