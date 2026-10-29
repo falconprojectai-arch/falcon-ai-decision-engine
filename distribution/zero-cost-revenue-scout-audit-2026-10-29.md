@@ -92,3 +92,10 @@ The current [directory page](https://launch.ignlab.net/) states that submissions
 - The live dashboard fetch returned the updated audit and regression-test link; the public product URL returned the expected title and description.
 - Both daily Zero-Cost Revenue Scout automations were updated to require at least 10 minutes of genuine productive work per run, with explicit honesty if the runtime cannot be measured or maintained.
 - Independent feedback remains one known public Issue #13 comment; GitHub Traffic metrics remain unavailable; no qualified lead or verified payment was found. Verified revenue remains $0.
+
+
+## Inbox check — distribution replies (2026-10-29)
+
+- Searched the connected Gmail results for `JSON Contract Tester`; the two returned threads were GitHub notifications (Issue #13 and a CI failure), not directory responses.
+- Targeted searches for `devxtools`, `thetooldirectory`, `directory submission`, and `Ignlab` returned no matching thread records in the available results. This does not prove rejection or prove the inbox has no relevant messages; it only means no reply was found through these searches.
+- Therefore DevXTools and The Tool Directory remain pending/unverified; Ignlab Launch and DevTools Daily remain researched-not-submitted. No channel status was upgraded.
