@@ -16,7 +16,7 @@
 - The latest pre-merge workflow runs for the product/test and docs heads were [run 40875213502](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/40875213502) and [run 40875623211](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/40875623211), both completed with conclusion **success**.
 - A green workflow establishes that the repository's configured checks passed for that commit. It does not establish merge, independent review, external deployment of the branch, customer usage, or revenue.
 - The product is intentionally a subset validator. It must not be marketed as a complete JSON Schema implementation.
-- After merge, the default-branch source was checked and contains the corrected slash-escape regex and regression test. The live GitHub Pages page still showed older content immediately after merge; deployment remains pending verification.
+- After merge, the default-branch source was checked and contains the corrected slash-escape regex and regression test. A later live fetch confirmed the merged audit content on GitHub Pages. The deployment workflow's post-deploy Chromium smoke tests were still running at the last check.
 
 ## Feedback record
 
@@ -78,3 +78,8 @@ The current [directory page](https://launch.ignlab.net/) states that submissions
 - **Earlier listings:** public search did not surface matching entries for DevXTools or The Tool Directory. Search absence is inconclusive; keep both as pending until a public URL or direct decision is verified.
 - **Independent-income evidence:** public Reddit threads contain qualitative examples of missed lead follow-up, repetitive data re-entry, scheduling, and admin burden. Comments emphasize one specific business outcome, not generic AI, and also warn that client acquisition and maintenance are hard. This supports only a hypothesis for a narrowly scoped lead-follow-up workflow; it is not market-size data or proof of willingness to pay. No outreach or sale occurred.
 - **Current conclusion:** PR merge and CI are engineering progress. Public deployment, product usage, qualified leads, and revenue remain unverified. Verified revenue remains **$0**.
+
+
+
+- **Runtime regression test:** one initial run failed because the test harness's own extraction regex was over-escaped. The failure was inspected from the job log, the harness was corrected, and the next run passed. This failure was in the test harness, not evidence of a new product-code failure.
+- **Deployment:** [Deploy control dashboard run 40876121032](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/40876121032) completed the Pages deployment step. A fresh public fetch then confirmed the merged dashboard audit content. Chromium smoke tests in that workflow were still running at the last check.
