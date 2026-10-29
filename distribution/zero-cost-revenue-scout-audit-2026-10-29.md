@@ -48,7 +48,7 @@ The current [submission page](https://www.devtoolsdaily.com/directory/submit/) s
 
 ### New channel verification: Ignlab Launch
 
-The current [directory page](https://launch.ignlab.net/) states that submissions are free, no account is required, and listings are reviewed before publication. The [submission page](https://launch.ignlab.net/submit.html) is reachable. The extracted page does not expose the form controls in a usable way, so this audit did **not** submit the listing. The draft is at [distribution/ignlab-launch-submission.md](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/blob/feat/contract-tester-structured-diagnostics/distribution/ignlab-launch-submission.md).
+The current [directory page](https://launch.ignlab.net/) states that submissions are free, no account is required, and listings are reviewed before publication. The [submission page](https://launch.ignlab.net/submit.html) is reachable. The extracted page does not expose the form controls in a usable way, so this audit did **not** submit the listing. The draft is at [distribution/ignlab-launch-submission.md](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/blob/main/distribution/ignlab-launch-submission.md).
 
 ## Operational boundary and metrics
 
