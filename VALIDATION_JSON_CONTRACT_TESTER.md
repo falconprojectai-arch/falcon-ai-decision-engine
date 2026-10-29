@@ -89,3 +89,14 @@ Channel state definitions:
 - **Failed:** a prior attempt was removed or rejected; do not repeat in a way that evades rules.
 
 No new channel currently provides verified customer acquisition or revenue. Do not report any of these research results as leads or sales. Continue to prioritize channels with public submission rules, no mandatory paid placement, a relevant developer audience, and a verifiable status page. Do not scrape member lists, mass-message people, or automate unsolicited replies.
+
+
+## Distribution update (2026-10-29 — localized pages and next submissions)
+- **Dashboard tracker:** added DevTools Daily as a discovered free submission route, not submitted yet, and linked the channel to the product page. Dashboard now also links each newly created localized landing page to the relevant language-specific channels. [Dashboard](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/).
+- **Spanish landing page:** created at https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/es/ ; includes workflow, limitations, privacy caution, feedback route, and source link.
+- **French landing page:** created at https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/fr/ ; includes workflow, limitations, privacy caution, feedback route, and source link.
+- **Japanese landing page:** created at https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/ja/ ; includes workflow, limitations, privacy caution, feedback route, and source link.
+- **New directory researched:** DevTools Daily offers a free editorial queue, but its submission flow currently asks the user to sign in. No submission was made and no approval is claimed.
+- **Browser automation constraint:** the browser workflow refused to start with a custom step limit because this account does not have the TinyFish beta. Its instructions require asking before retrying with the default 150-step limit. Therefore DevPages/DevTools Daily submissions remain unsubmitted for now; do not label them pending review.
+- **Multilingual strategy:** prioritize the localized pages as useful landing destinations, then submit to language-specific communities only where self-promotion is permitted and accounts are already available. Do not mass-post or treat translation alone as proof of demand.
+- **Current outcome gate:** these commits and pages are distribution infrastructure, not audience or revenue results. No new verified leads, qualified-traffic count, repeat-use signal, or payment is recorded.
