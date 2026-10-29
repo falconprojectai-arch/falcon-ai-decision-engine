@@ -26,7 +26,7 @@ The external comment by `shigeki7777` on [Issue #13](https://github.com/falconpr
 3. Machine-readable JSON or JUnit output.
 4. A mixed batch test with valid output, missing required field, wrong type, and nested failure.
 
-The proposed structured diagnostics address the first two and JSON export; JUnit is not implemented. Treat this as one feedback signal, not proof of demand. The connector did not expose the comment's creation timestamp, so no date is inferred.
+The proposed structured diagnostics address the first two and JSON export; JUnit is not implemented. Treat this as one feedback signal, not proof of demand. The public Issue #13 page shows the comment date as Oct 29, 2026; the comments connector itself omitted `created_at`.
 
 ## Distribution audit
 
