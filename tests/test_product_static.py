@@ -118,3 +118,28 @@ def test_validator_function_has_intact_signature_and_single_definition():
     assert "function issue(errors,instancePath,schemaPath,keyword,message,expected,actual)" in source
     assert "reportVersion:'1.1'" in source
     assert "instancePath" in source and "schemaPath" in source and "sampleIndex" in source
+
+
+def test_json_pointer_join_escapes_tilde_and_slash():
+    import re
+    import subprocess
+
+    source = PAGE.read_text(encoding="utf-8")
+    pointer = re.search(r"function pointerJoin\\(base,part\\)\\{[^}]*\\}", source)
+    schema = re.search(r"function schemaJoin\\(base,part\\)\\{[^}]*\\}", source)
+    assert pointer and schema, "Pointer helpers must be present in the product source"
+    script = (
+        pointer.group(0) + "\\n" + schema.group(0) + "\\n"
+        + "console.log(JSON.stringify(["
+        + "pointerJoin('/items','a/b~c'),"
+        + "schemaJoin('#/properties','a/b~c')"
+        + "]));"
+    )
+    result = subprocess.run(
+        ["node", "-e", script],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode == 0, result.stderr
+    assert result.stdout.strip() == '["/items/a~1b~0c","#/properties/a~1b~0c"]'
