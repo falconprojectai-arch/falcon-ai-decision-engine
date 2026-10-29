@@ -161,3 +161,11 @@ This run produced no new public acceptance, customer lead, qualified-traffic cou
 - PR #15 remains open and unmerged. At this check, there are no submitted reviews or inline review threads; passing CI is not equivalent to approval, merge, or deployment.
 - GitHub Traffic metrics remain unavailable through the connected interface; visits, unique visitors, referrers, popular paths, and clones remain unverified.
 - Revenue remains $0 verified. No independent customer payment or new substantive external feedback was observed in this check.
+
+
+## New zero-cost distribution candidate (2026-10-29)
+
+- **Ignlab Launch:** its public landing page says submissions are free, require no account, and are reviewed before publication: https://launch.ignlab.net/ . This is a newly researched candidate, not a submitted listing. No browser automation was run because the browser agent is metered; preserving the zero-cost constraint takes priority over automating a free form.
+- Prepared listing copy is stored at `distribution/ignlab-launch-submission.md`. The draft accurately describes the browser-only JSON Contract Tester as a subset validator and avoids unverified usage or revenue claims.
+- Next action: submit manually only if the free submission form is still available and the listing description/links are accurate; then record the submission receipt and public listing URL separately. Submission is not acceptance, traffic, or revenue.
+- Source: [Ignlab Launch](https://launch.ignlab.net/) and its stated submission FAQ. The directory's claims are site-authored and do not guarantee discovery or conversion.
