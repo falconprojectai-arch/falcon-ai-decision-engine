@@ -234,3 +234,17 @@ This run produced no new public acceptance, customer lead, qualified-traffic cou
 - **Separate opportunity research:** DevElif and MeWebLink state free/no-account directory submission paths; both remain **researched-not-submitted** because no external form submission was authorized/verified. Sources: https://develif.com/ and https://meweblink.com/ .
 - **Revenue:** independently verified revenue remains **$0**.
 - **Next action:** publish one mixed-batch example and add machine-readable JSON export; then verify any directory listing by public URL before upgrading channel status.
+
+
+## Mandatory audit — 2026-10-30 22:55 Asia/Tehran
+- **Independent external feedback:** no new independent comment verified since the known Issue #13 comment by **shigeki7777** (source: GitHub Issue #13, comment ID 6492617263, link: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/issues/13#issuecomment-6492617263). The connected issue search returned the same public feedback themes: exact JSON Pointer/sample/expected/actual diagnostics, machine-readable JSON/JUnit export, and mixed-batch validation.
+- **Owner-authored material:** PR #15 timeline comment by **falconprojectai-arch** at 2026-10-29T12:32:15Z (https://github.com/falconprojectai-arch/falcon-ai-decision-engine/pull/15#issuecomment-6496757499) is not counted as independent feedback.
+- **PR review audit:** PR #15 has 0 submitted reviews and 0 inline review threads at retrieval time.
+- **GitHub Traffic audit:** Views, unique visitors, referrers, popular paths, and clones were unavailable through the connected GitHub tool interface. Exact rolling period: unavailable. Retrieval time: 2026-10-30 22:55 Asia/Tehran. No counts inferred. GitHub documents that these endpoints require write access/Administration read permission; the connected tool does not expose a traffic action. Source: https://docs.github.com/en/rest/metrics/traffic
+- **Evidence-based next action:** keep the structured-diagnostics work deployed, add/verify a machine-readable JSON export and mixed-batch example, then recheck for independent user feedback. Treat traffic as unmeasured until an authorized traffic endpoint is available.
+- **Revenue:** verified $0.
+
+## Separate deep research — 2026-10-30 22:55 Asia/Tehran
+- **New hypothesis:** an agent-first, machine-readable directory can be a low-friction distribution layer for small developer tools. PromoteIndex advertises free, no-account project listing with JSON/Markdown/RSS/MCP-readable entries and an agent API; this is a research lead, not a submitted listing or acceptance. Source: https://promoteindex.com/submit
+- **Comparison:** this route has low setup and good automation potential, but unknown audience quality and zero evidence of customer demand yet. It ranks above generic directory spraying because the output is machine-readable and can be reused in an automated discovery workflow.
+- **Next concrete action:** prepare a single truthful listing draft and, only if the route is permitted without identity/payment/approval, submit once and verify the public listing URL; otherwise mark researched-not-submitted.
