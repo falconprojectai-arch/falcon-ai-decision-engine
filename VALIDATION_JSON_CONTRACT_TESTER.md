@@ -223,3 +223,14 @@ This run produced no new public acceptance, customer lead, qualified-traffic cou
 - **GitHub traffic audit:** Views, unique visitors, referrers, popular paths, and clones were **not available** through the connected GitHub tool interface in this run. Retrieval time: 2026-10-29 22:37 Asia/Tehran. No counts were inferred, and no rolling-period comparison was made.
 - **Evidence-based next action:** use the existing structured diagnostics work to add a machine-readable export (JSON first, JUnit only if it can be implemented without weakening privacy or correctness), then validate the mixed-batch scenario and record a public reproducible example. GEC is a research lead only; no external job was posted.
 - **Revenue:** verified $0. CI and repository activity are not revenue.
+
+
+## Mandatory feedback and traffic audit — 2026-10-30 10:44 Asia/Tehran
+
+- **Audit status: partial.** GitHub Issue #13 and Issue #14, their comment threads, PR #15 metadata/comments, submitted reviews, and inline review threads were checked.
+- **Independent external feedback:** `shigeki7777`, Issue #13 comment **6492617263**, date unavailable in the connected response, https://github.com/falconprojectai-arch/falcon-ai-decision-engine/issues/13#issuecomment-6492617263. Requests exact JSON Pointer/sample index/expected-vs-actual diagnostics, machine-readable JSON or JUnit output, and a mixed-batch test.
+- **Project-owned material:** Issue #14 comment **6467784038** and PR #15 comment **6496757499** are owner-authored, not independent feedback. PR #15 has **0 submitted reviews** and **0 inline review threads**.
+- **GitHub Traffic:** Views, unique visitors, referrers, popular paths, and clones were unavailable through the authorized GitHub interface at retrieval time. No counts or comparisons were inferred.
+- **Separate opportunity research:** DevElif and MeWebLink state free/no-account directory submission paths; both remain **researched-not-submitted** because no external form submission was authorized/verified. Sources: https://develif.com/ and https://meweblink.com/ .
+- **Revenue:** independently verified revenue remains **$0**.
+- **Next action:** publish one mixed-batch example and add machine-readable JSON export; then verify any directory listing by public URL before upgrading channel status.
