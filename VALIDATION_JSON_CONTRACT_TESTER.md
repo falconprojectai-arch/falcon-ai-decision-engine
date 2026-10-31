@@ -248,3 +248,15 @@ This run produced no new public acceptance, customer lead, qualified-traffic cou
 - **New hypothesis:** an agent-first, machine-readable directory can be a low-friction distribution layer for small developer tools. PromoteIndex advertises free, no-account project listing with JSON/Markdown/RSS/MCP-readable entries and an agent API; this is a research lead, not a submitted listing or acceptance. Source: https://promoteindex.com/submit
 - **Comparison:** this route has low setup and good automation potential, but unknown audience quality and zero evidence of customer demand yet. It ranks above generic directory spraying because the output is machine-readable and can be reused in an automated discovery workflow.
 - **Next concrete action:** prepare a single truthful listing draft and, only if the route is permitted without identity/payment/approval, submit once and verify the public listing URL; otherwise mark researched-not-submitted.
+
+
+## Mandatory feedback & traffic audit — 2026-10-31 10:36 Asia/Tehran
+
+- **Audit status: partial.** Issues #13 and #14, their public comments, PR #15 discussion timeline, submitted reviews, and inline review threads were checked through the connected GitHub interface.
+- **Independent external feedback:** one known actionable comment remains from **shigeki7777** on Issue #13 (comment ID 6492617263; source: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/issues/13#issuecomment-6492617263). The connector returned no creation timestamp for the comment, so no date is inferred. Requested exact JSON Pointer/sample/expected/actual diagnostics, machine-readable JSON or JUnit output, and a mixed-batch test.
+- **Project-owned material:** Issue #14 comment 6467784038 and PR #15 status comments by falconprojectai-arch are excluded from independent-feedback counts.
+- **PR review state:** PR #15 is merged. Current connected review query returned no independent submitted reviews or inline review threads; project-owned timeline material is not counted as external validation.
+- **GitHub Traffic:** **unavailable**. The connected GitHub tool surface did not expose repository Traffic/Insights metrics for views, unique visitors, referrers, popular paths, or clones. Rolling period and counts therefore remain unavailable; no comparison was made and no number was guessed. Retrieval time: 2026-10-31 10:36 Asia/Tehran.
+- **Directory/community checks:** no new externally visible acceptance, rejection, or substantive community comment was verified in this run. Existing directory candidates remain researched-not-submitted or pending until a public listing/decision is independently visible.
+- **Evidence-based next action:** publish and verify one reproducible mixed-batch example plus machine-readable JSON export; then use the public demo as the destination for one compliant free-directory submission only when the form is usable without user identity, payment, credentials, or approval.
+- **Revenue:** verified revenue remains **$0**. Code, CI, listings, and research are progress but not earnings.
