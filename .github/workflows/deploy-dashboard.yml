@@ -113,8 +113,8 @@ jobs:
                   response = await page.goto(os.environ["PAYMENT_URL"], wait_until="networkidle", timeout=60000)
                   assert response and response.status == 200, f"Unexpected HTTP response: {response.status if response else 'none'}"
                   assert await page.title() == "API & Agent Contract Review — Payment"
-                  assert await page.get_by_text("TYEEz4te11EYecrhNTFLY5enoMm7qPmjFd").count() == 1
-                  assert await page.get_by_text("0x48bf49eca7f6ef784ff524a8f58e156232746ca6").count() == 1
+                  assert await page.get_by_text("TD8c7KQc1qQrsBZVUF9F7aseZd1RPC9NPq").count() == 1
+                  assert await page.get_by_text("0xd243c3278707d7bee006e8b3f3105586bbf9667a").count() == 1
                   assert await page.locator("#tx-form").count() == 1
                   assert await page.locator("#txid").count() == 1
                   assert await page.locator("#contact").count() == 1
