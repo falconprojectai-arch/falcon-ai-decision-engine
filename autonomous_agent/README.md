@@ -29,9 +29,9 @@ Run from repository root:
 
     python autonomous_agent/agent.py "Add tests for the parser" --workspace .
 
-Resume with the same task text and task ID:
+Resume with the same task text and task ID. If the agent paused for human input, include the answer with --human-note:
 
-    python autonomous_agent/agent.py "Add tests for the parser" --workspace . --task-id task-20261102-120000
+    python autonomous_agent/agent.py "Add tests for the parser" --workspace . --task-id task-20261102-120000 --human-note "Use the existing pytest structure"
 
 ## Configuration
 - OPENAI_MODEL (default gpt-4.1)
