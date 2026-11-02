@@ -142,9 +142,9 @@ jobs:
                   response = await page.goto(os.environ["PRODUCT_URL"], wait_until="networkidle", timeout=60000)
                   assert response and response.status == 200, f"Unexpected HTTP response: {response.status if response else 'none'}"
                   assert await page.title() == "JSON Contract Tester — Validate AI and API Outputs"
-                  assert await page.locator("#status").inner_text() == "1 of 3 outputs passed. No data was uploaded."
+                  assert await page.locator("#status").inner_text() == "1 of 4 outputs passed. No data was uploaded."
                   assert await page.locator(".result.pass").count() == 1
-                  assert await page.locator(".result.fail").count() == 2
+                  assert await page.locator(".result.fail").count() == 3
 
                   await page.locator("#schema").fill('{"const":{"a":1,"b":2}}')
                   await page.locator("#cases").fill('{"b":2,"a":1}')
