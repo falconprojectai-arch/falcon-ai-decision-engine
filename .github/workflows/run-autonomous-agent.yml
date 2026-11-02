@@ -7,6 +7,14 @@ on:
         description: "Task for the OpenAI-only project agent"
         required: true
         type: string
+      task_id:
+        description: "Optional stable ID; reuse it to resume a paused task"
+        required: false
+        type: string
+      human_note:
+        description: "Answer to the agent last human question when resuming"
+        required: false
+        type: string
 
 permissions:
   contents: write
@@ -25,6 +33,14 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Restore task memory
+        uses: actions/cache@v4
+        with:
+          path: .agent/agent_state.sqlite3
+          key: agent-state-${{ inputs.task_id || format('run-{0}', github.run_id) }}-${{ github.run_id }}
+          restore-keys: |
+            agent-state-${{ inputs.task_id }}-
+
       - name: Install agent dependency
         run: python -m pip install -r autonomous_agent/requirements.txt
 
@@ -34,13 +50,18 @@ jobs:
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           AGENT_TASK: ${{ inputs.task }}
+          AGENT_TASK_ID: ${{ inputs.task_id }}
+          AGENT_HUMAN_NOTE: ${{ inputs.human_note }}
           AGENT_MAX_STEPS: "16"
         run: |
           if [ -z "$OPENAI_API_KEY" ]; then
             echo "Repository secret OPENAI_API_KEY is missing."
             exit 2
           fi
-          python autonomous_agent/agent.py "$AGENT_TASK" --workspace . --task-id "github-${GITHUB_RUN_ID}"
+          TASK_ID="$AGENT_TASK_ID"
+          if [ -z "$TASK_ID" ]; then TASK_ID="github-${GITHUB_RUN_ID}"; fi
+          echo "Agent task ID: $TASK_ID"
+          python autonomous_agent/agent.py "$AGENT_TASK" --workspace . --task-id "$TASK_ID" --human-note "$AGENT_HUMAN_NOTE"
 
       - name: Save agent audit database
         if: always()
