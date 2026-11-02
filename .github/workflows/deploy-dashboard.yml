@@ -139,17 +139,13 @@ jobs:
                   page = await browser.new_page()
                   errors = []
                   page.on("pageerror", lambda error: errors.append(str(error)))
-                  expected_status = "1 of 4 outputs passed. No data was uploaded."
-                  # Pages/CDN may briefly serve the previous build after deploy succeeds.
-                  for attempt in range(12):
-                      response = await page.goto(os.environ["PRODUCT_URL"], wait_until="networkidle", timeout=60000)
-                      assert response and response.status == 200, f"Unexpected HTTP response: {response.status if response else 'none'}"
-                      if await page.locator("#status").inner_text() == expected_status:
-                          break
-                      if attempt < 11:
-                          await page.wait_for_timeout(5000)
+                  response = await page.goto(os.environ["PRODUCT_URL"], wait_until="networkidle", timeout=60000)
+                  assert response and response.status == 200, f"Unexpected HTTP response: {response.status if response else 'none'}"
                   assert await page.title() == "JSON Contract Tester — Validate AI and API Outputs"
-                  assert await page.locator("#status").inner_text() == expected_status, "Latest four-case sample did not become visible after CDN propagation retries."
+                  # The four-case fixture is intentionally loaded through the public sample button.
+                  await page.get_by_role("button", name="Load sample").click()
+                  await page.get_by_role("button", name="Run contract tests").click()
+                  assert await page.locator("#status").inner_text() == "1 of 4 outputs passed. No data was uploaded."
                   assert await page.locator(".result.pass").count() == 1
                   assert await page.locator(".result.fail").count() == 3
 
