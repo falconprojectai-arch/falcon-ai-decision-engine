@@ -349,3 +349,22 @@ PR #15: merged; independent submitted reviews: 0; inline review threads: 0.
 External opportunity research found a distinct path: fixed-price JSON/API schema review and migration services have visible market pricing, including $300+ migration work and $500+ schema/API contract review examples: https://jsonic.io/services and https://www.upwork.com/hire/swagger-freelancers/. This is market evidence, not customer demand for this project.
 
 Next evidence-based action: publish one mixed-batch example and make JSON/JUnit output prominent, then use that artifact as the landing page for a narrowly scoped paid review offer. Verified revenue remains **$0**.
+
+
+## Mandatory feedback & traffic audit — 2026-11-02 22:47 Asia/Tehran
+
+- **Audit status: partial.** Public Issues #13/#14, their comments, PR #15 state, and the available review/comment surfaces were checked through the connected GitHub interface. Public Discussions and external directory inboxes were not exposed in this run.
+- **Independent external feedback:** No new independent feedback was verified. The known actionable external comment remains **shigeki7777**, Issue #13 comment **6492617263**: exact JSON Pointer/sample/expected/actual diagnostics, machine-readable JSON or JUnit output, and a mixed-batch test. Source: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/issues/13#issuecomment-6492617263. The connector did not provide a creation timestamp; no date was inferred.
+- **Project-owned material excluded:** Issue #14 comment **6467784038** and project-authored PR/status comments were not counted as independent feedback.
+- **PR review state:** PR #15 is merged; no independent submitted reviews or inline review threads were returned by the checked surfaces.
+- **GitHub Traffic:** **unavailable**. The authorized GitHub tool surface still does not expose the repository Traffic/Insights endpoints or permissions needed for views, unique visitors, referrers, popular paths, or clones. Rolling period and counts are unavailable; no comparison or estimate was made. Retrieval time: 2026-11-02 22:47 Asia/Tehran.
+- **Channel/public response check:** no new externally visible directory acceptance/rejection or substantive community comment was verified. Existing submissions remain pending until public listing/decision evidence is visible.
+- **Verified revenue:** **$0**. No external payment/provider record was available.
+- **Evidence-based next action:** keep the deployed mixed-batch sample and structured JSON report prominent, then test one specialist developer-resource route only if it offers a public contribution path without account, payment, or identity requirements.
+
+## Independent deep-research track — 2026-11-02 22:47 Asia/Tehran
+
+- **New hypothesis:** submit the project to a curated zero-paywall developer-resource catalog such as DevShelf via its public Contribution Wizard or GitHub PR, using the repository plus the live demo as the artifact. Evidence: the catalog reports 543 curated resources, 64 testing/QA tools, a public submission path, and social amplification for merged submissions: https://devshelf.ritualdev.in/ and https://github.com/RitualDev-Lab/DevShelf.
+- **Comparison:** distribution potential = medium; competition = high; free-tier feasibility = high; automation = medium (PR-based, review-gated); time-to-first-dollar = low/uncertain because listing is discovery, not monetization; maintenance = low after acceptance; policy risk = low if the listing is factual and non-spammy. This is materially different from paid review services and directory forms.
+- **Validation path:** first verify contribution rules and whether the repository accepts a factual tool entry without a required account/identity step beyond normal GitHub contribution. Do not open a PR unless the entry adds clear value and the route is compatible with the current no-identity/no-approval constraint. No submission was made in this run.
+- **Language fit:** English remains the priority. Persian/Spanish routes remain research-only; current evidence does not justify spending effort on localization over the English specialist-resource path.
