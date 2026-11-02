@@ -1,0 +1,19 @@
+name: Autonomous agent safety tests
+on:
+  push:
+    paths:
+      - "autonomous_agent/**"
+      - ".github/workflows/autonomous-agent-tests.yml"
+  pull_request:
+    paths:
+      - "autonomous_agent/**"
+      - ".github/workflows/autonomous-agent-tests.yml"
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m unittest discover -s autonomous_agent -p "test_*.py" -v
