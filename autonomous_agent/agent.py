@@ -44,6 +44,13 @@ def resolve(root: Path, rel: str) -> Path:
     p = Path(rel)
     if p.is_absolute():
         raise ValueError("Absolute paths are forbidden.")
+    blocked = {".git", ".agent", ".ssh", ".aws", ".config"}
+    for part in p.parts:
+        low = part.lower()
+        if low in blocked or low == ".env" or low.startswith(".env.") or "secret" in low or "credential" in low:
+            raise ValueError("Protected path.")
+        if low.endswith((".pem", ".key", ".p12", ".pfx")) or low in {"id_rsa", "id_ed25519"}:
+            raise ValueError("Protected credential file.")
     base = root.resolve()
     target = (base / p).resolve()
     if target != base and base not in target.parents:
