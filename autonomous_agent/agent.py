@@ -134,6 +134,7 @@ def main():
     ap.add_argument("task")
     ap.add_argument("--workspace",default=".")
     ap.add_argument("--task-id",default=None)
+    ap.add_argument("--human-note",default="",help="Answer to the agent's last ask_human question")
     args=ap.parse_args()
     try:
         from openai import OpenAI
@@ -153,6 +154,8 @@ def main():
         conversation=row[1]
         con.execute("UPDATE tasks SET status='running',updated=? WHERE id=?",(now(),task_id)); con.commit()
         first_input="Resume the existing task. Inspect state, continue execution and verify."
+        if args.human_note.strip():
+            first_input += "\nHuman answer: " + args.human_note.strip()
     else:
         conversation=client.conversations.create().id
         con.execute("INSERT INTO tasks VALUES(?,?,?,?,?,?)",
