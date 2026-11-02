@@ -317,3 +317,12 @@ This run produced no new public acceptance, customer lead, qualified-traffic cou
 - The payment page remains the canonical payment-instructions page; the JSON Contract Tester support section now matches it. Both pages were fetched again after the commits: each contains exactly one current TRC20 address and one current BEP20 address, and neither contains the prior values.
 - No wallet transaction or payment was initiated or verified. This update changes displayed receiving instructions only; it does not establish ownership, network compatibility, or successful receipt. Verify the receiving wallet supports USDT on the selected network before accepting funds.
 - README and dashboard do not contain literal wallet addresses, so no additional public copies were created. README network wording remains accurate. Dashboard audit note updated without duplicating wallet values.
+
+
+## Public deployment verification (2026-11-02T00:52:48.911Z)
+
+- Live fetch succeeded for the payment page, JSON Contract Tester, and Persian control dashboard.
+- The live JSON Contract Tester displays the current TRC20 and BEP20 receiving addresses; its product copy and supported JSON Schema subset were visible.
+- The live payment page displays the 4 USDT manual-review offer, network instructions, TxID form explanation, and manual-verification warning. No form was submitted and no payment was initiated.
+- Directory spot-check: DevXTools submission page confirms free editorial review but no public listing was verified in the inspected catalog/home page. The Tool Directory's public archive page did not expose a matching listing in the fetched first-page content; this is not proof of rejection. Ignlab Launch confirms free no-account submission and editorial review; no submission was made during this check. DevTools Daily confirms free editorial queue; no submission was made.
+- No directory approval, qualified traffic, new independent feedback, or payment was established by this check. Verified revenue remains $0.
