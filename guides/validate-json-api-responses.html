@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How to Validate JSON API Responses Against a Schema | JSON Contract Tester</title>
+<meta name="description" content="A practical guide to checking API and AI-agent JSON responses against a contract. Learn required-field, type, nested-object and batch checks with a free local browser tool.">
+<link rel="canonical" href="https://falconprojectai-arch.github.io/falcon-ai-decision-engine/guides/validate-json-api-responses.html">
+<meta property="og:title" content="How to Validate JSON API Responses Against a Schema">
+<meta property="og:description" content="Catch missing fields and wrong types in batches of API or AI-agent JSON outputs.">
+<meta property="og:type" content="article">
+<style>
+:root{font:16px/1.65 system-ui,sans-serif;color-scheme:light dark}body{max-width:850px;margin:0 auto;padding:24px}h1,h2{line-height:1.2}pre,code{font-family:ui-monospace,monospace}pre{overflow:auto;padding:16px;border:1px solid #8888;border-radius:10px;background:#8881}a{font-weight:650}.note{border-inline-start:4px solid #888;padding:10px 16px;background:#8881}.cta{display:inline-block;padding:11px 16px;border:1px solid #888;border-radius:9px;text-decoration:none;margin:8px 0}table{border-collapse:collapse;width:100%}td,th{border:1px solid #8888;padding:8px;text-align:left}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"HowTo","name":"Validate JSON API responses against a schema","step":[{"@type":"HowToStep","name":"Define the response contract","text":"Write a JSON Schema object describing required fields and expected types."},{"@type":"HowToStep","name":"Collect representative responses","text":"Include valid responses and likely failure cases such as missing fields and wrong nested types."},{"@type":"HowToStep","name":"Run a mixed batch","text":"Validate each JSON value against the same schema and inspect the failing sample and JSON Pointer."},{"@type":"HowToStep","name":"Use the right validator scope","text":"Check the tool's supported keywords; use a full JSON Schema implementation for unsupported features or critical production checks."}]}
+</script>
+</head>
+<body>
+<main>
+<p><a href="../products/json-contract-tester/">JSON Contract Tester</a> · Developer guide</p>
+<h1>How to Validate JSON API Responses Against a Schema</h1>
+<p>API integrations and AI agents often return JSON that is syntactically valid but structurally wrong. A response can parse successfully and still omit a required field, change a boolean to a string, or put the wrong type deep inside a nested object. A response contract catches these problems before downstream code relies on them.</p>
+<p><a class="cta" href="../products/json-contract-tester/">Open the free JSON Contract Tester</a></p>
+<h2>1. Define the expected shape</h2>
+<p>For example, an endpoint might promise an object with a boolean <code>ok</code> flag, a non-empty string result, and metadata containing a request ID and non-negative integer retry count.</p>
+<pre><code>{
+  "type": "object",
+  "required": ["ok", "result", "meta"],
+  "properties": {
+    "ok": { "type": "boolean" },
+    "result": { "type": "string", "minLength": 1 },
+    "meta": {
+      "type": "object",
+      "required": ["request_id", "retry_count"],
+      "properties": {
+        "request_id": { "type": "string", "minLength": 1 },
+        "retry_count": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}</code></pre>
+<h2>2. Test more than one happy-path response</h2>
+<p>A useful batch should include at least one valid response and representative failures. For the schema above, try these JSON values (one per line):</p>
+<pre><code>{"ok":true,"result":"done","meta":{"request_id":"req-001","retry_count":0}}
+{"ok":true,"meta":{"request_id":"req-002","retry_count":1}}
+{"ok":"yes","result":"done","meta":{"request_id":"req-003","retry_count":0}}
+{"ok":true,"result":"done","meta":{"request_id":"req-004","retry_count":"2"}}</code></pre>
+<p>The expected outcome is one pass and three failures: a missing required result, a wrong top-level type, and a wrong nested type. Testing a mixed batch is more revealing than checking only a single valid example.</p>
+<h2>3. Read failures as actionable diagnostics</h2>
+<p>For each failed sample, look for four things:</p>
+<ul>
+<li><strong>Sample index:</strong> which response in the batch failed.</li>
+<li><strong>JSON Pointer:</strong> the exact location, such as <code>/meta/retry_count</code>.</li>
+<li><strong>Expected:</strong> the contract rule or expected type.</li>
+<li><strong>Actual:</strong> the value or type received.</li>
+</ul>
+<p>This makes it easier to identify whether the producer, adapter, prompt, or downstream mapping needs attention. It is especially useful when comparing many AI-agent outputs.</p>
+<h2>4. Know the limits of the validator</h2>
+<p>The free browser tool linked here supports a documented subset of JSON Schema: <code>type</code>, <code>required</code>, <code>properties</code>, <code>additionalProperties: false</code>, <code>items</code>, <code>enum</code>, <code>const</code>, numeric bounds, string length and pattern, and array length bounds.</p>
+<div class="note"><strong>Important:</strong> It is not a full JSON Schema implementation. It does not support <code>$ref</code>, <code>$defs</code>, <code>allOf</code>, <code>anyOf</code>, <code>oneOf</code>, <code>not</code>, format validation, boolean schemas, or schema-valued <code>additionalProperties</code>. Unknown keywords are ignored. A PASS only means the value matched the supported rules. Use a complete validator for full-specification, production-critical, or security-sensitive validation.</div>
+<h2>5. Keep sensitive payloads local</h2>
+<p>JSON Contract Tester runs validation in the browser. The page states that inputs stay in the browser and are not uploaded. Avoid pasting secrets into any online tool unless you have independently checked its data-handling behavior.</p>
+<h2>Run the checks</h2>
+<p>Load the sample, run the batch, inspect the PASS/FAIL results, and download the machine-readable JSON report.</p>
+<p><a class="cta" href="../products/json-contract-tester/">Validate a JSON batch now</a></p>
+<p class="note">This guide is educational, not a guarantee that an API is correct or secure. Contract checks complement, rather than replace, integration tests and a full validator where required.</p>
+</main>
+</body>
+</html>
