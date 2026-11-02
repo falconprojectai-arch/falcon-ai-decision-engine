@@ -31,11 +31,13 @@ def test_contract_tester_static_page_and_required_controls():
     assert "XMLHttpRequest" not in source
     assert "window.lastContractReport" in source
 
-def test_sample_has_one_expected_pass_and_two_expected_failures():
+def test_sample_has_one_pass_and_three_failures_including_nested_error():
     source = PAGE.read_text(encoding="utf-8")
-    assert "{ok:true,result:'done'}" in source
-    assert "{ok:'yes',result:'done'}" in source
-    assert "{ok:true,extra:1}" in source
+    assert "{ok:true,result:'done',meta:{request_id:'req-001',retry_count:0}}" in source
+    assert "{ok:true,meta:{request_id:'req-002',retry_count:1}}" in source
+    assert "{ok:'yes',result:'done',meta:{request_id:'req-003',retry_count:0}}" in source
+    assert "{ok:true,result:'done',meta:{request_id:'req-004',retry_count:'2'}}" in source
+    assert "required:['request_id','retry_count']" in source
     assert "additionalProperties:false" in source
     assert "passed+' of '+lines.length+' outputs passed" in source
 
