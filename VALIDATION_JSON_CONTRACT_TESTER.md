@@ -309,3 +309,11 @@ This run produced no new public acceptance, customer lead, qualified-traffic cou
 - **Comparison:** faster path to first dollar than building a full SaaS; automation potential medium; maintenance burden medium; policy risk low if no sensitive data is requested; zero-upfront-cost validation path = one static niche page, one anonymized sample report, and one opt-in form. This remains a hypothesis, not a sale or proof of willingness-to-pay.
 - **Why it outranks directory research:** directories may provide discoverability but no demonstrated buyer intent; a narrow, outcome-based audit can test demand directly while reusing automation assets.
 - **Language fit:** English remains first. Persian/Spanish remain research-only until a permission-compatible channel and audience signal are found.
+
+
+## USDT receiving-address update — 2026-11-02 04:02 Asia/Tehran
+
+- Replaced the previously published USDT receiving addresses with the latest user-provided values in the two confirmed public product surfaces: `products/dev-agent-toolbox/payment.html` and `products/json-contract-tester/index.html`.
+- The payment page remains the canonical payment-instructions page; the JSON Contract Tester support section now matches it. Both pages were fetched again after the commits: each contains exactly one current TRC20 address and one current BEP20 address, and neither contains the prior values.
+- No wallet transaction or payment was initiated or verified. This update changes displayed receiving instructions only; it does not establish ownership, network compatibility, or successful receipt. Verify the receiving wallet supports USDT on the selected network before accepting funds.
+- README and dashboard do not contain literal wallet addresses, so no additional public copies were created. README network wording remains accurate. Dashboard audit note updated without duplicating wallet values.
