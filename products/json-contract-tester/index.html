@@ -40,8 +40,8 @@
 <script>
 (function(){
 const $=id=>document.getElementById(id), schemaInput=$('schema'), casesInput=$('cases'), results=$('results'), status=$('status');
-const sampleSchema={type:'object',required:['ok','result'],properties:{ok:{type:'boolean'},result:{type:'string',minLength:1}},additionalProperties:false};
-const sampleCases=[{ok:true,result:'done'},{ok:'yes',result:'done'},{ok:true,extra:1}];
+const sampleSchema={type:'object',required:['ok','result','meta'],properties:{ok:{type:'boolean'},result:{type:'string',minLength:1},meta:{type:'object',required:['request_id','retry_count'],properties:{request_id:{type:'string',minLength:1},retry_count:{type:'integer',minimum:0}},additionalProperties:false}},additionalProperties:false};
+const sampleCases=[{ok:true,result:'done',meta:{request_id:'req-001',retry_count:0}},{ok:true,meta:{request_id:'req-002',retry_count:1}},{ok:'yes',result:'done',meta:{request_id:'req-003',retry_count:0}},{ok:true,result:'done',meta:{request_id:'req-004',retry_count:'2'}}];
 function sameJson(a,b){
  if(a===b)return true;
  if(a===null||b===null||typeof a!=='object'||typeof b!=='object')return false;
