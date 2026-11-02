@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How to Test AI Agent JSON Outputs in Batches | JSON Contract Tester</title>
+<meta name="description" content="A practical workflow for testing AI-agent JSON outputs across multiple runs: define a response contract, batch test edge cases, inspect JSON Pointer failures, and compare prompt changes.">
+<link rel="canonical" href="https://falconprojectai-arch.github.io/falcon-ai-decision-engine/guides/test-ai-agent-json-outputs.html">
+<meta property="og:title" content="How to Test AI Agent JSON Outputs in Batches">
+<meta property="og:description" content="Catch missing fields and type drift in structured AI-agent responses with repeatable JSON contract checks.">
+<meta property="og:type" content="article">
+<style>:root{font:16px/1.65 system-ui,sans-serif;color-scheme:light dark}body{max-width:850px;margin:0 auto;padding:24px}h1,h2{line-height:1.2}pre{overflow:auto;padding:16px;border:1px solid #8888;border-radius:10px;background:#8881}code{font-family:ui-monospace,monospace}.note{border-inline-start:4px solid #888;padding:10px 16px;background:#8881}.cta{display:inline-block;padding:11px 16px;border:1px solid #888;border-radius:9px;text-decoration:none;margin:8px 0}</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"HowTo","name":"Test AI agent JSON outputs in batches","step":[{"@type":"HowToStep","name":"Write a response contract","text":"Define required keys, expected types, and constraints for the structured output."},{"@type":"HowToStep","name":"Collect outputs from multiple runs","text":"Include normal cases, edge cases, missing fields, and type-drift examples."},{"@type":"HowToStep","name":"Validate the batch","text":"Run each JSON response against the same contract and inspect per-sample diagnostics."},{"@type":"HowToStep","name":"Compare changes carefully","text":"Repeat the same batch after prompt or model changes; structural checks do not measure semantic correctness."}]}
+</script>
+</head>
+<body>
+<main>
+<p><a href="../products/json-contract-tester/">JSON Contract Tester</a> · AI-agent testing guide</p>
+<h1>How to Test AI Agent JSON Outputs in Batches</h1>
+<p>When an AI agent is asked to return structured JSON, a successful JSON parse is only the first check. The output may still omit a required key, return a number as a string, or change a nested object between runs. These failures can break tools, automations, and downstream API calls.</p>
+<p><a class="cta" href="../products/json-contract-tester/">Open the free JSON Contract Tester</a></p>
+<h2>1. Define the contract your consumer expects</h2>
+<p>Start with the shape your application actually reads. For example, a support-triage agent might return a category, a confidence score, and a list of next actions.</p>
+<pre><code>{
+  "type": "object",
+  "required": ["category", "confidence", "actions"],
+  "properties": {
+    "category": {
+      "type": "string",
+      "enum": ["billing", "technical", "account", "other"]
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "actions": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1
+    }
+  },
+  "additionalProperties": false
+}</code></pre>
+<h2>2. Build a repeatable batch</h2>
+<p>Do not test only one successful answer. Keep a small, representative batch that includes a valid result and likely structural failures:</p>
+<pre><code>{"category":"billing","confidence":0.94,"actions":["check invoice"]}
+{"category":"technical","confidence":"high","actions":["open ticket"]}
+{"category":"unknown","confidence":0.7,"actions":["request logs"]}
+{"category":"account","confidence":1.2,"actions":[]}
+{"confidence":0.8,"actions":["verify email"]}</code></pre>
+<p>For the contract above, the first object should pass. The other four should fail for a type mismatch, an enum violation, a numeric bound plus an empty array, and a missing required field.</p>
+<h2>3. Inspect the exact failure, not just PASS or FAIL</h2>
+<ul>
+<li><strong>Sample index:</strong> identify which agent run produced the invalid structure.</li>
+<li><strong>JSON Pointer:</strong> locate the field, such as <code>/confidence</code> or <code>/actions</code>.</li>
+<li><strong>Expected vs actual:</strong> see the rule and the received value/type.</li>
+<li><strong>Repeatability:</strong> run the same batch after a prompt, schema, or model change.</li>
+</ul>
+<p>This creates a lightweight regression check for output shape. It does not prove that the category is factually correct or that the agent followed the intended reasoning.</p>
+<h2>4. Separate structural validity from semantic quality</h2>
+<p>A response can satisfy every JSON rule and still be wrong. For example, <code>"category":"billing"</code> may be structurally valid but factually incorrect for the user's request. Combine contract validation with domain-specific assertions, human review, and end-to-end tests where needed.</p>
+<h2>5. Use a validator whose scope matches your schema</h2>
+<p>JSON Contract Tester is a free, local-browser utility for batch validation against a documented subset of JSON Schema. It supports types, required fields, properties, selected array and string constraints, enum, const, and numeric bounds. It does not implement the full JSON Schema specification: composition keywords such as <code>oneOf</code>, <code>anyOf</code>, <code>allOf</code>, <code>not</code>, references such as <code>$ref</code>, format validation, and boolean schemas are unsupported. Unknown keywords are ignored.</p>
+<div class="note"><strong>Important:</strong> A PASS means the value matched the supported rules only. Use a full JSON Schema validator for schemas requiring unsupported features or for production-critical/security-sensitive validation. Do not treat structural validation as a substitute for semantic evaluation.</div>
+<h2>Run a batch check</h2>
+<p>Paste the contract and one JSON object per line, load the sample if you want a starting point, run the checks, inspect diagnostics, and download the JSON report. Inputs are processed locally in the browser.</p>
+<p><a class="cta" href="../products/json-contract-tester/">Test AI-agent JSON outputs</a></p>
+<p><a href="./validate-json-api-responses.html">Related guide: validating API responses against a schema</a></p>
+</main>
+</body>
+</html>
