@@ -41,8 +41,8 @@ def test_sample_has_one_expected_pass_and_two_expected_failures():
 
 def test_usdt_addresses_and_networks_match_operator_provided_values():
     source = PAGE.read_text(encoding="utf-8")
-    assert "TYEEz4te11EYecrhNTFLY5enoMm7qPmjFd" in source
-    assert "0x48bf49eca7f6ef784ff524a8f58e156232746ca6" in source
+    assert "TD8c7KQc1qQrsBZVUF9F7aseZd1RPC9NPq" in source
+    assert "0xd243c3278707d7bee006e8b3f3105586bbf9667a" in source
     assert "USDT · TRC20 (TRON)" in source
     assert "USDT · BEP20 (BNB Smart Chain)" in source
     assert "data-copy=\"trc-address\"" in source
