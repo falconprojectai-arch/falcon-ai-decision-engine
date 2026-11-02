@@ -41,3 +41,25 @@ Resume with the same task text and task ID. If the agent paused for human input,
 ## Cost
 Local code and SQLite storage have no hosting fee. OpenAI API usage is billed separately;
 it is not free. Keep the step limit low during initial testing.
+
+
+## Run from a phone using GitHub Actions
+
+A manual workflow is included at Actions → Run OpenAI Autonomous Agent. It runs on a
+GitHub-hosted runner, so no laptop or local Python setup is needed.
+
+One-time setup:
+1. In the repository, open Settings → Secrets and variables → Actions.
+2. Add a repository secret named OPENAI_API_KEY with your OpenAI API key.
+3. In Actions, select Run OpenAI Autonomous Agent → Run workflow.
+4. Enter the task and start the workflow.
+
+When the agent finishes successfully and changes files, the workflow opens a pull request
+for review; it never merges automatically. The run also stores a short-lived audit database
+artifact. If the agent asks a human question or reaches its step limit, rerun the workflow
+with the same task text and the same task_id. Put your answer in human_note. The workflow
+restores the saved task database by task_id.
+
+The workflow requires GitHub Actions to be enabled and the repository's Actions token
+permissions to allow contents and pull-request writes. Do not paste the API key into the
+task field, workflow inputs, source files, or chat messages.
