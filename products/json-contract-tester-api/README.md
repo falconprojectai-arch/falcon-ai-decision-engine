@@ -29,7 +29,7 @@ Deploy only after a self-custody wallet has been created and its recovery materi
 Designed for Cloudflare Workers Free, within bounded limits: 64 KiB request body, 10 samples, 32 levels of nesting, 2,000 total JSON nodes, 100 diagnostics per sample. No database, file storage, or request-body logging is implemented. However, callers transmit the schema and JSON payloads to Cloudflare and the facilitator/payment infrastructure; this is separate from the browser tool, whose inputs stay local. Do not send secrets, personal data, or confidential production payloads.
 
 ## Validation scope
-This is a documented subset only: type, required, properties, additionalProperties: false, items, enum, const, numeric bounds, string length/pattern, and array length. It is not full JSON Schema.
+This is a documented subset only: type, required, properties, additionalProperties: false, items, enum, const, numeric bounds, string length, and array length. The hosted API rejects the regex pattern keyword to avoid unbounded regex CPU use. It is not full JSON Schema.
 
 ## Test
 Run npm test. Tests cover the mixed batch (1 PASS / 3 FAIL), nested JSON Pointer diagnostics, batch limits, depth limits, node-budget limits, and pointer escaping. Payment middleware integration still requires dependency installation, Cloudflare deployment and a Base wallet to verify end-to-end.
