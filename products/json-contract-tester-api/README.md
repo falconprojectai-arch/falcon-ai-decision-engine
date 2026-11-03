@@ -18,6 +18,10 @@ Example request:
 
 A successful paid response contains valid, a batch summary, per-sample results, and structured errors with instancePath, schemaPath, keyword, expected, and actual.
 
+## No-payment preflight
+
+A browser-based diagnostic page is available at https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester-api/payment-preflight.html. It checks health, CORS, malformed-input rejection, and the live x402 402 challenge without connecting a wallet, signing a payment, or spending USDC. A successful preflight does not verify payment signing or settlement.
+
 ## Payment
 The route uses x402 exact USDC on Base (eip155:8453) at an experimental price of $0.005 per batch. Set the public receiving address as a Cloudflare Worker secret:
 ```sh
