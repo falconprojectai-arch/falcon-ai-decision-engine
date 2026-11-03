@@ -90,7 +90,7 @@ const openApiDocument = {
         },
         responses: {
           '200': { description: 'Batch validation report; individual samples may pass or fail.' },
-          '400': { description: 'Invalid schema or batch shape; returned after payment.' },
+          '400': { description: 'Invalid schema or batch shape; returned after payment verification, before successful settlement.' },
           '402': { description: 'x402 v2 payment required; inspect PAYMENT-REQUIRED.' },
           '413': { description: 'Request body exceeds 64 KiB; rejected before payment.' },
           '503': { description: 'Payment receiver is not configured.' }
