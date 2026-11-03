@@ -11,6 +11,38 @@ permissions:
   contents: read
 
 jobs:
+  public-smoke-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Verify live Worker GET endpoints
+        env:
+          WORKER_URL: https://json-contract-tester-api.falcon-project-ai.workers.dev
+        run: |
+          set -euo pipefail
+          curl --retry 3 --retry-all-errors --retry-delay 2 -fsS "$WORKER_URL/health" \
+            | jq -e '.status == "ok" and .service == "json-contract-tester-api"'
+          curl --retry 3 --retry-all-errors --retry-delay 2 -fsS "$WORKER_URL/.well-known/x402" \
+            | jq -e '.resources[] | select(.path == "/v1/validate-batch" and .method == "POST")'
+          curl --retry 3 --retry-all-errors --retry-delay 2 -fsS "$WORKER_URL/openapi.json" \
+            | jq -e '.paths["/v1/validate-batch"].post != null'
+
+      - name: Verify payment challenge without paying
+        env:
+          WORKER_URL: https://json-contract-tester-api.falcon-project-ai.workers.dev
+        run: |
+          set -euo pipefail
+          status="$(curl -sS -o /tmp/x402-body.txt -D /tmp/x402-headers.txt -w '%{http_code}' \
+            -X POST "$WORKER_URL/v1/validate-batch" \
+            -H 'Content-Type: application/json' \
+            --data '{"schema":{"type":"object"},"outputs":[{"json":{}}]}')"
+          if [ "$status" != "402" ] || ! grep -qi '^payment-required:' /tmp/x402-headers.txt; then
+            echo "Expected HTTP 402 with PAYMENT-REQUIRED; received HTTP $status."
+            cat /tmp/x402-body.txt
+            exit 1
+          fi
+          echo "Live x402 payment challenge is healthy; no payment was sent."
+
   deploy:
     runs-on: ubuntu-latest
     timeout-minutes: 10
