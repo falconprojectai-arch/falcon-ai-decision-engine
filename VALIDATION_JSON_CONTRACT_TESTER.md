@@ -434,7 +434,13 @@ PR #15 review-state cross-check — 2026-11-03: PR #15 is closed and merged. The
 ### Prototype implementation status — 2026-11-03
 - Committed a separate Worker prototype under https://github.com/falconprojectai-arch/falcon-ai-decision-engine/tree/main/products/json-contract-tester-api
 - Added Hono + x402 exact-payment middleware for Base USDC at an experimental $0.005/batch price, a bounded batch validator, Cloudflare Wrangler configuration, usage/privacy notes, and Node built-in tests.
-- The pure validation suite passed **4/4 tests** locally: mixed batch (1 PASS / 3 FAIL), nested JSON Pointer/expected/actual, empty/oversized batch rejection, excessive nesting rejection, and JSON Pointer escaping. Syntax checks passed for both source files.
+- The pure validation suite passed **6/6 tests** locally: mixed batch (1 PASS / 3 FAIL), nested JSON Pointer/expected/actual, empty/oversized batch rejection, excessive nesting rejection, total JSON-node budget rejection, regex-pattern rejection before payment, and JSON Pointer escaping. Syntax checks passed for both source files.
 - **Not verified:** dependency installation, Cloudflare Worker build, live x402 402/verify/settle flow, marketplace listing, or production deployment. Those require a Cloudflare account and a self-custody Base wallet address. No private key, wallet, paid service, or live endpoint was created.
 - Preflight validation runs before the payment middleware so malformed/oversized requests are rejected without a payment challenge. Successful validation responses, including FAIL verdicts, are billable; this must be stated in the marketplace description.
 - Privacy boundary: the original browser tester remains local-only. The new hosted API transmits request payloads to Cloudflare; the prototype has no database or body logging, but this is a separate trust boundary and must be disclosed before launch.
+
+
+### Hosted API resource-safety refinement — 2026-11-03
+- Reduced maximum request body from 256 KiB to 64 KiB and added a total 2,000-node budget across schema and samples to constrain CPU use under Cloudflare Workers Free's 10 ms CPU allowance.
+- The hosted API now rejects the `pattern` keyword before payment because JavaScript regular expressions can exhibit catastrophic backtracking; the local browser tool retains its existing pattern support. This avoids advertising unsafe regex execution in the paid API.
+- Updated tests: **6/6 pass** locally, including node-budget and regex-rejection cases. The live x402/Worker integration remains untested and undeployed.
