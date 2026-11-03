@@ -446,3 +446,14 @@ PR #15 review-state cross-check — 2026-11-03: PR #15 is closed and merged. The
 - Updated tests: **6/6 pass** locally, including node-budget and regex-rejection cases. The live x402/Worker integration remains untested and undeployed.
 
 - Added `.github/workflows/json-contract-tester-api.yml` to run Node 22 validator tests and JavaScript syntax checks on API-folder changes. The commit has no combined status checks visible yet; workflow execution is not claimed as passed.
+
+
+### Live Worker, browser CORS, and CI verification — 2026-11-03
+- Public Worker health endpoint returned **HTTP 200** with `status: ok`, service `json-contract-tester-api`, version `0.1.0`: https://json-contract-tester-api.falcon-project-ai.workers.dev/health
+- Browser smoke test initially exposed a CORS read failure. Added Hono CORS middleware before the x402 middleware in `src/index.js`, allowing POST/OPTIONS, Content-Type and PAYMENT-SIGNATURE, and exposing PAYMENT-REQUIRED/PAYMENT-RESPONSE. Commit: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/commit/dd2e3172711e44a0a5fb56aca02c1881cf84f32d
+- CI for that commit uncovered a pre-existing JSON Pointer bug: the slash-escape regex in `pointerJoin` and `schemaJoin` was over-escaped, causing `ReferenceError: g is not defined`. Corrected both helpers to use the slash regex `/\\//g`. Commit: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/commit/7709004bf06c02da009ae5068c6313da6a9a1670
+- GitHub Actions then passed both the validator test suite and JavaScript syntax checks (6/6 tests): https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/41575741803
+- Live browser CORS test after deployment: OPTIONS returned **204** with `Access-Control-Allow-Origin: *`, allowed methods POST/OPTIONS, allowed headers Content-Type/PAYMENT-SIGNATURE, and exposed PAYMENT-REQUIRED/PAYMENT-RESPONSE. A valid dummy POST reached the Worker but returned **503** with `Payment receiver is not configured.`; no payment header was issued, and no payment/signature was attempted.
+- **Current blocker:** production Worker runtime does not currently see a valid `PAY_TO` secret. Re-check that `PAY_TO` is configured as a Worker Secret (not a build variable), on the exact Worker `json-contract-tester-api`, in the Production environment, with the intended self-custody EVM address; then redeploy/retry. Never print or expose the secret in logs or chat.
+- Firecrawl was connected and used for developer research. Its current account balance at onboarding was 1,000 credits; developer-index research on x402 browser CORS confirmed the need to both answer OPTIONS outside payment gating and expose the payment response headers. Source: https://github.com/x402-foundation/x402/issues/3722
+- No wallet signature, funds transfer, facilitator settlement, or customer revenue was tested or claimed. No paid x402 transaction was performed.
