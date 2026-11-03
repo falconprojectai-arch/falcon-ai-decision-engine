@@ -1,0 +1,145 @@
+name: Falcon autonomous cadence (GitHub Actions fallback)
+
+on:
+  schedule:
+    # 15-minute heartbeat, offset away from the top of the hour.
+    # Actual project/revenue checks are independently gated at 30/45 minutes.
+    - cron: "7,22,37,52 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: read
+  actions: read
+
+concurrency:
+  group: falcon-autonomous-cadence
+  cancel-in-progress: false
+
+jobs:
+  cadence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Review project and selected revenue path
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPOSITORY: ${{ github.repository }}
+          ISSUE_NUMBER: "18"
+        run: |
+          node <<'NODE'
+          const base = `https://api.github.com/repos/${process.env.REPOSITORY}`;
+          const headers = {
+            accept: "application/vnd.github+json",
+            authorization: `Bearer ${process.env.GH_TOKEN}`,
+            "x-github-api-version": "2022-11-28",
+            "content-type": "application/json",
+          };
+          const now = new Date();
+          const iso = now.toISOString();
+          const issueNumber = process.env.ISSUE_NUMBER;
+          async function api(path, options = {}) {
+            const response = await fetch(base + path, { ...options, headers: { ...headers, ...(options.headers || {}) } });
+            const raw = await response.text();
+            let data;
+            try { data = raw ? JSON.parse(raw) : null; } catch { data = raw; }
+            if (!response.ok) throw new Error(`GitHub API ${response.status} on ${path}: ${raw.slice(0, 500)}`);
+            return data;
+          }
+          function htmlDecode(value) {
+            return value.replace(/&amp;/g, "&").replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+          }
+          function extractResults(html) {
+            const out = [];
+            const re = /<a[^>]*class="result__a"[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>[\s\S]*?<a[^>]*class="result__snippet"[^>]*>([\s\S]*?)<\/a>/g;
+            let match;
+            while ((match = re.exec(html)) && out.length < 5) {
+              const clean = (s) => htmlDecode(s.replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim());
+              let url = htmlDecode(match[1]);
+              const uddg = url.match(/[?&]uddg=([^&]+)/);
+              if (uddg) { try { url = decodeURIComponent(uddg[1]); } catch {} }
+              if (/^https?:\/\//i.test(url)) out.push({ title: clean(match[2]), url, snippet: clean(match[3]).slice(0, 420) });
+            }
+            return out;
+          }
+          async function webSearch(query) {
+            const endpoint = "https://html.duckduckgo.com/html/?q=" + encodeURIComponent(query);
+            const response = await fetch(endpoint, { headers: { "user-agent": "Mozilla/5.0 (compatible; FalconCadence/1.0)" } });
+            if (!response.ok) throw new Error(`Web search returned HTTP ${response.status}`);
+            const html = await response.text();
+            const results = extractResults(html);
+            if (!results.length) throw new Error("Search provider returned no parseable results");
+            return results;
+          }
+          const comments = await api(`/issues/${issueNumber}/comments?per_page=100`);
+          const chronological = [...comments].sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+          const latestDaily = [...chronological].reverse().find(c => /Daily alternative follow-up:/.test(c.body || ""));
+          const latest30 = [...chronological].reverse().find(c => /<!-- falcon-cadence:project30 -->/.test(c.body || ""));
+          const latest45 = [...chronological].reverse().find(c => /<!-- falcon-cadence:revenue45 -->/.test(c.body || ""));
+          const due = (comment, minutes) => !comment || now - new Date(comment.created_at) >= minutes * 60 * 1000;
+          const due30 = due(latest30, 30);
+          const due45 = due(latest45, 45);
+          if (!due30 && !due45) {
+            console.log(`Heartbeat ${iso}: neither 30-minute nor 45-minute checkpoint is due.`);
+            process.exit(0);
+          }
+          const sections = [`# Falcon autonomous cadence checkpoint — ${iso}`];
+          const blockers = [];
+          if (due30) {
+            const [issues, prs, runs, health, x402] = await Promise.all([
+              api("/issues?state=open&per_page=30"),
+              api("/pulls?state=open&per_page=20"),
+              api("/actions/runs?per_page=10"),
+              fetch("https://json-contract-tester-api.falcon-project-ai.workers.dev/health").then(async r => ({ status: r.status, body: (await r.text()).slice(0, 500) })),
+              fetch("https://json-contract-tester-api.falcon-project-ai.workers.dev/.well-known/x402").then(async r => ({ status: r.status, body: (await r.text()).slice(0, 700) })),
+            ]);
+            const recentRuns = (runs.workflow_runs || []).slice(0, 6).map(r => `${r.name}: ${r.status}/${r.conclusion || "pending"} — ${r.html_url}`);
+            const latestRun = (runs.workflow_runs || [])[0];
+            sections.push(
+              "## 30-minute project review",
+              `- Open issues: ${issues.length}; open PRs: ${prs.length}.`,
+              `- Latest CI: ${latestRun ? `${latestRun.name} — ${latestRun.status}/${latestRun.conclusion || "pending"} (${latestRun.html_url})` : "No workflow runs returned"}.`,
+              `- API health: HTTP ${health.status}; ${health.body.replace(/\s+/g, " ").slice(0, 250)}.`,
+              `- x402 endpoint: HTTP ${x402.status}; ${x402.body.replace(/\s+/g, " ").slice(0, 350)}.`,
+              "- Recent workflow runs:",
+              ...recentRuns.map(x => `  - ${x}`),
+              "- Next action: prioritize the oldest actionable open issue; review CI failures before proposing code changes. This scheduled monitor does not merge PRs, deploy code, spend funds, or modify credentials."
+            );
+            if (health.status !== 200) blockers.push(`API health endpoint returned HTTP ${health.status}`);
+            if (x402.status !== 200) blockers.push(`x402 endpoint returned HTTP ${x402.status}`);
+            if (latestRun?.conclusion === "failure") blockers.push(`Latest CI run failed: ${latestRun.html_url}`);
+          }
+          if (due45) {
+            const body = latestDaily?.body || "";
+            const selected = body.match(/\*\*Selected option:\*\*\s*([^\n]+)/i)?.[1]?.trim();
+            const nextStep = body.match(/\*\*Next step:\*\*\s*([^\n]+)/i)?.[1]?.trim();
+            sections.push("## 45-minute selected revenue-path review");
+            if (!selected) {
+              sections.push("- Blocked: no daily selected revenue path was found in Issue #18. The existing daily manager must select and log one before this monitor can research it.");
+              blockers.push("No daily selected revenue path found in the project log.");
+            } else {
+              sections.push(`- Selected path: ${selected}`, `- Previously logged next step: ${nextStep || "No explicit next step recorded"}`);
+              try {
+                const results = await webSearch(`${selected} ${nextStep || ""} customer demand pricing free distribution evidence`.trim());
+                sections.push("- Fresh web evidence (search results; not proof of a sale):");
+                for (const item of results) sections.push(`  - [${item.title}](${item.url}) — ${item.snippet}`);
+                sections.push("- Next action: compare these fresh sources with the previous evidence, then update the daily selected path only in the daily manager cycle. No outreach, account creation, listing submission or payment was performed.");
+              } catch (error) {
+                sections.push(`- Research blocked: ${String(error.message || error)}`);
+                blockers.push("Fresh web search failed for the selected revenue path.");
+              }
+            }
+          }
+          sections.push("## Blockers", blockers.length ? blockers.map(x => `- ${x}`).join("\n") : "- None detected by this checkpoint.");
+          sections.push("\nThis is monitoring and evidence collection, not proof of traffic, leads, sales, settlement or revenue.");
+          const marker = [
+            due30 ? "<!-- falcon-cadence:project30 -->" : "",
+            due45 ? "<!-- falcon-cadence:revenue45 -->" : ""
+          ].filter(Boolean).join("\n");
+          const response = await api(`/issues/${issueNumber}/comments`, {
+            method: "POST",
+            body: JSON.stringify({ body: marker + "\n\n" + sections.join("\n") })
+          });
+          console.log(`Logged cadence checkpoint: ${response.html_url}`);
+          NODE
