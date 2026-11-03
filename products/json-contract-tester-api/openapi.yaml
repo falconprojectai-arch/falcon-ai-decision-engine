@@ -1,0 +1,148 @@
+openapi: 3.1.0
+info:
+  title: JSON Contract Tester API
+  version: 0.1.0
+  description: >-
+    Stateless batch validator for AI-agent/API JSON outputs against a documented
+    JSON Schema subset. Successful validation responses (including FAIL results)
+    are billable at the x402 price. This is not a full JSON Schema implementation.
+servers:
+  - url: https://json-contract-tester-api.falcon-project-ai.workers.dev
+paths:
+  /health:
+    get:
+      operationId: getHealth
+      summary: Health check
+      security: []
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [status, service, version]
+                properties:
+                  status: { const: ok }
+                  service: { const: json-contract-tester-api }
+                  version: { type: string }
+  /v1/validate-batch:
+    post:
+      operationId: validateJsonBatch
+      summary: Validate 1–10 JSON outputs against one schema
+      description: >-
+        Send one schema and 1–10 JSON samples. A successful response returns
+        per-sample PASS/FAIL diagnostics. The route uses x402 exact USDC on
+        Base Mainnet at 0.005 USDC per request batch. A valid unpaid request
+        returns HTTP 402 and a PAYMENT-REQUIRED challenge. Inspect the
+        challenge before authorizing payment. The hosted API does not support
+        the JSON Schema pattern keyword.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchRequest'
+            example:
+              schema:
+                type: object
+                required: [ok, result]
+                properties:
+                  ok: { type: boolean }
+                  result: { type: string }
+              outputs:
+                - id: sample-1
+                  json: { ok: true, result: done }
+                - id: sample-2
+                  json: { ok: "yes", result: done }
+      responses:
+        '200':
+          description: Batch validated; individual samples may pass or fail
+          headers:
+            PAYMENT-RESPONSE:
+              description: x402 settlement response metadata
+              schema: { type: string }
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchResponse'
+        '400':
+          description: Malformed request or unsupported/invalid schema
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '402':
+          description: Payment required; includes x402 v2 challenge in PAYMENT-REQUIRED
+          headers:
+            PAYMENT-REQUIRED:
+              description: Base64-encoded x402 payment requirements; inspect before signing
+              schema: { type: string }
+        '413':
+          description: Request body exceeds 64 KiB
+        '503':
+          description: Payment receiver is not configured
+      x-x402:
+        scheme: exact
+        network: eip155:8453
+        asset: USD Coin
+        price: "0.005"
+        unit: USDC per batch
+components:
+  schemas:
+    BatchRequest:
+      type: object
+      required: [schema, outputs]
+      properties:
+        schema:
+          type: object
+          description: Documented JSON Schema subset (not full JSON Schema)
+        outputs:
+          type: array
+          minItems: 1
+          maxItems: 10
+          items:
+            type: object
+            required: [json]
+            properties:
+              id: { type: string, maxLength: 80 }
+              json: {}
+    BatchResponse:
+      type: object
+      required: [reportVersion, tool, valid, summary, results, limitation]
+      properties:
+        reportVersion: { type: string }
+        tool: { const: JSON Contract Tester API }
+        valid: { type: boolean }
+        summary:
+          type: object
+          required: [total, passed, failed]
+          properties:
+            total: { type: integer }
+            passed: { type: integer }
+            failed: { type: integer }
+        results:
+          type: array
+          items:
+            type: object
+            required: [id, passed, errors]
+            properties:
+              id: { type: string }
+              passed: { type: boolean }
+              errors:
+                type: array
+                items:
+                  type: object
+                  required: [instancePath, schemaPath, keyword, message, expected, actual]
+                  properties:
+                    instancePath: { type: string }
+                    schemaPath: { type: string }
+                    keyword: { type: string }
+                    message: { type: string }
+                    expected: {}
+                    actual: {}
+        limitation: { type: string }
+    Error:
+      type: object
+      required: [error]
+      properties:
+        error: { type: string }
