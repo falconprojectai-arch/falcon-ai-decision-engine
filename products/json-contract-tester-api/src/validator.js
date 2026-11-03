@@ -8,8 +8,8 @@ function sameJson(a, b) {
   const ak = Object.keys(a), bk = Object.keys(b);
   return ak.length === bk.length && ak.every(k => Object.prototype.hasOwnProperty.call(b, k) && sameJson(a[k], b[k]));
 }
-function pointerJoin(base, part) { return `${base}/${String(part).replace(/~/g, '~0').replace(/\\//g, '~1')}`; }
-function schemaJoin(base, part) { return `${base}/${String(part).replace(/~/g, '~0').replace(/\\//g, '~1')}`; }
+function pointerJoin(base, part) { return `${base}/${String(part).replace(/~/g, '~0').replace(/\//g, '~1')}`; }
+function schemaJoin(base, part) { return `${base}/${String(part).replace(/~/g, '~0').replace(/\//g, '~1')}`; }
 function actualValue(value) {
   try { const s = JSON.stringify(value); return s === undefined ? String(value) : s.length > 500 ? `${s.slice(0, 497)}...` : s; }
   catch { return String(value); }
