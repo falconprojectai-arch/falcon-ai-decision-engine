@@ -23,7 +23,7 @@ The route uses x402 exact USDC on Base (eip155:8453) at an experimental price of
 ```sh
 npx wrangler secret put PAY_TO
 ```
-Deploy only after a self-custody wallet has been created and its recovery material safely backed up. No private key belongs in this repository or Worker code. The facilitator is the public Coinbase x402 facilitator.
+Deploy only after a self-custody wallet has been created and its recovery material safely backed up. No private key belongs in this repository or Worker code. The facilitator is PayAI's public x402 facilitator (`https://facilitator.payai.network`), which supports Base mainnet (`eip155:8453`) and EVM USDC payments. Verify current supported networks at its `/supported` endpoint before changing production configuration.
 
 ## Hosting and privacy
 Designed for Cloudflare Workers Free, within bounded limits: 64 KiB request body, 10 samples, 32 levels of nesting, 2,000 total JSON nodes, 100 diagnostics per sample. No database, file storage, or request-body logging is implemented. However, callers transmit the schema and JSON payloads to Cloudflare and the facilitator/payment infrastructure; this is separate from the browser tool, whose inputs stay local. Do not send secrets, personal data, or confidential production payloads.
