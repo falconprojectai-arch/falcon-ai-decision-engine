@@ -428,4 +428,13 @@ PR #15 review-state cross-check — 2026-11-03: PR #15 is closed and merged. The
 - Hosting: Cloudflare Worker Free. For PayAPI Market, implement a real x402 402 challenge and payment verification on Base; do not expose an unprotected origin. An existing browser-only page is not itself a durable paid API.
 
 ### Decision / blockers
-**Research-only; no wallet or endpoint created.** A self-custody wallet and a durable HTTPS Worker deployment are prerequisites. The user previously accepted that initial wallet/account setup may be user-handled; no private key was generated, stored, or requested in this run. Build the API only after the wallet path and secure key backup are available. Do not use an exchange deposit address as a substitute for a self-custody payout wallet without explicit support from the exchange and marketplace.
+**Prototype source committed; not deployed.** A self-custody wallet and a durable HTTPS Worker deployment are prerequisites. No private key was generated, stored, or requested in this run. Do not use an exchange deposit address as a substitute for a self-custody payout wallet without explicit support from the exchange and marketplace.
+
+
+### Prototype implementation status — 2026-11-03
+- Committed a separate Worker prototype under https://github.com/falconprojectai-arch/falcon-ai-decision-engine/tree/main/products/json-contract-tester-api
+- Added Hono + x402 exact-payment middleware for Base USDC at an experimental $0.005/batch price, a bounded batch validator, Cloudflare Wrangler configuration, usage/privacy notes, and Node built-in tests.
+- The pure validation suite passed **4/4 tests** locally: mixed batch (1 PASS / 3 FAIL), nested JSON Pointer/expected/actual, empty/oversized batch rejection, excessive nesting rejection, and JSON Pointer escaping. Syntax checks passed for both source files.
+- **Not verified:** dependency installation, Cloudflare Worker build, live x402 402/verify/settle flow, marketplace listing, or production deployment. Those require a Cloudflare account and a self-custody Base wallet address. No private key, wallet, paid service, or live endpoint was created.
+- Preflight validation runs before the payment middleware so malformed/oversized requests are rejected without a payment challenge. Successful validation responses, including FAIL verdicts, are billable; this must be stated in the marketplace description.
+- Privacy boundary: the original browser tester remains local-only. The new hosted API transmits request payloads to Cloudflare; the prototype has no database or body logging, but this is a separate trust boundary and must be disclosed before launch.
