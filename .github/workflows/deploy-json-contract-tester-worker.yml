@@ -7,9 +7,13 @@ on:
       - ".github/workflows/deploy-json-contract-tester-worker.yml"
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -23,27 +27,77 @@ jobs:
         working-directory: products/json-contract-tester-api
         run: npm install --no-audit --no-fund
 
+      - name: Run API unit tests
+        working-directory: products/json-contract-tester-api
+        run: npm test
+
       - name: Validate Worker bundle
         working-directory: products/json-contract-tester-api
         run: npx wrangler deploy --dry-run --config wrangler.jsonc
 
-      - name: Check deployment credentials
-        id: credentials
-        run: |
-          if [ -n "$CF_API_TOKEN" ] && [ -n "$CF_ACCOUNT_ID" ]; then
-            echo "ready=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "ready=false" >> "$GITHUB_OUTPUT"
-            echo "Cloudflare deploy skipped: add repository secrets CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID to enable automatic production deployment."
-          fi
+      - name: Require production credentials
         env:
-          CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CF_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          PAY_TO: ${{ secrets.PAY_TO }}
+        run: |
+          set -euo pipefail
+          missing=()
+          [ -n "$CLOUDFLARE_API_TOKEN" ] || missing+=("CLOUDFLARE_API_TOKEN")
+          [ -n "$CLOUDFLARE_ACCOUNT_ID" ] || missing+=("CLOUDFLARE_ACCOUNT_ID")
+          [ -n "$PAY_TO" ] || missing+=("PAY_TO")
+          if [ "${#missing[@]}" -gt 0 ]; then
+            printf 'Deployment blocked: missing GitHub Actions secrets: %s\n' "${missing[*]}"
+            exit 1
+          fi
+          if ! [[ "$PAY_TO" =~ ^0x[0-9a-fA-F]{40}$ ]]; then
+            echo "Deployment blocked: PAY_TO must be a valid EVM address (0x + 40 hex characters)."
+            exit 1
+          fi
 
       - name: Deploy Worker
-        if: steps.credentials.outputs.ready == 'true'
         working-directory: products/json-contract-tester-api
         run: npx wrangler deploy --config wrangler.jsonc
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      - name: Configure payment receiver
+        working-directory: products/json-contract-tester-api
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          PAY_TO: ${{ secrets.PAY_TO }}
+        run: |
+          set -euo pipefail
+          printf '%s' "$PAY_TO" | npx wrangler secret put PAY_TO --config wrangler.jsonc
+
+      - name: Verify production health and x402 challenge
+        env:
+          WORKER_URL: https://json-contract-tester-api.falcon-project-ai.workers.dev
+        run: |
+          set -euo pipefail
+          echo "Checking Worker health..."
+          health="$(curl --retry 5 --retry-all-errors --retry-delay 3 -fsS "$WORKER_URL/health")"
+          echo "$health" | jq -e '.status == "ok" and .service == "json-contract-tester-api"'
+
+          echo "Checking discovery manifest..."
+          curl --retry 5 --retry-all-errors --retry-delay 3 -fsS "$WORKER_URL/.well-known/x402" \
+            | jq -e '.resources[] | select(.path == "/v1/validate-batch" and .method == "POST")'
+
+          echo "Checking OpenAPI document..."
+          curl --retry 5 --retry-all-errors --retry-delay 3 -fsS "$WORKER_URL/openapi.json" \
+            | jq -e '.paths["/v1/validate-batch"].post != null'
+
+          echo "Checking that protected POST returns an x402 payment challenge (no payment is sent)..."
+          status="$(curl -sS -o /tmp/x402-body.txt -D /tmp/x402-headers.txt -w '%{http_code}' \
+            -X POST "$WORKER_URL/v1/validate-batch" \
+            -H 'Content-Type: application/json' \
+            --data '{"schema":{"type":"object"},"outputs":[{"json":{}}]}')"
+          if [ "$status" != "402" ] || ! grep -qi '^payment-required:' /tmp/x402-headers.txt; then
+            echo "Expected HTTP 402 with PAYMENT-REQUIRED header; received HTTP $status."
+            cat /tmp/x402-body.txt
+            cat /tmp/x402-headers.txt
+            exit 1
+          fi
+          echo "Production smoke tests passed."
