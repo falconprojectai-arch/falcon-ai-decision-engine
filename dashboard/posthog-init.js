@@ -44,7 +44,6 @@
     defaults: "2026-08-30",
     capture_pageview: true,
     autocapture: false,
-    disable_session_recording: true
   });
 
   document.addEventListener("click", function (event) {
