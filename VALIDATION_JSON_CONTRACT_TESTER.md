@@ -464,3 +464,13 @@ PR #15 review-state cross-check — 2026-11-03: PR #15 is closed and merged. The
 - One new live POST smoke test was sent without a payment signature or wallet credentials. It still returned **HTTP 503** with `Payment receiver is not configured.`; `PAYMENT-REQUIRED` and `WWW-Authenticate` were absent. CORS remains healthy (OPTIONS 204 and expected CORS headers).
 - A read-only attempt to inspect Cloudflare Production secret presence and latest deployment was blocked by Cloudflare sign-in. No credentials were requested or entered, and no dashboard changes were made. Therefore the presence of the exact secret in Production and whether the latest deployment includes it remain **unverified**.
 - Next action for the account owner: in the exact Worker `json-contract-tester-api`, verify `PAY_TO` (uppercase O, not zero) exists as a Secret in the **Production** environment, save it, then use Cloudflare's **Deploy** action so the active Worker version receives the binding. Do not share the secret value. After deployment, repeat the no-payment POST smoke test and expect a 402 challenge, not 503.
+
+## x402 production smoke test — 2026-11-03
+
+- **Root cause addressed:** the API was configured to use `https://x402.org/facilitator` while requesting Base mainnet (`eip155:8453`). The public x402.org facilitator is documented as testnet-oriented in the current Hono integration reference; this mismatch prevented the intended Base mainnet payment challenge from being initialized correctly.
+- **Implementation change:** switched the facilitator URL in `src/index.js` to `https://facilitator.payai.network`. Updated the API README to document the Base mainnet facilitator configuration.
+- **Commits:** implementation `99a8100e221acd57cd09ba466224bc89aae264f2`; README `b1ea65f94dd00b6e6c67dbbb40e1f8a5f4605ba1`.
+- **Live no-payment test:** `GET /health` returned HTTP 200. A harmless POST to `/v1/validate-batch`, with no `PAYMENT-SIGNATURE` and no wallet/payment authorization, returned HTTP 402 and a `PAYMENT-REQUIRED` challenge.
+- **Challenge inspection:** decoded response advertises x402 v2, scheme `exact`, network `eip155:8453`, amount `5000` USDC base units (0.005 USDC), and the configured receiving address. CORS exposes `PAYMENT-REQUIRED`.
+- **Safety:** no payment was signed, submitted, or settled. This proves the live payment challenge is now generated; it does not prove facilitator settlement, wallet compatibility, or that funds have been received.
+- **Next quality gate:** perform an end-to-end settlement only with explicit user authorization for a controlled test payment; then independently verify the resulting transaction and recipient balance. Until then, confirmed revenue remains **$0.00**.
