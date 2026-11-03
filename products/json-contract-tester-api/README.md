@@ -1,6 +1,6 @@
 # JSON Contract Tester API (x402 prototype)
 
-A separate stateless API for AI agents to validate a batch of JSON outputs against the documented JSON Schema subset used by the browser tester. It is not deployed and does not replace the free local browser tool.
+A deployed stateless API for AI agents to validate a batch of JSON outputs against the documented JSON Schema subset used by the browser tester. It is available at https://json-contract-tester-api.falcon-project-ai.workers.dev and does not replace the free local browser tool. The live health endpoint returns HTTP 200; an unpaid valid POST returns HTTP 402 with a PAYMENT-REQUIRED challenge. End-to-end paid settlement has not yet been verified.
 
 ## Route
 POST /v1/validate-batch
@@ -32,7 +32,7 @@ Designed for Cloudflare Workers Free, within bounded limits: 64 KiB request body
 This is a documented subset only: type, required, properties, additionalProperties: false, items, enum, const, numeric bounds, string length, and array length. The hosted API rejects the regex pattern keyword to avoid unbounded regex CPU use. It is not full JSON Schema.
 
 ## Test
-Run npm test. Tests cover the mixed batch (1 PASS / 3 FAIL), nested JSON Pointer diagnostics, batch limits, depth limits, node-budget limits, and pointer escaping. Payment middleware integration still requires dependency installation, Cloudflare deployment and a Base wallet to verify end-to-end.
+Run npm test. Tests cover the mixed batch (1 PASS / 3 FAIL), nested JSON Pointer diagnostics, batch limits, depth limits, node-budget limits, and pointer escaping. The current production Worker and payment challenge are live; end-to-end paid settlement still requires a wallet signature and an on-chain transaction.
 
 ## Receiving-address safety note
 Toobit has published support for USDC deposits on Base. However, an exchange deposit address is custodial and Toobit applies a per-asset/network minimum deposit threshold; deposits below the displayed minimum may not be credited. This API's experimental price is only $0.005 per batch, so do not configure an exchange deposit address as `PAY_TO` unless Toobit explicitly confirms that this exact address accepts Base USDC micro-deposits at or below that amount and credits each transfer. Preferred production recipient: a dedicated self-custody EVM wallet whose recovery phrase is backed up offline. Never put a private key or recovery phrase in this repository or Worker secrets.
