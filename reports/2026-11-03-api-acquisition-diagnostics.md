@@ -58,7 +58,7 @@ The latest public Agent402 snapshot now shows `payToByNetwork.eip155:8453` match
 
 The Worker serves:
 - `GET /.well-known/x402` — service manifest with the POST route, price, Base network, schema, and example.
-- `GET /openapi.json` — OpenAPI 3.1 discovery document.
+- `GET /openapi.json` — OpenAPI 3.1 discovery document. The live JSON still has the previous wording for the 400 response description; the repository's OpenAPI YAML, README, and buyer quickstart have been corrected. This is documentation-only; the live challenge and route behavior are verified.
 
 Links:
 - Manifest: https://json-contract-tester-api.falcon-project-ai.workers.dev/.well-known/x402
@@ -73,7 +73,7 @@ Links:
 - Challenge-before-schema-validation compatibility fix: `ceb7c173c3057122e00912544047175809d927c8`
 - README, buyer quickstart, and OpenAPI updated to explain billing/validation order.
 - API tests passed: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/41583715860
-- Wrangler dry-run passed; optional deployment job was skipped because the repository did not contain `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`. The production endpoints and behavior above were independently verified live after the source changes; the exact deployment mechanism was not confirmed.
+- Wrangler dry-run passed; optional deployment job was skipped because the repository did not contain `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`. The production discovery endpoints and challenge behavior above were independently verified live. The optional GitHub deploy workflow did not have Cloudflare secrets, and a read-only check of dash.cloudflare.com redirected to sign-in; no credentials were entered. The last wording-only change to the Worker-generated OpenAPI JSON is therefore not yet deployed.
 
 ## Revenue status
 
