@@ -90,9 +90,9 @@ const openApiDocument = {
         },
         responses: {
           '200': { description: 'Batch validation report; individual samples may pass or fail.' },
-          '400': { description: 'Malformed request or unsupported schema.' },
+          '400': { description: 'Invalid schema or batch shape; returned after payment.' },
           '402': { description: 'x402 v2 payment required; inspect PAYMENT-REQUIRED.' },
-          '413': { description: 'Request body exceeds 64 KiB.' },
+          '413': { description: 'Request body exceeds 64 KiB; rejected before payment.' },
           '503': { description: 'Payment receiver is not configured.' }
         }
       }
@@ -137,15 +137,15 @@ app.get('/health', c => c.json({ status: 'ok', service: 'json-contract-tester-ap
 app.get('/.well-known/x402', c => c.json(discoveryManifest));
 app.get('/openapi.json', c => c.json(openApiDocument));
 
-// Reject malformed/oversized requests before the payment middleware.
+// Reject only malformed or oversized bodies before payment. Schema/batch
+// validation happens after payment so generic x402 directory probes using {}
+// receive the real 402 challenge rather than a misleading 400 response.
 app.use('/v1/validate-batch', async (c, next) => {
   if (c.req.method !== 'POST') return next();
   const parsed = await readLimitedBody(c.req.raw, LIMITS.maxBodyBytes);
   if (parsed.tooLarge) return c.json({ error: `Request body exceeds ${LIMITS.maxBodyBytes} bytes.` }, 413);
   if (parsed.error) return c.json({ error: parsed.error }, 400);
-  const result = validateBatch(parsed.value);
-  if (!result.ok) return c.json({ error: result.error }, result.status);
-  c.set('validationResult', result.data);
+  c.set('requestBody', parsed.value);
   return next();
 });
 
@@ -164,9 +164,9 @@ app.use('*', async (c, next) => {
 });
 
 app.post('/v1/validate-batch', c => {
-  const result = c.get('validationResult');
-  if (!result) return c.json({ error: 'Validation preflight failed.' }, 400);
-  return c.json(result);
+  const result = validateBatch(c.get('requestBody'));
+  if (!result.ok) return c.json({ error: result.error }, result.status);
+  return c.json(result.data);
 });
 app.notFound(c => c.json({ error: 'Not found.' }, 404));
 export default app;
