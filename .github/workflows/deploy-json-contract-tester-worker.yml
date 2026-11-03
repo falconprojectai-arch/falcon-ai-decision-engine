@@ -10,9 +10,6 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: products/json-contract-tester-api
     steps:
       - name: Check deployment credentials
         id: credentials
@@ -39,10 +36,12 @@ jobs:
 
       - name: Install dependencies
         if: steps.credentials.outputs.ready == 'true'
+        working-directory: products/json-contract-tester-api
         run: npm install --no-audit --no-fund
 
       - name: Deploy Worker
         if: steps.credentials.outputs.ready == 'true'
+        working-directory: products/json-contract-tester-api
         run: npx wrangler deploy --config wrangler.jsonc
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
