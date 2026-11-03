@@ -61,6 +61,43 @@ jobs:
           cp products/dev-agent-toolbox/payment.html site/products/dev-agent-toolbox/payment.html
           cp products/dev-agent-toolbox/contract-review-checklist.html site/products/dev-agent-toolbox/contract-review-checklist.html
           cp products/json-contract-tester-api/payment-preflight.html site/products/json-contract-tester-api/payment-preflight.html
+      - name: Configure PostHog analytics
+        env:
+          POSTHOG_PROJECT_TOKEN: ${{ vars.POSTHOG_PROJECT_TOKEN }}
+          POSTHOG_API_HOST: ${{ vars.POSTHOG_API_HOST }}
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          import os
+
+          site = Path("site")
+          config = {
+              "projectToken": os.environ.get("POSTHOG_PROJECT_TOKEN", "").strip(),
+              "apiHost": os.environ.get("POSTHOG_API_HOST", "").strip(),
+          }
+          (site / "posthog-config.js").write_text(
+              "window.FALCON_POSTHOG_CONFIG = " + json.dumps(config) + ";\\n",
+              encoding="utf-8",
+          )
+          if not config["projectToken"] or not config["apiHost"]:
+              print("PostHog is disabled until repository Actions variables POSTHOG_PROJECT_TOKEN and POSTHOG_API_HOST are configured.")
+          pages = list(site.rglob("*.html"))
+          for page in pages:
+              relative = page.relative_to(site)
+              prefix = "../" * (len(relative.parts) - 1)
+              tags = (
+                  f'<script src="{prefix}posthog-config.js"></script>\\n'
+                  f'<script defer src="{prefix}posthog-init.js"></script>'
+              )
+              content = page.read_text(encoding="utf-8")
+              if "posthog-init.js" not in content:
+                  if "</head>" not in content:
+                      raise SystemExit(f"Missing </head> in {page}")
+                  content = content.replace("</head>", tags + "\\n</head>", 1)
+                  page.write_text(content, encoding="utf-8")
+          print(f"Added privacy-limited PostHog pageview and CTA tracking to {len(pages)} HTML pages.")
+          PY
       - name: Upload dashboard and product
         uses: actions/upload-pages-artifact@v3
         with:
