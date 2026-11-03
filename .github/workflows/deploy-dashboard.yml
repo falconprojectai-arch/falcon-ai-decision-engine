@@ -41,13 +41,28 @@ jobs:
             exit 1
           fi
           python - "$timestamp" <<'PY'
+          from datetime import datetime
           from pathlib import Path
+          from zoneinfo import ZoneInfo
+          import re
           import sys
+
           path = Path("dashboard/index.html")
           content = path.read_text(encoding="utf-8")
-          content = content.replace("__DASHBOARD_UPDATED_AT__", sys.argv[1])
-          if "__DASHBOARD_UPDATED_AT__" in content:
-              raise SystemExit("Timestamp placeholder was not replaced")
+          local_time = datetime.fromisoformat(sys.argv[1]).astimezone(ZoneInfo("Asia/Tehran"))
+          iso_time = local_time.isoformat(timespec="seconds")
+          label = local_time.strftime("%Y-%m-%d، %H:%M تهران").translate(
+              str.maketrans("0123456789", "۰۱۲۳۴۵۶۷۸۹")
+          )
+          content, count = re.subn(
+              r'<time id="last-updated" datetime="[^"]*">.*?</time>',
+              f'<time id="last-updated" datetime="{iso_time}">{label}</time>',
+              content,
+              count=1,
+              flags=re.DOTALL,
+          )
+          if count != 1:
+              raise SystemExit(f"Expected one dashboard timestamp element; found {count}")
           path.write_text(content, encoding="utf-8")
           PY
       - name: Assemble Pages site
@@ -72,6 +87,31 @@ jobs:
         run: |
           python -m pip install --upgrade pip playwright
           python -m playwright install --with-deps chromium
+      - name: Smoke-test deployed dashboard in Chromium
+        env:
+          DASHBOARD_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          python - <<'PY'
+          import asyncio
+          import os
+          from playwright.async_api import async_playwright
+
+          async def main():
+              async with async_playwright() as p:
+                  browser = await p.chromium.launch()
+                  page = await browser.new_page()
+                  errors = []
+                  page.on("pageerror", lambda error: errors.append(str(error)))
+                  response = await page.goto(os.environ["DASHBOARD_URL"], wait_until="networkidle", timeout=60000)
+                  assert response and response.status == 200
+                  timestamp = await page.locator("#last-updated").get_attribute("datetime")
+                  assert timestamp and "2026-11-02T04:20:00" not in timestamp
+                  assert "Golden Desk" in await page.locator("body").inner_text()
+                  assert not errors, f"Browser JavaScript errors: {errors}"
+                  await browser.close()
+
+          asyncio.run(main())
+          PY
       - name: Smoke-test developer toolbox in Chromium
         env:
           TOOLBOX_URL: ${{ steps.deployment.outputs.page_url }}products/dev-agent-toolbox/
