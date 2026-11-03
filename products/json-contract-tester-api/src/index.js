@@ -1,10 +1,20 @@
 import { Hono } from 'hono';
+import { cors } from 'hono/cors';
 import { paymentMiddleware, x402ResourceServer } from '@x402/hono';
 import { HTTPFacilitatorClient } from '@x402/core/server';
 import { registerExactEvmScheme } from '@x402/evm/exact/server';
 import { validateBatch, LIMITS } from './validator.js';
 
 const app = new Hono();
+
+// Allow browser clients to read the x402 payment challenge and submit payment signatures.
+app.use('/v1/*', cors({
+  origin: '*',
+  allowMethods: ['POST', 'OPTIONS'],
+  allowHeaders: ['Content-Type', 'PAYMENT-SIGNATURE'],
+  exposeHeaders: ['PAYMENT-REQUIRED', 'PAYMENT-RESPONSE'],
+  maxAge: 86400
+}));
 const facilitator = new HTTPFacilitatorClient({ url: 'https://x402.org/facilitator' });
 const resourceServer = new x402ResourceServer(facilitator);
 registerExactEvmScheme(resourceServer);
