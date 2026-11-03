@@ -77,7 +77,7 @@ jobs:
               "apiHost": os.environ.get("POSTHOG_API_HOST", "").strip(),
           }
           (site / "posthog-config.js").write_text(
-              "window.FALCON_POSTHOG_CONFIG = " + json.dumps(config) + ";\\n",
+              "window.FALCON_POSTHOG_CONFIG = " + json.dumps(config) + ";\n",
               encoding="utf-8",
           )
           if not config["projectToken"] or not config["apiHost"]:
