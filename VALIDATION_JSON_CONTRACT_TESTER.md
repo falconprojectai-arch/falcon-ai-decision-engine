@@ -444,3 +444,5 @@ PR #15 review-state cross-check — 2026-11-03: PR #15 is closed and merged. The
 - Reduced maximum request body from 256 KiB to 64 KiB and added a total 2,000-node budget across schema and samples to constrain CPU use under Cloudflare Workers Free's 10 ms CPU allowance.
 - The hosted API now rejects the `pattern` keyword before payment because JavaScript regular expressions can exhibit catastrophic backtracking; the local browser tool retains its existing pattern support. This avoids advertising unsafe regex execution in the paid API.
 - Updated tests: **6/6 pass** locally, including node-budget and regex-rejection cases. The live x402/Worker integration remains untested and undeployed.
+
+- Added `.github/workflows/json-contract-tester-api.yml` to run Node 22 validator tests and JavaScript syntax checks on API-folder changes. The commit has no combined status checks visible yet; workflow execution is not claimed as passed.
