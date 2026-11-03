@@ -1,6 +1,10 @@
 name: Falcon autonomous cadence (GitHub Actions fallback)
 
 on:
+  push:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/autonomous-cadence.yml"
   schedule:
     # 15-minute heartbeat, offset away from the top of the hour.
     # Actual project/revenue checks are independently gated at 30/45 minutes.
