@@ -33,3 +33,6 @@ This is a documented subset only: type, required, properties, additionalProperti
 
 ## Test
 Run npm test. Tests cover the mixed batch (1 PASS / 3 FAIL), nested JSON Pointer diagnostics, batch limits, depth limits, node-budget limits, and pointer escaping. Payment middleware integration still requires dependency installation, Cloudflare deployment and a Base wallet to verify end-to-end.
+
+## Receiving-address safety note
+Toobit has published support for USDC deposits on Base. However, an exchange deposit address is custodial and Toobit applies a per-asset/network minimum deposit threshold; deposits below the displayed minimum may not be credited. This API's experimental price is only $0.005 per batch, so do not configure an exchange deposit address as `PAY_TO` unless Toobit explicitly confirms that this exact address accepts Base USDC micro-deposits at or below that amount and credits each transfer. Preferred production recipient: a dedicated self-custody EVM wallet whose recovery phrase is backed up offline. Never put a private key or recovery phrase in this repository or Worker secrets.
