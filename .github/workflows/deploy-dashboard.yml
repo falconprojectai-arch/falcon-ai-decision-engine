@@ -94,7 +94,7 @@ jobs:
               if "posthog-init.js" not in content:
                   if "</head>" not in content:
                       raise SystemExit(f"Missing </head> in {page}")
-                  content = content.replace("</head>", tags + "\\n</head>", 1)
+                  content = content.replace("</head>", tags + "\n</head>", 1)
                   page.write_text(content, encoding="utf-8")
           print(f"Added privacy-limited PostHog pageview and CTA tracking to {len(pages)} HTML pages.")
           PY
