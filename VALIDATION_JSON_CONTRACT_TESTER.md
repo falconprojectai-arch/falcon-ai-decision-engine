@@ -474,3 +474,10 @@ PR #15 review-state cross-check — 2026-11-03: PR #15 is closed and merged. The
 - **Challenge inspection:** the live POST returned HTTP 402 with a `PAYMENT-REQUIRED` header; a prior full decode of the challenge showed x402 v2, scheme `exact`, network `eip155:8453`, amount `5000` USDC base units (0.005 USDC), and a configured receiving address. A later smoke test reconfirmed HTTP 402 and `Access-Control-Allow-Origin: *`. The facilitator's `/supported` endpoint independently confirmed x402 v2 exact support for `eip155:8453`.
 - **Safety:** no payment was signed, submitted, or settled. This proves the live payment challenge is now generated; it does not prove facilitator settlement, wallet compatibility, or that funds have been received.
 - **Next quality gate:** perform an end-to-end settlement only with explicit user authorization for a controlled test payment; then independently verify the resulting transaction and recipient balance. Until then, confirmed revenue remains **$0.00**.
+
+
+### No-payment x402 preflight client — 2026-11-03
+- Added a standalone browser diagnostic at `products/json-contract-tester-api/payment-preflight.html` and linked it from the API README.
+- The page checks the public health endpoint, CORS OPTIONS, rejection of malformed input before payment, and the valid-request HTTP 402 challenge plus `PAYMENT-REQUIRED` header. It makes no wallet connection, creates no signature, submits no transaction, and spends no USDC.
+- Live browser verification is still required after GitHub Pages deploy. The page deliberately labels 402/challenge as a payment-gate check only; it does not claim end-to-end paid settlement.
+- Next gate: run the page from a normal browser, confirm all four checks, then begin first-customer acquisition with the free browser tester as the demo and the API as a clearly labeled experimental paid endpoint. No revenue or customer is claimed.
