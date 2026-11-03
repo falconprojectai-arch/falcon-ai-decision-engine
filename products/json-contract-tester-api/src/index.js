@@ -8,9 +8,9 @@ import { validateBatch, LIMITS } from './validator.js';
 const app = new Hono();
 
 // Allow browser clients to read the x402 payment challenge and submit payment signatures.
-app.use('/v1/*', cors({
+app.use('*', cors({
   origin: '*',
-  allowMethods: ['POST', 'OPTIONS'],
+  allowMethods: ['GET', 'POST', 'OPTIONS'],
   allowHeaders: ['Content-Type', 'PAYMENT-SIGNATURE'],
   exposeHeaders: ['PAYMENT-REQUIRED', 'PAYMENT-RESPONSE'],
   maxAge: 86400
