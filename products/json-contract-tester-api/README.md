@@ -31,7 +31,7 @@ A browser-based diagnostic page is available at https://falconprojectai-arch.git
 
 ## Payment
 
-The route uses x402 exact USDC on Base (eip155:8453) at an experimental price of $0.005 per batch. Malformed JSON and bodies over 64 KiB are rejected before payment. JSON that parses but has an invalid schema or batch shape is validated after the x402 payment step and can return HTTP 400 after payment; callers should validate their request against the OpenAPI contract before authorizing a payment. This ordering also lets generic x402 marketplace probes receive the actual 402 challenge when they send an empty JSON object.
+The route uses x402 exact USDC on Base (eip155:8453) at an experimental price of $0.005 per batch. Malformed JSON and bodies over 64 KiB are rejected before payment. JSON that parses but has an invalid schema or batch shape is validated after x402 payment verification and can return HTTP 400. The @x402/hono middleware settles only after a successful response; therefore, a 4xx response is not a settled sale. Count a payment only when a successful 2xx response carries PAYMENT-RESPONSE and an on-chain receipt. Callers should validate their request against the OpenAPI contract before authorizing payment. This ordering also lets generic x402 marketplace probes receive the actual 402 challenge when they send an empty JSON object.
 
 Set the public receiving address as a Cloudflare Worker secret:
 ```sh
