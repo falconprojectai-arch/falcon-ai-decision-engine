@@ -87,7 +87,7 @@ jobs:
               relative = page.relative_to(site)
               prefix = "../" * (len(relative.parts) - 1)
               tags = (
-                  f'<script src="{prefix}posthog-config.js"></script>\\n'
+                  f'<script src="{prefix}posthog-config.js"></script>\n'
                   f'<script defer src="{prefix}posthog-init.js"></script>'
               )
               content = page.read_text(encoding="utf-8")
