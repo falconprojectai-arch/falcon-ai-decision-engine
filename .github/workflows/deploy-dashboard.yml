@@ -7,6 +7,7 @@ on:
       - "dashboard/**"
       - "products/json-contract-tester/**"
       - "products/dev-agent-toolbox/**"
+      - "products/json-contract-tester-api/**"
       - ".github/workflows/deploy-dashboard.yml"
   workflow_dispatch:
 
@@ -53,12 +54,13 @@ jobs:
         run: |
           set -eu
           rm -rf site
-          mkdir -p site/products/json-contract-tester site/products/dev-agent-toolbox
+          mkdir -p site/products/json-contract-tester site/products/dev-agent-toolbox site/products/json-contract-tester-api
           cp -R dashboard/. site/
           cp products/json-contract-tester/index.html site/products/json-contract-tester/index.html
           cp products/dev-agent-toolbox/index.html site/products/dev-agent-toolbox/index.html
           cp products/dev-agent-toolbox/payment.html site/products/dev-agent-toolbox/payment.html
           cp products/dev-agent-toolbox/contract-review-checklist.html site/products/dev-agent-toolbox/contract-review-checklist.html
+          cp products/json-contract-tester-api/payment-preflight.html site/products/json-contract-tester-api/payment-preflight.html
       - name: Upload dashboard and product
         uses: actions/upload-pages-artifact@v3
         with:
