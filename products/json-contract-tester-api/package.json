@@ -1,0 +1,14 @@
+{
+  "name": "json-contract-tester-x402-api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": { "test": "node --test", "dev": "wrangler dev", "deploy": "wrangler deploy" },
+  "dependencies": {
+    "@x402/core": "^2.17.0",
+    "@x402/evm": "^2.17.0",
+    "@x402/hono": "^2.17.0",
+    "hono": "^4.13.11"
+  },
+  "devDependencies": { "wrangler": "^4.145.0" }
+}
