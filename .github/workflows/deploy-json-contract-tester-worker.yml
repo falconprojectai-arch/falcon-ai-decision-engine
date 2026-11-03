@@ -71,19 +71,13 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          PAY_TO: ${{ secrets.PAY_TO }}
         run: |
           set -euo pipefail
           missing=()
           [ -n "$CLOUDFLARE_API_TOKEN" ] || missing+=("CLOUDFLARE_API_TOKEN")
           [ -n "$CLOUDFLARE_ACCOUNT_ID" ] || missing+=("CLOUDFLARE_ACCOUNT_ID")
-          [ -n "$PAY_TO" ] || missing+=("PAY_TO")
           if [ "${#missing[@]}" -gt 0 ]; then
             printf 'Deployment blocked: missing GitHub Actions secrets: %s\n' "${missing[*]}"
-            exit 1
-          fi
-          if ! [[ "$PAY_TO" =~ ^0x[0-9a-fA-F]{40}$ ]]; then
-            echo "Deployment blocked: PAY_TO must be a valid EVM address (0x + 40 hex characters)."
             exit 1
           fi
 
@@ -94,15 +88,8 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 
-      - name: Configure payment receiver
-        working-directory: products/json-contract-tester-api
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          PAY_TO: ${{ secrets.PAY_TO }}
-        run: |
-          set -euo pipefail
-          printf '%s' "$PAY_TO" | npx wrangler secret put PAY_TO --config wrangler.jsonc
+      # PAY_TO is intentionally kept as a Cloudflare Worker secret, not copied into GitHub.
+      # The independent public smoke test verifies that the existing payment receiver is configured.
 
       - name: Verify production health and x402 challenge
         env:
