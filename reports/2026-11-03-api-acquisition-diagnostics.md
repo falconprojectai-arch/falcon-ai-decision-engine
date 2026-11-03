@@ -2,54 +2,83 @@
 
 Date: 2026-11-03
 
-## Current verified production behavior
+## Current production behavior
 
-Independent HTTP checks were run against the deployed Cloudflare Worker:
+Independent HTTP checks against the live Cloudflare Worker:
 
-| Check | Expected | Result |
-|---|---:|---:|
-| `GET /health` | 200 | 200 |
-| `OPTIONS /v1/validate-batch` | 204 | 204 |
-| Malformed JSON POST | 400 | 400 |
-| Valid unpaid batch POST | 402 + `PAYMENT-REQUIRED` | 402 + header |
+| Check | Result |
+|---|---:|
+| `GET /health` | 200; `Access-Control-Allow-Origin: *` |
+| `OPTIONS /v1/validate-batch` | 204 |
+| Malformed JSON POST | 400 before payment |
+| Empty JSON POST (`{}`) | 402 + `PAYMENT-REQUIRED` |
+| Valid unpaid batch POST | 402 + `PAYMENT-REQUIRED` |
 
-The live payment challenge is x402 v2, scheme `exact`, Base Mainnet (`eip155:8453`), 5,000 USDC base units = 0.005 USDC per batch. The challenge's `payTo` matches the MetaMask receiving address explicitly confirmed by the owner. This confirms challenge issuance, not payment settlement.
+The live challenge is x402 v2, scheme `exact`, Base Mainnet (`eip155:8453`), 5,000 USDC base units = 0.005 USDC per batch. The live `payTo` is `0xFEFA6Cb78Cb79bc140Cd776e038d2093F7A170a5`, matching the MetaMask receiving address explicitly confirmed by the owner.
 
-## PayAPI Market result
+A key compatibility fix moved schema validation after the x402 middleware. This means generic directory probes that send an empty JSON object now receive the real 402 challenge instead of a misleading 400. Malformed JSON and oversized bodies are still rejected before payment. The x402 Hono middleware settles after a successful response; the API's paid handler returns 200 for a valid batch and 400 for schema-invalid batches. See the official package documentation: https://www.npmjs.com/package/@x402/hono
 
-The provider listing was not submitted. PayAPI's server-side route probe returned `not_402` for the Worker URL, even though independent POST checks receive the expected 402 challenge. The form therefore could not auto-verify the wallet field. No wallet address was manually forced into the form, and no submission/payment was made.
+## PayAPI Market submission
 
-- Listing page: https://payapi.market/list
-- API route: https://json-contract-tester-api.falcon-project-ai.workers.dev/v1/validate-batch
+<badge>Submitted — pending review</badge>
 
-## Alternative free directory: Agent402
+The free provider listing was successfully submitted.
 
-Agent402 offers free registration, no account, and 0% take rate. Its seller crawler reads `/.well-known/x402` and `/openapi.json`, then discovers and probes the declared routes.
+- Listing ID: `54bd4f89-23f8-47e7-b507-039362b51198`
+- Provider ID: `e1b9b73c-b2fc-4c23-8869-572284569e48`
+- Name: JSON Contract Tester API
+- Contact: `falcon.project.ai@gmail.com`
+- Route: `POST https://json-contract-tester-api.falcon-project-ai.workers.dev/v1/validate-batch`
+- Price: 0.005 USDC per batch on Base
+- Wallet auto-read from live 402: matches the confirmed receiving address
+- Initial triage: `auto_passed`
+- Current status: `pending_review`
+- Confirmation email: sent and received
 
-A direct registration attempt using the POST-only route as the origin returned 404 because the crawler treated the supplied origin as a discovery root. To make the service discoverable correctly, the Worker source now exposes:
-- `GET /.well-known/x402` — service manifest with the POST route, price, Base network, input schema, and example.
-- `GET /openapi.json` — OpenAPI 3.1 document with the POST operation, example request, and x402 price/network annotations.
+PayAPI's email confirms that the form accepted the listing and that the marketplace will make one canary call from its own wallet. If the route returns the same 402 after payment, the listing stays pending and the marketplace emails the reason. No USDC from the seller was spent, and no seller wallet was connected or signed.
 
-Agent402 seller registration: https://agent402.tools/sell
+- Form: https://payapi.market/list
+- Provider dashboard: https://payapi.market/dashboard
 
-## Code and deployment changes
+## Agent402 free directory
 
-- Worker discovery metadata added in commit: `8d66e84f408c7f35fce98ba5754ec6e9a1b0496d`
-- Guarded Cloudflare deployment workflow added and corrected.
-- Wrangler production bundle dry-run passed: 1,411.68 KiB upload / 241.80 KiB gzip.
-- API test workflow passed: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/41583715860
-- Wrangler dry-run workflow passed; actual deploy step was skipped: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/41583716033
+The Worker origin was successfully registered at Agent402. Its public record shows:
+- `listed: true`
+- Display name: JSON Contract Tester API
+- One paid route discovered
+- Network: Base Mainnet (`eip155:8453`)
+- `routable: true`, health score 1
 
-## Remaining deployment requirement
+The current Agent402 snapshot still shows no refreshed paywall/payTo proof and the router marks the seller as below its settlement-history floor. It is therefore a discovery listing, not a settlement-verified or guaranteed-callable listing yet.
 
-The repository currently has neither of these Actions secrets configured:
-- `CLOUDFLARE_API_TOKEN`
-- `CLOUDFLARE_ACCOUNT_ID`
+- Registration: https://agent402.tools/sell
+- Public seller record: https://agent402.tools/api/index?seller=https%3A%2F%2Fjson-contract-tester-api.falcon-project-ai.workers.dev
 
-The workflow is ready. Once both are added under GitHub → repository Settings → Secrets and variables → Actions, pushing the Worker source or manually running the workflow will deploy the discovery endpoints. Do not paste the API token into chat or commit it to the repository.
+## Discovery and buyer documentation now live
+
+The Worker serves:
+- `GET /.well-known/x402` — service manifest with the POST route, price, Base network, schema, and example.
+- `GET /openapi.json` — OpenAPI 3.1 discovery document.
+
+Links:
+- Manifest: https://json-contract-tester-api.falcon-project-ai.workers.dev/.well-known/x402
+- OpenAPI JSON: https://json-contract-tester-api.falcon-project-ai.workers.dev/openapi.json
+- Buyer quickstart: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/blob/main/products/json-contract-tester-api/BUYER_QUICKSTART.md
+- OpenAPI YAML: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/blob/main/products/json-contract-tester-api/openapi.yaml
+- Five-check preflight: https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester-api/payment-preflight.html
+
+## Code and CI
+
+- Discovery endpoints and manifest: Worker source commit `8d66e84f408c7f35fce98ba5754ec6e9a1b0496d`
+- Challenge-before-schema-validation compatibility fix: `ceb7c173c3057122e00912544047175809d927c8`
+- README, buyer quickstart, and OpenAPI updated to explain billing/validation order.
+- API tests passed: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/41583715860
+- Wrangler dry-run passed; optional deployment job was skipped because the repository did not contain `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`. The production endpoints and behavior above were independently verified live after the source changes; the exact deployment mechanism was not confirmed.
 
 ## Revenue status
 
-- Confirmed paid transactions: 0
+- Paid customer transactions confirmed: 0
 - Confirmed revenue: $0
-- No wallet signature, payment transaction, or settlement has been created.
+- Seller-signed transactions: 0
+- PayAPI's canary payment: pending
+- Agent402 settlement verification: pending
