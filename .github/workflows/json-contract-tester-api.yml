@@ -1,0 +1,28 @@
+name: JSON Contract Tester API Tests
+
+on:
+  push:
+    paths:
+      - "products/json-contract-tester-api/**"
+      - ".github/workflows/json-contract-tester-api.yml"
+  pull_request:
+    paths:
+      - "products/json-contract-tester-api/**"
+      - ".github/workflows/json-contract-tester-api.yml"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Run validator tests
+        working-directory: products/json-contract-tester-api
+        run: node --test
+      - name: Check JavaScript syntax
+        working-directory: products/json-contract-tester-api
+        run: node --check src/index.js && node --check src/validator.js
