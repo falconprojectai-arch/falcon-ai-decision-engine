@@ -402,3 +402,30 @@ The strongest near-term route remains the existing JSON Contract Tester: preserv
 
 
 PR #15 review-state cross-check — 2026-11-03: PR #15 is closed and merged. The connected timeline returned one project-owner-authored comment, zero independent review submissions, and zero inline review threads. Owner-authored material was excluded from independent feedback counts. https://github.com/falconprojectai-arch/falcon-ai-decision-engine/pull/15
+
+
+## New automated monetization hypothesis — x402 pay-per-call API — 2026-11-03 04:14 Asia/Tehran
+
+**Hypothesis:** expose the existing JSON Contract Tester as a separate stateless API for agents, charge a small USDC amount per successful batch, and list it on an x402 marketplace. This is distinct from the existing $4 USDT human-review service: the API would deliver machine-readable validation automatically, without email fulfillment.
+
+### Marketplace comparison
+- **PayAPI Market (preferred for further evaluation):** listing is free, provider keeps 100% of settled calls, and discovery is free through MCP/HTTP. A provider must supply a durable HTTPS URL, paid route, example request, Base USDC wallet, and price; automated checks and a human review follow. Its verification test is one real canary call up to $0.10, paid by the marketplace. The listing/verification process is not proof of recurring buyer demand. Sources: https://payapi.market/faq and https://payapi.market/how-we-verify
+- **tools402 (secondary):** supports Base, Polygon and Solana, wallet-only/no KYC, and can generate a seller wallet, but takes 3% in paywall mode or 4% in proxy mode; settlement is daily and amounts below 1 USDC carry forward. Its documentation reports only one community seller live, so distribution liquidity is unproven. Sources: https://docs.tools402.dev/quickstart and https://docs.tools402.dev/sell-side/paywall-vs-proxy
+- **Cloudflare Workers Free:** 100,000 requests/day, 10 ms CPU per invocation and 128 MB memory; sufficient for a bounded deterministic validator if payload size, depth and sample count are capped. No paid Worker plan is needed for an MVP within these limits. Source: https://developers.cloudflare.com/workers/platform/limits/
+- **Existing payment rail compatibility:** Toobit has announced USDC deposits/withdrawals on Base (2025) and Solana (April 2026). This makes later exchange receipt plausible, but does not replace a self-custody payout wallet and does not prove current account-level availability. Sources: https://www.toobit.com/en-US/announcement/toobit-to-support-matic-base-avaxc-and-optimism-chain-for-usdc-on-toobit-spot and https://www.toobit.com/en-US/announcement/toobit-to-support-sol-chain-for-usdc-on-toobit-spot
+
+### Competition and demand check
+- PayAPI Market's Verification category reports 440 listings, so broad verification is crowded. The catalogue includes **Agent Tool Result Contract Validator**, priced at $0.005 USDC/request with one settlement-verified route as of 2026-11-01; it validates a specific Agent Tool Result Envelope v1.0. A separate Axiom Relay listing advertises deterministic JSON validation. Direct competition is therefore real, not hypothetical. Sources: https://payapi.market/marketplace/verification and https://payapi.market/api/agent-tool-result-contract-validator
+- The plausible differentiator is general JSON Schema subset validation across multiple payloads in one request, with exact JSON Pointer diagnostics and downloadable/structured batch output. Do not claim full JSON Schema support.
+- PayAPI Market itself explicitly cautions that a directory row is not evidence of buyer demand; a settlement-verified badge proves one paid canary route, not ongoing organic usage. Source: https://payapi.market/guides/x402-api-directory
+
+### Proposed MVP shape (not deployed)
+- Route: `POST /v1/validate-batch`
+- Request: `{ "schema": {...}, "outputs": [{ "id": "sample-1", "json": {...} }] }`
+- Response: `{ "valid": false, "summary": {"total": 1, "passed": 0, "failed": 1}, "results": [...] }`, including `instancePath`, `schemaPath`, `keyword`, `expected`, and `actual` for each failure.
+- Initial limits: max 10 payloads, max 256 KB request body, bounded nesting depth; no persistence and no request-body logging. This API is separate from the browser-only tool and must disclose that submitted JSON is transmitted to the hosted Worker and processed in memory.
+- Test price hypothesis: $0.002–$0.005 USDC per successful batch; validate with real paid usage, not listing count.
+- Hosting: Cloudflare Worker Free. For PayAPI Market, implement a real x402 402 challenge and payment verification on Base; do not expose an unprotected origin. An existing browser-only page is not itself a durable paid API.
+
+### Decision / blockers
+**Research-only; no wallet or endpoint created.** A self-custody wallet and a durable HTTPS Worker deployment are prerequisites. The user previously accepted that initial wallet/account setup may be user-handled; no private key was generated, stored, or requested in this run. Build the API only after the wallet path and secure key backup are available. Do not use an exchange deposit address as a substitute for a self-custody payout wallet without explicit support from the exchange and marketplace.
