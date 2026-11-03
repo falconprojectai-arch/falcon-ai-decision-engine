@@ -14,7 +14,7 @@ Independent HTTP checks against the live Cloudflare Worker:
 | Empty JSON POST (`{}`) | 402 + `PAYMENT-REQUIRED` |
 | Valid unpaid batch POST | 402 + `PAYMENT-REQUIRED` |
 
-The live challenge is x402 v2, scheme `exact`, Base Mainnet (`eip155:8453`), 5,000 USDC base units = 0.005 USDC per batch. The live `payTo` is `0xFEFA6Cb78Cb79bc140Cd776e038d2093F7A170a5`, matching the MetaMask receiving address explicitly confirmed by the owner.
+Browser preflight was executed end-to-end: **5/5 passed**, with no failed checks and no wallet connection, signing, or payment. The live challenge is x402 v2, scheme `exact`, Base Mainnet (`eip155:8453`), 5,000 USDC base units = 0.005 USDC per batch. The live `payTo` is `0xFEFA6Cb78Cb79bc140Cd776e038d2093F7A170a5`, matching the MetaMask receiving address explicitly confirmed by the owner.
 
 A key compatibility fix moved schema validation after the x402 middleware. This means generic directory probes that send an empty JSON object now receive the real 402 challenge instead of a misleading 400. Malformed JSON and oversized bodies are still rejected before payment. The x402 Hono middleware settles after a successful response; the API's paid handler returns 200 for a valid batch and 400 for schema-invalid batches. See the official package documentation: https://www.npmjs.com/package/@x402/hono
 
