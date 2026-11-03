@@ -15,7 +15,7 @@ app.use('/v1/*', cors({
   exposeHeaders: ['PAYMENT-REQUIRED', 'PAYMENT-RESPONSE'],
   maxAge: 86400
 }));
-const facilitator = new HTTPFacilitatorClient({ url: 'https://x402.org/facilitator' });
+const facilitator = new HTTPFacilitatorClient({ url: 'https://facilitator.payai.network' });
 const resourceServer = new x402ResourceServer(facilitator);
 registerExactEvmScheme(resourceServer);
 
