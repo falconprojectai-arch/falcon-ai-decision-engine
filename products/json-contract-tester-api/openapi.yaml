@@ -86,7 +86,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/BatchResponse'
         '400':
-          description: Malformed JSON (pre-payment) or invalid schema/batch shape (after payment)
+          description: Malformed JSON (pre-payment) or invalid schema/batch shape (after payment verification; not a successful settlement)
           content:
             application/json:
               schema: { $ref: '#/components/schemas/Error' }
