@@ -18,6 +18,11 @@ Example request:
 
 A successful paid response contains valid, a batch summary, per-sample results, and structured errors with instancePath, schemaPath, keyword, expected, and actual.
 
+## Buyer integration
+
+- [Buyer quickstart](./BUYER_QUICKSTART.md): unpaid challenge inspection and Node.js x402 client example.
+- [OpenAPI 3.1 specification](./openapi.yaml): machine-readable endpoint and request/response contract.
+
 ## No-payment preflight
 
 A browser-based diagnostic page is available at https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester-api/payment-preflight.html. It checks health, CORS, malformed-input rejection, and the live x402 402 challenge without connecting a wallet, signing a payment, or spending USDC. A successful preflight does not verify payment signing or settlement.
@@ -40,3 +45,7 @@ Run npm test. Tests cover the mixed batch (1 PASS / 3 FAIL), nested JSON Pointer
 
 ## Receiving-address safety note
 Toobit has published support for USDC deposits on Base. However, an exchange deposit address is custodial and Toobit applies a per-asset/network minimum deposit threshold; deposits below the displayed minimum may not be credited. This API's experimental price is only $0.005 per batch, so do not configure an exchange deposit address as `PAY_TO` unless Toobit explicitly confirms that this exact address accepts Base USDC micro-deposits at or below that amount and credits each transfer. Preferred production recipient: a dedicated self-custody EVM wallet whose recovery phrase is backed up offline. Never put a private key or recovery phrase in this repository or Worker secrets.
+
+
+## Browser CORS note — 2026-11-03
+The browser preflight identified that `/health` did not yet include CORS headers, even though `/v1/*` did. The source was updated to apply CORS to the health route as well. This source change requires redeploying the Cloudflare Worker before the health check can be read cross-origin by the diagnostic page; the GitHub Pages diagnostic itself does not deploy the Worker. No Cloudflare deploy credential is available through the connected tools, so production redeployment is not claimed.
