@@ -20,7 +20,7 @@ A key compatibility fix moved schema validation after the x402 middleware. This 
 
 ## PayAPI Market submission
 
-<badge>Submitted — pending review</badge>
+Status: **Submitted — pending review**
 
 The free provider listing was successfully submitted.
 
@@ -49,7 +49,7 @@ The Worker origin was successfully registered at Agent402. Its public record sho
 - Network: Base Mainnet (`eip155:8453`)
 - `routable: true`, health score 1
 
-The current Agent402 snapshot still shows no refreshed paywall/payTo proof and the router marks the seller as below its settlement-history floor. It is therefore a discovery listing, not a settlement-verified or guaranteed-callable listing yet.
+The latest public Agent402 snapshot now shows `payToByNetwork.eip155:8453` matching the confirmed MetaMask address, a live route `lastVerifiedAt`, one paid route, and `routable: true`. The seller is still below the router's settlement-history floor; its Base verdict has `unprovenTier: true` with a $0.01 ceiling, so a $0.005 request may be considered only after proven sellers. This is directory/paywall verification, not a completed paid transaction or guaranteed dispatch.
 
 - Registration: https://agent402.tools/sell
 - Public seller record: https://agent402.tools/api/index?seller=https%3A%2F%2Fjson-contract-tester-api.falcon-project-ai.workers.dev
