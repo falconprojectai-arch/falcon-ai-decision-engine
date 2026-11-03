@@ -34,3 +34,10 @@ test('rejects batches that exceed the total JSON node budget', () => {
   const r = validateBatch({ schema: { type: 'object' }, outputs: [{ json: many }] });
   assert.equal(r.ok, false); assert.match(r.error, /JSON nodes/);
 });
+
+
+test('rejects regex pattern schemas before payment to avoid unbounded regex work', () => {
+  const r = validateBatch({ schema: { type: 'string', pattern: '^(a+)+$' }, outputs: [{ json: 'aaaa' }] });
+  assert.equal(r.ok, false);
+  assert.match(r.error, /does not support the pattern keyword/);
+});
