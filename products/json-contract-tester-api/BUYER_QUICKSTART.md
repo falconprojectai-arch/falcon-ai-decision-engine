@@ -21,7 +21,7 @@ curl -i https://json-contract-tester-api.falcon-project-ai.workers.dev/v1/valida
 
 Expected result before payment: **HTTP 402** and a `PAYMENT-REQUIRED` response header. This is only a challenge check, not a paid call.
 
-Malformed JSON and request bodies over 64 KiB are rejected before payment. A JSON body that parses but has an invalid schema or batch shape is validated after payment and can return HTTP 400 after the charge. Validate requests against the OpenAPI contract before authorizing a payment.
+Malformed JSON and request bodies over 64 KiB are rejected before payment. A JSON body that parses but has an invalid schema or batch shape is validated after payment verification and can return HTTP 400. The @x402/hono middleware settles only after a successful response; count only a successful 2xx response with PAYMENT-RESPONSE and an on-chain receipt as a completed payment. Validate requests against the OpenAPI contract before authorizing payment.
 
 ## 2. x402 JavaScript client
 
@@ -86,7 +86,7 @@ HTTP 200 means the batch was processed. The JSON body separately reports:
 - `summary`: total, passed and failed counts.
 - `results[]`: each sample's PASS/FAIL status and structured diagnostics.
 
-A paid response can legitimately contain failed samples. The API charges per successfully processed batch, not per PASS. A syntactically valid but schema-invalid request can return HTTP 400 after payment, so validate the request contract before signing.
+A successfully processed batch can legitimately contain failed samples; the batch is charged based on successful processing, not on whether every sample passes. A schema-invalid request returns 400 after payment verification; the middleware settles only after a successful response, so it should not produce a settled payment.
 
 ## Supported rules and limits
 
