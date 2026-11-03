@@ -4,8 +4,9 @@ info:
   version: 0.1.0
   description: >-
     Stateless batch validator for AI-agent/API JSON outputs against a documented
-    JSON Schema subset. Successful validation responses (including FAIL results)
-    are billable at the x402 price. This is not a full JSON Schema implementation.
+    JSON Schema subset. A syntactically valid unpaid request receives an x402
+    challenge before schema validation. Schema-invalid attempts are validated
+    after payment and may return a billable 400. This is not full JSON Schema.
 servers:
   - url: https://json-contract-tester-api.falcon-project-ai.workers.dev
 paths:
@@ -26,6 +27,22 @@ paths:
                   status: { const: ok }
                   service: { const: json-contract-tester-api }
                   version: { type: string }
+  /.well-known/x402:
+    get:
+      operationId: getX402DiscoveryManifest
+      summary: x402 discovery manifest
+      security: []
+      responses:
+        '200':
+          description: Service and paid-resource discovery metadata
+  /openapi.json:
+    get:
+      operationId: getOpenApiDocument
+      summary: OpenAPI JSON document
+      security: []
+      responses:
+        '200':
+          description: Machine-readable API contract
   /v1/validate-batch:
     post:
       operationId: validateJsonBatch
@@ -33,10 +50,12 @@ paths:
       description: >-
         Send one schema and 1–10 JSON samples. A successful response returns
         per-sample PASS/FAIL diagnostics. The route uses x402 exact USDC on
-        Base Mainnet at 0.005 USDC per request batch. A valid unpaid request
-        returns HTTP 402 and a PAYMENT-REQUIRED challenge. Inspect the
-        challenge before authorizing payment. The hosted API does not support
-        the JSON Schema pattern keyword.
+        Base Mainnet at 0.005 USDC per request batch. A syntactically valid
+        unpaid request returns HTTP 402 and a PAYMENT-REQUIRED challenge before
+        schema validation. Malformed JSON and bodies over 64 KiB are rejected
+        before payment. Schema-invalid requests are validated after payment and
+        may return a billable 400. Inspect the challenge before authorizing
+        payment. The hosted API does not support the JSON Schema pattern keyword.
       requestBody:
         required: true
         content:
@@ -67,7 +86,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/BatchResponse'
         '400':
-          description: Malformed request or unsupported/invalid schema
+          description: Malformed JSON (pre-payment) or invalid schema/batch shape (after payment)
           content:
             application/json:
               schema: { $ref: '#/components/schemas/Error' }
@@ -78,7 +97,7 @@ paths:
               description: Base64-encoded x402 payment requirements; inspect before signing
               schema: { type: string }
         '413':
-          description: Request body exceeds 64 KiB
+          description: Request body exceeds 64 KiB; rejected before payment
         '503':
           description: Payment receiver is not configured
       x-x402:
