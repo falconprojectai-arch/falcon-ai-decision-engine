@@ -32,11 +32,7 @@ function check(value, schema, path = '', schemaPath = '#', errors = [], depth = 
   if (typeof value === 'string') {
     if (Number.isInteger(schema.minLength) && schema.minLength >= 0 && [...value].length < schema.minLength) issue(errors, path, schemaJoin(schemaPath, 'minLength'), 'minLength', 'String is shorter than minLength', schema.minLength, [...value].length);
     if (Number.isInteger(schema.maxLength) && schema.maxLength >= 0 && [...value].length > schema.maxLength) issue(errors, path, schemaJoin(schemaPath, 'maxLength'), 'maxLength', 'String is longer than maxLength', schema.maxLength, [...value].length);
-    if (schema.pattern !== undefined) {
-      if (typeof schema.pattern !== 'string') issue(errors, path, schemaJoin(schemaPath, 'pattern'), 'pattern', 'Pattern must be a string', 'string', typeof schema.pattern);
-      else try { if (!(new RegExp(schema.pattern)).test(value)) issue(errors, path, schemaJoin(schemaPath, 'pattern'), 'pattern', 'String does not match pattern', schema.pattern, value); }
-      catch (e) { issue(errors, path, schemaJoin(schemaPath, 'pattern'), 'pattern', 'Invalid pattern in schema', schema.pattern, e.message); }
-    }
+
   }
   if (typeof value === 'number' && Number.isFinite(value)) {
     if (typeof schema.minimum === 'number' && value < schema.minimum) issue(errors, path, schemaJoin(schemaPath, 'minimum'), 'minimum', 'Number is below minimum', schema.minimum, value);
@@ -54,6 +50,13 @@ function check(value, schema, path = '', schemaPath = '#', errors = [], depth = 
   }
   return errors;
 }
+function hasPatternKeyword(schema) {
+  if (!schema || typeof schema !== 'object') return false;
+  if (Object.prototype.hasOwnProperty.call(schema, 'pattern')) return true;
+  for (const child of Object.values(schema)) if (hasPatternKeyword(child)) return true;
+  return false;
+}
+
 function inspectTree(value, depth = 0, budget = { nodes: 0 }) {
   budget.nodes++;
   if (depth > MAX_DEPTH) return { tooDeep: true, tooMany: false };
@@ -69,6 +72,7 @@ export function validateBatch(input) {
   const { schema, outputs } = input;
   if (!schema || typeof schema !== 'object' || Array.isArray(schema)) return { ok: false, status: 400, error: 'schema must be a JSON object.' };
   if (!Array.isArray(outputs) || outputs.length < 1 || outputs.length > 10) return { ok: false, status: 400, error: 'outputs must contain between 1 and 10 samples.' };
+  if (hasPatternKeyword(schema)) return { ok: false, status: 400, error: 'The hosted API does not support the pattern keyword; use the local browser tester for regex rules.' };
   const budget = { nodes: 0 };
   const schemaStats = inspectTree(schema, 0, budget);
   if (schemaStats.tooDeep) return { ok: false, status: 400, error: `schema nesting exceeds ${MAX_DEPTH}.` };
