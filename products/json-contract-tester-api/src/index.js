@@ -136,7 +136,7 @@ const resourceServer = new x402ResourceServer(facilitator);
 registerExactEvmScheme(resourceServer);
 
 async function readLimitedBody(request, maxBytes) {
-  if (!request.body) return { error: 'Request body is required.' };
+  if (!request.body) return { empty: true };
   const declared = Number(request.headers.get('content-length') || 0);
   if (declared > maxBytes) return { tooLarge: true };
   const reader = request.body.getReader();
@@ -152,6 +152,7 @@ async function readLimitedBody(request, maxBytes) {
   const joined = new Uint8Array(total);
   let offset = 0;
   for (const chunk of chunks) { joined.set(chunk, offset); offset += chunk.byteLength; }
+  if (total === 0) return { empty: true };
   try { return { value: JSON.parse(new TextDecoder().decode(joined)) }; }
   catch { return { error: 'Request body must be valid JSON.' }; }
 }
@@ -202,7 +203,10 @@ app.use('/v1/validate-batch', async (c, next) => {
   const parsed = await readLimitedBody(c.req.raw, LIMITS.maxBodyBytes);
   if (parsed.tooLarge) return c.json({ error: `Request body exceeds ${LIMITS.maxBodyBytes} bytes.` }, 413);
   if (parsed.error) return c.json({ error: parsed.error }, 400);
-  c.set('requestBody', parsed.value);
+  // Empty-body POST probes from paid-API directories must receive the live
+  // x402 challenge. If a buyer pays without a valid batch body, validation
+  // returns 400 and the middleware does not settle a successful response.
+  c.set('requestBody', parsed.empty ? null : parsed.value);
   return next();
 });
 
