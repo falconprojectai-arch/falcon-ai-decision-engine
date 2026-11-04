@@ -142,17 +142,26 @@ jobs:
         run: |
           set -euo pipefail
           echo "Refreshing the free Agent402 seller index..."
-          curl --retry 3 --retry-all-errors --retry-delay 3 -fsS \
+          status="$(curl --silent --show-error -o /tmp/agent402-register.json -w '%{http_code}' \
             -X POST https://agent402.tools/api/index/register \
             -H 'content-type: application/json' \
-            --data "$(jq -n --arg origin "$WORKER_URL" '{origin: $origin}')" \
-            | jq .
-          echo "Verifying refreshed public seller metadata..."
-          curl --retry 5 --retry-all-errors --retry-delay 3 -fsS \
-            "https://agent402.tools/api/index?seller=$WORKER_URL" \
-            | jq -e --arg origin "$WORKER_URL" '
-                .origin == $origin
-                and .routable == true
-                and any(.tools[]; .route == "/v1/validate-batch"
-                  and ((.tags // []) | index("api-response-validation") != null))
-              '
+            --data "$(jq -n --arg origin "$WORKER_URL" '{origin: $origin}')")"
+          if [ "$status" = "429" ]; then
+            echo "Agent402 rate limit reached; the existing seller listing is left intact."
+            cat /tmp/agent402-register.json
+          elif [[ "$status" =~ ^2[0-9][0-9]$ ]]; then
+            cat /tmp/agent402-register.json | jq .
+            echo "Verifying refreshed public seller metadata..."
+            curl --retry 5 --retry-all-errors --retry-delay 3 -fsS \
+              "https://agent402.tools/api/index?seller=$WORKER_URL" \
+              | jq -e --arg origin "$WORKER_URL" '
+                  .origin == $origin
+                  and .routable == true
+                  and any(.tools[]; .route == "/v1/validate-batch"
+                    and ((.tags // []) | index("api-response-validation") != null))
+                '
+          else
+            echo "Agent402 registration failed with HTTP $status."
+            cat /tmp/agent402-register.json
+            exit 1
+          fi
