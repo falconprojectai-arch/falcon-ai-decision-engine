@@ -5,6 +5,7 @@ on:
     branches: ["main"]
     paths:
       - "dashboard/**"
+      - "llms.txt"
       - "products/json-contract-tester/**"
       - "products/dev-agent-toolbox/**"
       - "products/json-contract-tester-api/**"
@@ -71,6 +72,7 @@ jobs:
           rm -rf site
           mkdir -p site/products/json-contract-tester site/products/dev-agent-toolbox site/products/json-contract-tester-api
           cp -R dashboard/. site/
+          cp llms.txt site/llms.txt
           cp products/json-contract-tester/index.html site/products/json-contract-tester/index.html
           cp products/dev-agent-toolbox/index.html site/products/dev-agent-toolbox/index.html
           cp products/dev-agent-toolbox/payment.html site/products/dev-agent-toolbox/payment.html
