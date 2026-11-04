@@ -40,11 +40,19 @@ Update each row only with evidence returned by the channel. Valid states: resear
 
 | Product | Channel | State | Submission ID / public URL | Evidence / next action |
 |---|---|---|---|---|
-| LocalBiz FollowUp | pending inspection | researched | — | — |
-| StockPulse | pending inspection | researched | — | — |
-| MCPGuard Lite | pending inspection | researched | — | — |
-| ExpenseSnap | pending inspection | researched | — | — |
-| CronPulse | pending inspection | researched | — | — |
+| All five products | QuestStack | failed / retry scheduled | No IDs; no listings created | Exact-URL duplicate checks returned available=true; POST returned HTTP 429. One-time retry scheduled 2026-11-05 15:30 UTC. Free API path; optional paid upgrades not used. |
+| LocalBiz FollowUp | Tool Commons | blocked_user_action | No issue created | Exact-name and URL duplicate searches: 0. Official issue template redirects to GitHub sign-in. |
+| StockPulse | Tool Commons | blocked_user_action | No issue created | Exact-name and URL duplicate searches: 0. Official issue template redirects to GitHub sign-in. |
+| MCPGuard Lite | Tool Commons | blocked_user_action | No issue created | Exact-name and URL duplicate searches: 0. Official issue template redirects to GitHub sign-in. |
+| ExpenseSnap | Tool Commons | blocked_user_action | No issue created | Exact-name and URL duplicate searches: 0. Official issue template redirects to GitHub sign-in. |
+| CronPulse | Tool Commons | blocked_user_action | No issue created | Exact-name and URL duplicate searches: 0. Official issue template redirects to GitHub sign-in. |
 
 ## Final verification
 For every live listing: open listing URL, confirm title and canonical product URL, open product URL, check page loads, and record timestamp and HTTP/browser evidence. A directory submission receipt alone is not publication.
+
+
+## Additional channel verification — 2026-11-04
+
+- QuestStack official API rules verified: free listing, no account/API key, optional paid boosts only. Five exact URL checks were clear. Submission was blocked by HTTP 429; no record was created. One-time retry scheduled for 2026-11-05 15:30 UTC.
+- Tool Commons official criteria verified: OSI license, no login, local-first, no ads/tracking, static hostable, single-purpose. The project source is MIT licensed and source inspection found no analytics/tracking/network calls in these five product pages. Exact-name and exact-URL duplicate searches returned zero. GitHub issue creation was blocked because the browser was logged out and the GitHub connector lacks issue-write permission. No credentials were requested and no account was created.
+- Correct Pages host is `falconprojectai-arch.github.io`; a later browser task accidentally tested a different guessed host and its 404 findings are excluded. The correct canonical product pages were separately confirmed HTTP 200.
