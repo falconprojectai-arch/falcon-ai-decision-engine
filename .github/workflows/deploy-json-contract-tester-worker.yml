@@ -148,6 +148,20 @@ jobs:
             exit 1
           fi
           jq -e '.accepts[0].scheme == "exact" and .accepts[0].amount == "5000"' /tmp/x402-empty-post-body.txt
+
+          echo "Checking Bazaar extension in the canonical PAYMENT-REQUIRED header..."
+          status="$(curl -sS -o /tmp/x402-post-body.txt -D /tmp/x402-post-headers.txt -w '%{http_code}' \
+            -X POST "$WORKER_URL/v1/validate-batch" \
+            -H 'Content-Type: application/json' \
+            --data '{"schema":{"type":"object","required":["ok"],"properties":{"ok":{"type":"boolean"}}},"outputs":[{"id":"probe","json":{"ok":true}}]}')"
+          if [ "$status" != "402" ] || ! grep -qi '^payment-required:' /tmp/x402-post-headers.txt; then
+            echo "Expected POST HTTP 402 with PAYMENT-REQUIRED; received HTTP $status."
+            cat /tmp/x402-post-body.txt
+            exit 1
+          fi
+          encoded="$(grep -i '^payment-required:' /tmp/x402-post-headers.txt | sed 's/^[^:]*:[[:space:]]*//' | tr -d '\r')"
+          printf '%s' "$encoded" | base64 -d > /tmp/x402-post-challenge.json
+          jq -e '.extensions.bazaar.info.input.method == "POST" and .extensions.bazaar.info.input.bodyType == "json" and .extensions.bazaar.info.output.type == "json"' /tmp/x402-post-challenge.json
           echo "Production smoke tests passed."
 
       # Free Agent402 registration refresh: re-crawl the public x402 manifest and
