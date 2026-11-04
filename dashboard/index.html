@@ -54,7 +54,7 @@ h1{font-size:25px;margin:0}h2{font-size:17px;margin:0 0 14px}h3{font-size:14px;m
 </div>
 </section>
 <section class="card" id="opportunities">
-<div class="row"><h2>رصد فرصت‌ها</h2><span class="pill active" id="report-status">گزارش audit: ۳۰ اکتبر</span></div>
+<div class="row"><h2>رصد فرصت‌ها</h2><span class="pill active" id="report-status">گزارش audit: ۴ نوامبر ۱۷:۵۶</span></div>
 <p class="sub">این بخش برای ردیابی مسیر هر فرصت است. عددهای زیر تا زمان اتصال گزارش اجرای موتور عمداً «—» هستند؛ صفر یا آمار ساختگی نمایش داده نمی‌شود.</p>
 <div class="opportunity-grid">
 <div class="mini-stat"><div class="label">فرصت‌های جمع‌آوری‌شده</div><div class="metric" data-opportunity-metric="collected">—</div><div class="sub">کل موارد ورودی در آخرین اجرا</div></div>
@@ -199,6 +199,21 @@ h1{font-size:25px;margin:0}h2{font-size:17px;margin:0 0 14px}h3{font-size:14px;m
 <div class="row"><h3>۲۶. LLM/Agent Index — فایل llms.txt</h3><span class="pill success">منتشر و تأیید شد</span></div>
 <p>فایل ریشهٔ llms.txt با توضیح محصولات، endpoint، قیمت، شبکهٔ پرداخت، قرارداد ورودی/خروجی، محدودیت‌های واقعی و لینک quickstart ساخته و از طریق GitHub Pages منتشر شد. صفحهٔ محصول نیز به آن لینک می‌دهد. این فایل برای خزنده‌ها و ایجنت‌هایی است که فایل‌های راهنمای سایت را می‌خوانند؛ هنوز هیچ کلیک یا استفاده‌ای از آن اندازه‌گیری نشده است.</p>
 <div class="actions"><a class="smalllink" href="https://falconprojectai-arch.github.io/falcon-ai-decision-engine/llms.txt" target="_blank" rel="noreferrer">باز کردن llms.txt ↗</a> · <a class="smalllink" href="https://github.com/falconprojectai-arch/falcon-ai-decision-engine/blob/main/llms.txt" target="_blank" rel="noreferrer">منبع GitHub ↗</a></div>
+</div>
+<div class="item">
+<div class="row"><h3>۲۷. API.market — بازارگاه API با پرداخت مدیریت‌شده</h3><span class="pill blocked">بررسی شد؛ پرداخت به فروشنده ناسازگار</span></div>
+<p>ثبت محصول رایگان است و فروشنده ۸۰٪ درآمد را نگه می‌دارد، اما راهنمای رسمی فقط حوالهٔ بانکی یا PayPal را برای پرداخت فروشنده اعلام می‌کند؛ حداقل پرداخت ۵۰ دلار و تسویه ماهانه با فاصلهٔ ۳۰ روز است. ثبت‌نام نیز نام قانونی، تلفن، نشانی کامل و اطلاعات روش پرداخت می‌خواهد. به‌دلیل نبود پرداخت رمزارزی و نیاز به اطلاعات شخصی/بانکی، فعلاً مناسب نیست و هیچ حسابی ساخته نشده است.</p>
+<div class="actions"><a class="smalllink" href="https://api.market/seller" target="_blank" rel="noreferrer">شرایط فروشنده ↗</a> · <a class="smalllink" href="https://docs.api.market/seller-docs/adding-payout-details" target="_blank" rel="noreferrer">روش‌های تسویه ↗</a> · <a class="smalllink" href="https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester-api/" target="_blank" rel="noreferrer">معرفی API ↗</a></div>
+</div>
+<div class="item">
+<div class="row"><h3>۲۸. gold-402 — فهرست تخصصی سرویس‌های x402</h3><span class="pill queued">واجد شرایط فنی؛ PR ارسال نشده</span></div>
+<p>قواعد رسمی پذیرش، endpoint زنده با HTTP 402 معتبر یا manifest، مثال درخواست و بررسی دستی maintainer را لازم می‌داند. سرویس ما از نظر فنی در محدوده است؛ اما تنها مسیر پذیرش PR عمومی از fork است و اتصال فعلی GitHub امکان fork/نوشتن در مخزن بیرونی را ارائه نمی‌کند. Issue جایگزین قابل قبول نیست؛ بنابراین چیزی ارسال نشده است.</p>
+<div class="actions"><a class="smalllink" href="https://github.com/Haustorium12/gold-402/blob/main/CONTRIBUTING.md" target="_blank" rel="noreferrer">قواعد ارسال ↗</a> · <a class="smalllink" href="https://json-contract-tester-api.falcon-project-ai.workers.dev/.well-known/x402" target="_blank" rel="noreferrer">manifest زنده ↗</a> · <a class="smalllink" href="https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester-api/" target="_blank" rel="noreferrer">معرفی API ↗</a></div>
+</div>
+<div class="item">
+<div class="row"><h3>۲۹. PayAPI Market — canary مستقل</h3><span class="pill active">pending_review / هنوز live نیست</span></div>
+<p>آخرین ایمیل همچنان فقط پذیرش فرم در ۳ نوامبر را نشان می‌دهد؛ PayAPI گفته canary را با کیف پول خودش اجرا می‌کند. در بررسی امروز، فهرست عمومی و فایل verified-routes هنوز هیچ ردیف منطبق با endpoint ما نشان ندادند. هیچ نتیجهٔ canary، receipt، بازدید یا فراخوانی تأیید نشده است.</p>
+<div class="actions"><a class="smalllink" href="https://payapi.market/marketplace" target="_blank" rel="noreferrer">بازارگاه ↗</a> · <a class="smalllink" href="https://payapi.market/verified-routes.json" target="_blank" rel="noreferrer">فهرست verified routes ↗</a> · <a class="smalllink" href="https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester-api/" target="_blank" rel="noreferrer">معرفی API ↗</a></div>
 </div>
 <div class="alert">اندازه‌گیری فعلی محدود است: هنوز ابزار تحلیل بازدید/UTM متصل نیست و هیچ مشتری یا درآمد تأییدشده‌ای ثبت نشده. لینک‌های کانال، مسیر دسترسی هستند؛ تأیید انتشار و نتیجه باید جداگانه ثبت شود.</div>
 </section>
