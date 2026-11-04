@@ -79,7 +79,77 @@ console.log(await response.json());
 
 The wrapper handles the x402 challenge and retry using the signer. Run it only after checking the live challenge and funding a dedicated wallet with an amount you are willing to spend. This example is for a local Node.js agent, not a direct MetaMask browser connection.
 
-## 3. Response semantics
+## 3. Python agent integration (httpx)
+
+The official x402 Python client can handle the HTTP 402 challenge and retry automatically. Install:
+
+```bash
+pip install "x402[httpx]" eth-account
+```
+
+Create `buyer.py`:
+
+```python
+import asyncio
+import json
+import os
+
+from eth_account import Account
+from x402 import x402Client
+from x402.http import x402HTTPClient
+from x402.http.clients import x402HttpxClient
+from x402.mechanisms.evm import EthAccountSigner
+from x402.mechanisms.evm.exact.register import register_exact_evm_client
+
+URL = "https://json-contract-tester-api.falcon-project-ai.workers.dev/v1/validate-batch"
+
+payload = {
+    "schema": {
+        "type": "object",
+        "required": ["ok", "result"],
+        "properties": {
+            "ok": {"type": "boolean"},
+            "result": {"type": "string"}
+        }
+    },
+    "outputs": [
+        {"id": "agent-output-1", "json": {"ok": True, "result": "done"}},
+        {"id": "agent-output-2", "json": {"ok": "yes", "result": "done"}}
+    ]
+}
+
+async def main() -> None:
+    key = os.getenv("EVM_PRIVATE_KEY")
+    if not key:
+        raise RuntimeError("Set EVM_PRIVATE_KEY in your local environment")
+
+    account = Account.from_key(key)
+    client = x402Client()
+    register_exact_evm_client(client, EthAccountSigner(account))
+    payment_client = x402HTTPClient(client)
+
+    async with x402HttpxClient(client) as http:
+        response = await http.post(
+            URL,
+            content=json.dumps(payload),
+            headers={"Content-Type": "application/json"},
+        )
+        await response.aread()
+        print("HTTP", response.status_code)
+        print(response.text)
+
+        if response.is_success:
+            settlement = payment_client.get_payment_settle_response(
+                lambda name: response.headers.get(name)
+            )
+            print("Settlement:", settlement)
+
+asyncio.run(main())
+```
+
+Run it only after inspecting the live unpaid challenge and confirming its network, token, amount, and recipient. Use a dedicated low-balance wallet; never put a private key in source control, a browser page, or an agent prompt. A successful HTTP response and the settlement receipt are separate checks.
+
+## 4. Response semantics
 
 HTTP 200 means the batch was processed. The JSON body separately reports:
 - `valid`: true only when every sample passes.
