@@ -49,6 +49,33 @@ paths:
         '200':
           description: Machine-readable API contract
   /v1/validate-batch:
+    get:
+      operationId: probeValidateBatchGet
+      summary: Read-only x402 discovery probe (validation requires POST)
+      description: >-
+        Returns the same unpaid x402 challenge for marketplace discovery.
+        GET is not the billable validation operation; use POST with the
+        documented request body. A paid GET attempt returns 405 and is not
+        settled.
+      responses:
+        '402':
+          description: x402 v2 discovery challenge; no validation is performed
+        '405':
+          description: Use POST for batch validation; no settlement occurs
+      x-payment-required: true
+    head:
+      operationId: probeValidateBatchHead
+      summary: Read-only x402 discovery probe (validation requires POST)
+      description: >-
+        HEAD returns the same unpaid x402 challenge for marketplace discovery.
+        The billable validation operation remains POST. A paid HEAD attempt
+        returns 405 and is not settled.
+      responses:
+        '402':
+          description: x402 v2 discovery challenge; no validation is performed
+        '405':
+          description: Use POST for batch validation; no settlement occurs
+      x-payment-required: true
     post:
       operationId: validateJsonBatch
       summary: Validate JSON Schema for AI outputs, API responses, and webhooks
