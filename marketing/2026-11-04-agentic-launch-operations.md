@@ -81,3 +81,6 @@ Execution evidence: https://github.com/falconprojectai-arch/falcon-ai-decision-e
 - Browser Use credits remain unavailable; no paid top-up was initiated. The successful TechTools route used GitHub Actions at no added cost.
 
 Revenue remains $0.00; no user acquisition or payment is claimed.
+
+
+Dashboard update deployed successfully: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/41893873049 — all deployment and Chromium smoke-test steps passed.
