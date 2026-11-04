@@ -10,6 +10,7 @@ on:
       - "products/dev-agent-toolbox/**"
       - "products/json-contract-tester-api/**"
       - "products/index.html"
+      - "products/launch-guide.md"
       - "products/localbiz-followup/**"
       - "products/stockpulse/**"
       - "products/mcpguard-lite/**"
