@@ -72,6 +72,28 @@ const openApiDocument = {
   servers: [{ url: 'https://json-contract-tester-api.falcon-project-ai.workers.dev' }],
   paths: {
     '/v1/validate-batch': {
+      get: {
+        operationId: 'probeValidateBatchGet',
+        summary: 'Read-only x402 discovery probe (validation requires POST)',
+        description: 'Returns the same unpaid x402 challenge for marketplace discovery. GET is not the billable validation operation; use POST with the documented request body.',
+        tags: ['json-schema-validation', 'api-response-validation'],
+        'x-payment-required': true,
+        responses: {
+          '402': { description: 'x402 v2 discovery challenge; no validation is performed.' },
+          '405': { description: 'Use POST for batch validation; no settlement occurs.' }
+        }
+      },
+      head: {
+        operationId: 'probeValidateBatchHead',
+        summary: 'Read-only x402 discovery probe (validation requires POST)',
+        description: 'HEAD returns the same unpaid x402 challenge for marketplace discovery. The billable validation operation remains POST.',
+        tags: ['json-schema-validation', 'api-response-validation'],
+        'x-payment-required': true,
+        responses: {
+          '402': { description: 'x402 v2 discovery challenge; no validation is performed.' },
+          '405': { description: 'Use POST for batch validation; no settlement occurs.' }
+        }
+      },
       post: {
         operationId: 'validateJsonBatch',
         summary: 'Validate JSON Schema for AI outputs, API responses, and webhook payloads',
