@@ -24,8 +24,6 @@ jobs:
             | jq -e '.status == "ok" and .service == "json-contract-tester-api"'
           curl --retry 3 --retry-all-errors --retry-delay 2 -fsS "$WORKER_URL/.well-known/x402" \
             | jq -e '.resources[] | select(.path == "/v1/validate-batch" and .method == "POST")'
-          curl --retry 3 --retry-all-errors --retry-delay 2 -fsS "$WORKER_URL/.well-known/x402.json" \
-            | jq -e '(.x402Version == 2) and (.resources[] | select(.url == (env.WORKER_URL + "/v1/validate-batch") and .accepts[0].amount == "5000"))'
           curl --retry 3 --retry-all-errors --retry-delay 2 -fsS "$WORKER_URL/openapi.json" \
             | jq -e '.paths["/v1/validate-batch"].post != null'
 
@@ -115,6 +113,8 @@ jobs:
           echo "Checking discovery manifest..."
           curl --retry 5 --retry-all-errors --retry-delay 3 -fsS "$WORKER_URL/.well-known/x402" \
             | jq -e '.resources[] | select(.path == "/v1/validate-batch" and .method == "POST")'
+          curl --retry 5 --retry-all-errors --retry-delay 3 -fsS "$WORKER_URL/.well-known/x402.json" \
+            | jq -e '(.x402Version == 2) and (.resources[] | select(.url == (env.WORKER_URL + "/v1/validate-batch") and .accepts[0].amount == "5000"))'
 
           echo "Checking OpenAPI document..."
           curl --retry 5 --retry-all-errors --retry-delay 3 -fsS "$WORKER_URL/openapi.json" \
