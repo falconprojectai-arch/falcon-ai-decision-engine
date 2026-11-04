@@ -13,6 +13,8 @@ on:
       - "products/localbiz-followup/**"
       - "products/stockpulse/**"
       - "products/mcpguard-lite/**"
+      - "products/expensesnap/**"
+      - "products/cronpulse/**"
       - ".github/workflows/deploy-dashboard.yml"
   workflow_dispatch:
 
@@ -74,7 +76,7 @@ jobs:
         run: |
           set -eu
           rm -rf site
-          mkdir -p site/products/json-contract-tester site/products/dev-agent-toolbox site/products/json-contract-tester-api site/products/localbiz-followup site/products/stockpulse site/products/mcpguard-lite
+          mkdir -p site/products/json-contract-tester site/products/dev-agent-toolbox site/products/json-contract-tester-api site/products/localbiz-followup site/products/stockpulse site/products/mcpguard-lite site/products/expensesnap site/products/cronpulse
           cp -R dashboard/. site/
           cp llms.txt site/llms.txt
           cp products/json-contract-tester/index.html site/products/json-contract-tester/index.html
@@ -86,6 +88,8 @@ jobs:
           cp products/localbiz-followup/index.html site/products/localbiz-followup/index.html
           cp products/stockpulse/index.html site/products/stockpulse/index.html
           cp products/mcpguard-lite/index.html site/products/mcpguard-lite/index.html
+          cp products/expensesnap/index.html site/products/expensesnap/index.html
+          cp products/cronpulse/index.html site/products/cronpulse/index.html
       - name: Upload dashboard and product
         uses: actions/upload-pages-artifact@v3
         with:
@@ -258,6 +262,44 @@ jobs:
                   await check(browser, "products/localbiz-followup/", "LocalBiz FollowUp — lightweight lead & customer follow-up", follow)
                   await check(browser, "products/stockpulse/", "StockPulse — inventory & reorder calculator", stock)
                   await check(browser, "products/mcpguard-lite/", "MCPGuard Lite — local agent config security checker", guard)
+                  await browser.close()
+          asyncio.run(main())
+          PY
+
+      - name: Smoke-test additional micro products in Chromium
+        env:
+          PAGES_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          python - <<'PY'
+          import asyncio, os
+          from playwright.async_api import async_playwright
+
+          async def main():
+              async with async_playwright() as p:
+                  browser = await p.chromium.launch()
+                  errors = []
+                  page = await browser.new_page()
+                  page.on("pageerror", lambda error: errors.append(str(error)))
+                  response = await page.goto(os.environ["PAGES_URL"] + "products/expensesnap/", wait_until="networkidle", timeout=60000)
+                  assert response and response.status == 200
+                  assert await page.title() == "ExpenseSnap — time & expense tracker"
+                  await page.locator("#project").fill("Test client")
+                  await page.locator("#rate").fill("50")
+                  await page.locator("#quantity").fill("2")
+                  await page.locator("#entryForm button[type=submit]").click()
+                  assert await page.locator("#hours").inner_text() == "2.00"
+                  assert await page.locator("#total").inner_text() == "100.00"
+                  await page.close()
+                  page = await browser.new_page()
+                  page.on("pageerror", lambda error: errors.append(str(error)))
+                  response = await page.goto(os.environ["PAGES_URL"] + "products/cronpulse/", wait_until="networkidle", timeout=60000)
+                  assert response and response.status == 200
+                  assert await page.title() == "CronPulse — agent & scheduled job run analyzer"
+                  await page.get_by_role("button", name="Load sample").click()
+                  await page.get_by_role("button", name="Analyze runs").click()
+                  assert await page.locator("#count").inner_text() == "4"
+                  assert await page.locator("#fail").inner_text() == "2"
+                  assert not errors, f"Browser JavaScript errors: {errors}"
                   await browser.close()
           asyncio.run(main())
           PY
