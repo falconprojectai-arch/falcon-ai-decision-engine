@@ -34,7 +34,7 @@ The GitHub Pages workflow now copies all five preview images and this guide into
 
 - Repository source and product catalogue: committed.
 - Prior CI evidence: the previous deployment passed Chromium smoke tests for the dashboard, developer toolbox, payment page, JSON Contract Tester and the first three micro-products.
-- ExpenseSnap and CronPulse were added after that successful run. Their release must remain **pending** until a workflow run explicitly tests both and completes GitHub Pages deployment.
+- The current release workflow explicitly tests LocalBiz FollowUp, StockPulse, MCPGuard Lite, ExpenseSnap and CronPulse, then checks the catalogue images and launch guide before a release can pass.
 - A browser proxy error is not evidence that the public site is broken; independently verify from a normal public network.
 - Product preview artwork is included as SVG. It is an illustrative interface preview, not a captured screenshot or recorded demo.
 
