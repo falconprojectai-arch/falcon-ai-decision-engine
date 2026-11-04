@@ -133,6 +133,19 @@ async function readLimitedBody(request, maxBytes) {
   catch { return { error: 'Request body must be valid JSON.' }; }
 }
 
+app.get('/', c => c.json({
+  name: 'JSON Contract Tester API',
+  status: 'ok',
+  description: 'Paid batch validation API for JSON outputs against a documented JSON Schema subset.',
+  price: '0.005 USDC per batch on Base Mainnet (x402)',
+  endpoints: {
+    health: '/health',
+    discovery: '/.well-known/x402',
+    openapi: '/openapi.json',
+    validate: 'POST /v1/validate-batch'
+  },
+  product: 'https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/'
+}));
 app.get('/health', c => c.json({ status: 'ok', service: 'json-contract-tester-api', version: '0.1.0' }));
 app.get('/.well-known/x402', c => c.json(discoveryManifest));
 app.get('/openapi.json', c => c.json(openApiDocument));
