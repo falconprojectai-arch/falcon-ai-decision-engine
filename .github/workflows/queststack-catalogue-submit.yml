@@ -1,0 +1,83 @@
+name: Submit Falcon product catalogue to QuestStack
+
+on:
+  push:
+    paths:
+      - ".github/workflows/queststack-catalogue-submit.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Check and submit one catalogue listing
+        env:
+          CATALOG_URL: https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/
+          API_BASE: https://queststack.io/api/v1
+        run: |
+          python - <<'PY'
+          import json, os, sys, urllib.parse, urllib.request, urllib.error
+
+          base = os.environ["API_BASE"]
+          url = os.environ["CATALOG_URL"]
+          check_url = base + "/listings/check?" + urllib.parse.urlencode({"url": url})
+          req = urllib.request.Request(check_url, headers={"Accept": "application/json"})
+          try:
+              with urllib.request.urlopen(req, timeout=25) as response:
+                  check = json.loads(response.read().decode("utf-8"))
+          except Exception as exc:
+              print("DUPLICATE_CHECK_FAILED:", type(exc).__name__, str(exc)[:300])
+              sys.exit(1)
+
+          if check.get("available") is not True:
+              print("SKIPPED: catalogue URL is already listed or unavailable.")
+              print("CHECK_RESULT:", json.dumps({k:v for k,v in check.items() if k not in ("managementToken","token")}, ensure_ascii=False))
+              sys.exit(0)
+
+          payload = {
+              "websiteUrl": url,
+              "name": "Falcon AI Micro Tools",
+              "summary": "A collection of focused browser-based tools for customer follow-up, inventory, MCP configuration checks, project expenses, and scheduled-job history.",
+              "category": "developer-tools",
+              "tags": ["web", "free-plan", "productivity"],
+              "description": """Falcon AI Micro Tools is a small suite of local-first browser utilities. The catalogue includes:
+
+          - [LocalBiz FollowUp](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/localbiz-followup/) — customer follow-up tracking with CSV export; it does not send messages.
+          - [StockPulse](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/stockpulse/) — SKU inventory and reorder thresholds; no live store/accounting sync.
+          - [MCPGuard Lite](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/mcpguard-lite/) — heuristic MCP/agent config checks; not a full security audit or runtime protection.
+          - [ExpenseSnap](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/expensesnap/) — project time and expense tracking with CSV/JSON export; not accounting or tax software.
+          - [CronPulse](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/cronpulse/) — offline JSON/JSONL job-history analysis; not live monitoring or alerting.
+
+          Tools run in the browser and are designed for straightforward, single-purpose workflows. See each product page for current capabilities and limitations.""",
+              "requestKey": "f7b9c3d2-8a41-4e6f-9d13-2c5a7b0e4f61"
+          }
+          data = json.dumps(payload).encode("utf-8")
+          req = urllib.request.Request(base + "/listings", data=data, headers={"Content-Type":"application/json","Accept":"application/json"}, method="POST")
+          try:
+              with urllib.request.urlopen(req, timeout=35) as response:
+                  result = json.loads(response.read().decode("utf-8"))
+                  listing = result.get("listing") or result.get("data") or result
+                  safe = {
+                      "http_status": response.status,
+                      "id": listing.get("id") if isinstance(listing, dict) else None,
+                      "status": listing.get("status") if isinstance(listing, dict) else None,
+                      "name": listing.get("name") if isinstance(listing, dict) else None,
+                      "url": listing.get("url") if isinstance(listing, dict) else None,
+                  }
+                  print("SUBMISSION_RESPONSE:", json.dumps(safe, ensure_ascii=False))
+                  if not safe["id"]:
+                      print("RESPONSE_RECEIVED_BUT_LISTING_ID_NOT_FOUND; manual verification required.")
+          except urllib.error.HTTPError as exc:
+              body = exc.read().decode("utf-8", "replace")[:800]
+              print("SUBMISSION_HTTP_ERROR:", exc.code, body)
+              if exc.code == 429:
+                  print("RATE_LIMITED: stop and retry only after the server's stated window.")
+              sys.exit(1)
+          except Exception as exc:
+              print("SUBMISSION_FAILED:", type(exc).__name__, str(exc)[:300])
+              sys.exit(1)
+          PY
