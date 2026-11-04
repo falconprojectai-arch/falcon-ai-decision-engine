@@ -45,3 +45,9 @@ test('CDP Bazaar x402 manifest exposes the paid resource and public receiver', a
   assert.equal(body.resources[0].accepts[0].payTo, payTo);
   assert.equal(body.resources[0].accepts[0].amount, '5000');
 });
+
+test('empty-body POST marketplace probes reach x402 payment gating', async () => {
+  const response = await app.fetch(new Request('https://api.example.test/v1/validate-batch', { method: 'POST' }), {});
+  assert.equal(response.status, 503);
+  assert.equal((await response.json()).error, 'Payment receiver is not configured.');
+});
