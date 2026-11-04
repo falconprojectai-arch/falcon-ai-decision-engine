@@ -139,6 +139,15 @@ jobs:
             exit 1
           fi
           jq -e '.accepts[0].scheme == "exact" and .accepts[0].network == "eip155:8453" and .accepts[0].amount == "5000"' /tmp/x402-get-body.txt
+
+          echo "Checking empty-body POST marketplace probe..."
+          status="$(curl -sS -o /tmp/x402-empty-post-body.txt -D /tmp/x402-empty-post-headers.txt -w '%{http_code}' -X POST "$WORKER_URL/v1/validate-batch")"
+          if [ "$status" != "402" ] || ! grep -qi '^payment-required:' /tmp/x402-empty-post-headers.txt; then
+            echo "Expected empty POST HTTP 402 with PAYMENT-REQUIRED; received HTTP $status."
+            cat /tmp/x402-empty-post-body.txt
+            exit 1
+          fi
+          jq -e '.accepts[0].scheme == "exact" and .accepts[0].amount == "5000"' /tmp/x402-empty-post-body.txt
           echo "Production smoke tests passed."
 
       # Free Agent402 registration refresh: re-crawl the public x402 manifest and
