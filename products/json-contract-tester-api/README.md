@@ -1,6 +1,6 @@
 # JSON Contract Tester API (x402 prototype)
 
-A deployed stateless API for AI agents to validate a batch of JSON outputs against the documented JSON Schema subset used by the browser tester. It is available at https://json-contract-tester-api.falcon-project-ai.workers.dev and does not replace the free local browser tool. The live health endpoint returns HTTP 200; a syntactically valid unpaid POST returns HTTP 402 with a PAYMENT-REQUIRED challenge, including generic directory probes that send `{}`. End-to-end paid settlement has not yet been verified.
+A deployed stateless API for AI agents to validate a batch of JSON outputs against the documented JSON Schema subset used by the browser tester. It is available at https://json-contract-tester-api.falcon-project-ai.workers.dev and does not replace the free local browser tool. The API root returns a service summary and endpoint links (HTTP 200); the live health endpoint returns HTTP 200; a syntactically valid unpaid POST returns HTTP 402 with a PAYMENT-REQUIRED challenge, including generic directory probes that send `{}`. End-to-end paid settlement has not yet been verified.
 
 ## Route
 POST /v1/validate-batch
