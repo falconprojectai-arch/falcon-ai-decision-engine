@@ -39,6 +39,132 @@ const requestSchema = {
 
 // Machine-readable discovery metadata. Marketplaces can discover the POST route
 // without guessing its method or request body, then verify the live 402 quote.
+const bazaarInputExample = {
+  schema: { type: 'object', required: ['ok'], properties: { ok: { type: 'boolean' } } },
+  outputs: [
+    { id: 'valid-sample', json: { ok: true } },
+    { id: 'invalid-sample', json: { ok: 'yes' } }
+  ]
+};
+const bazaarOutputExample = {
+  reportVersion: '1.0',
+  tool: 'JSON Contract Tester API',
+  valid: false,
+  summary: { total: 2, passed: 1, failed: 1 },
+  results: [
+    { id: 'valid-sample', passed: true, errors: [] },
+    {
+      id: 'invalid-sample',
+      passed: false,
+      errors: [{
+        instancePath: '/ok',
+        schemaPath: '#/properties/ok/type',
+        keyword: 'type',
+        message: 'Value has the wrong type',
+        expected: 'boolean',
+        actual: 'string'
+      }]
+    }
+  ],
+  limitation: 'Documented JSON Schema subset only; not a full JSON Schema implementation.'
+};
+const bazaarOutputSchema = {
+  type: 'object',
+  required: ['reportVersion', 'tool', 'valid', 'summary', 'results', 'limitation'],
+  properties: {
+    reportVersion: { const: '1.0' },
+    tool: { const: 'JSON Contract Tester API' },
+    valid: { type: 'boolean' },
+    summary: {
+      type: 'object',
+      required: ['total', 'passed', 'failed'],
+      properties: {
+        total: { type: 'integer' },
+        passed: { type: 'integer' },
+        failed: { type: 'integer' }
+      }
+    },
+    results: {
+      type: 'array',
+      items: {
+        type: 'object',
+        required: ['id', 'passed', 'errors'],
+        properties: {
+          id: { type: 'string' },
+          passed: { type: 'boolean' },
+          errors: {
+            type: 'array',
+            items: {
+              type: 'object',
+              required: ['instancePath', 'schemaPath', 'keyword', 'message', 'expected', 'actual'],
+              properties: {
+                instancePath: { type: 'string' },
+                schemaPath: { type: 'string' },
+                keyword: { type: 'string' },
+                message: { type: 'string' },
+                expected: {},
+                actual: {}
+              }
+            }
+          }
+        }
+      }
+    },
+    limitation: { type: 'string' }
+  }
+};
+const bazaarExtension = {
+  info: {
+    input: {
+      type: 'http',
+      method: 'POST',
+      bodyType: 'json',
+      body: bazaarInputExample
+    },
+    output: {
+      type: 'json',
+      example: bazaarOutputExample
+    }
+  },
+  schema: {
+    $schema: 'https://json-schema.org/draft/2020-12/schema',
+    type: 'object',
+    properties: {
+      input: {
+        type: 'object',
+        properties: {
+          type: { type: 'string', const: 'http' },
+          method: { type: 'string', enum: ['POST', 'PUT', 'PATCH'] },
+          bodyType: { type: 'string', enum: ['json', 'form-data', 'text'] },
+          body: requestSchema,
+          queryParams: { type: 'object', additionalProperties: { type: 'string' } },
+          headers: { type: 'object', additionalProperties: { type: 'string' } }
+        },
+        required: ['type', 'method', 'bodyType', 'body'],
+        additionalProperties: false
+      },
+      output: {
+        type: 'object',
+        properties: {
+          type: { type: 'string' },
+          example: bazaarOutputSchema
+        },
+        required: ['type']
+      }
+    },
+    required: ['input']
+  }
+};
+const resourceTags = [
+  'json-schema-validation',
+  'api-response-validation',
+  'ai-agent-output',
+  'structured-output',
+  'webhook-validation',
+  'contract-testing',
+  'regression-testing'
+];
+
 const discoveryManifest = {
   name: 'JSON Contract Tester API',
   description: serviceDescription,
@@ -199,7 +325,13 @@ app.get('/.well-known/x402.json', c => {
     x402Version: 2,
     resources: [{
       url: new URL('/v1/validate-batch', c.req.url).toString(),
+      type: 'http',
+      serviceName: 'JSON Contract Tester API',
       description: serviceDescription,
+      mimeType: 'application/json',
+      tags: resourceTags,
+      outputSchema: bazaarOutputSchema,
+      extensions: { bazaar: bazaarExtension },
       accepts: [{
         scheme: 'exact',
         network: 'eip155:8453',
@@ -255,7 +387,19 @@ app.use('*', async (c, next) => {
   // for older marketplace indexers that still parse v1-style JSON challenges.
   const headers = new Headers(response.headers);
   headers.set('content-type', 'application/json; charset=UTF-8');
-  return new Response(JSON.stringify({ error: 'Payment required', accepts: publicAccepts }), {
+  return new Response(JSON.stringify({
+    x402Version: 2,
+    error: 'Payment required',
+    resource: {
+      url: new URL('/v1/validate-batch', c.req.url).toString(),
+      description,
+      mimeType: 'application/json',
+      serviceName: 'JSON Contract Tester API',
+      tags: resourceTags
+    },
+    accepts: publicAccepts,
+    extensions: { bazaar: bazaarExtension }
+  }), {
     status: 402,
     headers
   });
