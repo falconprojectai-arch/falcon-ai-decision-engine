@@ -29,6 +29,16 @@
 <p id="status" role="status" aria-live="polite" class="muted"></p><section id="results" aria-live="polite"></section>
 </main>
 <section><h2>Supported rules and current limitations</h2><p class="muted small">Supported: type, required, properties, additionalProperties=false, items, enum, const, minimum, maximum, minLength, maxLength, pattern, minItems, and maxItems. Limits: one JSON value per non-empty line; object/array schema nodes only; no $ref/$defs, composition (allOf/anyOf/oneOf/not), format checks, boolean schemas, or additionalProperties schemas. Pattern uses this browser's JavaScript regular-expression engine. Unknown keywords are ignored. A PASS means only that the value matches the rules listed here, not that it is valid under the full JSON Schema specification. Use a full validator for production or security-critical contracts.</p></section>
+<section id="api" aria-labelledby="api-title" style="margin-top:28px;padding:18px;border:1px solid #888;border-radius:12px">
+<h2 id="api-title">Need automated validation from an AI agent or backend?</h2>
+<p>Use the machine-to-machine JSON Contract Tester API to validate 1–10 JSON outputs per request and receive structured PASS/FAIL results with JSON Pointer diagnostics. The browser tool above remains free and private; the API is a separate pay-per-call service.</p>
+<ul>
+<li><strong>Price:</strong> 0.005 USDC per batch on Base Mainnet (x402).</li>
+<li><strong>Route:</strong> <code>POST https://json-contract-tester-api.falcon-project-ai.workers.dev/v1/validate-batch</code></li>
+<li><strong>Payment:</strong> x402-compatible client; the unpaid request returns HTTP 402 with the exact payment details before any payment is made.</li>
+<li><strong>Integration docs:</strong> <a href="https://json-contract-tester-api.falcon-project-ai.workers.dev/openapi.json">OpenAPI</a> · <a href="https://json-contract-tester-api.falcon-project-ai.workers.dev/.well-known/x402">x402 discovery</a> · <a href="https://json-contract-tester-api.falcon-project-ai.workers.dev/health">health status</a>.</li>
+</ul>
+</section>
 <section id="support" aria-labelledby="support-title" style="margin-top:28px;padding:18px;border:1px solid #888;border-radius:12px">
 <h2 id="support-title">Support this free tool (optional)</h2>
 <p>If this utility saves you time, you can optionally support future improvements with USDT. The tool remains free; payment does not unlock features or create a service obligation.</p>
