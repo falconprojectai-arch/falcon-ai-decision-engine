@@ -39,8 +39,10 @@ x402scan states that registered origins receive a merchant storefront and health
 - Querying the catalog for "JSON Contract Tester" returned zero items.
 - Circle's seller guide says discovery metadata must be declared and at least one successful settlement through the CDP facilitator is needed for CDP Bazaar indexing.
 - Current Worker source uses https://facilitator.payai.network, not the CDP facilitator. Therefore Circle/CDP discovery should not be expected to index this service from the current PayAI settlement path.
-- No public seller-registration endpoint was found in Circle's Discovery API OpenAPI document; it exposes catalog/discovery endpoints.
-- Decision: do not switch facilitators or request credentials automatically. A CDP migration requires explicit review of account access, payment recipient, facilitator credentials, fees/terms, and end-to-end settlement behavior.
+- Coinbase's seller quickstart requires a CDP API key ID and secret to authenticate the seller to the CDP Facilitator. It says the API key does not decide where funds land; the existing recipient address remains separately configured.
+- Official facilitator pricing: first 1,000 on-chain transactions per month are free; after that, $0.001 per on-chain transaction. Payment verification is free. This makes a CDP trial potentially zero-upfront, but it still requires account access and credentials.
+- No public seller-registration endpoint was found in Circle's Discovery API OpenAPI document; it exposes catalog/discovery endpoints. CDP's seller guide says there is no separate Bazaar registration form: validate the endpoint, then complete one successful paid call through CDP Facilitator.
+- Decision: do not switch facilitators or request credentials automatically. A CDP migration requires user-controlled CDP account/API credentials, confirmation that the current PAY_TO address is controlled and correct, review of facilitator terms, and end-to-end settlement verification.
 
 #### Agentic Market / PayAI Bazaar
 - Agentic Market endpoint validator passed preflight checks but returned index=null.
