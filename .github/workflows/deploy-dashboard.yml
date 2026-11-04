@@ -384,7 +384,7 @@ jobs:
                   assert response and response.status == 200
                   assert await page.locator("article.card").count() == 5
                   images = await page.locator("article.card img").evaluate_all("(els) => els.map(e => ({src:e.getAttribute('src'), width:e.naturalWidth, complete:e.complete}))")
-                  assert len(images) == 5 and all(x["complete"] and x["width"] > 0 for x in images), f"Preview images failed: {images}"
+                  assert len(images) == 5 and all(x["complete"] and x["width"] > 0 and x["src"].endswith("/screenshot.png") for x in images), f"Product screenshots failed: {images}"
                   assert await page.locator("article.card a[href*='github.com/falconprojectai-arch/falcon-ai-decision-engine/tree/main/products/']").count() == 5
                   guide = await page.request.get(os.environ["PAGES_URL"] + "products/launch-guide.md")
                   assert guide.status == 200, f"Launch guide HTTP {guide.status}"
