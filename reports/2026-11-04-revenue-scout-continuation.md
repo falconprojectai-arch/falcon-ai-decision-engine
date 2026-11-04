@@ -105,3 +105,38 @@ No payment provider account was created, no identity or bank details were entere
 
 ## Execution boundaries
 No paid transaction, wallet signature, facilitator migration, payout setup, account creation, public directory submission, unsolicited outreach, or external message was made during this continuation. No 10-minute elapsed-time claim is made; the environment does not provide a reliable elapsed-work timer.
+
+
+## Evening continuation — 2026-11-04 19:40:00 Asia/Tehran
+
+### Live marketplace follow-up
+- **PayAPI Market:** Gmail search across the last 7 days returned exactly one thread from notifications@payapi.market: the 2026-11-03 05:28:56 UTC acknowledgement. Full message says the listing is not live, PayAPI will pay one call from its own wallet, and no seller action is needed unless they email again. No canary result or receipt arrived. Official FAQ says its own canary covers one route up to $0.10; our $0.005 price is within that ceiling. No top-up or seller-funded payment is required at this price. Sources: https://payapi.market/faq and https://payapi.market/marketplace.
+- **Agent402:** fresh seller index at 2026-11-04T15:37:45.005Z reports health=1, routable=true, executeViaCallableNow=true, executeViaLane=unproven, and routerDispatchEligible=false with settlement_required. This means it can be called through the unproven lane at the stated routed price, but Smart Order Router will not dispatch it as a proven seller. It is not evidence of settlement or customer demand. Source: https://agent402.tools/api/index?seller=https%3A%2F%2Fjson-contract-tester-api.falcon-project-ai.workers.dev.
+- **Production:** health endpoint returned HTTP 200; standard x402 v2 manifest at /.well-known/x402.json was fetched live and contains a POST resource, Base USDC accepts and the structured input/output contract. Sources: https://json-contract-tester-api.falcon-project-ai.workers.dev/health and https://json-contract-tester-api.falcon-project-ai.workers.dev/.well-known/x402.json.
+
+### New free marketplace listing — published, but not safe to promote as a working purchase path
+- Submitted the existing public x402 v2 manifest to Agent Bazaar (Saylor Innovations) using its documented no-account, no-KYC, no-listing-fee flow. Submission returned HTTP 200: `{"ok":true,"host":"json-contract-tester-api.falcon-project-ai.workers.dev","resourceCount":1}`.
+- Public search for “JSON Contract Tester” returned exactly one result. Listing ID 75152 is visible at https://bazaar.saylorinnovations.com/resources/75152 and machine-readable metadata at https://bazaar.saylorinnovations.com/resources/75152.json.
+- **Critical compatibility issue discovered immediately after publication:** the marketplace's resource-detail renderer hardcodes GET for all HTTP resources and generates GET curl/JavaScript/Python examples. Our paid validator is POST-only with a JSON body; GET is only a non-billable discovery probe and returns 405 after the unpaid challenge. The marketplace's public listing therefore exposes an execution example that is incompatible with our real paid operation. This is a directory listing, not a verified successful purchase. Do not promote it as a functioning route until the marketplace supports method-aware resources or the listing is corrected.
+- Source implementation showing GET hardcoding: https://github.com/SaylorInnovations/open-x402-bazaar/blob/master/functions/resources/%5Bslug%5D.js. Marketplace publish docs: https://bazaar.saylorinnovations.com/publish.
+- No wallet change, signature, seller-funded payment, featured placement or paid promotion was made.
+
+### Additional free distribution route
+- **Wever Labs Agent Directory:** official form says listing/editing are free and automated checks may publish immediately; failed checks go to operator review. Required fields include service name, website, description, category, access type and contact email. It remains researched-not-submitted because the contact email requirement and possibility of operator review do not meet the strict no-identity/no-approval submission gate for this run. Sources: https://weverlabs.com/directory/ and https://weverlabs.com/directory/submit/.
+
+### Distinct non-JSON market research
+- **Local-business/WhatsApp lead follow-up:** WorkFlicks advertises a free plan, $12/month Starter and $29/month Agency; this is a competitor pricing signal, not evidence that our specific MVP will sell. https://workflicks.online/
+- Conversion24 advertises follow-up from €3.50 per lead, with a 100-playbook monthly minimum plus separate messaging/voice usage and setup costs. That implies a high-cost service model and supports testing a lightweight self-serve alternative rather than copying its managed service. https://conversion24.com/business-services-lead-follow-up-whatsapp/
+- **Digital products:** Lemon Squeezy marketplace takes 30% on marketplace sales, requires at least 3 store sales or $50 in own-store sales before marketplace eligibility, and pays to supported bank or PayPal accounts with a $50 payout threshold. This is not a near-term fit for the current crypto-only receiving route. https://docs.lemonsqueezy.com/help/marketplace and https://docs.lemonsqueezy.com/help/getting-started/getting-paid.
+- **Iranian rial rails:** Zarinpal's official page confirms onboarding, identity verification and gateway application/review; it advertises first-month free membership, standard 0.5% up to 16,000 toman plus 500 toman fixed, and next-day settlement by 17:00. https://www.zarinpal.com/payment-gateway and https://www.zarinpal.com/pricing. Zibal's official registration guide requires an Iranian mobile number in the applicant's name, email, Shaba, identity document, tax-tracking code, Enamad and a valid permit; it warns that identity and bank information must not be shared with others. https://help.zibal.ir/article/registration/. PayPing's official docs expose payment, withdrawal and transaction-report APIs, but the fetched docs do not establish current merchant eligibility, fees or payout availability. https://docs.payping.ir/. IDPay's official terms page could not be fetched due to TLS failure in this run; no current eligibility claim is made.
+- **Decision:** LocalBiz FollowUp remains the best distinct non-JSON hypothesis to validate, but not to build yet. Continue the 3 independent users × 5 real leads × second-day return gate. No Iranian gateway is considered ready until the account owner personally verifies eligibility and enters any identity/bank details only in the provider's secure official panel.
+
+### Feedback and traffic audit
+- Latest repository issues/comments checked: Issue #13 still has one independent external comment from shigeki7777 (2026-10-29); no newer independent buyer feedback was found. Issue #18 and #19 recent comments are project-owner or automation-generated and were excluded as independent market feedback.
+- GitHub Traffic views/clones endpoints are not exposed by the connected GitHub fetch integration (request rejected as unsupported endpoint). No visit, unique visitor, referrer, clone or conversion counts are reported.
+- CI latest before this continuation: Test Revenue Machine run 41848418955 completed successfully. The current dashboard change will trigger a new deploy/test run; final live verification is pending.
+
+### Revenue and safety
+- Independently verified revenue remains **$0.00**. No independent buyer payment, canary receipt, or settlement receipt has been verified.
+- No wallet signature, payment, facilitator migration, bank/card detail, KYC form, account creation or paid placement was performed.
+- No 10-minute elapsed-work claim is made; elapsed productive time is not reliably measured by this environment.
