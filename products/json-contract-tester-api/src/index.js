@@ -210,7 +210,15 @@ app.use('*', async (c, next) => {
   if (c.req.path !== '/v1/validate-batch' || !['GET', 'HEAD', 'POST'].includes(c.req.method)) return next();
   const payTo = c.env.PAY_TO;
   if (!payTo || !/^0x[a-fA-F0-9]{40}$/.test(payTo)) return c.json({ error: 'Payment receiver is not configured.' }, 503);
-  const accepts = [{ scheme: 'exact', price: '$0.005', network: 'eip155:8453', payTo }];
+  const accepts = [{ scheme: 'exact', price: '$0.005', network: 'eip155:8453', payTo, maxTimeoutSeconds: 60 }];
+  const publicAccepts = [{
+    scheme: 'exact',
+    network: 'eip155:8453',
+    payTo,
+    asset: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
+    amount: '5000',
+    maxTimeoutSeconds: 60
+  }];
   const description = 'Validate 1–10 JSON outputs against the documented JSON Schema subset; receive structured PASS/FAIL results and JSON Pointer diagnostics.';
   // GET and HEAD expose the same unpaid 402 challenge for read-only marketplace
   // probes. The actual billable operation remains POST only.
@@ -219,7 +227,16 @@ app.use('*', async (c, next) => {
     'GET /v1/validate-batch': { accepts, description, mimeType: 'application/json' },
     'HEAD /v1/validate-batch': { accepts, description, mimeType: 'application/json' }
   }, resourceServer);
-  return mw(c, next);
+  const response = await mw(c, next);
+  if (response.status !== 402) return response;
+  // Preserve the canonical x402 v2 header and expose accepts[] in the body
+  // for older marketplace indexers that still parse v1-style JSON challenges.
+  const headers = new Headers(response.headers);
+  headers.set('content-type', 'application/json; charset=UTF-8');
+  return new Response(JSON.stringify({ error: 'Payment required', accepts: publicAccepts }), {
+    status: 402,
+    headers
+  });
 });
 
 const discoveryMethodNotAllowed = c => c.json({ error: 'Use POST /v1/validate-batch for batch validation.' }, 405, { Allow: 'POST' });
