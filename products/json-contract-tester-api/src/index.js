@@ -101,6 +101,12 @@ const openApiDocument = {
         tags: ['json-schema-validation', 'json-validation', 'api-response-validation', 'ai-agent-output', 'structured-output', 'webhook-validation', 'contract-testing', 'regression-testing'],
         'x-price-usd': '0.005',
         'x-x402-network': 'eip155:8453',
+        'x-payment-info': {
+          protocols: ['x402'],
+          price: { mode: 'fixed', currency: 'USD', amount: '0.005' },
+          network: 'eip155:8453',
+          asset: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913'
+        },
         'x-payment-required': true,
         requestBody: {
           required: true,
