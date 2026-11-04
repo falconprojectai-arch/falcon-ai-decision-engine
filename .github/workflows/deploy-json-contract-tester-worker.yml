@@ -120,3 +120,27 @@ jobs:
             exit 1
           fi
           echo "Production smoke tests passed."
+
+      # Free Agent402 registration refresh: re-crawl the public x402 manifest and
+      # OpenAPI after every Worker deploy. This improves discovery metadata only;
+      # it does not create or simulate a paid settlement.
+      - name: Refresh Agent402 seller listing
+        env:
+          WORKER_URL: https://json-contract-tester-api.falcon-project-ai.workers.dev
+        run: |
+          set -euo pipefail
+          echo "Refreshing the free Agent402 seller index..."
+          curl --retry 3 --retry-all-errors --retry-delay 3 -fsS \
+            -X POST https://agent402.tools/api/index/register \
+            -H 'content-type: application/json' \
+            --data "$(jq -n --arg origin "$WORKER_URL" '{origin: $origin}')" \
+            | jq .
+          echo "Verifying refreshed public seller metadata..."
+          curl --retry 5 --retry-all-errors --retry-delay 3 -fsS \
+            "https://agent402.tools/api/index?seller=$WORKER_URL" \
+            | jq -e --arg origin "$WORKER_URL" '
+                .origin == $origin
+                and .routable == true
+                and any(.tools[]; .route == "/v1/validate-batch"
+                  and ((.tags // []) | index("api-response-validation") != null))
+              '
