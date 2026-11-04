@@ -26,7 +26,7 @@ The repository also keeps an SVG interface illustration for each product as a fa
 
 ## Release test status
 
-<badge>PASS</badge> **All five products, catalogue images and launch guide passed the GitHub Actions deployment workflow** on commit `73c052c4e4c77b07cffca5d200723745ead0565e`.
+**PASS — All five products, catalogue images and launch guide passed the GitHub Actions deployment workflow** on commit `73c052c4e4c77b07cffca5d200723745ead0565e`.
 
 The successful run:
 - Captured five real PNG screenshots from the working product interfaces.
