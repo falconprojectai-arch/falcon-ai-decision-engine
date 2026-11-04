@@ -51,3 +51,14 @@ test('empty-body POST marketplace probes reach x402 payment gating', async () =>
   assert.equal(response.status, 503);
   assert.equal((await response.json()).error, 'Payment receiver is not configured.');
 });
+
+test('OpenAPI exposes x-payment-info for x402 discovery registries', async () => {
+  const response = await app.fetch(new Request('https://api.example.test/openapi.json'), {});
+  assert.equal(response.status, 200);
+  const body = await response.json();
+  const operation = body.paths['/v1/validate-batch'].post;
+  assert.deepEqual(operation['x-payment-info'].protocols, ['x402']);
+  assert.equal(operation['x-payment-info'].price.mode, 'fixed');
+  assert.equal(operation['x-payment-info'].price.currency, 'USD');
+  assert.equal(operation['x-payment-info'].price.amount, '0.005');
+});
