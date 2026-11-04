@@ -28,7 +28,7 @@ The JSON Contract Tester also has a live machine-to-machine API for AI agents an
 - OpenAPI: https://json-contract-tester-api.falcon-project-ai.workers.dev/openapi.json
 - No-payment diagnostics: https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester-api/payment-preflight.html
 
-The live unpaid request returns HTTP 402 with a payment challenge; this proves the paywall is active, not that a payment has settled. The API passed its unit/route tests and production health, discovery, OpenAPI, and challenge smoke tests. A PayAPI Market listing was accepted into review on 2026-11-03; it is **not live yet** and its paid canary/settlement receipt is pending. No x402 sales or revenue are currently recorded.
+The live unpaid request returns HTTP 402 with a payment challenge; this proves the paywall is active, not that a payment has settled. The API passed its unit/route tests and production health, discovery, OpenAPI, and challenge smoke tests. A PayAPI Market listing was accepted into review on 2026-11-03; it is **not live yet** and its paid canary/settlement receipt is pending. No x402 sales or revenue are currently recorded. The public Agent402 seller index also discovers the API as routable on Base; its execute-via lane is callable, while Smart Order Router dispatch remains gated on settlement proof. [Agent402 seller record](https://agent402.tools/api/index?seller=https%3A%2F%2Fjson-contract-tester-api.falcon-project-ai.workers.dev).
 
 ## Current V1 core
 
