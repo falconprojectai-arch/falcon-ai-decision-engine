@@ -1,0 +1,49 @@
+# Falcon Project AI
+
+> Developer utilities for JSON contracts, API responses, and AI-agent output validation.
+
+## Primary products
+
+- [JSON Contract Tester — free browser tool](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/): Validate JSON examples against a documented schema subset locally in the browser. Inputs are processed in the browser and are not uploaded by this tool.
+- [JSON Contract Tester API](https://json-contract-tester-api.falcon-project-ai.workers.dev/): Stateless machine-to-machine endpoint for validating 1–10 JSON outputs in one batch.
+  - Endpoint: `POST https://json-contract-tester-api.falcon-project-ai.workers.dev/v1/validate-batch`
+  - Price: 0.005 USDC per batch on Base Mainnet (`eip155:8453`).
+  - Payment: x402 v2; unpaid valid requests return HTTP 402 with a `PAYMENT-REQUIRED` challenge.
+  - No API key or account is required; an x402-compatible client and a wallet able to authorize Base USDC payments are required for paid calls.
+  - [Buyer quickstart — Node.js and Python](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/blob/main/products/json-contract-tester-api/BUYER_QUICKSTART.md)
+  - [OpenAPI 3.1 JSON](https://json-contract-tester-api.falcon-project-ai.workers.dev/openapi.json)
+  - [x402 v2 manifest](https://json-contract-tester-api.falcon-project-ai.workers.dev/.well-known/x402.json)
+  - [No-payment preflight](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester-api/payment-preflight.html)
+- [Dev & Agent Toolbox](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/dev-agent-toolbox/): Free developer utilities for API and agent workflows.
+
+## API contract
+
+Request JSON:
+- `schema`: JSON Schema object using the supported subset.
+- `outputs`: array of 1–10 items, each with `id` and `json`.
+
+Response JSON includes:
+- `valid`: whether every sample passed.
+- `summary`: total, passed, failed.
+- `results[]`: per-sample PASS/FAIL and structured diagnostics.
+- Error details include JSON Pointer paths such as `instancePath`, `schemaPath`, `keyword`, `expected`, and `actual`.
+
+Supported subset:
+- `type`, `required`, `properties`, `additionalProperties: false`, `items`, `enum`, `const`, numeric bounds, string length, and array length.
+- The hosted API rejects `pattern`.
+- Not full JSON Schema: no `$ref`/`$defs`, composition keywords, or format assertions.
+- Limits: 64 KiB request body, 1–10 samples, 32 nesting levels, 2,000 total JSON nodes, and 100 diagnostics per sample.
+
+## Safe use
+
+- Never submit secrets, personal data, credentials, or confidential production payloads.
+- Inspect the live x402 challenge's network, token, amount, and recipient before authorizing any payment.
+- A HTTP 402 challenge or directory listing is not proof of a completed sale. Count a sale only after a successful 2xx response and a verified settlement receipt.
+- The API is experimental; no uptime SLA or full JSON Schema conformance is claimed.
+
+## Project and status
+
+- [Project dashboard](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/)
+- [Source repository](https://github.com/falconprojectai-arch/falcon-ai-decision-engine)
+- [Published technical guide: API response validation](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/guides/validate-json-api-responses.html)
+- [Published technical guide: AI-agent JSON output testing](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/guides/test-ai-agent-json-outputs.html)
