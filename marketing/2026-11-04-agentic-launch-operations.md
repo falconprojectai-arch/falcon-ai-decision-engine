@@ -56,3 +56,28 @@ For every live listing: open listing URL, confirm title and canonical product UR
 - QuestStack official API rules verified: free listing, no account/API key, optional paid boosts only. Five exact URL checks were clear. Submission was blocked by HTTP 429; no record was created. One-time retry scheduled for 2026-11-05 15:30 UTC.
 - Tool Commons official criteria verified: OSI license, no login, local-first, no ads/tracking, static hostable, single-purpose. The project source is MIT licensed and source inspection found no analytics/tracking/network calls in these five product pages. Exact-name and exact-URL duplicate searches returned zero. GitHub issue creation was blocked because the browser was logged out and the GitHub connector lacks issue-write permission. No credentials were requested and no account was created.
 - Correct Pages host is `falconprojectai-arch.github.io`; a later browser task accidentally tested a different guessed host and its 404 findings are excluded. The correct canonical product pages were separately confirmed HTTP 200.
+
+
+## Agentic launch update — 2026-11-04 19:05 UTC
+
+### Confirmed public listings — TechTools Launchpad
+
+The documented unauthenticated JSON API was called from GitHub Actions to avoid the exhausted Browser Use credits. All five submissions returned HTTP 201 and the public listing API re-check found all five exact canonical URLs.
+
+| Product | State | Listing ID | Public link |
+|---|---|---:|---|
+| LocalBiz FollowUp | live_verified | 7543 | https://techtools.cz/tools/launchpad/?tool=7543 |
+| StockPulse | live_verified | 7544 | https://techtools.cz/tools/launchpad/?tool=7544 |
+| MCPGuard Lite | live_verified | 7545 | https://techtools.cz/tools/launchpad/?tool=7545 |
+| ExpenseSnap | live_verified | 7546 | https://techtools.cz/tools/launchpad/?tool=7546 |
+| CronPulse | live_verified | 7547 | https://techtools.cz/tools/launchpad/?tool=7547 |
+
+Execution evidence: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/41893495551
+
+### Blockers re-tested
+
+- QuestStack: GitHub Actions runner got HTTP 403 on the duplicate-check endpoint and stopped before submission. No listing created. Earlier Browser Use attempt returned HTTP 429. The scheduled retry remains enabled but has no confirmed next-run timestamp.
+- Tool Commons: GitHub connector create_issue returned HTTP 403 Resource not accessible by integration; no issue created. Needs Issues: write permission or authenticated browser.
+- Browser Use credits remain unavailable; no paid top-up was initiated. The successful TechTools route used GitHub Actions at no added cost.
+
+Revenue remains $0.00; no user acquisition or payment is claimed.
