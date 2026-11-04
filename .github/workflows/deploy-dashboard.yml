@@ -97,6 +97,65 @@ jobs:
           cp products/mcpguard-lite/preview.svg site/products/mcpguard-lite/preview.svg
           cp products/expensesnap/preview.svg site/products/expensesnap/preview.svg
           cp products/cronpulse/preview.svg site/products/cronpulse/preview.svg
+      - name: Install browser-test dependencies
+        run: |
+          python -m pip install --upgrade pip playwright
+          python -m playwright install --with-deps chromium
+      - name: Capture real product screenshots with synthetic data
+        run: |
+          python - <<'PY'
+          import asyncio, subprocess, sys, time
+          from playwright.async_api import async_playwright
+
+          server = subprocess.Popen([sys.executable, "-m", "http.server", "8765", "--directory", "site"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+          try:
+              time.sleep(2)
+              async def main():
+                  async with async_playwright() as p:
+                      browser = await p.chromium.launch()
+                      async def capture(slug, setup):
+                          page = await browser.new_page(viewport={"width": 1440, "height": 1000}, device_scale_factor=1)
+                          response = await page.goto(f"http://127.0.0.1:8765/products/{slug}/", wait_until="networkidle", timeout=60000)
+                          assert response and response.status == 200, f"{slug}: page did not load"
+                          await setup(page)
+                          await page.screenshot(path=f"site/products/{slug}/screenshot.png", full_page=True, animations="disabled")
+                          await page.close()
+                      async def localbiz(page):
+                          await page.locator("#name").fill("Northside Cafe")
+                          await page.locator("#contact").fill("sample@example.test")
+                          await page.locator("#need").fill("Website enquiry")
+                          await page.locator("#leadForm button[type=submit]").click()
+                      async def stock(page):
+                          await page.locator("#sku").fill("SKU-104")
+                          await page.locator("#name").fill("Coffee beans")
+                          await page.locator("#qty").fill("4")
+                          await page.locator("#min").fill("10")
+                          await page.locator("#cost").fill("8")
+                          await page.locator("#price").fill("14")
+                          await page.locator("#form button[type=submit]").click()
+                      async def guard(page):
+                          await page.get_by_role("button", name="Load sample").click()
+                          await page.get_by_role("button", name="Scan configuration").click()
+                      async def expense(page):
+                          await page.locator("#date").fill("2026-11-04")
+                          await page.locator("#project").fill("Northside Cafe")
+                          await page.locator("#quantity").fill("2")
+                          await page.locator("#rate").fill("50")
+                          await page.locator("#entryForm button[type=submit]").click()
+                      async def cron(page):
+                          await page.get_by_role("button", name="Load sample").click()
+                          await page.get_by_role("button", name="Analyze runs").click()
+                      await capture("localbiz-followup", localbiz)
+                      await capture("stockpulse", stock)
+                      await capture("mcpguard-lite", guard)
+                      await capture("expensesnap", expense)
+                      await capture("cronpulse", cron)
+                      await browser.close()
+              asyncio.run(main())
+          finally:
+              server.terminate()
+              server.wait(timeout=10)
+          PY
       - name: Upload dashboard and product
         uses: actions/upload-pages-artifact@v3
         with:
@@ -104,10 +163,6 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-      - name: Install browser-test dependencies
-        run: |
-          python -m pip install --upgrade pip playwright
-          python -m playwright install --with-deps chromium
       - name: Smoke-test deployed dashboard in Chromium
         env:
           DASHBOARD_URL: ${{ steps.deployment.outputs.page_url }}
