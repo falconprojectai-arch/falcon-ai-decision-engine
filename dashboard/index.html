@@ -28,7 +28,7 @@ h1{font-size:25px;margin:0}h2{font-size:17px;margin:0 0 14px}h3{font-size:14px;m
 <div class="layout">
 <div class="stack">
 <section class="card">
-<div class="row"><h2>وضعیت پروژه‌ها</h2><span class="pill done">آخرین تغییر داشبورد: <time id="last-updated" datetime="2026-11-02T04:20:00+03:30">۲ نوامبر ۲۰۲۶، ۰۴:۲۰ تهران</time></span></div>
+<div class="row"><h2>وضعیت پروژه‌ها</h2><span class="pill done">آخرین تغییر داشبورد: <time id="last-updated" datetime="2026-11-04T04:54:23+03:30">۱۳ آبان ۱۴۰۵ ساعت ۰۴:۵۴:۲۳ تهران</time></span></div>
 <div class="item">
 <div class="row"><div><h3>۱. JSON Schema Generator</h3><div class="sub">ابزار مرورگری؛ تبدیل نمونهٔ JSON به JSON Schema</div></div><span class="pill done">فایل ساخته شد</span></div>
 <div class="bar"><span style="width:65%"></span></div><div class="sub">۶۵٪ تخمینی از مسیر MVP — نیازمند تست و انتشار عمومی</div>
@@ -154,6 +154,26 @@ h1{font-size:25px;margin:0}h2{font-size:17px;margin:0 0 14px}h3{font-size:14px;m
 <div class="row"><h3>۱۷. معرفی ژاپنی — صفحهٔ مستقل ابزار</h3><span class="pill done">صفحه ساخته شد</span></div>
 <p>صفحهٔ ژاپنی برای مخاطب‌های Qiita و Zenn آماده است. انتشار مقاله یا ثبت در انجمن‌های ژاپنی هنوز انجام نشده.</p>
 <div class="actions"><a class="smalllink" href="https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/ja/" target="_blank" rel="noreferrer">صفحهٔ معرفی ژاپنی ↗</a> · <a class="smalllink" href="https://qiita.com/" target="_blank" rel="noreferrer">کانال Qiita ↗</a> · <a class="smalllink" href="https://zenn.dev/" target="_blank" rel="noreferrer">کانال Zenn ↗</a></div>
+</div>
+<div class="item">
+<div class="row"><h3>۱۸. Agent Service Directory — فهرست API و ابزارهای ایجنت</h3><span class="pill active">به فهرست اولیه اضافه شد؛ پایش در انتظار</span></div>
+<p>ثبت رایگان با HTTP 201 پذیرفته شد. سرویس فعلاً در index قرار گرفته و پس از بررسی‌های بدون پرداخت، در صورت پاس‌شدن معیارها وارد directory می‌شود. این فهرست هیچ پرداختی انجام نمی‌دهد.</p>
+<div class="actions"><a class="smalllink" href="https://agentservicedirectory.com/services/cand_280405644fee6b9c" target="_blank" rel="noreferrer">صفحهٔ وضعیت سرویس ↗</a> · <a class="smalllink" href="https://agentservicedirectory.com/methodology" target="_blank" rel="noreferrer">روش ارزیابی ↗</a> · <a class="smalllink" href="https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/" target="_blank" rel="noreferrer">صفحهٔ محصول ↗</a></div>
+</div>
+<div class="item">
+<div class="row"><h3>۱۹. Agent Bazaar — بازار x402 برای ایجنت‌ها</h3><span class="pill done">ثبت موفق</span></div>
+<p>ارسال manifest استاندارد x402 v2 با HTTP 200 پذیرفته شد و یک resource ثبت شد. نمایش نهایی و آمار استفاده هنوز مستقلاً تأیید نشده‌اند؛ ثبت فهرست به معنی فروش نیست.</p>
+<div class="actions"><a class="smalllink" href="https://bazaar.saylorinnovations.com/" target="_blank" rel="noreferrer">بازار Agent Bazaar ↗</a> · <a class="smalllink" href="https://json-contract-tester-api.falcon-project-ai.workers.dev/.well-known/x402.json" target="_blank" rel="noreferrer">manifest ثبت‌شده ↗</a></div>
+</div>
+<div class="item">
+<div class="row"><h3>۲۰. x402dash — فهرست و پایش endpointهای پرداختی</h3><span class="pill done">ثبت و تأیید خودکار</span></div>
+<p>API ثبت با HTTP 201 پاسخ داد؛ سرویس verified شد و وارد چرخهٔ پایش liveness می‌شود. ثبت رایگان است؛ هیچ پرداخت یا تبلیغ پولی انجام نشده.</p>
+<div class="actions"><a class="smalllink" href="https://x402dash.com/" target="_blank" rel="noreferrer">داشبورد x402dash ↗</a> · <a class="smalllink" href="https://api.x402dash.com/v1/endpoints?q=json-contract-tester-api" target="_blank" rel="noreferrer">جست‌وجوی endpoint ↗</a></div>
+</div>
+<div class="item">
+<div class="row"><h3>۲۱. YourAITools — دایرکتوری ابزارهای x402</h3><span class="pill active">بررسی فنی موفق؛ منتظر بازبینی انسانی</span></div>
+<p>ارسال دوم با آدرس پایهٔ درست انجام شد. Health check با HTTP 402 و x402 v2 موفق، InjectScan نتیجهٔ safe و PayGuard نتیجهٔ not sanctioned داد. وضعیت فعلی pending_review است؛ تا تأیید انسانی listing عمومی فعال نیست.</p>
+<div class="actions"><a class="smalllink" href="https://api.youraitools.co/listing/v1/submit/sub_zreyutibyh" target="_blank" rel="noreferrer">وضعیت ثبت ↗</a> · <a class="smalllink" href="https://youraitools.co/" target="_blank" rel="noreferrer">دایرکتوری YourAITools ↗</a></div>
 </div>
 <div class="alert">اندازه‌گیری فعلی محدود است: هنوز ابزار تحلیل بازدید/UTM متصل نیست و هیچ مشتری یا درآمد تأییدشده‌ای ثبت نشده. لینک‌های کانال، مسیر دسترسی هستند؛ تأیید انتشار و نتیجه باید جداگانه ثبت شود.</div>
 </section>
