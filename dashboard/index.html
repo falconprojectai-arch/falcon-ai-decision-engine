@@ -28,7 +28,7 @@ h1{font-size:25px;margin:0}h2{font-size:17px;margin:0 0 14px}h3{font-size:14px;m
 <div class="layout">
 <div class="stack">
 <section class="card">
-<div class="row"><h2>وضعیت پروژه‌ها</h2><span class="pill done">آخرین تغییر داشبورد: <time id="last-updated" datetime="2026-11-04T04:54:23+03:30">۱۳ آبان ۱۴۰۵ ساعت ۰۴:۵۴:۲۳ تهران</time></span></div>
+<div class="row"><h2>وضعیت پروژه‌ها</h2><span class="pill done">آخرین تغییر داشبورد: <time id="last-updated" datetime="2026-11-04T04:55:31+03:30">۱۳ آبان ۱۴۰۵ ساعت ۰۴:۵۵:۳۱ تهران</time></span></div>
 <div class="item">
 <div class="row"><div><h3>۱. JSON Schema Generator</h3><div class="sub">ابزار مرورگری؛ تبدیل نمونهٔ JSON به JSON Schema</div></div><span class="pill done">فایل ساخته شد</span></div>
 <div class="bar"><span style="width:65%"></span></div><div class="sub">۶۵٪ تخمینی از مسیر MVP — نیازمند تست و انتشار عمومی</div>
@@ -157,17 +157,17 @@ h1{font-size:25px;margin:0}h2{font-size:17px;margin:0 0 14px}h3{font-size:14px;m
 </div>
 <div class="item">
 <div class="row"><h3>۱۸. Agent Service Directory — فهرست API و ابزارهای ایجنت</h3><span class="pill active">به فهرست اولیه اضافه شد؛ پایش در انتظار</span></div>
-<p>ثبت رایگان با HTTP 201 پذیرفته شد. سرویس فعلاً در index قرار گرفته و پس از بررسی‌های بدون پرداخت، در صورت پاس‌شدن معیارها وارد directory می‌شود. این فهرست هیچ پرداختی انجام نمی‌دهد.</p>
+<p>ثبت رایگان با HTTP 201 پذیرفته شد و سرویس در index قرار گرفت. اولین probe آن در ۰۴ نوامبر با HTTP 400 شکست خورد، چون فهرست برای POST بدون بدنه probe می‌فرستد و API آن حالت را پیش از x402 رد می‌کرد. این رفتار اصلاح و deploy شد؛ نتیجهٔ probe بعدی هنوز در انتظار است و سرویس هنوز وارد directory نشده.</p>
 <div class="actions"><a class="smalllink" href="https://agentservicedirectory.com/services/cand_280405644fee6b9c" target="_blank" rel="noreferrer">صفحهٔ وضعیت سرویس ↗</a> · <a class="smalllink" href="https://agentservicedirectory.com/methodology" target="_blank" rel="noreferrer">روش ارزیابی ↗</a> · <a class="smalllink" href="https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/" target="_blank" rel="noreferrer">صفحهٔ محصول ↗</a></div>
 </div>
 <div class="item">
 <div class="row"><h3>۱۹. Agent Bazaar — بازار x402 برای ایجنت‌ها</h3><span class="pill done">ثبت موفق</span></div>
 <p>ارسال manifest استاندارد x402 v2 با HTTP 200 پذیرفته شد و یک resource ثبت شد. نمایش نهایی و آمار استفاده هنوز مستقلاً تأیید نشده‌اند؛ ثبت فهرست به معنی فروش نیست.</p>
-<div class="actions"><a class="smalllink" href="https://bazaar.saylorinnovations.com/" target="_blank" rel="noreferrer">بازار Agent Bazaar ↗</a> · <a class="smalllink" href="https://json-contract-tester-api.falcon-project-ai.workers.dev/.well-known/x402.json" target="_blank" rel="noreferrer">manifest ثبت‌شده ↗</a></div>
+<div class="actions"><a class="smalllink" href="https://bazaar.saylorinnovations.com/resources/74953" target="_blank" rel="noreferrer">صفحهٔ ثبت‌شده در Agent Bazaar ↗</a> · <a class="smalllink" href="https://json-contract-tester-api.falcon-project-ai.workers.dev/.well-known/x402.json" target="_blank" rel="noreferrer">manifest ثبت‌شده ↗</a></div>
 </div>
 <div class="item">
 <div class="row"><h3>۲۰. x402dash — فهرست و پایش endpointهای پرداختی</h3><span class="pill done">ثبت و تأیید خودکار</span></div>
-<p>API ثبت با HTTP 201 پاسخ داد؛ سرویس verified شد و وارد چرخهٔ پایش liveness می‌شود. ثبت رایگان است؛ هیچ پرداخت یا تبلیغ پولی انجام نشده.</p>
+<p>API ثبت با HTTP 201 پاسخ داد و رکورد در فهرست ظاهر شد. وضعیت ثبت verified است، اما هنوز هیچ liveness probe اجرا نشده (check_count=0 و reachability=unknown). ثبت رایگان است؛ هیچ پرداخت یا تبلیغ پولی انجام نشده.</p>
 <div class="actions"><a class="smalllink" href="https://x402dash.com/" target="_blank" rel="noreferrer">داشبورد x402dash ↗</a> · <a class="smalllink" href="https://api.x402dash.com/v1/endpoints?q=json-contract-tester-api" target="_blank" rel="noreferrer">جست‌وجوی endpoint ↗</a></div>
 </div>
 <div class="item">
