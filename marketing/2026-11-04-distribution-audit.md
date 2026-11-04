@@ -4,6 +4,8 @@
 
 - Products in scope: LocalBiz FollowUp, StockPulse, MCPGuard Lite, ExpenseSnap, CronPulse.
 - New directory submissions completed in this audit: **0**.
+- QuestStack: duplicate checks passed for all five exact product URLs; POST was blocked by HTTP 429 network rate limit. A one-time retry is scheduled for 2026-11-05 15:30 UTC.
+- Tool Commons: all five products passed exact-name and canonical-URL duplicate searches, but no submissions were made because the official GitHub issue form required sign-in and the browser session was logged out.
 - New confirmation IDs: **0**.
 - New public listings verified: **0**.
 - Product pages and catalogue: all six URLs returned **HTTP 200** in the browser check.
@@ -40,6 +42,15 @@ A submission was not counted as successful unless the form was actually sent and
 | Toolsland | https://www.toolsland.ai/submit-ai-tool-free | Failed to load | `ERR_SOCKS_CONNECTION_FAILED`; likely AI-tool scope only |
 
 These are candidate leads, not verified eligible submission routes. Search snippets suggested free/no-account paths for some sites, but the actual forms could not be opened. Therefore no form was submitted.
+
+## Additional verified submission routes
+
+| Channel | Result | Evidence / next step |
+|---|---|---|
+| [QuestStack](https://queststack.io/submit-your-tool) | Eligible; rate limited | Official docs confirm free API listing without account or API key. Duplicate checks returned available=true for all five exact product URLs. Submission POST returned HTTP 429 before creating any listing. A one-time retry is scheduled for 2026-11-05 15:30 UTC. Optional paid Pro and dofollow upgrades were not used. |
+| [Tool Commons](https://toolcommons.org/) | Criteria fit; blocked by GitHub sign-in | MIT license and source inspection support open-source, local-first, static-hosted, no-login/no-tracking fit. Five exact-name and exact-URL duplicate searches returned zero. The official [submission issue template](https://github.com/ToolCommons/toolcommons.github.io/issues/new?template=submit-tool.md) redirected to GitHub login, so no issue was created. No credentials or new account were requested. |
+
+**Correct canonical Pages host:** `falconprojectai-arch.github.io`. A separate attempted check accidentally substituted `falcon-ai-decision-engine.github.io`; those 404s are not evidence about the actual canonical pages and are excluded. The correct six URLs above were previously verified HTTP 200 in the browser check.
 
 ## Previously checked channels — do not duplicate
 
