@@ -1,0 +1,126 @@
+name: Submit five Falcon tools to TechTools Launchpad
+
+on:
+  push:
+    paths:
+      - ".github/workflows/techtools-launchpad-submit.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check duplicates, submit sequentially, and verify
+        run: |
+          python - <<'PY'
+          import json, sys, time, urllib.parse, urllib.request, urllib.error
+
+          base = "https://techtools.cz/launchpad-api"
+          tools = [
+            {
+              "name": "LocalBiz FollowUp",
+              "url": "https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/localbiz-followup/",
+              "tagline": "A lightweight customer follow-up tracker with CSV export for small shops and online sellers.",
+              "description": "Track customers, follow-up dates, notes, and next actions in a browser-based workspace. Export records to CSV. It does not send messages automatically and has no cloud sync or multi-user collaboration.",
+              "category": "business"
+            },
+            {
+              "name": "StockPulse",
+              "url": "https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/stockpulse/",
+              "tagline": "A simple SKU inventory tracker with stock thresholds and reorder alerts.",
+              "description": "Maintain a lightweight product and SKU list, update stock counts, set reorder thresholds, and export inventory data as CSV. It does not connect to online stores or accounting systems.",
+              "category": "business"
+            },
+            {
+              "name": "MCPGuard Lite",
+              "url": "https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/mcpguard-lite/",
+              "tagline": "A local heuristic checker for risky patterns in MCP and agent configuration files.",
+              "description": "Inspect MCP or agent configuration text for selected risky patterns using local heuristic checks. It is not a comprehensive security audit, malware scanner, or runtime protection system.",
+              "category": "developer"
+            },
+            {
+              "name": "ExpenseSnap",
+              "url": "https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/expensesnap/",
+              "tagline": "Track project time and expenses in a lightweight browser tool with CSV and JSON export.",
+              "description": "Record project time and expenses, review totals, and export data in CSV or JSON. It is not accounting, tax, invoicing, or payment-processing software.",
+              "category": "business"
+            },
+            {
+              "name": "CronPulse",
+              "url": "https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/cronpulse/",
+              "tagline": "Analyze JSON and JSONL scheduled-job history offline to spot failures and patterns.",
+              "description": "Load local JSON or JSONL run-history data and inspect execution outcomes and failure patterns. It does not provide live monitoring, notifications, retries, or automatic restarts.",
+              "category": "developer"
+            }
+          ]
+
+          def request(url, data=None, method=None):
+              headers = {"Accept":"application/json", "User-Agent":"FalconLaunchpadAgent/1.0"}
+              if data is not None:
+                  headers["Content-Type"] = "application/json"
+              req = urllib.request.Request(url, data=data, headers=headers, method=method)
+              with urllib.request.urlopen(req, timeout=30) as response:
+                  return response.status, json.loads(response.read().decode("utf-8"))
+
+          def collect_urls(obj, out):
+              if isinstance(obj, dict):
+                  for k, v in obj.items():
+                      if k.lower() in ("url", "website", "website_url") and isinstance(v, str):
+                          out.add(v.rstrip("/"))
+                      collect_urls(v, out)
+              elif isinstance(obj, list):
+                  for v in obj:
+                      collect_urls(v, out)
+
+          try:
+              _, listing_data = request(base + "/tools?per_page=100&page=1")
+          except Exception as exc:
+              print("ABORT: could not retrieve existing listings:", type(exc).__name__, str(exc)[:250])
+              sys.exit(1)
+
+          existing = set()
+          collect_urls(listing_data, existing)
+          outcomes = []
+
+          for item in tools:
+              canonical = item["url"].rstrip("/")
+              if canonical in existing:
+                  outcomes.append({"name":item["name"],"status":"skipped_duplicate","url":item["url"]})
+                  print("SKIP_DUPLICATE:", item["name"])
+                  continue
+              payload = dict(item)
+              payload["submitted_by"] = "Falcon AI Agent"
+              try:
+                  status, result = request(base + "/tools", json.dumps(payload).encode("utf-8"), "POST")
+                  outcomes.append({"name":item["name"],"status":"submitted","http_status":status,"response":result})
+                  print("SUBMITTED:", item["name"], "HTTP", status, json.dumps(result, ensure_ascii=False)[:500])
+                  existing.add(canonical)
+              except urllib.error.HTTPError as exc:
+                  body = exc.read().decode("utf-8","replace")[:500]
+                  outcomes.append({"name":item["name"],"status":"error","http_status":exc.code,"body":body})
+                  print("ERROR:", item["name"], "HTTP", exc.code, body)
+                  if exc.code == 429:
+                      print("RATE_LIMITED: stopping to respect the platform limit.")
+                      break
+              except Exception as exc:
+                  outcomes.append({"name":item["name"],"status":"error","error":type(exc).__name__ + ": " + str(exc)[:200]})
+                  print("ERROR:", item["name"], type(exc).__name__, str(exc)[:200])
+              time.sleep(1)
+
+          try:
+              _, verify_data = request(base + "/tools?per_page=100&page=1")
+              verified = set()
+              collect_urls(verify_data, verified)
+              for item in tools:
+                  found = item["url"].rstrip("/") in verified
+                  print("VERIFY:", item["name"], "PUBLIC" if found else "NOT_FOUND", item["url"])
+          except Exception as exc:
+              print("VERIFY_READ_FAILED:", type(exc).__name__, str(exc)[:200])
+
+          if any(x["status"] == "error" for x in outcomes):
+              sys.exit(1)
+          PY
