@@ -16,6 +16,20 @@ A small manual service is available for a first validation: one JSON Schema or d
 - Never submit production secrets or personal/confidential payloads.
 - A transfer is not counted as revenue until it is independently verified and recorded.
 
+## Paid machine API — x402
+
+The JSON Contract Tester also has a live machine-to-machine API for AI agents and automation clients:
+
+- API root: https://json-contract-tester-api.falcon-project-ai.workers.dev/
+- Paid route: `POST /v1/validate-batch`
+- Price: **0.005 USDC per batch** on Base Mainnet (`eip155:8453`) using x402 v2 exact.
+- Health: https://json-contract-tester-api.falcon-project-ai.workers.dev/health
+- Discovery manifest: https://json-contract-tester-api.falcon-project-ai.workers.dev/.well-known/x402
+- OpenAPI: https://json-contract-tester-api.falcon-project-ai.workers.dev/openapi.json
+- No-payment diagnostics: https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester-api/payment-preflight.html
+
+The live unpaid request returns HTTP 402 with a payment challenge; this proves the paywall is active, not that a payment has settled. The API passed its unit/route tests and production health, discovery, OpenAPI, and challenge smoke tests. A PayAPI Market listing was accepted into review on 2026-11-03; it is **not live yet** and its paid canary/settlement receipt is pending. No x402 sales or revenue are currently recorded.
+
 ## Current V1 core
 
 - **Scanner input layer:** validates a supplied JSON feed and can fetch bounded public HTTPS RSS/Atom feeds in dry-run mode.
