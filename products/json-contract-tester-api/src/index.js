@@ -164,18 +164,24 @@ app.use('/v1/validate-batch', async (c, next) => {
 });
 
 app.use('*', async (c, next) => {
-  if (c.req.path !== '/v1/validate-batch' || c.req.method !== 'POST') return next();
+  if (c.req.path !== '/v1/validate-batch' || !['GET', 'HEAD', 'POST'].includes(c.req.method)) return next();
   const payTo = c.env.PAY_TO;
   if (!payTo || !/^0x[a-fA-F0-9]{40}$/.test(payTo)) return c.json({ error: 'Payment receiver is not configured.' }, 503);
+  const accepts = [{ scheme: 'exact', price: '$0.005', network: 'eip155:8453', payTo }];
+  const description = 'Validate 1–10 JSON outputs against the documented JSON Schema subset; receive structured PASS/FAIL results and JSON Pointer diagnostics.';
+  // GET and HEAD expose the same unpaid 402 challenge for read-only marketplace
+  // probes. The actual billable operation remains POST only.
   const mw = paymentMiddleware({
-    'POST /v1/validate-batch': {
-      accepts: [{ scheme: 'exact', price: '$0.005', network: 'eip155:8453', payTo }],
-      description: 'Validate 1–10 JSON outputs against the documented JSON Schema subset; receive structured PASS/FAIL results and JSON Pointer diagnostics.',
-      mimeType: 'application/json'
-    }
+    'POST /v1/validate-batch': { accepts, description, mimeType: 'application/json' },
+    'GET /v1/validate-batch': { accepts, description, mimeType: 'application/json' },
+    'HEAD /v1/validate-batch': { accepts, description, mimeType: 'application/json' }
   }, resourceServer);
   return mw(c, next);
 });
+
+const discoveryMethodNotAllowed = c => c.json({ error: 'Use POST /v1/validate-batch for batch validation.' }, 405, { Allow: 'POST' });
+app.get('/v1/validate-batch', discoveryMethodNotAllowed);
+app.on('HEAD', '/v1/validate-batch', c => new Response(null, { status: 405, headers: { Allow: 'POST' } }));
 
 app.post('/v1/validate-batch', c => {
   const result = validateBatch(c.get('requestBody'));
