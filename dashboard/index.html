@@ -28,7 +28,7 @@ h1{font-size:25px;margin:0}h2{font-size:17px;margin:0 0 14px}h3{font-size:14px;m
 <div class="layout">
 <div class="stack">
 <section class="card">
-<div class="row"><h2>وضعیت پروژه‌ها</h2><span class="pill done">آخرین تغییر داشبورد: <time id="last-updated" datetime="2026-11-04T05:01:26+03:30">۱۳ آبان ۱۴۰۵ ساعت ۰۵:۰۱:۲۶ تهران</time></span></div>
+<div class="row"><h2>وضعیت پروژه‌ها</h2><span class="pill done">آخرین تغییر داشبورد: <time id="last-updated" datetime="2026-11-04T05:02:19+03:30">۱۳ آبان ۱۴۰۵ ساعت ۰۵:۰۲:۱۹ تهران</time></span></div>
 <div class="item">
 <div class="row"><div><h3>۱. JSON Schema Generator</h3><div class="sub">ابزار مرورگری؛ تبدیل نمونهٔ JSON به JSON Schema</div></div><span class="pill done">فایل ساخته شد</span></div>
 <div class="bar"><span style="width:65%"></span></div><div class="sub">۶۵٪ تخمینی از مسیر MVP — نیازمند تست و انتشار عمومی</div>
@@ -189,6 +189,7 @@ h1{font-size:25px;margin:0}h2{font-size:17px;margin:0 0 14px}h3{font-size:14px;m
 </section>
 <section class="card">
 <h2>گزارش کارها و تصمیم‌ها</h2>
+<div class="event"><small>ثبت: 2026-11-04T05:02:19+03:30 · استقرار Worker: موفق · CI: موفق</small><h3>گسترش کشف‌پذیری API برای بازارهای x402 و ایجنت‌ها</h3><div class="sub">برای crawlerهای GET/HEAD و POST بدون بدنه، پاسخ 402 سازگار اضافه شد؛ بدنهٔ 402 علاوه بر هدر رسمی PAYMENT-REQUIRED شامل accepts[] است. manifest استاندارد x402 v2 اکنون serviceName، tags، outputSchema و نمونهٔ ورودی/خروجی دارد. افزونهٔ رسمی Bazaar روی مسیر POST ثبت شده و متادیتای OpenAPI نیز x-payment-info را منتشر می‌کند. تست‌های واحد، ساخت Worker، استقرار و smoke test پس از استقرار موفق شدند؛ run <a href="https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/41754604346">41754604346</a>. هیچ پرداخت آزمایشی از طرف پروژه انجام نشده.</div><div class="sub">وضعیت توزیع: Agent Bazaar resource 74954 با برچسب‌ها و outputSchema در جست‌وجوی عمومی دیده می‌شود؛ x402dash ثبت شده ولی هنوز liveness probe ندارد؛ YourAITools از health check عبور کرده و منتظر بازبینی انسانی است؛ Agent Service Directory در index است اما probe نخست 400 بود، اصلاح empty-body POST مستقر شده و recheck در انتظار است. PayAPI هنوز فقط دریافت فرم را تأیید کرده و canary/settlement تأیید نشده است.</div></div>
 <div class="timeline">
 <div class="event"><small>ثبت‌شده در پروژه</small><h3>ساخت نسخهٔ اولیهٔ JSON Schema Generator</h3><div class="sub">فایل مستقل HTML در مخزن GitHub ثبت شده؛ اجرای مرورگری و بدون ارسال JSON به سرور طراحی شده.</div></div>
 <div class="event"><small>پیکربندی شده، اجرا تأیید نشده</small><h3>Zero-Cost Revenue Scout</h3><div class="sub">اتوماسیون روزانه برای یافتن مسیرهای درآمد کم‌هزینه تنظیم شده؛ هنوز اجرای موفق یا درآمدزایی آن تأیید نشده.</div></div>
