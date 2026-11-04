@@ -78,4 +78,14 @@ Source for the client API pattern: https://docs.x402.org/getting-started/quickst
 
 ## LLM/agent discovery asset
 
-Created a root `llms.txt` with concise product descriptions, the paid API route, pricing, x402 payment network, request/response semantics, supported subset and limitations, buyer quickstart links, safety notes, and technical guides. Updated the GitHub Pages workflow to publish this file at the site root and trigger a Pages deploy when it changes. The JSON Contract Tester product page now links to the LLM/agent index and labels the buyer quickstart as Node.js + Python. Deployment and live fetch verification are pending.
+Created a root `llms.txt` with concise product descriptions, the paid API route, pricing, x402 payment network, request/response semantics, supported subset and limitations, buyer quickstart links, safety notes, and technical guides. Updated the GitHub Pages workflow to publish this file at the site root and trigger a Pages deploy when it changes. The JSON Contract Tester product page now links to the LLM/agent index and labels the buyer quickstart as Node.js + Python. Published at https://falconprojectai-arch.github.io/falcon-ai-decision-engine/llms.txt and live fetch verified. The product page link is also live.
+
+## Final verification
+
+- GitHub Pages deployment: successful — https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/41777549037
+- Chromium smoke tests: dashboard, developer toolbox, payment page, and JSON Contract Tester product all passed.
+- Revenue Machine tests: passed — https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/41777549046
+- Live dashboard confirms Circle, x402scan, CDP facilitator, and LLM index entries.
+- Live product page confirms Node.js + Python quickstart, llms.txt, and x402scan submission link.
+- Live llms.txt confirms the product, price, payment network, API limits, and Python quickstart.
+- Latest PayAPI inbox check still returns only the 2026-11-03 submission acknowledgement; no canary result or settlement has arrived.
