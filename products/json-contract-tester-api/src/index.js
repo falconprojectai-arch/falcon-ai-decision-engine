@@ -3,6 +3,7 @@ import { cors } from 'hono/cors';
 import { paymentMiddleware, x402ResourceServer } from '@x402/hono';
 import { HTTPFacilitatorClient } from '@x402/core/server';
 import { registerExactEvmScheme } from '@x402/evm/exact/server';
+import { bazaarResourceServerExtension } from '@x402/extensions/bazaar';
 import { validateBatch, LIMITS } from './validator.js';
 
 const app = new Hono();
@@ -278,6 +279,7 @@ app.use('*', cors({
 const facilitator = new HTTPFacilitatorClient({ url: 'https://facilitator.payai.network' });
 const resourceServer = new x402ResourceServer(facilitator);
 registerExactEvmScheme(resourceServer);
+resourceServer.registerExtension(bazaarResourceServerExtension);
 
 async function readLimitedBody(request, maxBytes) {
   if (!request.body) return { empty: true };
@@ -377,7 +379,12 @@ app.use('*', async (c, next) => {
   // GET and HEAD expose the same unpaid 402 challenge for read-only marketplace
   // probes. The actual billable operation remains POST only.
   const mw = paymentMiddleware({
-    'POST /v1/validate-batch': { accepts, description, mimeType: 'application/json' },
+    'POST /v1/validate-batch': {
+      accepts,
+      description,
+      mimeType: 'application/json',
+      extensions: { bazaar: bazaarExtension }
+    },
     'GET /v1/validate-batch': { accepts, description, mimeType: 'application/json' },
     'HEAD /v1/validate-batch': { accepts, description, mimeType: 'application/json' }
   }, resourceServer);
