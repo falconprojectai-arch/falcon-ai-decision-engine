@@ -310,3 +310,32 @@ jobs:
                   await browser.close()
           asyncio.run(main())
           PY
+
+      - name: Smoke-test product catalogue and preview assets in Chromium
+        env:
+          PAGES_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          python - <<'PY'
+          import asyncio, os
+          from playwright.async_api import async_playwright
+
+          async def main():
+              async with async_playwright() as p:
+                  browser = await p.chromium.launch()
+                  page = await browser.new_page()
+                  errors = []
+                  page.on("pageerror", lambda error: errors.append(str(error)))
+                  response = await page.goto(os.environ["PAGES_URL"] + "products/", wait_until="networkidle", timeout=60000)
+                  assert response and response.status == 200
+                  assert await page.locator("article.card").count() == 5
+                  images = await page.locator("article.card img").evaluate_all("(els) => els.map(e => ({src:e.getAttribute('src'), width:e.naturalWidth, complete:e.complete}))")
+                  assert len(images) == 5 and all(x["complete"] and x["width"] > 0 for x in images), f"Preview images failed: {images}"
+                  assert await page.locator("article.card a[href*='github.com/falconprojectai-arch/falcon-ai-decision-engine/tree/main/products/']").count() == 5
+                  guide = await page.request.get(os.environ["PAGES_URL"] + "products/launch-guide.md")
+                  assert guide.status == 200, f"Launch guide HTTP {guide.status}"
+                  assert "Standard product introduction package" in await guide.text()
+                  assert not errors, f"Browser JavaScript errors: {errors}"
+                  await browser.close()
+
+          asyncio.run(main())
+          PY
