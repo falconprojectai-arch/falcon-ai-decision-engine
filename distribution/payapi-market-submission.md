@@ -58,6 +58,8 @@ This supersedes the earlier assumption that a new listing submission was still r
 - OpenAPI: HTTP 200; POST route and request example present.
 - Browser product page: HTTP 200; default sample renders 1 PASS / 2 FAIL.
 - GitHub Actions deploy smoke test: passed; an unpaid valid POST returned HTTP 402 with `PAYMENT-REQUIRED`.
+- The dedicated no-payment preflight passed all 5 checks: health 200, CORS 204, invalid JSON 400, empty JSON probe 402, valid request 402.
+- Both decoded x402 challenges specify Base Mainnet, canonical Base USDC, 0.005 USDC, x402 v2 exact. The live `payTo` matches the independent MetaMask/Base wallet address the owner explicitly confirmed and saved as the Worker `PAY_TO` secret; it is not the separate Toobit exchange address. The public repository does not expose that wallet address.
 - API and validator tests: passed after the API test workflow was updated to install dependencies before importing the Hono app.
 - Paid signing, marketplace canary settlement, and a public settlement receipt have **not** yet been independently verified.
 
