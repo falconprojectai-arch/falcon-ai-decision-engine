@@ -582,3 +582,11 @@ Publish the mixed-batch/JUnit artifact and wait for PayAPI's canary result; do n
 - **Traffic:** GitHub Traffic views/clones endpoint is not available through the connected integration; counts remain unavailable, not zero.
 - **API health and manifest:** live health HTTP 200; standard x402 v2 manifest fetched successfully. The manifest declares POST /v1/validate-batch and Base USDC $0.005.
 - **Revenue:** $0.00 independently verified. A public directory listing, successful health probe, 402 challenge, or router callability flag is not a sale or settlement.
+
+
+## true402 directory listing — 2026-11-04 19:42 Asia/Tehran
+- Free registration completed with HTTP 201; listing ID: `a5ccc7ac-2153-403a-91a8-be5be7a69073`.
+- Direct public record is available at https://true402.dev/api/v1/services/a5ccc7ac-2153-403a-91a8-be5be7a69073 and explicitly describes the operation as POST {schema, outputs}; this is method-compatible with the paid validator.
+- Initial reputation has zero transactions and zero trust score. Listing is discovery only; no sale, buyer, settlement or traffic is verified.
+- Official seller guide: https://true402.dev/sell. It states free listing/no approval, but third-party settlements are not imported into its ranking; third-party listings remain at zero score and are ordered by registration age.
+- No payment, signature, KYC, account creation, or wallet/payout change was made.
