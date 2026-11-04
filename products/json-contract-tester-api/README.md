@@ -1,6 +1,6 @@
 # JSON Contract Tester API (x402 prototype)
 
-A deployed stateless API for AI agents to validate a batch of JSON outputs against the documented JSON Schema subset used by the browser tester. It is available at https://json-contract-tester-api.falcon-project-ai.workers.dev and does not replace the free local browser tool. The API root returns a service summary and endpoint links (HTTP 200); the live health endpoint returns HTTP 200; unpaid GET, HEAD, and syntactically valid POST requests to the paid route return HTTP 402 with a PAYMENT-REQUIRED challenge for read-only marketplace discovery. Only POST performs batch validation; GET/HEAD are discovery probes and are not billable operations. End-to-end paid settlement has not yet been verified.
+A deployed stateless API for AI agents to validate a batch of JSON outputs against the documented JSON Schema subset used by the browser tester. It is available at https://json-contract-tester-api.falcon-project-ai.workers.dev and does not replace the free local browser tool. The API root returns a service summary and endpoint links (HTTP 200); the live health endpoint returns HTTP 200; unpaid GET, HEAD, syntactically valid POST, and empty-body POST probes to the paid route return HTTP 402 with a PAYMENT-REQUIRED challenge for marketplace discovery. Only a POST containing a valid batch performs validation; GET/HEAD are discovery probes, and an empty-body POST is not billable. End-to-end paid settlement has not yet been verified.
 
 ## Route
 POST /v1/validate-batch
@@ -23,6 +23,7 @@ A successful paid response contains valid, a batch summary, per-sample results, 
 - [Buyer quickstart](./BUYER_QUICKSTART.md): unpaid challenge inspection and Node.js x402 client example.
 - [OpenAPI 3.1 specification](./openapi.yaml): machine-readable endpoint and request/response contract.
 - Live discovery manifest: https://json-contract-tester-api.falcon-project-ai.workers.dev/.well-known/x402
+- Bazaar-compatible x402 v2 manifest: https://json-contract-tester-api.falcon-project-ai.workers.dev/.well-known/x402.json
 - Live OpenAPI JSON: https://json-contract-tester-api.falcon-project-ai.workers.dev/openapi.json
 
 ## No-payment preflight
