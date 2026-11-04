@@ -67,3 +67,9 @@ x402scan states that registered origins receive a merchant storefront and health
 
 ## Income status
 Confirmed revenue: $0.00. Directory submissions, HTTP 402 challenges, and marketplace preflight checks are not sales.
+
+## Buyer integration improvement
+
+Added a Python `httpx` buyer example to `products/json-contract-tester-api/BUYER_QUICKSTART.md`, using the official x402 Python client pattern. It shows an agent developer how to submit a JSON batch, handle the 402 challenge automatically, and inspect settlement response headers. It explicitly requires a local environment variable and dedicated low-balance wallet; no private key is embedded. The example is documented but has not been executed against a paid request because no buyer wallet or transaction was authorized.
+
+Source for the client API pattern: https://docs.x402.org/getting-started/quickstart-for-buyers
