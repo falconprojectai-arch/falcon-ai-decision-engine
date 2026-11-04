@@ -8,7 +8,11 @@ on:
       - "llms.txt"
       - "products/json-contract-tester/**"
       - "products/dev-agent-toolbox/**"
-      - "products/json-contract-tester-api/**"\n      - "products/index.html"\n      - "products/localbiz-followup/**"\n      - "products/stockpulse/**"\n      - "products/mcpguard-lite/**"
+      - "products/json-contract-tester-api/**"
+      - "products/index.html"
+      - "products/localbiz-followup/**"
+      - "products/stockpulse/**"
+      - "products/mcpguard-lite/**"
       - ".github/workflows/deploy-dashboard.yml"
   workflow_dispatch:
 
@@ -77,7 +81,11 @@ jobs:
           cp products/dev-agent-toolbox/index.html site/products/dev-agent-toolbox/index.html
           cp products/dev-agent-toolbox/payment.html site/products/dev-agent-toolbox/payment.html
           cp products/dev-agent-toolbox/contract-review-checklist.html site/products/dev-agent-toolbox/contract-review-checklist.html
-          cp products/json-contract-tester-api/payment-preflight.html site/products/json-contract-tester-api/payment-preflight.html\n          cp products/index.html site/products/index.html\n          cp products/localbiz-followup/index.html site/products/localbiz-followup/index.html\n          cp products/stockpulse/index.html site/products/stockpulse/index.html\n          cp products/mcpguard-lite/index.html site/products/mcpguard-lite/index.html
+          cp products/json-contract-tester-api/payment-preflight.html site/products/json-contract-tester-api/payment-preflight.html
+          cp products/index.html site/products/index.html
+          cp products/localbiz-followup/index.html site/products/localbiz-followup/index.html
+          cp products/stockpulse/index.html site/products/stockpulse/index.html
+          cp products/mcpguard-lite/index.html site/products/mcpguard-lite/index.html
       - name: Upload dashboard and product
         uses: actions/upload-pages-artifact@v3
         with:
