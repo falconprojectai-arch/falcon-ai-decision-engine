@@ -571,3 +571,14 @@ Publish the mixed-batch/JUnit artifact and wait for PayAPI's canary result; do n
 - **Verified revenue:** $0.00. No independent payment or on-chain settlement receipt verified.
 - **Golden River:** keep the current JSON Contract Tester / PayAPI canary as primary because it is already submitted and PayAPI says its own wallet funds the canary. Do not self-fund or sign. The best new directory fit is gold-402, but it is pending a legitimate PR-from-fork path. API.market is rejected for now due to payout mismatch. LocalBiz FollowUp remains pending user validation.
 - **Elapsed time:** no claim that 10 minutes elapsed; this environment did not provide a reliable elapsed-work timer.
+
+
+## Distribution and evidence audit — 2026-11-04 19:40:00 Asia/Tehran
+- **Agent Bazaar listing:** public listing created at https://bazaar.saylorinnovations.com/resources/75152 after the documented free submission. Search for the exact product name returned one result. The marketplace's current resource page generates GET-only examples for every HTTP resource; the paid validator is POST-only. The listing is therefore published for discovery but has a method compatibility defect and must not be treated as a working buyer execution route or settlement verification. See https://github.com/SaylorInnovations/open-x402-bazaar/blob/master/functions/resources/%5Bslug%5D.js.
+- **PayAPI Market:** no new email since the 2026-11-03 submission acknowledgement; still pending review/not live. Its own FAQ says its canary is up to $0.10; our $0.005 route is below the cap. Wait for the marketplace-funded call; do not self-fund.
+- **Agent402:** current status is crawl/routable true, execute-via callable on the unproven lane, but Smart Order Router eligibility false due to settlement_required. No independent settlement evidence.
+- **Wever Labs:** free listing/editing verified, but form requires a contact email and failed automated checks may go to operator review; not submitted.
+- **Feedback:** no new independent external feedback beyond the existing Issue #13 comment. Project-owner and automation comments excluded.
+- **Traffic:** GitHub Traffic views/clones endpoint is not available through the connected integration; counts remain unavailable, not zero.
+- **API health and manifest:** live health HTTP 200; standard x402 v2 manifest fetched successfully. The manifest declares POST /v1/validate-batch and Base USDC $0.005.
+- **Revenue:** $0.00 independently verified. A public directory listing, successful health probe, 402 challenge, or router callability flag is not a sale or settlement.
