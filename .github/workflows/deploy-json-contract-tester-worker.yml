@@ -27,21 +27,31 @@ jobs:
           curl --retry 3 --retry-all-errors --retry-delay 2 -fsS "$WORKER_URL/openapi.json" \
             | jq -e '.paths["/v1/validate-batch"].post != null'
 
-      - name: Verify payment challenge without paying
+      - name: Verify x402 discovery challenges without paying
         env:
           WORKER_URL: https://json-contract-tester-api.falcon-project-ai.workers.dev
         run: |
           set -euo pipefail
-          status="$(curl -sS -o /tmp/x402-body.txt -D /tmp/x402-headers.txt -w '%{http_code}' \
+          for method in GET HEAD; do
+            status="$(curl -sS -o /tmp/x402-$method-body.txt -D /tmp/x402-$method-headers.txt -w '%{http_code}' -X "$method" "$WORKER_URL/v1/validate-batch")"
+            if [ "$status" != "402" ] || ! grep -qi '^payment-required:' /tmp/x402-$method-headers.txt; then
+              echo "Expected $method HTTP 402 with PAYMENT-REQUIRED; received HTTP $status."
+              cat /tmp/x402-$method-body.txt
+              exit 1
+            fi
+            echo "$method discovery challenge passed; no payment was sent."
+          done
+
+          status="$(curl -sS -o /tmp/x402-post-body.txt -D /tmp/x402-post-headers.txt -w '%{http_code}' \
             -X POST "$WORKER_URL/v1/validate-batch" \
             -H 'Content-Type: application/json' \
             --data '{"schema":{"type":"object"},"outputs":[{"json":{}}]}')"
-          if [ "$status" != "402" ] || ! grep -qi '^payment-required:' /tmp/x402-headers.txt; then
-            echo "Expected HTTP 402 with PAYMENT-REQUIRED; received HTTP $status."
-            cat /tmp/x402-body.txt
+          if [ "$status" != "402" ] || ! grep -qi '^payment-required:' /tmp/x402-post-headers.txt; then
+            echo "Expected POST HTTP 402 with PAYMENT-REQUIRED; received HTTP $status."
+            cat /tmp/x402-post-body.txt
             exit 1
           fi
-          echo "Live x402 payment challenge is healthy; no payment was sent."
+          echo "POST buyer challenge passed; no payment was sent."
 
   deploy:
     runs-on: ubuntu-latest
