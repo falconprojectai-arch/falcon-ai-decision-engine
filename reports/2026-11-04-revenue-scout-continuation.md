@@ -140,3 +140,9 @@ No paid transaction, wallet signature, facilitator migration, payout setup, acco
 - Independently verified revenue remains **$0.00**. No independent buyer payment, canary receipt, or settlement receipt has been verified.
 - No wallet signature, payment, facilitator migration, bank/card detail, KYC form, account creation or paid placement was performed.
 - No 10-minute elapsed-work claim is made; elapsed productive time is not reliably measured by this environment.
+
+
+## Additional free POST-compatible directory — 2026-11-04 19:42 Asia/Tehran
+- **true402:** registered the existing POST API through the documented free inline-manifest route at `POST https://true402.dev/api/v1/services/register`. Response was HTTP 201 with listing ID `a5ccc7ac-2153-403a-91a8-be5be7a69073`. The direct public record is readable at https://true402.dev/api/v1/services/a5ccc7ac-2153-403a-91a8-be5be7a69073 and describes the endpoint as `POST {schema, outputs}`, matching our paid operation. This avoids the GET/POST mismatch discovered in Agent Bazaar.
+- The listing's initial reputation is `transactions=0`, `settled=null`, `trustScore=0`; no buyer or settlement is implied. true402's own seller guide says third-party listings have no imported settlement history and therefore remain at zero rank, ordered by registration age; the benefit is machine-readable discovery only, not guaranteed traffic. https://true402.dev/sell
+- No payment, signature, payout change, KYC, account creation, or paid promotion was performed. The inline manifest uses the existing public payment metadata; no wallet configuration was changed.
