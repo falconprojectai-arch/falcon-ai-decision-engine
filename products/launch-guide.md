@@ -34,7 +34,7 @@ The successful run:
 - Passed Chromium smoke tests for LocalBiz FollowUp, StockPulse, MCPGuard Lite, ExpenseSnap and CronPulse.
 - Verified five catalogue cards, all five screenshot image loads, all five repository links, the visible passed-test labels and the published launch guide.
 
-[Open the successful deployment and test run](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/41872597519).
+[Open the successful deployment and test run](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/41873099905).
 
 ## Run and test locally
 
