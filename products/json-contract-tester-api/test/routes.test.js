@@ -44,6 +44,12 @@ test('CDP Bazaar x402 manifest exposes the paid resource and public receiver', a
   assert.equal(body.resources[0].accepts[0].network, 'eip155:8453');
   assert.equal(body.resources[0].accepts[0].payTo, payTo);
   assert.equal(body.resources[0].accepts[0].amount, '5000');
+  assert.equal(body.resources[0].serviceName, 'JSON Contract Tester API');
+  assert.ok(body.resources[0].tags.includes('json-schema-validation'));
+  assert.equal(body.resources[0].extensions.bazaar.info.input.method, 'POST');
+  assert.equal(body.resources[0].extensions.bazaar.info.input.body.outputs.length, 2);
+  assert.equal(body.resources[0].extensions.bazaar.info.output.type, 'json');
+  assert.equal(body.resources[0].outputSchema.properties.valid.type, 'boolean');
 });
 
 test('empty-body POST marketplace probes reach x402 payment gating', async () => {
