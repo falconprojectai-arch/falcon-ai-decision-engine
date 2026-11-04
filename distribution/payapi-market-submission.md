@@ -1,9 +1,23 @@
-# PayAPI Market listing draft — JSON Contract Tester API
+# PayAPI Market listing — pending review and canary verification
 
-**Status:** prepared; not submitted.  
-**Reason held:** the live x402 challenge must be checked against a dedicated Base USDC wallet controlled by the project owner before any external listing is submitted.
+**Status:** form accepted on 2026-11-03; listing is pending review, not live.  
+**Marketplace listing ID:** `54bd4f89-23f8-47e7-b507-039362b51198`  
+**Do not submit a duplicate.**
 
-## Listing details
+## Verified marketplace email
+
+Gmail contains an official message from `notifications@payapi.market`, received 2026-11-03 05:28:56 UTC, subject: **We have your PayAPI Market submission: JSON Contract Tester API**.
+
+The message states:
+- The form accepted **JSON Contract Tester API**.
+- Acceptance does not mean the listing is live.
+- PayAPI Market will pay one call from its own wallet to the submitted route.
+- If the server returns the same 402 after payment, the listing stays pending and they will email the reason.
+- **No action is needed unless PayAPI emails again.**
+
+This supersedes the earlier assumption that a new listing submission was still required. Do not create a duplicate listing or send a follow-up unless the marketplace asks.
+
+## Submitted API details (technical record)
 
 - **Name:** JSON Contract Tester API
 - **Description:** Validate 1–10 JSON outputs against a documented JSON Schema subset. Receive per-sample PASS/FAIL results and structured JSON Pointer diagnostics. Designed for AI-agent and API response contract checks.
@@ -36,38 +50,28 @@
 }
 ```
 
-## Before submission — mandatory checks
+## Live technical checks
 
-1. Run the no-payment preflight at https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester-api/payment-preflight.html.
-2. Decode the live `PAYMENT-REQUIRED` header and verify:
-   - network is Base Mainnet (`eip155:8453`);
-   - asset is Base USDC;
-   - amount is 5,000 atomic units (0.005 USDC);
-   - `payTo` exactly matches a dedicated Base EVM wallet controlled by the project owner.
-3. Do not use an exchange deposit address (including Toobit) unless the exchange confirms that this exact address supports and credits Base USDC micro-deposits at this amount. The existing project notes warn that exchange minimum deposit thresholds may exceed a $0.005 payment.
-4. Never copy a private key or recovery phrase into GitHub, Cloudflare variables, forms, or chat. The Worker needs only the public `PAY_TO` address as a secret.
-5. If the live `payTo` address does not match the wallet address entered in the form, do not submit.
+- API root: HTTP 200; service summary and endpoint links verified after deployment.
+- Health: HTTP 200.
+- x402 discovery manifest: HTTP 200; Base USDC exact quote present at 0.005 USDC.
+- OpenAPI: HTTP 200; POST route and request example present.
+- Browser product page: HTTP 200; default sample renders 1 PASS / 2 FAIL.
+- GitHub Actions deploy smoke test: passed; an unpaid valid POST returned HTTP 402 with `PAYMENT-REQUIRED`.
+- API and validator tests: passed after the API test workflow was updated to install dependencies before importing the Hono app.
+- Paid signing, marketplace canary settlement, and a public settlement receipt have **not** yet been independently verified.
 
-## Marketplace terms checked
+## Marketplace terms relevant to the pending canary
 
-PayAPI Market's current FAQ says provider listing is free, providers keep 100% of settled calls, and the marketplace requires a durable URL, paid route, working example request, Base USDC wallet controlled by the provider, and a price matching the live 402 challenge. Automated checks run before human review. Its current canary verification pays one route up to $0.10; this API's $0.005 price is below that ceiling, so the published instructions do not call for a provider top-up.
+PayAPI Market's current FAQ says listing is free, providers keep 100%, and the marketplace tests a route using one paid canary from its own wallet, up to $0.10. The submitted API's $0.005 price is below that ceiling. No provider top-up is called for by the published instructions for this price.
 
 Sources:
 - https://payapi.market/faq
 - https://payapi.market/terms
 - https://payapi.market/list
 
-## Current evidence
+## Next step
 
-- Root route: HTTP 200; service summary and endpoint links verified after deployment.
-- Health: HTTP 200.
-- x402 discovery manifest: HTTP 200; Base USDC exact quote present at 0.005 USDC.
-- OpenAPI: HTTP 200; POST route and request example present.
-- GitHub Actions deploy smoke test: passed; an unpaid valid POST returned HTTP 402 with `PAYMENT-REQUIRED`.
-- Unit/API tests: passed after adding dependency installation to the API test workflow.
-- Paid signing, on-chain settlement, and the actual receiving-wallet identity have **not** been independently verified.
-- No PayAPI Market listing has been submitted or accepted. No revenue is claimed.
+**Wait for PayAPI Market's canary result email or a public listing/receipt.** No additional wallet funding, signature, transaction, listing submission, or outreach is required at this stage. If a failure email arrives, inspect its exact reason and only then change the relevant configuration.
 
-## Submission state
-
-**Pending wallet ownership verification and explicit owner submission approval.**
+Verified project revenue remains **$0** until a real successful paid response and on-chain settlement receipt are independently confirmed.
