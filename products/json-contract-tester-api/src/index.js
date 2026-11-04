@@ -7,7 +7,7 @@ import { validateBatch, LIMITS } from './validator.js';
 
 const app = new Hono();
 
-const serviceDescription = 'Validate 1–10 JSON outputs against a documented JSON Schema subset. Returns per-sample PASS/FAIL results and JSON Pointer diagnostics. $0.005 USDC per batch on Base Mainnet via x402 v2 exact.';
+const serviceDescription = 'JSON Schema validation API for AI agents, LLM structured outputs, API responses, webhook payloads, and backend data contracts. Validate 1–10 JSON samples in one batch against a documented JSON Schema subset; receive per-sample PASS/FAIL results and structured JSON Pointer diagnostics for contract testing and regression checks. Not full JSON Schema; the pattern keyword is unsupported. $0.005 USDC per batch on Base Mainnet via x402 v2 exact.';
 const requestExample = {
   schema: {
     type: 'object',
@@ -47,7 +47,8 @@ const discoveryManifest = {
     name: 'validate_json_batch',
     path: '/v1/validate-batch',
     method: 'POST',
-    summary: serviceDescription,
+    summary: 'JSON Schema validation for AI-agent outputs, API responses, and webhook payloads; batch PASS/FAIL with JSON Pointer diagnostics.',
+    tags: ['json-schema-validation', 'json-validation', 'api-response-validation', 'ai-agent-output', 'structured-output', 'webhook-validation', 'contract-testing', 'regression-testing'],
     price_usd: '0.005',
     accepts: [{
       scheme: 'exact',
@@ -73,9 +74,9 @@ const openApiDocument = {
     '/v1/validate-batch': {
       post: {
         operationId: 'validateJsonBatch',
-        summary: 'Validate a batch of JSON outputs',
+        summary: 'Validate JSON Schema for AI outputs, API responses, and webhook payloads',
         description: serviceDescription,
-        tags: ['validation', 'json'],
+        tags: ['json-schema-validation', 'json-validation', 'api-response-validation', 'ai-agent-output', 'structured-output', 'webhook-validation', 'contract-testing', 'regression-testing'],
         'x-price-usd': '0.005',
         'x-x402-network': 'eip155:8453',
         'x-payment-required': true,
