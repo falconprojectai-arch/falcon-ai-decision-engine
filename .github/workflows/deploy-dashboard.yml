@@ -90,6 +90,12 @@ jobs:
           cp products/mcpguard-lite/index.html site/products/mcpguard-lite/index.html
           cp products/expensesnap/index.html site/products/expensesnap/index.html
           cp products/cronpulse/index.html site/products/cronpulse/index.html
+          cp products/launch-guide.md site/products/launch-guide.md
+          cp products/localbiz-followup/preview.svg site/products/localbiz-followup/preview.svg
+          cp products/stockpulse/preview.svg site/products/stockpulse/preview.svg
+          cp products/mcpguard-lite/preview.svg site/products/mcpguard-lite/preview.svg
+          cp products/expensesnap/preview.svg site/products/expensesnap/preview.svg
+          cp products/cronpulse/preview.svg site/products/cronpulse/preview.svg
       - name: Upload dashboard and product
         uses: actions/upload-pages-artifact@v3
         with:
