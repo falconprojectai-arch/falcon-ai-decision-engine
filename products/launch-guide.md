@@ -12,6 +12,12 @@ This guide is the source of truth for the five browser-first micro-products adde
 | [ExpenseSnap](./expensesnap/) | Scattered billable-time and project-expense records | Time and expense entries, project/client totals, invoice-ready CSV/JSON summary | Not tax/accounting software; no timer, invoicing, payments or cloud sync | `products/expensesnap/` |
 | [CronPulse](./cronpulse/) | Repeated failures hidden in exported job histories | Import JSON/JSONL run history, normalize common fields, identify repeated failures, export incident summary | Offline analysis only; not live monitoring, alerting, retry or restart | `products/cronpulse/` |
 
+## Standard product introduction package
+
+Each product card in [`products/index.html`](./index.html) now uses the same structure: short product name, illustrative interface preview, one-paragraph plain-language explanation, current release-test status, live product path, and direct source-repository link. The SVG previews are intentionally labelled as illustrative; they are not captured browser screenshots and contain synthetic sample data.
+
+The GitHub Pages workflow now copies all five preview images and this guide into the published site. The workflow also runs Chromium smoke tests for all five products after deployment. Do not change a product's status to passed unless the corresponding workflow run completes successfully on the current product commits.
+
 ## Run and test
 
 1. Open the relevant `index.html` in a modern browser, or serve the repository root over a local static HTTP server.
@@ -30,7 +36,7 @@ This guide is the source of truth for the five browser-first micro-products adde
 - Prior CI evidence: the previous deployment passed Chromium smoke tests for the dashboard, developer toolbox, payment page, JSON Contract Tester and the first three micro-products.
 - ExpenseSnap and CronPulse were added after that successful run. Their release must remain **pending** until a workflow run explicitly tests both and completes GitHub Pages deployment.
 - A browser proxy error is not evidence that the public site is broken; independently verify from a normal public network.
-- Screenshots and demo video are not included in this guide; do not imply they exist until generated and checked in.
+- Product preview artwork is included as SVG. It is an illustrative interface preview, not a captured screenshot or recorded demo.
 
 ## Distribution gates
 
