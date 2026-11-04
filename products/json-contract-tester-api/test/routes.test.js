@@ -22,3 +22,13 @@ test('health route remains public and reports the service status', async () => {
   assert.equal(body.status, 'ok');
   assert.equal(body.service, 'json-contract-tester-api');
 });
+
+test('GET and HEAD discovery probes are routed through payment gating, not 404', async () => {
+  const getResponse = await app.fetch(new Request('https://api.example.test/v1/validate-batch'), {});
+  assert.equal(getResponse.status, 503);
+  assert.equal((await getResponse.json()).error, 'Payment receiver is not configured.');
+
+  const headResponse = await app.fetch(new Request('https://api.example.test/v1/validate-batch', { method: 'HEAD' }), {});
+  assert.equal(headResponse.status, 503);
+  assert.equal(headResponse.headers.get('content-type'), 'application/json');
+});
