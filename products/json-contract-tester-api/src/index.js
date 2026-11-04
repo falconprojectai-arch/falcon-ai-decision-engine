@@ -171,6 +171,27 @@ app.get('/', c => c.json({
 }));
 app.get('/health', c => c.json({ status: 'ok', service: 'json-contract-tester-api', version: '0.1.0' }));
 app.get('/.well-known/x402', c => c.json(discoveryManifest));
+// Coinbase CDP Bazaar-compatible x402 v2 manifest. The receiving address is
+// public payment metadata and is read from the Worker secret at request time.
+app.get('/.well-known/x402.json', c => {
+  const payTo = c.env.PAY_TO;
+  if (!payTo || !/^0x[a-fA-F0-9]{40}$/.test(payTo)) return c.json({ error: 'Payment receiver is not configured.' }, 503);
+  return c.json({
+    x402Version: 2,
+    resources: [{
+      url: new URL('/v1/validate-batch', c.req.url).toString(),
+      description: serviceDescription,
+      accepts: [{
+        scheme: 'exact',
+        network: 'eip155:8453',
+        payTo,
+        asset: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
+        amount: '5000',
+        maxTimeoutSeconds: 60
+      }]
+    }]
+  });
+});
 app.get('/openapi.json', c => c.json(openApiDocument));
 
 // Reject only malformed or oversized bodies before payment. Schema/batch
