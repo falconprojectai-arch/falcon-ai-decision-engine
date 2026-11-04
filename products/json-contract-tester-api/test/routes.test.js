@@ -32,3 +32,16 @@ test('GET and HEAD discovery probes are routed through payment gating, not 404',
   assert.equal(headResponse.status, 503);
   assert.equal(headResponse.headers.get('content-type'), 'application/json');
 });
+
+test('CDP Bazaar x402 manifest exposes the paid resource and public receiver', async () => {
+  const payTo = '0x1111111111111111111111111111111111111111';
+  const response = await app.fetch(new Request('https://api.example.test/.well-known/x402.json'), { PAY_TO: payTo });
+  assert.equal(response.status, 200);
+  const body = await response.json();
+  assert.equal(body.x402Version, 2);
+  assert.equal(body.resources[0].url, 'https://api.example.test/v1/validate-batch');
+  assert.equal(body.resources[0].accepts[0].scheme, 'exact');
+  assert.equal(body.resources[0].accepts[0].network, 'eip155:8453');
+  assert.equal(body.resources[0].accepts[0].payTo, payTo);
+  assert.equal(body.resources[0].accepts[0].amount, '5000');
+});
