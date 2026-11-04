@@ -71,6 +71,18 @@ const openApiDocument = {
   },
   servers: [{ url: 'https://json-contract-tester-api.falcon-project-ai.workers.dev' }],
   paths: {
+    '/.well-known/x402.json': {
+      get: {
+        operationId: 'getCdpBazaarX402Manifest',
+        summary: 'x402 v2 manifest for agent marketplaces',
+        description: 'Public machine-readable manifest including the paid resource URL, Base USDC price, and receiving address.',
+        security: [],
+        responses: {
+          '200': { description: 'x402 v2 resource manifest' },
+          '503': { description: 'Payment receiver is not configured.' }
+        }
+      }
+    },
     '/v1/validate-batch': {
       get: {
         operationId: 'probeValidateBatchGet',
