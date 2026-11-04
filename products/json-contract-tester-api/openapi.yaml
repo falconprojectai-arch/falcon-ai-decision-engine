@@ -3,10 +3,15 @@ info:
   title: JSON Contract Tester API
   version: 0.1.0
   description: >-
-    Stateless batch validator for AI-agent/API JSON outputs against a documented
-    JSON Schema subset. A syntactically valid unpaid request receives an x402
-    challenge before schema validation. Schema-invalid attempts are validated
-    after payment and may return a billable 400. This is not full JSON Schema.
+    JSON Schema validation API for AI agents, LLM structured outputs, API
+    responses, webhook payloads, and backend data contracts. Batch-validate
+    1–10 JSON samples against a documented JSON Schema subset and receive
+    per-sample PASS/FAIL results with structured JSON Pointer diagnostics.
+    Useful for API response validation, AI-agent output checks, webhook
+    contract testing, and regression checks. This is not full JSON Schema;
+    the pattern keyword is unsupported. A syntactically valid unpaid request
+    receives an x402 challenge before schema validation. Schema-invalid
+    attempts are validated after payment and may return a billable 400.
 servers:
   - url: https://json-contract-tester-api.falcon-project-ai.workers.dev
 paths:
@@ -46,9 +51,11 @@ paths:
   /v1/validate-batch:
     post:
       operationId: validateJsonBatch
-      summary: Validate 1–10 JSON outputs against one schema
+      summary: Validate JSON Schema for AI outputs, API responses, and webhooks
       description: >-
-        Send one schema and 1–10 JSON samples. A successful response returns
+        Validate AI-agent outputs, API responses, webhook payloads, and backend
+        JSON data contracts against the documented schema subset. Send one schema
+        and 1–10 JSON samples. A successful response returns
         per-sample PASS/FAIL diagnostics. The route uses x402 exact USDC on
         Base Mainnet at 0.005 USDC per request batch. A syntactically valid
         unpaid request returns HTTP 402 and a PAYMENT-REQUIRED challenge before
@@ -100,6 +107,15 @@ paths:
           description: Request body exceeds 64 KiB; rejected before payment
         '503':
           description: Payment receiver is not configured
+      tags:
+        - json-schema-validation
+        - json-validation
+        - api-response-validation
+        - ai-agent-output
+        - structured-output
+        - webhook-validation
+        - contract-testing
+        - regression-testing
       x-x402:
         scheme: exact
         network: eip155:8453
