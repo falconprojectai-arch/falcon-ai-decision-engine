@@ -386,6 +386,7 @@ jobs:
                   images = await page.locator("article.card img").evaluate_all("(els) => els.map(e => ({src:e.getAttribute('src'), width:e.naturalWidth, complete:e.complete}))")
                   assert len(images) == 5 and all(x["complete"] and x["width"] > 0 and x["src"].endswith("/screenshot.png") for x in images), f"Product screenshots failed: {images}"
                   assert await page.locator("article.card a[href*='github.com/falconprojectai-arch/falcon-ai-decision-engine/tree/main/products/']").count() == 5
+                  assert await page.locator("article.card .status").all_text_contents() == ["Automated smoke tests passed · 2026-11-04"] * 5
                   guide = await page.request.get(os.environ["PAGES_URL"] + "products/launch-guide.md")
                   assert guide.status == 200, f"Launch guide HTTP {guide.status}"
                   assert "Standard product introduction package" in await guide.text()
