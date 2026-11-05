@@ -30,7 +30,7 @@ A free, browser-only utility for checking multiple JSON outputs against one JSON
 }
 ```
 
-The JUnit XML export is generated locally from the current browser report; it does not upload inputs or change the hosted API response format.
+The JUnit XML export is generated locally from the current browser report; it does not upload inputs or change the hosted API response format. The page now loads scripts and styles from same-origin files and applies a restrictive same-origin Content Security Policy meta policy. GitHub Pages does not expose a per-site response-header configuration for adding `X-Content-Type-Options: nosniff`.
 
 ## Important scope
 
