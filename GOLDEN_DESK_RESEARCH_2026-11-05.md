@@ -203,3 +203,6 @@ No card-to-card route was adopted: provider/bank reconciliation and dispute rule
 - Added [Persian ECU diagnostic record HTML](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/blob/main/products/ecu-diagnostic-record/diagnostic-record-fa.html) and [offer draft](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/blob/main/products/ecu-diagnostic-record/offer-fa-draft.md).
 - Added a privacy/print behavior test; [CI run 41992191137](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/41992191137) passed.
 - State: `researched-not-submitted`; Sibilapp is `blocked` until seller approval and payout terms are verified. No revenue or buyer demand is claimed.
+
+
+**Freshness caveat (2026-11-05):** the Sibilapp seller page content is available in a search-indexed result crawled about two months ago; a live fetch failed with a tunnel error. Treat the advertised 10% commission, no setup fee and instant delivery as preliminary until the official seller dashboard/terms are opened and verified. No seller account, KYC or listing was created.
