@@ -189,6 +189,56 @@ const discoveryManifest = {
     example: requestExample
   }]
 };
+const batchResponseSchema = {
+  type: 'object',
+  required: ['reportVersion', 'tool', 'valid', 'summary', 'results', 'limitation'],
+  properties: {
+    reportVersion: { type: 'string' },
+    tool: { const: 'JSON Contract Tester API' },
+    valid: { type: 'boolean' },
+    summary: {
+      type: 'object',
+      required: ['total', 'passed', 'failed'],
+      properties: {
+        total: { type: 'integer' },
+        passed: { type: 'integer' },
+        failed: { type: 'integer' }
+      }
+    },
+    results: {
+      type: 'array',
+      items: {
+        type: 'object',
+        required: ['id', 'passed', 'errors'],
+        properties: {
+          id: { type: 'string' },
+          passed: { type: 'boolean' },
+          errors: {
+            type: 'array',
+            items: {
+              type: 'object',
+              required: ['instancePath', 'schemaPath', 'keyword', 'message', 'expected', 'actual'],
+              properties: {
+                instancePath: { type: 'string' },
+                schemaPath: { type: 'string' },
+                keyword: { type: 'string' },
+                message: { type: 'string' },
+                expected: {},
+                actual: {}
+              }
+            }
+          }
+        }
+      }
+    },
+    limitation: { type: 'string' }
+  }
+};
+const errorSchema = {
+  type: 'object',
+  required: ['error'],
+  properties: { error: { type: 'string' } }
+};
 const openApiDocument = {
   openapi: '3.1.0',
   info: {
@@ -198,6 +248,51 @@ const openApiDocument = {
   },
   servers: [{ url: 'https://json-contract-tester-api.falcon-project-ai.workers.dev' }],
   paths: {
+    '/': {
+      get: {
+        operationId: 'getServiceInfo',
+        summary: 'Service information and endpoint links',
+        security: [],
+        responses: {
+          '200': { description: 'Service metadata and public endpoint links' }
+        }
+      }
+    },
+    '/health': {
+      get: {
+        operationId: 'getHealth',
+        summary: 'Health check',
+        security: [],
+        responses: {
+          '200': {
+            description: 'Service is healthy',
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  required: ['status', 'service', 'version'],
+                  properties: {
+                    status: { const: 'ok' },
+                    service: { const: 'json-contract-tester-api' },
+                    version: { type: 'string' }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    '/.well-known/x402': {
+      get: {
+        operationId: 'getX402DiscoveryManifest',
+        summary: 'x402 discovery manifest',
+        security: [],
+        responses: {
+          '200': { description: 'Service and paid-resource discovery metadata' }
+        }
+      }
+    },
     '/.well-known/x402.json': {
       get: {
         operationId: 'getCdpBazaarX402Manifest',
@@ -206,7 +301,20 @@ const openApiDocument = {
         security: [],
         responses: {
           '200': { description: 'x402 v2 resource manifest' },
-          '503': { description: 'Payment receiver is not configured.' }
+          '503': {
+            description: 'Payment receiver is not configured.',
+            content: { 'application/json': { schema: { $ref: '#/components/schemas/Error' } } }
+          }
+        }
+      }
+    },
+    '/openapi.json': {
+      get: {
+        operationId: 'getOpenApiDocument',
+        summary: 'OpenAPI JSON document',
+        security: [],
+        responses: {
+          '200': { description: 'Machine-readable API contract' }
         }
       }
     },
@@ -216,9 +324,13 @@ const openApiDocument = {
         summary: 'Read-only x402 discovery probe (validation requires POST)',
         description: 'Returns the same unpaid x402 challenge for marketplace discovery. GET is not the billable validation operation; use POST with the documented request body.',
         tags: ['json-schema-validation', 'api-response-validation'],
+        security: [],
         'x-payment-required': true,
         responses: {
-          '402': { description: 'x402 v2 discovery challenge; no validation is performed.' },
+          '402': {
+            description: 'x402 v2 discovery challenge; no validation is performed.',
+            headers: { 'PAYMENT-REQUIRED': { $ref: '#/components/headers/PaymentRequired' } }
+          },
           '405': { description: 'Use POST for batch validation; no settlement occurs.' }
         }
       },
@@ -227,9 +339,13 @@ const openApiDocument = {
         summary: 'Read-only x402 discovery probe (validation requires POST)',
         description: 'HEAD returns the same unpaid x402 challenge for marketplace discovery. The billable validation operation remains POST.',
         tags: ['json-schema-validation', 'api-response-validation'],
+        security: [],
         'x-payment-required': true,
         responses: {
-          '402': { description: 'x402 v2 discovery challenge; no validation is performed.' },
+          '402': {
+            description: 'x402 v2 discovery challenge; no validation is performed.',
+            headers: { 'PAYMENT-REQUIRED': { $ref: '#/components/headers/PaymentRequired' } }
+          },
           '405': { description: 'Use POST for batch validation; no settlement occurs.' }
         }
       },
@@ -251,18 +367,55 @@ const openApiDocument = {
           required: true,
           content: {
             'application/json': {
-              schema: requestSchema,
+              schema: { $ref: '#/components/schemas/BatchRequest' },
               example: requestExample
             }
           }
         },
         responses: {
-          '200': { description: 'Batch validation report; individual samples may pass or fail.' },
-          '400': { description: 'Invalid schema or batch shape; returned after payment verification, before successful settlement.' },
-          '402': { description: 'x402 v2 payment required; inspect PAYMENT-REQUIRED.' },
-          '413': { description: 'Request body exceeds 64 KiB; rejected before payment.' },
-          '503': { description: 'Payment receiver is not configured.' }
+          '200': {
+            description: 'Batch validated; individual samples may pass or fail',
+            headers: { 'PAYMENT-RESPONSE': { $ref: '#/components/headers/PaymentResponse' } },
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/BatchResponse' }
+              }
+            }
+          },
+          '400': {
+            description: 'Malformed JSON (pre-payment) or invalid schema/batch shape (after payment verification; not a successful settlement)',
+            content: { 'application/json': { schema: { $ref: '#/components/schemas/Error' } } }
+          },
+          '402': {
+            description: 'Payment required; includes x402 v2 challenge in PAYMENT-REQUIRED',
+            headers: { 'PAYMENT-REQUIRED': { $ref: '#/components/headers/PaymentRequired' } }
+          },
+          '413': {
+            description: 'Request body exceeds 64 KiB; rejected before payment',
+            content: { 'application/json': { schema: { $ref: '#/components/schemas/Error' } } }
+          },
+          '503': {
+            description: 'Payment receiver is not configured',
+            content: { 'application/json': { schema: { $ref: '#/components/schemas/Error' } } }
+          }
         }
+      }
+    }
+  },
+  components: {
+    schemas: {
+      BatchRequest: requestSchema,
+      BatchResponse: batchResponseSchema,
+      Error: errorSchema
+    },
+    headers: {
+      PaymentRequired: {
+        description: 'Base64-encoded x402 payment requirements; inspect before signing',
+        schema: { type: 'string' }
+      },
+      PaymentResponse: {
+        description: 'x402 settlement response metadata',
+        schema: { type: 'string' }
       }
     }
   }
