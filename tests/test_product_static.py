@@ -39,8 +39,8 @@ def test_contract_tester_page_uses_local_assets_and_required_controls():
     assert "script-src 'self'" in source
     assert "Download JSON report" in source
     assert "Download JUnit XML" in source
-    assert "No data was uploaded." in source
     assert "inputs stay in this browser" in source
+    assert "No data was uploaded." in APP.read_text(encoding="utf-8")
 
 
 def test_all_runtime_assets_exist_and_remain_local():
