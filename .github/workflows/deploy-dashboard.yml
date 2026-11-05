@@ -81,6 +81,9 @@ jobs:
           cp -R dashboard/. site/
           cp llms.txt site/llms.txt
           cp products/json-contract-tester/index.html site/products/json-contract-tester/index.html
+          cp products/json-contract-tester/app.js site/products/json-contract-tester/app.js
+          cp products/json-contract-tester/junit-export.js site/products/json-contract-tester/junit-export.js
+          cp products/json-contract-tester/styles.css site/products/json-contract-tester/styles.css
           cp products/dev-agent-toolbox/index.html site/products/dev-agent-toolbox/index.html
           cp products/dev-agent-toolbox/payment.html site/products/dev-agent-toolbox/payment.html
           cp products/dev-agent-toolbox/contract-review-checklist.html site/products/dev-agent-toolbox/contract-review-checklist.html
@@ -249,6 +252,7 @@ jobs:
           python - <<'PY'
           import asyncio
           import os
+          from pathlib import Path
           from playwright.async_api import async_playwright
 
           async def main():
@@ -256,16 +260,33 @@ jobs:
                   browser = await p.chromium.launch()
                   page = await browser.new_page()
                   errors = []
+                  asset_status = {"styles.css": None, "junit-export.js": None, "app.js": None}
+                  def record_asset(response):
+                      for asset in asset_status:
+                          if response.url.endswith("/" + asset):
+                              asset_status[asset] = response.status
+                  page.on("response", record_asset)
                   page.on("pageerror", lambda error: errors.append(str(error)))
                   response = await page.goto(os.environ["PRODUCT_URL"], wait_until="networkidle", timeout=60000)
                   assert response and response.status == 200, f"Unexpected HTTP response: {response.status if response else 'none'}"
                   assert await page.title() == "JSON Contract Tester — Validate AI and API Outputs"
+                  assert all(status == 200 for status in asset_status.values()), f"Product assets failed to load: {asset_status}"
                   # The four-case fixture is intentionally loaded through the public sample button.
                   await page.get_by_role("button", name="Load sample").click()
                   await page.get_by_role("button", name="Run contract tests").click()
                   assert await page.locator("#status").inner_text() == "1 of 4 outputs passed. No data was uploaded."
                   assert await page.locator(".result.pass").count() == 1
                   assert await page.locator(".result.fail").count() == 3
+
+                  async with page.expect_download() as download_info:
+                      await page.get_by_role("button", name="Download JUnit XML").click()
+                  download = await download_info.value
+                  assert download.suggested_filename == "contract-test-report.junit.xml"
+                  xml_path = await download.path()
+                  xml = Path(xml_path).read_text(encoding="utf-8")
+                  assert '<testsuites tests="4" failures="3"' in xml
+                  assert 'name="sample-1"' in xml and 'name="sample-4"' in xml
+                  assert "instancePath:" in xml and "schemaPath:" in xml
 
                   await page.locator("#schema").fill('{"const":{"a":1,"b":2}}')
                   await page.locator("#cases").fill('{"b":2,"a":1}')
