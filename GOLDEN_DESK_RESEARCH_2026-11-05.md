@@ -213,3 +213,6 @@ The seller page is available in a search-indexed result crawled about two months
 
 
 **Language fit:** English has the clearest observed category evidence (Etsy auto-repair templates and ECU technical downloads); Persian is the best initial language for this ECU-specific pack because the target buyer is a Persian-speaking independent repair shop and a local seller marketplace is discoverable, though seller eligibility is not verified. No Spanish-specific buyer signal or suitable payout route was found; no Spanish localization or submission was attempted.
+
+
+**Language/competitor update (2026-11-05):** Spanish-language category evidence is present: Etsy Spain shows 580 relevant mechanic-sheet results with low-priced generic downloads, and ViaSheet lists a Spanish-language workshop CRM at €39 one-time with instant delivery. This supports category fit, not ECU-specific buyer intent; no Spanish payout eligibility for this seller was verified. A fresh English Etsy competitor page is priced at $17.49 but its new shop shows 0 sales and no reviews, reinforcing that listing price is not proof of demand. Keep Spanish as a later localization test, not a launch decision. Sources: https://www.etsy.com/market/mechanic_sheets ; https://www.viasheet.com/es/products/auto-repair-crm/ ; https://www.etsy.com/listing/4591994381/auto-repair-invoice-template-mechanic.
