@@ -2,6 +2,7 @@ name: Deploy JSON Contract Tester Worker
 
 on:
   push:
+    branches: ["main"]
     paths:
       - "products/json-contract-tester-api/**"
       - ".github/workflows/deploy-json-contract-tester-worker.yml"
