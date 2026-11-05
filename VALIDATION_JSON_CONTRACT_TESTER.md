@@ -663,7 +663,7 @@ Publish the mixed-batch/JUnit artifact and wait for PayAPI's canary result; do n
 - **PayAPI Market:** listing `54bd4f89-23f8-47e7-b507-039362b51198` remains **`pending_review`**. Gmail contains only the 2026-11-03 acknowledgement from `notifications@payapi.market`; no newer canary email. Public `/agent/get` returns HTTP 404 `not_found`; exact-ID search returns 0 matches. Canary has **not** been attempted; no views, calls, feedback or receipt. PayAPI said its own wallet funds the canary (up to $0.10); $0.005 is below that cap. Do not fund or sign. [Public lookup](https://payapi.market/agent/get?id=54bd4f89-23f8-47e7-b507-039362b51198) · [FAQ](https://payapi.market/faq) · [Gmail evidence](https://mail.google.com/mail/u/0/#all/thread-f:1880813718521869388).
 - **DevXTools / The Tool Directory:** prior `pending review` states remain unverified this run; no new public acceptance/rejection was found.
 - **PromoteIndex:** `researched-not-submitted`; no public listing verified.
-- **Reddit r/SideProject:** `failed/removed`; no repost or moderation bypass.
+- **Reddit r/SideProject:** `published/successful` (direct public fetch confirms the owner-authored post is live; 0 comments; no repost or moderation bypass).
 - Exact-name searches across Reddit, DEV and Hacker News produced no new relevant independent community comment.
 
 ### Separate non-JSON opportunity and Iranian payment rails
@@ -712,7 +712,7 @@ Weights: buyer evidence ×2, time-to-first-sale ×2, zero-cost ×1, automation �
 | DevXTools | `researched-not-submitted` (no public listing reverified) | https://devxtools.com/ | https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/ |
 | The Tool Directory | `researched-not-submitted` (no public listing reverified) | https://thetooldirectory.com/ | https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/ |
 | PromoteIndex | `researched-not-submitted` | https://promoteindex.com/submit | https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/ |
-| Reddit r/SideProject | `failed/removed` (no repost/bypass) | https://www.reddit.com/r/SideProject/ | https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/ |
+| Reddit r/SideProject | `published/successful` (owner post is publicly visible; 0 comments) | https://www.reddit.com/r/SideProject/comments/1xhfg2y/i_built_a_small_json_contract_tester_for_checking/ | https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/ |
 | Sibilapp seller marketplace | `blocked` (seller account/application/approval and payout terms not verified) | https://sibilapp.ir/sell | https://github.com/falconprojectai-arch/falcon-ai-decision-engine/blob/main/products/ecu-diagnostic-record/diagnostic-record-fa.html |
 | Etsy seller marketplace | `researched-not-submitted` (seller eligibility/payout not verified) | https://www.etsy.com/sell | https://github.com/falconprojectai-arch/falcon-ai-decision-engine/blob/main/products/ecu-diagnostic-record/diagnostic-record-fa.html |
 
@@ -726,3 +726,76 @@ The five TechTools micro-product listings #7543–#7547 remain `published/succes
 
 
 **Language/competitor update (2026-11-05):** Spanish-language category evidence is present: Etsy Spain shows 580 relevant mechanic-sheet results with low-priced generic downloads, and ViaSheet lists a Spanish-language workshop CRM at €39 one-time with instant delivery. This supports category fit, not ECU-specific buyer intent; no Spanish payout eligibility for this seller was verified. A fresh English Etsy competitor page is priced at $17.49 but its new shop shows 0 sales and no reviews, reinforcing that listing price is not proof of demand. Keep Spanish as a later localization test, not a launch decision. Sources: https://www.etsy.com/market/mechanic_sheets ; https://www.viasheet.com/es/products/auto-repair-crm/ ; https://www.etsy.com/listing/4591994381/auto-repair-invoice-template-mechanic.
+
+
+## Scheduled Scout Audit — 2026-11-05, 23:05 Asia/Tehran
+
+### Repository, feedback and review audit
+
+- Repository metadata: has_discussions=false; GitHub Discussions are not enabled.
+- Inspected public Issues #13, #14, #17, #18, #19 and #21; open PRs #20, #16, #2 and #1; review lists and issue comments. All four open PRs returned zero submitted reviews. PR #20 has no human review or inline review thread; its only comment is the Cloudflare deployment bot. PRs #2 and #1 have no comments or reviews.
+- The only actionable independent feedback remains **shigeki7777**, Issue #13, **2026-10-29 09:10:29 UTC**: exact JSON Pointer/sample index/expected-vs-actual diagnostics, machine-readable JSON/JUnit output, and a mixed-batch test. Link: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/issues/13#issuecomment-6492617263
+- Later Issue #13 comments are project-owner-authored, not independent feedback: the owner response dated 2026-11-03 00:40:58 UTC and the 4 USDT manual-review offer dated 2026-11-05 17:27:40 UTC. Issue #18's 21 comments are project-owner or GitHub Actions bot updates; they are not independent feedback. Issue #21 was created by the project owner on 2026-11-05 17:27:38 UTC and still has 0 comments.
+- No new independent actionable feedback was found.
+- DEV article API: 0 comments and 0 public reactions. The unauthenticated article object does not expose page views; this is not evidence of zero views. https://dev.to/falconprojectaiarch/7-checks-before-trusting-an-api-or-ai-agent-json-response-1mii
+- Reddit: direct fetch confirms the owner-authored r/SideProject post is publicly visible; the comments section says “Be the first to comment”. Status is therefore published/successful, not failed/removed. No second post was made. https://www.reddit.com/r/SideProject/comments/1xhfg2y/i_built_a_small_json_contract_tester_for_checking/
+
+### GitHub Traffic audit
+
+- Retrieval attempt: **2026-11-05 23:05:03 Asia/Tehran**.
+- Requested views, unique visitors, referrers, popular paths and clones through the connected GitHub fetch surface. The four /traffic/views, /traffic/clones, /traffic/popular/referrers and /traffic/popular/paths requests each returned the same actual error: **HTTP 400 — “GitHub Fetch URL is not an allowed public GitHub repository or search endpoint.”**
+- The connected GitHub surface exposes repository, issue and pull-request data but rejects the Traffic endpoints. No authorized Traffic values or rolling period were returned. Views, unique visitors, referrers, popular paths and clones remain unavailable; no counts or comparisons were invented.
+
+### Falcon product and channel evidence
+
+- **PR #20 — Fix live OpenAPI contract parity:** open, mergeable, not merged. Three API test checks succeeded (runs/jobs 41991862139, 41991861875 and 41991829514), but the Cloudflare Workers preview check failed at **2026-11-05 08:07:00 UTC**. Build ID: df47ce0a-18bf-4da8-900b-ff5c61050e3a. The check exposes only the Cloudflare dashboard log link, not the build error text; the log page requires an authenticated Cloudflare session. https://github.com/falconprojectai-arch/falcon-ai-decision-engine/pull/20
+- The live /openapi.json remains incomplete: it still lists /.well-known/x402.json and /v1/validate-batch, but not the additional root, health, /.well-known/x402 and /openapi.json routes added in PR #20. The live /health endpoint returns HTTP 200. No production deploy or merge was performed.
+- **TechTools Launchpad #7727:** published/successful. Public API read returned the JSON Contract Tester API listing, success=true, 0 upvotes, featured=false, and no review queue. Created **2026-11-05 06:57:30 UTC**; submitted_by=Falcon Project AI, so this is a verified owner submission, not independent endorsement. Listing: https://techtools.cz/tools/launchpad/?tool=7727
+- **PayAPI Market listing 54bd4f89-23f8-47e7-b507-039362b51198:** pending_review, not live. The only matching Gmail message remains from notifications@payapi.market at **2026-11-03 05:28:56 UTC**; it explicitly says the form was accepted but is not live and PayAPI will pay one canary call from its own wallet. Public lookup returned HTTP 404. No canary attempt/result, views, calls, feedback or settlement receipt was exposed. No seller funding or signature was performed. https://payapi.market/agent/get?id=54bd4f89-23f8-47e7-b507-039362b51198
+- **Agent402 seller record:** discovery is live and routable, health=1, 3 routes, Base only, payToByNetwork[eip155:8453]=0xFEFA6Cb78Cb79bc140Cd776e038d2093F7A170a5. Seller-level paywall=null; individual routes are marked paid at $0.005. routerDispatchEligible=false, reason settlement_required; executeViaCallableNow=true only in the Base unproven lane, with route-execute $0.01 total ($0.005 underlying + $0.005 routing fee). This is directory discovery/callability under an unproven ceiling, not proven settlement or a buyer. https://agent402.tools/api/index?seller=https%3A%2F%2Fjson-contract-tester-api.falcon-project-ai.workers.dev
+- **true402:** listing discovered; transactions=0, trustScore=0, settled=null, settledVolumeUsd=null. https://true402.dev/api/v1/services/a5ccc7ac-2153-403a-91a8-be5be7a69073
+- **x402scan:** public listing shows 0 transactions, $0.00 volume and 0 buyers. https://www.x402scan.com/server/fc25a6e2-6e6e-4cfc-b00c-bc594b2636f3
+- Channel status snapshot (each line gives the direct channel URL and product-introduction URL):
+  - DEV Community — published/successful: https://dev.to/falconprojectaiarch/7-checks-before-trusting-an-api-or-ai-agent-json-response-1mii → https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/
+  - Reddit r/SideProject — published/successful: https://www.reddit.com/r/SideProject/comments/1xhfg2y/i_built_a_small_json_contract_tester_for_checking/ → https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/
+  - TechTools Launchpad #7727 — published/successful: https://techtools.cz/tools/launchpad/?tool=7727 → https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/
+  - true402 — published/successful (discovery only; 0 transactions): https://true402.dev/api/v1/services/a5ccc7ac-2153-403a-91a8-be5be7a69073 → https://json-contract-tester-api.falcon-project-ai.workers.dev/
+  - Agent402 — published/successful (discovery only; router dispatch not proven): https://agent402.tools/api/index?seller=https%3A%2F%2Fjson-contract-tester-api.falcon-project-ai.workers.dev → https://json-contract-tester-api.falcon-project-ai.workers.dev/
+  - x402scan — published/successful (0 buyers/transactions): https://www.x402scan.com/server/fc25a6e2-6e6e-4cfc-b00c-bc594b2636f3 → https://json-contract-tester-api.falcon-project-ai.workers.dev/
+  - PayAPI Market — pending_review: https://payapi.market/agent/get?id=54bd4f89-23f8-47e7-b507-039362b51198 → https://json-contract-tester-api.falcon-project-ai.workers.dev/
+  - DevXTools — researched-not-submitted: https://devxtools.com/ → https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/
+  - The Tool Directory — researched-not-submitted: https://thetooldirectory.com/ → https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/
+  - PromoteIndex — researched-not-submitted: https://promoteindex.com/submit → https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/
+
+### Independent deep-web track — new non-Falcon candidate
+
+**Selected hypothesis:** a Persian/English **Online Seller Ops Starter Kit** sold as a one-time digital download, separate from the LocalBiz browser app and unrelated to JSON/API validation. The kit targets small Instagram, WhatsApp and website sellers who track orders and inventory in chat threads.
+
+Evidence checked across six angles:
+- AI-agent marketplaces: Aiphra advertises free listings at a 7% free-plan fee and wallet payouts in 1–7 days; Sleekto advertises free listings but requires Stripe; AI Agent Marketplace charges providers $45/month plus a 12% task fee. Free listing does not guarantee eligible payout. https://aiphra.com/ · https://sleekto.com/sell.php · https://ai-agentmarketplace.com/pricing
+- Local-business workflow software: Back2Cart claims 600+ Shopify stores and a free 5-cart/month tier, showing a paid category but also strong platform/niche competition. https://www.back2cart.com/
+- Digital products: Gumroad charges 10% + $0.50 for direct sales and 30% for Discover; payout method varies by country. Notion Marketplace charges 8% + $0.40, has a $20 payout minimum and 14-day hold, and uses a Stripe approval/onboarding path. https://gumroad.com/pricing · https://www.notion.com/help/selling-on-marketplace
+- Niche data/research: TenderHawk offers a no-card free tier and advertises £19/month Standard; TenderWorthy advertises £49/month Pro. This validates an adjacent subscription category, but no customer or revenue evidence was found. https://tenderhawk.co.uk/ · https://tenderworthy.co.uk/pricing/
+- Affiliate/lead routing: the FTC requires clear disclosure of material relationships; this model needs audience and compliant disclosures, so it is not the best immediate zero-cost candidate. https://search.ftc.gov/business-guidance/resources/disclosures-101-social-media-influencers
+- Persian digital-product demand signals: Farafile lists an order-management XLSX at 200,000 toman with 4,076 displayed views; other Persian Instagram-template listings show 17,136 displayed views at 30,000 toman and 2 ratings on a 23,500-toman product. These are page-view/listing signals, not verified sales. https://farafile.ir/product/56635/%D9%81%D8%A7%DB%8C%D9%84-%D8%A7%DA%A9%D8%B3%D9%84-%D9%85%D8%AF%DB%8C%D8%B1%DB%8C%D8%AA-%D8%AB%D8%A8%D8%AA-%D8%B3%D9%81%D8%A7%D8%B1%D8%B4%D8%A7%D8%AA · https://farafile.ir/product/40290/
+
+**Concrete step completed:** created and validated a local downloadable XLSX sample with six sheets (Persian guide, orders, inventory, follow-ups, dashboard formulas and message templates), synthetic demo records, dropdown statuses and no external connections. It is a private sample artifact only; it has not been listed or sold. Proposed price test for an expanded pack: **99,000–149,000 toman**, explicitly a hypothesis, not a market-cleared price. Zero-cost validation: distribute a free sample only in opt-in seller communities, measure downloads and qualified feedback, then enable checkout only after legitimate merchant onboarding. The current LocalBiz FollowUp public demo remains browser-only/localStorage with manual follow-up and CSV/JSON export; it does not send messages, sync to cloud or process payments. https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/localbiz-followup/
+
+### Iran / Persian / rial payment rails
+
+- **Zarinpal (official):** current public pricing page advertises 0.5% per transaction, capped at 16,000 toman, plus 500 toman fixed; the first month is free apart from Shaparak fees. Its official auth docs describe mobile OTP and OAuth client credentials/access tokens. Merchant eligibility and the complete KYC document checklist still need confirmation in the seller's own official account. https://www.zarinpal.com/pricing · https://www.zarinpal.com/docs/apiDocs/auth
+- **IDPay (official):** personal-link setup describes mobile verification, personal details and bank IBAN/account. Official API requires a dashboard API key, callback and transaction verification; the docs say a successful payment must be verified within 10 minutes or it is returned. The current official fee schedule could not be retrieved (provider pricing link returned 502), so no fee is asserted. https://idpay.ir/ · https://idpay.ir/web-service/v1.1/
+- **Zibal (official):** gateway prerequisites list tax-tracking code, valid eNamad, relevant license, matching tax identity/IBAN, Iranian server IPs and electronic contract signature. Public pricing shows 1% per successful transaction capped at 20,000 toman, with VAT shown separately in its calculator. https://help.zibal.ir/article/how-get-and-set-up-online-payment-gateway/ · https://zibal.ir/pricing
+- **PayPing (official):** public site advertises product/invoice payment links, API, refund service and automatic settlement/reporting. Current fees and full merchant KYC/settlement terms were not verified because the official pricing/terms pages timed out. https://payping.ir/ · https://payping.ir/api
+- **Manual card-to-card:** no official provider/bank rule was found that establishes a safe, automated reconciliation route for this product. Do not treat screenshots or customer-submitted transfer IDs as verified payment; prefer gateway callback plus server-side verification.
+- **International marketplace eligibility:** Iran is not in Etsy Payments' eligible-country list, and is not in Notion's direct-payment country list; Notion requires Stripe onboarding and allows third-party checkout links for ineligible countries. Do not use false residence, borrowed identities or account workarounds. https://help.etsy.com/hc/en-us/articles/115015710408-Countries-Eligible-for-Etsy-Payments · https://www.notion.com/help/selling-on-marketplace
+- No gateway account was created; no identity, card, IBAN, bank or payout data was collected or changed. Actual eligibility, applicable law/sanctions and merchant onboarding must be confirmed by the owner directly with the official provider.
+
+### Progress, revenue and next actions
+
+- **Success progress: 50% (6 of 12 measurable milestones)** — public browser product; API health/tests; structured diagnostics/JSON report; evergreen guides; at least one verified public directory listing; and a separate non-Falcon downloadable prototype. This is milestone completion, not probability of earning.
+- Verified revenue: **$0.00**. No buyer, paid call, settlement receipt or gateway transaction was verified.
+- Highest-value Falcon action: inspect Cloudflare build logs for PR #20 build ID df47ce0a-18bf-4da8-900b-ff5c61050e3a; correct the preview failure; rerun tests and only then consider merge/deploy. The connected GitHub surface exposes the failure summary but not Cloudflare log contents; authenticated Cloudflare dashboard access is the real blocker.
+- Next independent action: publish the seller workbook sample on a legitimate zero-cost channel only after seller eligibility/terms are verified; keep it researched-not-submitted meanwhile. No identity-gated account, payment, public submission or unsolicited outreach was attempted.
+- Execution-time integrity: substantive research, source reading, public audits, workbook creation/validation and repository evidence updates were completed. Do not claim a 10-minute continuous work interval unless the elapsed-time check confirms it.
+
