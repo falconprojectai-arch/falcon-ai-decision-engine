@@ -14,7 +14,7 @@ A free, browser-only utility for checking multiple JSON outputs against one JSON
 2. Paste a JSON Schema into **JSON Schema**.
 3. Put one JSON value per non-empty line in **Test outputs**.
 4. Click **Run contract tests**.
-5. Download the report if you want a small artifact to attach to a bug or review.
+5. Download the JSON report for structured diagnostics or the JUnit XML report for CI test-result ingestion.
 
 ## Example contract
 
@@ -30,6 +30,8 @@ A free, browser-only utility for checking multiple JSON outputs against one JSON
 }
 ```
 
+The JUnit XML export is generated locally from the current browser report; it does not upload inputs or change the hosted API response format.
+
 ## Important scope
 
 This MVP implements a documented subset of JSON Schema: `type`, `required`, `properties`, `additionalProperties: false`, `items`, `enum`, `const`, numeric bounds, string length/pattern, and array length.
@@ -37,6 +39,11 @@ This MVP implements a documented subset of JSON Schema: `type`, `required`, `pro
 It does **not** implement the full specification. Unsupported features include `$ref`/`$defs`, `allOf`/`anyOf`/`oneOf`/`not`, `format` assertions, boolean schemas, and schema-valued `additionalProperties`. Unknown keywords are ignored.
 
 A PASS means only that the value matches the rules supported by this tool. Use a full, well-tested validator for production or security-critical contracts.
+
+## Distribution
+
+- [JSON Contract Tester API on TechTools Launchpad](https://techtools.cz/tools/launchpad/?tool=7727)
+- [API OpenAPI document](https://json-contract-tester-api.falcon-project-ai.workers.dev/openapi.json)
 
 ## Feedback
 
