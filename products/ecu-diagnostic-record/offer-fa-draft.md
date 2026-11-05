@@ -54,3 +54,7 @@
 **تصمیم Desk Lead:** فرصت مستقل قابل‌ساخت است، اما فعلاً Golden River نیست. به‌دلیل نبود buyer intent مستقیم و ابهام در پذیرش/تسویه، در وضعیت `researched-not-submitted` می‌ماند.
 
 **Freshness caveat (2026-11-05):** the Sibilapp seller page content is available in a search-indexed result crawled about two months ago; a live fetch failed with a tunnel error. Treat the advertised 10% commission, no setup fee and instant delivery as preliminary until the official seller dashboard/terms are opened and verified. No seller account, KYC or listing was created.
+
+
+## Source freshness caveat — 2026-11-05
+The Sibilapp seller page content is available only in a search-indexed result crawled about two months ago; a live fetch failed with a tunnel error. Treat the advertised 10% commission, no setup fee and instant delivery as preliminary until the official seller dashboard/terms are opened and verified. No seller account, KYC or listing was created.
