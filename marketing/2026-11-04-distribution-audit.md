@@ -160,3 +160,8 @@ The response indicates an existing submission is waiting for admin review, usual
 - Repository test workflow: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/42057022526
 
 **Next action:** wait for the existing QuestStack admin review outcome. If it becomes active, obtain the listing ID/public URL and verify its title and canonical catalogue URL. If rejected, review the stated reason and only retry after the official duplicate check permits it. The one-time retry automation has been stopped to avoid repeated duplicate checks while the existing submission is pending.
+
+
+### Dashboard deployment verification — 2026-11-05 15:41 UTC
+
+The dashboard update was deployed from commit `35d4724866070cb6a5c034d66fbc954c5a130b6f`. Deployment workflow [42057326937](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/42057326937) completed with conclusion **success**. The GitHub Pages deploy step and all Chromium smoke tests completed successfully, including the dashboard, developer toolbox, payment page, main product, both micro-product groups, and product catalogue/preview assets. The deployed dashboard includes the QuestStack pending-review section and links to the exact-check evidence.
