@@ -177,3 +177,29 @@ No card-to-card route was adopted: provider/bank reconciliation and dispute rule
 5. Keep Persian StockPulse at draft until jurisdiction/KYC is cleared and three independent shop tests pass.
 
 **Elapsed work:** no reliable wall-clock work timer was available; no claim of ten minutes is made.
+
+
+## Run 7 follow-up — 2026-11-05 11:35 Asia/Tehran
+
+### Fresh five-angle non-JSON research
+
+1. **AI-agent-run services:** [Otobiz official pricing](https://otobiz.ai/pricing) offers 1,000 messages/month free, then $0.01/message; AI-written messages cost $0.02 each. Paid tiers shown include $19, $39, $79, $149 and $299/month. This confirms a paid category but introduces usage charges, Meta/WhatsApp channel dependencies and setup/support burden. Not selected.
+2. **Local-business workflow automation:** [WhatsApp Business official features](https://whatsappbusiness.com/products/business-app-features/) already include greeting/away messages, quick replies, labels, catalog, cart and multi-device features. A paid follow-up tool must prove it solves something beyond these free substitutes. Existing LocalBiz FollowUp remains pending validation; no integration built.
+3. **Digital products/content:** created a new Persian ECU diagnostic record prototype and offer draft (links in the audit section below). Global listings show an auto-repair 14-sheet template at $11.24 with 6 views in 24 hours, and ECU technical digital downloads around $14–$39. Free generic job-card templates are also widely available; the candidate must specialize in ECU IDs, DTC/Freeze Frame and bench-test records.
+4. **Niche data/research products:** [Regrid MCP documentation](https://support.regrid.com/docs/mcp-server) says parcel data requires a valid API token and every parcel lookup/query consumes API quota; its terms require disabling model training/data sharing when using Regrid data with an AI system. This is not a zero-upfront data resale path; rejected.
+5. **Affiliate/lead-routing:** [FTC Endorsement Guides FAQ](https://www.ftc.gov/business-guidance/resources/ftcs-endorsement-guides-what-people-are-asking) requires clear, conspicuous disclosure of material connections and honest endorsements. No eligible affiliate program, payout path or owned audience was verified; not selected.
+
+### Iranian rial route update
+
+- **ZarinPal official page:** KYC + gateway application; first month free of ZarinPal fee except Shaparak, standard fee 0.5% capped at 16,000 toman, settlement one day after transaction by 17:00. Official integration docs support request/redirect/verify.
+- **Zibal official guide (updated 2026-10-17):** individual registration needs Iranian mobile in applicant's own name, email, own-name Sheba and identity document; gateway prerequisites include tax tracking code, valid e-Namad and valid permit. Fees and settlement schedule were not confirmed.
+- **PayPing official API docs:** payment, verification, refunds, reports and withdrawal endpoints are documented; merchant fee/KYC/settlement terms not confirmed.
+- **IDPay:** official source not retrievable in this run; not verified.
+- **Sibilapp seller page:** advertises 10% commission, no setup fee, instant delivery; account creation, seller application and approval required. Payout and KYC details not visible; no listing submitted.
+- **OFAC:** current Iran program page includes November 4, 2026 action and October 5 notice to foreign financial institutions. FAQ 156 describes possible correspondent-account restrictions following a Treasury finding. U.S.-person/U.S.-nexus eligibility must be legally checked before any Iran-related payment; no circumvention or proxy account.
+
+### New non-JSON asset
+
+- Added [Persian ECU diagnostic record HTML](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/blob/main/products/ecu-diagnostic-record/diagnostic-record-fa.html) and [offer draft](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/blob/main/products/ecu-diagnostic-record/offer-fa-draft.md).
+- Added a privacy/print behavior test; [CI run 41992191137](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/41992191137) passed.
+- State: `researched-not-submitted`; Sibilapp is `blocked` until seller approval and payout terms are verified. No revenue or buyer demand is claimed.
