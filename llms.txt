@@ -47,3 +47,10 @@ Supported subset:
 - [Source repository](https://github.com/falconprojectai-arch/falcon-ai-decision-engine)
 - [Published technical guide: API response validation](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/guides/validate-json-api-responses.html)
 - [Published technical guide: AI-agent JSON output testing](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/guides/test-ai-agent-json-outputs.html)
+## Public discovery listings
+
+- [x402scan — JSON Contract Tester API](https://www.x402scan.com/server/fc25a6e2-6e6e-4cfc-b00c-bc594b2636f3): public listing; POST /v1/validate-batch is visible. The listing currently reports 0 transactions, $0.00 volume, and 0 buyers.
+- [Agent Bazaar listing](https://bazaar.saylorinnovations.com/resources/75152): public discovery record; method compatibility and settlement are not established by the directory record.
+- [TechTools Launchpad listing](https://techtools.cz/tools/launchpad/?tool=7727): public listing; current displayed visit count is 0.
+- [true402 listing](https://true402.dev/api/v1/services/a5ccc7ac-2153-403a-91a8-be5be7a69073): public service record; 0 transactions and no settlement proof currently exposed.
+- Directory discovery, a 402 challenge, and a canary-pending marketplace submission are not revenue. Count revenue only after a successful paid response and independently verifiable settlement evidence.
