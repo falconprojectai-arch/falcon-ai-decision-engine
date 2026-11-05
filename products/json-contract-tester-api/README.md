@@ -59,3 +59,13 @@ Toobit has published support for USDC deposits on Base. However, an exchange dep
 ## Browser CORS and marketplace discovery — 2026-11-03
 
 The live Worker now applies CORS to `/health`, `/.well-known/x402`, `/openapi.json` and the API route. GET and HEAD discovery probes on `/v1/validate-batch` are protected by the same unpaid x402 challenge so read-only marketplace indexers can verify the service; the actual billable validation operation remains POST. Independent browser-compatible HTTP checks confirm Health 200 with `Access-Control-Allow-Origin: *`, OPTIONS 204, malformed JSON 400, and a valid unpaid POST 402. The discovery manifest and OpenAPI JSON are live and have been accepted by Agent402's free directory. A generic Agent402 paywall probe initially got 400 because schema validation ran before payment; the request pipeline has since been changed so syntactically valid JSON reaches the x402 challenge before schema validation. After payment, schema-invalid requests can return a billable 400.
+
+## Public discovery listings — 2026-11-05
+
+- [x402scan](https://www.x402scan.com/server/fc25a6e2-6e6e-4cfc-b00c-bc594b2636f3) — public listing verified; four resources registered, including POST /v1/validate-batch. Current listing activity: 0 transactions, $0.00 volume, 0 buyers.
+- [Agent Bazaar](https://bazaar.saylorinnovations.com/resources/75152) — public record verified; the directory record does not establish method compatibility or settlement.
+- [TechTools Launchpad](https://techtools.cz/tools/launchpad/?tool=7727) — public listing verified; displayed visit count currently 0.
+- [true402](https://true402.dev/api/v1/services/a5ccc7ac-2153-403a-91a8-be5be7a69073) — public service record verified; 0 transactions and no settlement proof exposed.
+- [PayAPI Market submission](https://payapi.market/agent/get?id=54bd4f89-23f8-47e7-b507-039362b51198) — pending review; public lookup currently returns not_found, and no canary result or receipt has been received.
+
+Directory registration is a discovery milestone only. No paid API call or on-chain settlement has been independently verified.
