@@ -128,3 +128,35 @@ Directory listings are distribution, not evidence of customers or revenue. No cu
 ### Dashboard deployment verification
 
 Updated dashboard deployed successfully in [GitHub Actions run 41893873049](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/41893873049). Deployment step and all Chromium smoke tests completed with success, including dashboard, developer toolbox, payment page, product pages, new micro products, and catalogue/preview assets.
+
+
+## QuestStack retry — 2026-11-05 15:38 UTC
+
+### Official duplicate-check result — no new submission
+
+The revised GitHub Actions workflow checked the exact canonical URL of each product and the catalogue URL against the documented public endpoint `GET https://queststack.io/api/v1/listings/check?url=...`.
+
+Evidence: [QuestStack retry workflow 42057022428](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/42057022428). The runner completed all six GET requests successfully with HTTP 200. Every response returned `available: false` and the same exact message:
+
+> That website was already submitted and waits for review, usually within 24 hours. Do not submit it again.
+
+| Checked entry | Exact URL | HTTP | `available` | Outcome |
+|---|---|---:|---:|---|
+| LocalBiz FollowUp | https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/localbiz-followup/ | 200 | false | Existing submission pending review; do not resubmit |
+| StockPulse | https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/stockpulse/ | 200 | false | Existing submission pending review; do not resubmit |
+| MCPGuard Lite | https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/mcpguard-lite/ | 200 | false | Existing submission pending review; do not resubmit |
+| ExpenseSnap | https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/expensesnap/ | 200 | false | Existing submission pending review; do not resubmit |
+| CronPulse | https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/cronpulse/ | 200 | false | Existing submission pending review; do not resubmit |
+| Falcon AI Micro Tools catalogue | https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/ | 200 | false | Existing submission pending review; do not resubmit |
+
+**Submission result:** no POST was sent, no duplicate listing was created, and no listing ID, public listing URL, or management token was returned by the duplicate-check endpoint. The current run did **not** receive HTTP 429; the API returned HTTP 200 with `available: false`. The earlier runner attempt on 2026-11-04 had received HTTP 403 on its duplicate-check GET, but this retry reached the endpoint successfully.
+
+QuestStack's official submission instructions state **one listing per website** and explicitly say not to submit again when `available` is false. All five product URLs share the same website origin, so five separate listings would also conflict with that published rule. The workflow therefore checks all five URLs but does not attempt five separate submissions. The catalogue URL was also checked and returned unavailable.
+
+The response indicates an existing submission is waiting for admin review, usually within 24 hours. Because the duplicate-check response did not include its listing ID, the public listing title and canonical URL cannot yet be verified through the documented `GET /listings/{id}` route. No public listing was counted as live or accepted. No Pro boost, paid upgrade, payment, badge, backlink, account creation, or API key action occurred.
+
+- Official rules and API route: https://queststack.io/submit-your-tool
+- Workflow evidence: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/42057022428
+- Repository test workflow: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/42057022526
+
+**Next action:** wait for the existing QuestStack admin review outcome. If it becomes active, obtain the listing ID/public URL and verify its title and canonical catalogue URL. If rejected, review the stated reason and only retry after the official duplicate check permits it. The one-time retry automation has been stopped to avoid repeated duplicate checks while the existing submission is pending.
