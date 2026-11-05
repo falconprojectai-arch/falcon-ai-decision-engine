@@ -84,3 +84,16 @@ Revenue remains $0.00; no user acquisition or payment is claimed.
 
 
 Dashboard update deployed successfully: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/41893873049 — all deployment and Chromium smoke-test steps passed.
+
+
+## QuestStack retry outcome — 2026-11-05 15:38 UTC
+
+The prior retry schedule has now run. The updated workflow checked all five exact product URLs plus the catalogue URL. All six official duplicate-check GET requests returned HTTP 200 with `available: false` and the exact response message: "That website was already submitted and waits for review, usually within 24 hours. Do not submit it again."
+
+Evidence: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/42057022428
+
+No POST was attempted. No new listing ID, public listing URL, or management token was issued. No duplicate was created. QuestStack's published rule is one listing per website; all five products share the same website origin, so five separate submissions would not comply. The catalogue URL also returned unavailable.
+
+The check response did not expose an existing listing ID, so its public title/canonical URL cannot yet be verified. State remains **pending admin review**, not live/approved. Wait for the review outcome; if active, obtain the listing ID and verify the public page; if rejected, use the reason and re-check availability before any permitted correction. The one-time retry automation has been disabled to prevent repeat attempts while the existing submission is pending.
+
+No paid upgrade, Pro boost, payment, badge/backlink change, account creation, or API-key creation occurred. The current run was not rate-limited: all duplicate-check calls returned HTTP 200. The previous 2026-11-04 runner error was HTTP 403 and is superseded by this successful check response.
