@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="کاربرگ چاپی و قابل‌تکمیل برای ثبت پذیرش، عیب‌یابی و تحویل ECU و برق خودرو. بدون ارسال یا ذخیره‌سازی اطلاعات.">
+<title>کاربرگ ثبت عیب‌یابی ECU و برق خودرو</title>
+<style>
+*{box-sizing:border-box}
+:root{color-scheme:light}
+body{margin:0;background:#edf1f5;color:#18212b;font-family:Tahoma,Arial,sans-serif;font-size:12px;line-height:1.65}
+.toolbar{max-width:210mm;margin:12px auto;text-align:left}
+.toolbar button{border:0;border-radius:8px;background:#1d3557;color:#fff;padding:10px 16px;font:inherit;cursor:pointer}
+.sheet{width:210mm;min-height:297mm;margin:10mm auto;padding:12mm;background:#fff;box-shadow:0 5px 24px #172b4d18}
+header{border-bottom:2px solid #1d3557;padding-bottom:10px;margin-bottom:12px}
+h1{font-size:21px;margin:0 0 4px;color:#1d3557}
+h2{font-size:14px;margin:14px 0 8px;padding:5px 8px;background:#eaf0f6;border-right:3px solid #1d3557}
+p{margin:4px 0}
+.sub{color:#526171;font-size:10px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.field{min-width:0}
+label{display:block;font-weight:700;font-size:10px;margin-bottom:3px;color:#34465a}
+input,textarea{width:100%;border:1px solid #9aa8b7;border-radius:4px;background:#fff;color:#111;font:inherit;padding:5px;min-height:28px}
+textarea{height:56px;resize:vertical}
+table{width:100%;border-collapse:collapse;margin:5px 0 10px}
+th,td{border:1px solid #9aa8b7;padding:5px;vertical-align:top}
+th{background:#edf2f7;font-size:10px}
+td{height:29px}
+.small{font-size:10px}
+.checks{display:flex;flex-wrap:wrap;gap:8px 14px;margin:6px 0}
+.checks label{display:inline-flex;align-items:center;gap:5px;font-weight:400;font-size:10px}
+.checks input{width:13px;min-height:13px;height:13px}
+.signature{height:46px}
+.note{border:1px solid #c5d0dc;background:#f7f9fb;padding:7px 9px;border-radius:5px;font-size:10px}
+.footer{display:flex;justify-content:space-between;margin-top:12px;padding-top:7px;border-top:1px solid #cbd4de;color:#5b6876;font-size:9px}
+@media print{
+ @page{size:A4;margin:0}
+ body{background:#fff}
+ .toolbar{display:none}
+ .sheet{width:210mm;min-height:297mm;margin:0;padding:12mm;box-shadow:none;break-after:page;page-break-after:always}
+ .sheet:last-of-type{break-after:auto;page-break-after:auto}
+ input,textarea{background:#fff}
+}
+</style>
+</head>
+<body>
+<div class="toolbar"><button type="button" onclick="window.print()">چاپ / ذخیره به PDF</button></div>
+
+<section class="sheet">
+<header>
+  <h1>کاربرگ پذیرش و ثبت عیب‌یابی ECU و برق خودرو</h1>
+  <p class="sub">فرم ثبت اطلاعات پرونده — این فایل اطلاعات را ارسال یا در سرور ذخیره نمی‌کند. پس از تکمیل، چاپ یا ذخیره PDF بگیرید.</p>
+</header>
+
+<div class="grid">
+  <div class="field"><label>شماره پرونده</label><input></div>
+  <div class="field"><label>تاریخ پذیرش</label><input></div>
+  <div class="field"><label>نام تکنسین</label><input></div>
+</div>
+
+<h2>۱. مشخصات مشتری و خودرو</h2>
+<div class="grid">
+  <div class="field"><label>نام مشتری</label><input></div>
+  <div class="field"><label>شماره تماس</label><input></div>
+  <div class="field"><label>شماره پذیرش / فاکتور</label><input></div>
+  <div class="field"><label>سازنده و مدل خودرو</label><input></div>
+  <div class="field"><label>سال ساخت</label><input></div>
+  <div class="field"><label>کارکرد (km)</label><input></div>
+  <div class="field"><label>شماره شاسی / VIN</label><input></div>
+  <div class="field"><label>شماره پلاک</label><input></div>
+  <div class="field"><label>نوع موتور / گیربکس</label><input></div>
+</div>
+
+<h2>۲. مشخصات ECU</h2>
+<div class="grid">
+  <div class="field"><label>سازنده ECU</label><input></div>
+  <div class="field"><label>مدل / خانواده ECU</label><input></div>
+  <div class="field"><label>شماره قطعه (Part No.)</label><input></div>
+  <div class="field"><label>شناسه سخت‌افزار (HW ID)</label><input></div>
+  <div class="field"><label>شناسه نرم‌افزار (SW ID)</label><input></div>
+  <div class="field"><label>شماره سریال / برچسب</label><input></div>
+</div>
+
+<h2>۳. شرح ایراد و وضعیت هنگام پذیرش</h2>
+<div class="field"><label>شرح دقیق مشکل از زبان مشتری</label><textarea></textarea></div>
+<div class="field" style="margin-top:7px"><label>شرایط بروز ایراد (سرد / گرم / دور موتور / بار / رطوبت / پس از تعمیر و ...)</label><textarea></textarea></div>
+<div class="checks">
+  <label><input type="checkbox"> روشن نمی‌شود</label>
+  <label><input type="checkbox"> بد روشن می‌شود</label>
+  <label><input type="checkbox"> خاموشی ناگهانی</label>
+  <label><input type="checkbox"> ریپ / افت توان</label>
+  <label><input type="checkbox"> چراغ هشدار</label>
+  <label><input type="checkbox"> ایراد متناوب</label>
+  <label><input type="checkbox"> سابقه آب‌خوردگی</label>
+  <label><input type="checkbox"> سابقه تعمیر قبلی</label>
+</div>
+
+<h2>۴. کدهای خطا و اطلاعات اسکن اولیه (DTC / Freeze Frame)</h2>
+<table>
+<thead><tr><th style="width:18%">کد خطا</th><th>شرح / ماژول</th><th style="width:18%">وضعیت</th><th>شرایط ثبت / Freeze Frame</th></tr></thead>
+<tbody>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+</tbody>
+</table>
+<div class="note">یادآوری: کد خطا به‌تنهایی علت قطعی خرابی نیست. شرایط ثبت، داده‌های زنده و اطلاعات فنی معتبر خودرو را نیز بررسی و ثبت کنید.</div>
+
+<div class="footer"><span>کاربرگ ثبت عیب‌یابی ECU و برق خودرو</span><span>صفحه ۱ از ۲</span></div>
+</section>
+
+<section class="sheet">
+<header>
+  <h1>ثبت آزمون، اقدام تعمیراتی و تحویل</h1>
+  <p class="sub">شماره پرونده: <span style="display:inline-block;width:55mm;border-bottom:1px solid #9aa8b7">&nbsp;</span>　تاریخ: <span style="display:inline-block;width:35mm;border-bottom:1px solid #9aa8b7">&nbsp;</span></p>
+</header>
+
+<h2>۵. اندازه‌گیری‌های اولیه</h2>
+<div class="grid">
+  <div class="field"><label>ولتاژ باتری (V)</label><input></div>
+  <div class="field"><label>تغذیه ECU (طبق مرجع سازنده)</label><input></div>
+  <div class="field"><label>افت مسیر زمین (طبق مرجع)</label><input></div>
+  <div class="field"><label>مرجع ۵ ولت (در صورت کاربرد)</label><input></div>
+  <div class="field"><label>وضعیت ارتباط / پروتکل</label><input></div>
+  <div class="field"><label>مصرف جریان روی میز (mA)</label><input></div>
+</div>
+
+<h2>۶. آزمون روی میز / مدارها</h2>
+<table>
+<thead><tr><th>نقطه یا مدار مورد بررسی</th><th>مقدار مرجع طبق OEM</th><th>مقدار اندازه‌گیری‌شده</th><th>نتیجه / توضیح</th></tr></thead>
+<tbody>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+</tbody>
+</table>
+
+<h2>۷. یافته‌ها و اقدامات انجام‌شده</h2>
+<div class="field"><label>یافته بازرسی ظاهری (خوردگی، رطوبت، آثار حرارت، آسیب فیزیکی و ...)</label><textarea></textarea></div>
+<div class="field" style="margin-top:7px"><label>اقدامات انجام‌شده / قطعات تعویض‌شده / نسخه نرم‌افزار یا کالیبراسیون</label><textarea></textarea></div>
+
+<h2>۸. تأیید عملکرد پس از تعمیر</h2>
+<div class="checks">
+  <label><input type="checkbox"> ارتباط با ECU برقرار شد</label>
+  <label><input type="checkbox"> خطاهای قبلی پاک شدند</label>
+  <label><input type="checkbox"> خطا پس از آزمون برنگشت</label>
+  <label><input type="checkbox"> استارت سرد بررسی شد</label>
+  <label><input type="checkbox"> استارت گرم بررسی شد</label>
+  <label><input type="checkbox"> آزمون جاده‌ای انجام شد</label>
+  <label><input type="checkbox"> آزمون نهایی انجام نشد</label>
+</div>
+<div class="field"><label>نتیجه آزمون نهایی / موارد باقی‌مانده</label><textarea></textarea></div>
+
+<h2>۹. هزینه، تأیید مشتری و تحویل</h2>
+<div class="grid">
+  <div class="field"><label>هزینه عیب‌یابی</label><input></div>
+  <div class="field"><label>هزینه قطعات</label><input></div>
+  <div class="field"><label>اجرت</label><input></div>
+</div>
+<div class="field" style="margin-top:7px"><label>شرایط ضمانت، مدت و موارد خارج از پوشش</label><textarea></textarea></div>
+<div class="grid two" style="margin-top:9px">
+  <div class="field"><label>امضای مشتری / تأیید تحویل</label><div class="signature"></div></div>
+  <div class="field"><label>نام و امضای تکنسین</label><div class="signature"></div></div>
+</div>
+<div class="note">این کاربرگ ابزار ثبت سوابق است، نه دستورالعمل تعمیر یا گواهی ایمنی. مقادیر آزمون و روش‌های تشخیص باید بر اساس مستندات معتبر سازنده خودرو، تجهیزات مناسب و صلاحیت تکنسین تعیین شوند. پیش از انجام تعمیر، حدود کار و هزینه با مشتری تأیید شود.</div>
+
+<div class="footer"><span>اطلاعات این فرم فقط در نسخه‌ای که خودتان تکمیل و نگهداری می‌کنید درج می‌شود.</span><span>صفحه ۲ از ۲</span></div>
+</section>
+</body>
+</html>
