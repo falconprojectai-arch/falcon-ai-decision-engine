@@ -720,3 +720,6 @@ The five TechTools micro-product listings #7543–#7547 remain `published/succes
 
 
 **Sibilapp source freshness:** seller-page details are available only in a search-indexed result crawled about two months ago; live retrieval failed with a tunnel error. The advertised 10% commission/no setup/instant delivery are preliminary, not current verified terms. Seller approval, KYC and payout schedule remain unverified. No account or listing was created.
+
+
+**Language fit:** English has the clearest observed category evidence (Etsy auto-repair templates and ECU technical downloads); Persian is the best initial language for the ECU-specific pack because the target buyer is a Persian-speaking independent repair shop and a local seller marketplace is discoverable, though seller eligibility is not verified. No Spanish-specific buyer signal or suitable payout route was found; no Spanish localization or submission was attempted.
