@@ -162,9 +162,9 @@ def test_json_pointer_join_escapes_tilde_and_slash():
 
 def test_junit_export_is_a_local_browser_asset_with_expected_diagnostics():
     source = JUNIT.read_text(encoding="utf-8")
-    assert "window.JSONContractTesterJUnit" in source
+    assert "root.JSONContractTesterJUnit" in source
     assert "buildJUnitXml" in source
-    assert "<testsuites" in source
+    assert "'<testsuites" in source
     assert "sampleIndex" in source
     assert "instancePath" in source
     assert "schemaPath" in source
