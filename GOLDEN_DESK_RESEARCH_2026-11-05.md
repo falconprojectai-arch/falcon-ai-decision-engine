@@ -206,3 +206,7 @@ No card-to-card route was adopted: provider/bank reconciliation and dispute rule
 
 
 **Freshness caveat (2026-11-05):** the Sibilapp seller page content is available in a search-indexed result crawled about two months ago; a live fetch failed with a tunnel error. Treat the advertised 10% commission, no setup fee and instant delivery as preliminary until the official seller dashboard/terms are opened and verified. No seller account, KYC or listing was created.
+
+
+### Source freshness correction — Sibilapp
+The seller page is available in a search-indexed result crawled about two months ago; live retrieval failed with a tunnel error. The advertised 10% commission, no setup fee and instant delivery are preliminary only, not current verified terms. Seller approval, KYC and payout schedule remain unverified; no account or listing was created.
