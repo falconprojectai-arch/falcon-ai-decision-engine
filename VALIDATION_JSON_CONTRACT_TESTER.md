@@ -1111,3 +1111,6 @@ Full report: [reports/2026-11-06-evening-scout.md](reports/2026-11-06-evening-sc
 - Next: obtain Cloudflare preview logs, await PayAPI provider-funded canary, validate the ECU workbook with three qualified shops before adding features or publishing.
 
 Measured productive work window: 2026-11-06T19:57:53Z–2026-11-06T20:07:55Z (10m02s). Dashboard progress remains 50% (6/12 evidence milestones, not an earning probability).
+
+
+Post-update verification: Deploy control dashboard run 42286085712 completed successfully at 2026-11-06T20:11:31Z; Chromium smoke tests passed for the dashboard, developer toolbox, payment page, deployed product, micro products, catalogue/preview assets and post-checkout test. Test Revenue Machine runs 42286079022, 42286085660 and 42286092087 also passed. These confirm CI and synthetic smoke tests only; no real users, payments or revenue are implied.
