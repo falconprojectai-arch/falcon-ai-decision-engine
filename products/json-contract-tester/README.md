@@ -48,3 +48,6 @@ A PASS means only that the value matches the rules supported by this tool. Use a
 ## Feedback
 
 If this is useful in a real workflow, please describe the concrete case and the missing rule or error detail in [issue #13](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/issues/13).
+
+
+**CI boundary:** The JUnit XML button downloads a file generated locally from the current browser report. It can be imported by a CI test-results viewer after you move the file through your own workflow; this tool does not run tests in CI, upload the report, or publish artifacts automatically. Inputs remain in the browser.
