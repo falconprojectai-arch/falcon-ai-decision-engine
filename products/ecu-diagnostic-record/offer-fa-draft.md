@@ -58,3 +58,26 @@
 
 ## Source freshness caveat — 2026-11-05
 The Sibilapp seller page content is available only in a search-indexed result crawled about two months ago; a live fetch failed with a tunnel error. Treat the advertised 10% commission, no setup fee and instant delivery as preliminary until the official seller dashboard/terms are opened and verified. No seller account, KYC or listing was created.
+
+
+## Evidence refresh — 2026-11-06
+
+### Market signal and competition
+- Etsy's current auto-repair order-form category shows **134+ items**. Digital examples appear around **$1.26–$9.50**, with several listings showing substantial engagement counts. These are marketplace signals, not verified sales for this Persian ECU-specific form. https://www.etsy.com/market/order_form_for_auto_repair
+- One current auto-shop management spreadsheet is listed at **$34.99** but shows **0 sales / no reviews** after about two months: a reminder that a high price is not proof of demand. https://www.etsy.com/listing/4574436728/auto-repair-shop-financial-spreadsheet
+- Free substitutes are strong: Garageauto offers five free PDF/Word inspection forms, and Tekmetric offers a free 100-point checklist. Generic repair-order forms are therefore commoditized. https://garageauto.app/vehicle-inspection-checklist/ · https://www.tekmetric.com/post/the-comprehensive-vehicle-inspection-checklist-printable
+- The only defensible differentiation is the specialist ECU workflow already in the sample: ECU part/HW/SW IDs, DTC/Freeze Frame, bench measurements, repair actions and post-repair verification. Direct demand for this exact Persian niche remains unproven.
+
+### Persian distribution and checkout research
+- **Digyno:** no sign-up/monthly fee, **3% per sale**, automatic digital-file delivery. New sellers have a **72-hour** review hold until five successful sales, then 24 hours; minimum withdrawal **100,000 toman**; withdrawal usually within one business day. Seller identity verification, a seller-owned payout account and manager approval are required. PDF/XLSX/ZIP/DOCX/CSV are accepted (100 MB per file, up to 10 files/product); scripts, executable files and macro-enabled workbooks are prohibited. https://digyno.com/sell
+- **Zarinpal:** first month waives its provider fee but not Shaparak charges; standard fee **0.5% capped at 16,000 toman + 500 fixed**. The official IPG page says automatic next-day settlement by 17:00 and identity/document review before activation. https://www.zarinpal.com/pricing · https://www.zarinpal.com/payment-gateway
+- **Zibal:** **1% capped at 20,000 toman**, plus VAT on the fee; no setup/monthly fee; settlement follows the account cycle. Official prerequisites include applicant verification, a matching payout account, tax tracking, valid eNamad and a relevant license. https://zibal.ir/pricing · https://help.zibal.ir/article/registration/
+- **PayPing:** base plan has no annual subscription and charges **1% capped at 5,000 toman + 500 fixed + VAT**; automatic daily settlement is listed. Product/invoice links, API, refunds and reporting are documented. Seller eligibility still needs confirmation in the official account. https://payping.ir/pricing · https://docs.payping.ir/
+- **IDPay:** official API requires a dashboard API key and documents create/verify/status endpoints; its fee page returned HTTP 502, so current fees and settlement were not verified. https://idpay.ir/web-service/v1.1/ · https://blog.idpay.ir/helps/106
+- Etsy Payments does not list Iran as eligible and requires the shop bank country to match; Payhip's free tier still relies on PayPal/Stripe, so neither is a verified Iran payout route. https://help.etsy.com/hc/en-us/articles/115015710408-Countries-Eligible-for-Etsy-Payments · https://payhip.com/pricing
+
+### Legal gate and decision
+- OFAC's Iran page currently includes a **4 November 2026** alert and lists an automotive-sector determination effective **1 October 2026**. The owner's legal person/residence and any U.S. nexus are not established here. Because this product targets automotive workshops, do not sell, onboard or route payments to Iranian buyers until qualified legal review confirms the specific activity and counterparties are permitted. https://ofac.treasury.gov/sanctions-programs-and-country-information/iran-sanctions
+- Status remains **researched-not-submitted**. Updated scores (0–5): buyer evidence **3**; speed **2**; zero-upfront-cost **4**; automation **5**; low support **4**; legal/platform feasibility **0 pending review**. The zero legal score blocks execution under the Golden Desk gate.
+- No seller/gateway account, listing, identity verification, payout setting or payment was created or changed. No personal or bank details were collected or stored.
+- Next action: keep the product unpublished until legal eligibility is confirmed and any required seller verification is completed directly on the official provider site. No further feature work is justified until opt-in feedback from an ECU technician is observed.
