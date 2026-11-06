@@ -8,6 +8,10 @@
 - No API key or account; x402 payment is the access mechanism.
 - A syntactically valid unpaid JSON request returns HTTP 402 with `PAYMENT-REQUIRED`, even when the body is `{}`. Inspect the amount, asset, network and recipient before authorizing any payment.
 
+## Agent Bazaar call-method note — 2026-11-07
+
+The public Agent Bazaar listing currently shows a generic GET challenge example. For this API, **GET and HEAD are read-only discovery probes only**; they do not validate a batch. To run a billable validation, use **POST** with the JSON body shown below. Do not authorize a payment for a GET or HEAD probe.
+
 ## 1. Inspect the challenge without paying
 
 ```bash
