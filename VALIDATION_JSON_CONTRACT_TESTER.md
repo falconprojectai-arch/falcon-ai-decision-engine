@@ -1138,3 +1138,5 @@ Full evidence report: [reports/2026-11-06-run5-scout.md](reports/2026-11-06-run5
 - **Verified revenue:** $0.00. Success progress remains 50% (6/12 evidence milestones; not an earning probability).
 - **Next highest-value action:** inspect the authenticated Cloudflare preview log for PR #20, correct the build issue, rerun preview, and only then verify live OpenAPI parity and consider merge. Wait for PayAPI's provider-funded canary; do not self-fund. Recheck Agent402 when its public seller endpoint is readable.
 
+
+- **PR #20 check-run detail (2026-11-06T20:31Z):** head SHA `3b409a2aee8e8469bfc07da7c1700524390cd8c0` is open/not merged and branch-mergeable. Three automated checks passed (two `test`, one `tests`); the Cloudflare Workers build failed at 2026-11-05T08:07:00Z for build `df47ce0a-18bf-4da8-900b-ff5c61050e3a`. No merge until the authenticated Cloudflare log is reviewed and a new preview succeeds. [Checks](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/pull/20/checks).
