@@ -885,3 +885,15 @@ A final review of the submission log found that the current channel table had in
 - **Niche data:** SBA recommends validating demand, market size, saturation and competitor pricing; no specific paid dataset buyer signal or free data wedge was validated this run. https://www.sba.gov/business-guide/plan-your-business/market-research-competitive-analysis
 - **Affiliate/lead-routing:** FTC guidance requires clear, conspicuous disclosure of material connections and affiliate commissions near recommendations/links. No partner program or proven audience was validated; rejected for now. https://www.ftc.gov/business-guidance/resources/ftcs-endorsement-guides-what-people-are-asking
 - Best separate candidate remains the ECU-specific diagnostic record pack: broad Etsy demand exists, but the Persian ECU niche is unproven and the legal gate remains 0. Status: researched-not-submitted.
+
+
+### Post-edit verification and non-JSON angle scan — 2026-11-06
+
+- Builder change: the public browser page and README now clarify that JUnit XML is a local file export for an external CI importer, not automatic CI execution or upload. Public page verified HTTP 200: https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/.
+- Post-edit test run **42179233245** passed Python and Node JUnit tests; Pages deployment **42179233214** and Chromium smoke tests passed. https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/42179233245 · https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/42179233214
+- AI-agent marketplace: provider plan is **$45/month** plus a 12% platform fee; rejected as not zero-upfront. https://ai-agentmarketplace.com/pricing
+- Automation engines: n8n hosted Starter is **€20/month**; self-hosted Community Edition still needs a server and maintenance. Make's official free tier is **1,000 credits/month** and pauses scenarios at the limit. https://n8n.io/pricing · https://www.make.com/pricing
+- Local-business missed-call workflow: SimplAssist lists **$49/month + $25 SMS activation** and a **$79/month** full suite; recurring telecom and support costs make it a poor zero-cost fit. https://simplassist.com/
+- Niche data: SBA's official research guide emphasizes demand, market size, saturation and competitor pricing; no specific paid data buyer signal was verified. https://www.sba.gov/business-guide/plan-your-business/market-research-competitive-analysis
+- Affiliate/lead routing: FTC guidance requires clear disclosure of material connections and affiliate commissions; no partner or audience with proven conversion was validated. https://www.ftc.gov/business-guidance/resources/ftcs-endorsement-guides-what-people-are-asking
+- Best separate candidate remains the ECU-specific diagnostic record pack. Broad Etsy category demand is visible, but Persian ECU demand is unproven; status remains researched-not-submitted and the legal gate remains 0.
