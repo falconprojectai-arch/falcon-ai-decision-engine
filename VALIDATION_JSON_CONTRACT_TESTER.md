@@ -1140,3 +1140,35 @@ Full evidence report: [reports/2026-11-06-run5-scout.md](reports/2026-11-06-run5
 
 
 - **PR #20 check-run detail (2026-11-06T20:31Z):** head SHA `3b409a2aee8e8469bfc07da7c1700524390cd8c0` is open/not merged and branch-mergeable. Three automated checks passed (two `test`, one `tests`); the Cloudflare Workers build failed at 2026-11-05T08:07:00Z for build `df47ce0a-18bf-4da8-900b-ff5c61050e3a`. No merge until the authenticated Cloudflare log is reviewed and a new preview succeeds. [Checks](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/pull/20/checks).
+
+
+---
+
+## Daily audit — 2026-11-07 00:31 Asia/Tehran
+
+Full evidence report: [reports/2026-11-07-run5-scout.md](./reports/2026-11-07-run5-scout.md).
+
+### Current live checks
+- Product page, API root, `/health`, OpenAPI JSON, discovery manifest and x402 v2 manifest returned HTTP 200.
+- Live parity check passed: OpenAPI/manifest `0.1.0`, x402 v2, `POST /v1/validate-batch`, $0.005 per batch, Base `eip155:8453`, amount `5000`, max 10 outputs. GET/HEAD remain read-only discovery probes; no paid POST was sent.
+- Agent Bazaar resource 75152 is public and verified. Its generated human instructions show a generic GET retry, while the paid validation operation is POST and the machine record omits the method. Buyer quickstart warning added in commit `e5c08d7b6724042039de2c705fd93f43a809b574`; the updated file was re-read from GitHub.
+- Worker deployment, API tests, Revenue Machine tests and dashboard deployment all succeeded in runs `42293139583`, `42293139637`, `42293139779`, `42293139804`. Agent402 seller refresh completed successfully. Latest seller record: health 1, routable true, Base only, paywall 402, 3 routes; router dispatch remains ineligible (`settlement_required)); executeViaCallableNow is true only on the unproven lane. No settlement or paid call.
+- PayAPI listing `54bd4f89-23f8-47e7-b507-039362b51198` remains pending_review/not live; public lookup 404 not_found. Last provider email is 2026-11-03 05:28:56Z; no canary result.
+- x402scan displays 0 transactions, $0 volume and 0 buyers over 30 days; true402 displays 0 transactions and null settlement fields.
+- TechTools listing 7727 is public and displayed 0 visits at 2026-11-07 00:28:15 Asia/Tehran. DEV article is public with no new comments visible. Reddit recheck was unsupported; prior published status retained but current comments not reverified.
+
+### Feedback and traffic
+- Issues #13/#14/#17/#18/#19/#21 and PR reviews #20/#16/#15/#1/#2 were checked. No new independent external feedback or PR review. The only actionable external feedback remains shigeki7777 on Issue #13 (2026-10-29 09:10:29Z); owner/bot comments are not counted as independent feedback.
+- GitHub Discussions retrieval was rejected by the connector allowlist.
+- Traffic endpoints attempted at 2026-11-07 00:28:34 Asia/Tehran for rolling 14 days 2026-10-24 00:28:34 → 2026-11-07 00:28:34. `traffic/views`, `traffic/clones`, `traffic/popular/paths` and `traffic/popular/referrers` all returned HTTP 400 because these endpoints are not in the connector's allowed fetch list. Views/unique visitors, clones, referrers and popular paths remain unavailable; no counts invented.
+
+### Distribution register
+- published/successful: DEV, Reddit (last verified; current recheck blocked), TechTools Launchpad 7727, Agent Bazaar 75152, x402scan, true402, Agent402 (public seller index only; not settlement).
+- pending review: PayAPI Market, DevXTools, The Tool Directory, PromoteIndex ticket #000098, Ignlab Launch, Launching Next (saved submission; public listing unverified).
+- researched-not-submitted: FreeStuff.dev, Development Station, DevStudio Online, DevsTools.
+- blocked: SEODataPulse (email required), Toolscase (email verification), CodeHype/DevPages (login), ListMySaaS (badge/DR/paid option). Best of AI was not a fit. Direct links and product-introduction URL are in the full report.
+
+### Independent income research
+- New hypothesis: bilingual freelancer Scope Change Control Pack. Workbook, DOCX form and one-page PDF sample created and verified locally; not listed or sold. Evidence shows direct competition and free templates, so confidence is low. Digyno supports automatic file delivery with 3% fee and owner KYC; public marketplace showed one generic product with no rating, so it is checkout/delivery, not proven acquisition.
+- Iran rails compared: Digyno, Zarinpal, Zibal, PayPing and IDPay. Etsy Payments and Stripe country eligibility do not include Iran. OFAC FAQs 1250/1257/1110 are material compliance gates; no identity or bank data was used. See the full report for fees, KYC, settlement, risks and sources.
+- Verified revenue: **$0.00**.
