@@ -51,3 +51,14 @@ If this is useful in a real workflow, please describe the concrete case and the 
 
 
 **CI boundary:** The JUnit XML button downloads a file generated locally from the current browser report. It can be imported by a CI test-results viewer after you move the file through your own workflow; this tool does not run tests in CI, upload the report, or publish artifacts automatically. Inputs remain in the browser.
+
+
+## JUnit export regression tests
+
+The browser's JUnit XML exporter has a dependency-free Node test suite. Run it from the repository root:
+
+```bash
+node --test products/json-contract-tester/tests/junit-export.test.js
+```
+
+The test workflow runs on pushes to `main` and pull requests that change the browser tester or its workflow. It checks mixed-batch counts, per-sample diagnostics, XML escaping, empty reports, and missing-diagnostic fallbacks. It does not upload browser inputs or execute CI tests on user data.
