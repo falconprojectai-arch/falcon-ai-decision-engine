@@ -24,6 +24,7 @@
 {"ok":true,"extra":1}</textarea></section>
 </div>
 <div class="actions"><button id="run">Run contract tests</button><button id="sample">Load sample</button><button id="download">Download JSON report</button><button id="download-junit" type="button">Download JUnit XML</button></div>
+<p class="muted small">JUnit XML is a local file export for an external CI test-result importer. This browser tool does not run CI jobs, upload your inputs, or publish artifacts automatically.</p>
 <p id="status" role="status" aria-live="polite" class="muted"></p><section id="results" aria-live="polite"></section>
 </main>
 <section><h2>Supported rules and current limitations</h2><p class="muted small">Supported: type, required, properties, additionalProperties=false, items, enum, const, minimum, maximum, minLength, maxLength, pattern, minItems, and maxItems. Limits: one JSON value per non-empty line; object/array schema nodes only; no $ref/$defs, composition (allOf/anyOf/oneOf/not), format checks, boolean schemas, or additionalProperties schemas. Pattern uses this browser's JavaScript regular-expression engine. Unknown keywords are ignored. A PASS means only that the value matches the rules listed here, not that it is valid under the full JSON Schema specification. Use a full validator for production or security-critical contracts.</p></section>
