@@ -1,0 +1,28 @@
+name: JSON Contract Tester browser export tests
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "products/json-contract-tester/**"
+      - ".github/workflows/json-contract-tester-browser-tests.yml"
+  pull_request:
+    paths:
+      - "products/json-contract-tester/**"
+      - ".github/workflows/json-contract-tester-browser-tests.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  junit-export:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Test JUnit XML export
+        run: node --test products/json-contract-tester/tests/junit-export.test.js
