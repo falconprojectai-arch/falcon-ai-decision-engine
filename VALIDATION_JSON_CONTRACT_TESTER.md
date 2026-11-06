@@ -873,3 +873,15 @@ A final review of the submission log found that the current channel table had in
 - Next action: wait for PayAPI's own canary result; if it returns 402 after payment, capture the exact provider response and fix the payment middleware/route before resubmission. Do not self-fund or sign. Keep the local JUnit XML export documented as a file export, not automatic CI execution.
 - Verified revenue: **$0.00**. No external payment/provider record or on-chain settlement receipt exists.
 - Audit status: **partial** only because GitHub Traffic metrics and the authenticated PayAPI provider dashboard are not accessible in this run. No counts were guessed.
+
+
+### Post-edit verification and five-angle market scan — 2026-11-06 10:42:45 Asia/Tehran
+
+- Builder: the public browser page and README now state that JUnit XML is a local file export for an external CI importer, not automatic CI execution/upload. Public product page verified HTTP 200 with the note visible: https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/.
+- Post-edit GitHub Actions run **42179233245** passed Python and Node JUnit tests. Pages deployment **42179233214** completed successfully, including Chromium smoke tests. https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/42179233245 · https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/42179233214
+- **AI-agent marketplace:** customer tasks are free to post, but providers pay **$45/month** plus a 12% fee and receive Stripe payouts; not a zero-upfront seller route. https://ai-agentmarketplace.com/pricing
+- **Automation engines:** n8n Community Edition is free only when self-hosted; hosted Starter is **€20/month billed annually** for 2,500 executions. Make lists **1,000 free credits/month**, but workflows pause when credits run out; AI, SMS, hosting and support remain separate costs. https://n8n.io/pricing · https://www.make.com/pricing
+- **Local-business workflows:** SimplAssist lists missed-call SMS + web chat at **$49/month + $25 SMS activation**, Full Suite at **$79/month + $25**, and website chat at $15/month. Telecom registration, usage and support add ongoing costs. https://simplassist.com/
+- **Niche data:** SBA recommends validating demand, market size, saturation and competitor pricing; no specific paid dataset buyer signal or free data wedge was validated this run. https://www.sba.gov/business-guide/plan-your-business/market-research-competitive-analysis
+- **Affiliate/lead-routing:** FTC guidance requires clear, conspicuous disclosure of material connections and affiliate commissions near recommendations/links. No partner program or proven audience was validated; rejected for now. https://www.ftc.gov/business-guidance/resources/ftcs-endorsement-guides-what-people-are-asking
+- Best separate candidate remains the ECU-specific diagnostic record pack: broad Etsy demand exists, but the Persian ECU niche is unproven and the legal gate remains 0. Status: researched-not-submitted.
