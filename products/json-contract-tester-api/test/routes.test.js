@@ -68,3 +68,46 @@ test('OpenAPI exposes x-payment-info for x402 discovery registries', async () =>
   assert.equal(operation['x-payment-info'].price.currency, 'USD');
   assert.equal(operation['x-payment-info'].price.amount, '0.005');
 });
+
+
+test('OpenAPI mirrors every public route and exposes the checked-in contract schemas', async () => {
+  const response = await app.fetch(new Request('https://api.example.test/openapi.json'), {});
+  assert.equal(response.status, 200);
+  const body = await response.json();
+
+  for (const route of ['/', '/health', '/.well-known/x402', '/.well-known/x402.json', '/openapi.json', '/v1/validate-batch']) {
+    assert.ok(body.paths[route], `OpenAPI is missing public route ${route}`);
+  }
+
+  assert.deepEqual(body.components.schemas.BatchRequest.required, ['schema', 'outputs']);
+  assert.equal(body.components.schemas.BatchRequest.properties.outputs.maxItems, 10);
+  assert.deepEqual(body.components.schemas.BatchResponse.required, [
+    'reportVersion', 'tool', 'valid', 'summary', 'results', 'limitation'
+  ]);
+  assert.deepEqual(body.components.schemas.Error.required, ['error']);
+
+  const operation = body.paths['/v1/validate-batch'].post;
+  assert.equal(
+    operation.requestBody.content['application/json'].schema.$ref,
+    '#/components/schemas/BatchRequest'
+  );
+  assert.equal(
+    operation.responses['200'].content['application/json'].schema.$ref,
+    '#/components/schemas/BatchResponse'
+  );
+  assert.equal(
+    operation.responses['200'].headers['PAYMENT-RESPONSE'].$ref,
+    '#/components/headers/PaymentResponse'
+  );
+  assert.equal(
+    operation.responses['402'].headers['PAYMENT-REQUIRED'].$ref,
+    '#/components/headers/PaymentRequired'
+  );
+
+  for (const method of ['get', 'head']) {
+    assert.equal(
+      body.paths['/v1/validate-batch'][method].responses['402'].headers['PAYMENT-REQUIRED'].$ref,
+      '#/components/headers/PaymentRequired'
+    );
+  }
+});
