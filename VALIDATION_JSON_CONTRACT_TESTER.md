@@ -1296,6 +1296,7 @@ A separate PayAPI listing, **Agent Tool Result Contract Validator**, is provided
 ### Concrete asset changes
 - Added research prototype: `products/ecu-workshop-forms/index.html` (commit `6c95effd17aa578d87f2df5acb12f68cd1d1d930`).
 - Added product catalogue card (commit `942b4fdf36cd060a9365aa652f84a7bf18201684`).
+- Added product README with buyer hypothesis, scope, exclusions, payment/fulfilment constraints and release gates (commit `1006c23559cd87c1e61b11cc046ec54b2c8982dc`).
 - Updated dashboard audit and added prototype link (commit `f2cd6a674e934005139f3eaeba0dfe9772bf0d5c`).
 - Created Issue #22 for specialist feedback: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/issues/22
 - GitHub file reads verified RTL, print-to-PDF, feedback link, no POST submission, and “not for sale” disclosure.
