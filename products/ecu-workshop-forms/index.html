@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101827">
+<meta name="description" content="نمونه اولیه فرم پذیرش ECU، ثبت عیب‌یابی، گزارش تعمیر و تحویل برای تعمیرگاه‌های ایسیو و برق خودرو.">
+<title>فرم‌های پذیرش و گزارش تعمیر ECU — نمونه اولیه</title>
+<style>
+:root{color-scheme:light;--ink:#172437;--muted:#5d6b7c;--line:#d7dee8;--paper:#fff;--bg:#eef2f7;--accent:#0b6b8b;--soft:#e8f4f8}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.8 Tahoma,"Segoe UI",sans-serif}
+.wrap{max-width:980px;margin:0 auto;padding:22px}
+.hero,.sheet{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:22px;margin:0 0 16px;box-shadow:0 8px 24px rgba(22,38,60,.05)}
+.kicker{font-size:12px;font-weight:700;letter-spacing:.04em;color:var(--accent)}
+h1{font-size:clamp(23px,4vw,34px);line-height:1.4;margin:6px 0 10px}
+h2{font-size:20px;margin:0 0 12px}
+h3{font-size:15px;margin:15px 0 7px}
+p{margin:8px 0}.muted{color:var(--muted)}
+.notice{background:var(--soft);border-right:4px solid var(--accent);padding:12px 14px;border-radius:8px;margin:14px 0}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+button,a.btn{border:1px solid #075b78;background:#075b78;color:#fff;border-radius:9px;padding:9px 15px;font:inherit;text-decoration:none;cursor:pointer}
+a{color:var(--accent)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.field{border:1px solid var(--line);border-radius:7px;min-height:56px;padding:7px 10px}
+.field b{display:block;color:var(--muted);font-size:11px;font-weight:600}
+.line{border-bottom:1px solid #9ba8b8;height:26px}
+.checks{display:flex;gap:10px;flex-wrap:wrap}
+.check{border:1px solid var(--line);padding:4px 9px;border-radius:6px;white-space:nowrap}
+table{width:100%;border-collapse:collapse;margin:8px 0}
+th,td{border:1px solid var(--line);padding:7px;text-align:right;vertical-align:top}
+th{background:#f4f7fa;font-size:12px}
+td{height:42px}
+.small{font-size:12px}
+.footer{font-size:12px;color:var(--muted);margin:20px 0}
+@media(max-width:650px){.wrap{padding:10px}.hero,.sheet{padding:14px}.grid{grid-template-columns:1fr}}
+@media print{
+ @page{size:A4;margin:12mm}
+ body{background:#fff;font-size:11pt}
+ .wrap{max-width:none;padding:0}
+ .hero{box-shadow:none;border:0;padding:0 0 10mm;margin:0}
+ .sheet{box-shadow:none;border:0;border-radius:0;padding:0;margin:0;break-after:page;page-break-after:always}
+ .sheet:last-of-type{break-after:auto;page-break-after:auto}
+ .actions,.no-print{display:none!important}
+ .field{min-height:14mm}
+ td{height:15mm}
+}
+</style>
+</head>
+<body>
+<main class="wrap">
+<section class="hero">
+ <div class="kicker">نمونهٔ پژوهشی · نسخهٔ ۰٫۱ · ۸ نوامبر ۲۰۲۶</div>
+ <h1>فرم‌های پذیرش و گزارش تعمیر ECU</h1>
+ <p class="muted">یک نمونهٔ چاپی و قابل تکمیل برای ثبت منظم پذیرش، شرح ایراد، مشخصات یونیت، مراحل بررسی و تحویل در تعمیرگاه‌های ایسیو و برق خودرو.</p>
+ <div class="notice"><strong>وضعیت:</strong> نمونهٔ اولیهٔ رایگان؛ هنوز محصول فروشی نیست. فرم‌ها خالی‌اند و هیچ اطلاعاتی در این صفحه ذخیره یا ارسال نمی‌شود. پیش از استفادهٔ واقعی، باید توسط تعمیرکار باتجربه و متناسب با رویهٔ هر تعمیرگاه بازبینی شوند.</div>
+ <div class="actions no-print">
+  <button type="button" onclick="window.print()">چاپ / ذخیره به PDF</button>
+  <a class="btn" href="https://github.com/falconprojectai-arch/falcon-ai-decision-engine/issues/22">ثبت بازخورد تخصصی</a>
+  <a class="btn" href="../">بازگشت به مجموعه ابزارها</a>
+ </div>
+ <p class="small muted no-print">برای آزمایش، از اطلاعات ساختگی استفاده کنید. شماره تماس واقعی، پلاک، VIN، فایل ECU، رمزها یا اطلاعات مالی مشتری را در issue عمومی قرار ندهید.</p>
+</section>
+
+<section class="sheet">
+ <div class="kicker">فرم ۱ از ۳ · پذیرش و شناسایی</div>
+ <h2>فرم پذیرش ECU / برق خودرو</h2>
+ <div class="grid">
+  <div class="field"><b>شماره پذیرش</b><div class="line"></div></div>
+  <div class="field"><b>تاریخ و ساعت دریافت</b><div class="line"></div></div>
+  <div class="field"><b>نام مشتری / شناسه پرونده</b><div class="line"></div></div>
+  <div class="field"><b>راه تماس (در نسخه چاپی داخلی)</b><div class="line"></div></div>
+  <div class="field"><b>خودرو: سازنده / مدل / تیپ / سال</b><div class="line"></div></div>
+  <div class="field"><b>پلاک / VIN (در صورت نیاز و با رعایت حریم خصوصی)</b><div class="line"></div></div>
+  <div class="field"><b>نوع یونیت / ECU</b><div class="line"></div></div>
+  <div class="field"><b>سازنده / شماره قطعه / شماره سخت‌افزار</b><div class="line"></div></div>
+  <div class="field"><b>شماره نرم‌افزار / نسخه (در صورت قابل تشخیص بودن)</b><div class="line"></div></div>
+  <div class="field"><b>اقلام تحویلی همراه یونیت</b><div class="line"></div></div>
+ </div>
+ <h3>شرح ایراد از زبان مشتری</h3><div class="field"><div class="line"></div><div class="line"></div></div>
+ <h3>وضعیت ظاهری هنگام دریافت</h3>
+ <div class="checks"><span class="check">□ سالم ظاهری</span><span class="check">□ شکستگی / ترک</span><span class="check">□ آثار رطوبت</span><span class="check">□ آثار سوختگی</span><span class="check">□ دست‌کاری قبلی</span><span class="check">□ متعلقات ناقص</span></div>
+ <h3>توضیح وضعیت موجود / عکس‌های پیوست</h3><div class="field"><div class="line"></div><div class="line"></div></div>
+ <p class="small muted">تأیید دریافت فقط به معنی ثبت وضعیت ظاهری و اقلام تحویلی است؛ به معنی تأیید علت خرابی یا تضمین نتیجهٔ تعمیر نیست.</p>
+ <div class="grid"><div class="field"><b>نام و امضای تحویل‌دهنده</b><div class="line"></div></div><div class="field"><b>نام و امضای پذیرش‌کننده</b><div class="line"></div></div></div>
+</section>
+
+<section class="sheet">
+ <div class="kicker">فرم ۲ از ۳ · گزارش بررسی و تعمیر</div>
+ <h2>گزارش عیب‌یابی و اقدامات انجام‌شده</h2>
+ <div class="grid">
+  <div class="field"><b>شماره پذیرش / پرونده</b><div class="line"></div></div>
+  <div class="field"><b>تاریخ شروع بررسی</b><div class="line"></div></div>
+  <div class="field"><b>مدل / شناسه یونیت</b><div class="line"></div></div>
+  <div class="field"><b>تکنسین مسئول</b><div class="line"></div></div>
+ </div>
+ <h3>شرایط و تجهیزات آزمون</h3>
+ <div class="grid"><div class="field"><b>منبع تغذیه / محدودیت جریان ثبت‌شده</b><div class="line"></div></div><div class="field"><b>رابط / دستگاه آزمون و نسخه</b><div class="line"></div></div><div class="field"><b>شرایط اتصال / پایه‌های مورد استفاده</b><div class="line"></div></div><div class="field"><b>فایل پشتیبان / شناسه نسخه (بدون درج فایل یا رمز)</b><div class="line"></div></div></div>
+ <h3>مشاهدات و نتایج ثبت‌شده</h3>
+ <table><thead><tr><th>مرحله / آزمون</th><th>مشاهده یا نتیجه</th><th>تاریخ</th><th>تأیید</th></tr></thead><tbody><tr><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td></tr></tbody></table>
+ <h3>اقدامات و قطعات مصرفی / تعویض‌شده</h3>
+ <table><thead><tr><th>شرح اقدام یا قطعه</th><th>تعداد</th><th>شناسه / توضیح</th><th>تأیید</th></tr></thead><tbody><tr><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td></tr></tbody></table>
+ <h3>نتیجهٔ بررسی / موارد حل‌نشده / پیشنهاد بعدی</h3><div class="field"><div class="line"></div><div class="line"></div><div class="line"></div></div>
+ <p class="small muted">این فرم صرفاً برای ثبت مشاهدات واقعی تکنسین است؛ هیچ مقدار مرجع، دستور پروگرام یا توصیهٔ ایمنی فنی در آن تجویز نشده است.</p>
+ <div class="grid"><div class="field"><b>نام و امضای تکنسین</b><div class="line"></div></div><div class="field"><b>بازبینی مسئول فنی</b><div class="line"></div></div></div>
+</section>
+
+<section class="sheet">
+ <div class="kicker">فرم ۳ از ۳ · کنترل نهایی و تحویل</div>
+ <h2>کنترل کیفیت، تحویل و پیگیری</h2>
+ <div class="grid">
+  <div class="field"><b>شماره پذیرش</b><div class="line"></div></div>
+  <div class="field"><b>تاریخ آزمون نهایی</b><div class="line"></div></div>
+  <div class="field"><b>شناسه یونیت / خودرو</b><div class="line"></div></div>
+  <div class="field"><b>نام بازبین</b><div class="line"></div></div>
+ </div>
+ <h3>چک‌لیست کنترل نهایی</h3>
+ <div class="checks"><span class="check">□ ظاهر و اتصالات بررسی شد</span><span class="check">□ آزمون طبق رویه تعمیرگاه انجام شد</span><span class="check">□ خطاهای باقی‌مانده ثبت شد</span><span class="check">□ اقلام تحویلی تطبیق داده شد</span><span class="check">□ گزارش برای مشتری آماده شد</span><span class="check">□ نسخه پشتیبان/سوابق داخلی ثبت شد</span></div>
+ <h3>نتیجهٔ نهایی و محدودیت‌ها</h3><div class="field"><div class="line"></div><div class="line"></div><div class="line"></div></div>
+ <div class="grid">
+  <div class="field"><b>تاریخ تحویل</b><div class="line"></div></div>
+  <div class="field"><b>وضعیت تحویل</b><div class="line"></div></div>
+  <div class="field"><b>مدت و شرایط ضمانت اعلام‌شده توسط تعمیرگاه</b><div class="line"></div></div>
+  <div class="field"><b>موارد خارج از ضمانت / توضیحات</b><div class="line"></div></div>
+ </div>
+ <h3>توضیح تحویل و توصیه‌های ثبت‌شده</h3><div class="field"><div class="line"></div><div class="line"></div></div>
+ <div class="grid"><div class="field"><b>نام و امضای تحویل‌دهنده</b><div class="line"></div></div><div class="field"><b>نام و امضای دریافت‌کننده</b><div class="line"></div></div></div>
+ <p class="small muted">این نمونه قرارداد حقوقی یا تعیین‌کنندهٔ شرایط ضمانت نیست. مدت، حدود و استثناهای ضمانت باید مطابق قرارداد و قوانین مربوط به همان تعمیرگاه تعیین شوند.</p>
+</section>
+
+<p class="footer">نمونهٔ پژوهشی Falcon Project AI · بدون ورود اطلاعات، ارسال فرم، ذخیره‌سازی مرورگری یا پرداخت. بازخورد تخصصی: <a href="https://github.com/falconprojectai-arch/falcon-ai-decision-engine/issues/22">GitHub Issue #22</a>.</p>
+</main>
+</body>
+</html>
