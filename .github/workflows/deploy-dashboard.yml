@@ -16,6 +16,7 @@ on:
       - "products/mcpguard-lite/**"
       - "products/expensesnap/**"
       - "products/cronpulse/**"
+      - "products/ecu-workshop-forms/**"
       - ".github/workflows/deploy-dashboard.yml"
   workflow_dispatch:
 
@@ -77,7 +78,7 @@ jobs:
         run: |
           set -eu
           rm -rf site
-          mkdir -p site/products/json-contract-tester site/products/dev-agent-toolbox site/products/json-contract-tester-api site/products/localbiz-followup site/products/stockpulse site/products/mcpguard-lite site/products/expensesnap site/products/cronpulse
+          mkdir -p site/products/json-contract-tester site/products/dev-agent-toolbox site/products/json-contract-tester-api site/products/localbiz-followup site/products/stockpulse site/products/mcpguard-lite site/products/expensesnap site/products/cronpulse site/products/ecu-workshop-forms
           cp -R dashboard/. site/
           cp llms.txt site/llms.txt
           cp products/json-contract-tester/index.html site/products/json-contract-tester/index.html
@@ -94,6 +95,7 @@ jobs:
           cp products/mcpguard-lite/index.html site/products/mcpguard-lite/index.html
           cp products/expensesnap/index.html site/products/expensesnap/index.html
           cp products/cronpulse/index.html site/products/cronpulse/index.html
+          cp products/ecu-workshop-forms/index.html site/products/ecu-workshop-forms/index.html
           cp products/launch-guide.md site/products/launch-guide.md
           cp products/localbiz-followup/preview.svg site/products/localbiz-followup/preview.svg
           cp products/stockpulse/preview.svg site/products/stockpulse/preview.svg
@@ -387,6 +389,32 @@ jobs:
           asyncio.run(main())
           PY
 
+
+      - name: Smoke-test ECU workshop research prototype in Chromium
+        env:
+          PAGES_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          python - <<'PY'
+          import asyncio, os
+          from playwright.async_api import async_playwright
+
+          async def main():
+              async with async_playwright() as p:
+                  browser = await p.chromium.launch()
+                  page = await browser.new_page()
+                  errors = []
+                  page.on("pageerror", lambda error: errors.append(str(error)))
+                  response = await page.goto(os.environ["PAGES_URL"] + "products/ecu-workshop-forms/", wait_until="networkidle", timeout=60000)
+                  assert response and response.status == 200, "ECU workshop prototype did not load"
+                  assert await page.title() == "فرم‌های پذیرش و گزارش تعمیر ECU — نمونه اولیه"
+                  assert await page.locator("a[href*='issues/22']").count() == 1
+                  assert "نمونهٔ پژوهشی" in await page.locator("body").inner_text()
+                  assert not errors, f"Browser JavaScript errors: {errors}"
+                  await browser.close()
+
+          asyncio.run(main())
+          PY
+
       - name: Smoke-test product catalogue and preview assets in Chromium
         env:
           PAGES_URL: ${{ steps.deployment.outputs.page_url }}
@@ -403,11 +431,13 @@ jobs:
                   page.on("pageerror", lambda error: errors.append(str(error)))
                   response = await page.goto(os.environ["PAGES_URL"] + "products/", wait_until="networkidle", timeout=60000)
                   assert response and response.status == 200
-                  assert await page.locator("article.card").count() == 5
-                  images = await page.locator("article.card img").evaluate_all("(els) => els.map(e => ({src:e.getAttribute('src'), width:e.naturalWidth, complete:e.complete}))")
+                  cards = page.locator("article.card")
+                  assert await cards.count() == 6
+                  images = await cards.locator("img").evaluate_all("(els) => els.map(e => ({src:e.getAttribute('src'), width:e.naturalWidth, complete:e.complete}))")
                   assert len(images) == 5 and all(x["complete"] and x["width"] > 0 and x["src"].endswith("/screenshot.png") for x in images), f"Product screenshots failed: {images}"
-                  assert await page.locator("article.card a[href*='github.com/falconprojectai-arch/falcon-ai-decision-engine/tree/main/products/']").count() == 5
-                  assert await page.locator("article.card .status").all_text_contents() == ["Automated smoke tests passed · 2026-11-04"] * 5
+                  assert await cards.locator("a[href*='github.com/falconprojectai-arch/falcon-ai-decision-engine/tree/main/products/']").count() == 6
+                  statuses = await cards.locator(".status").all_text_contents()
+                  assert len(statuses) == 6 and statuses.count("Automated smoke tests passed · 2026-11-04") == 5 and statuses.count("Research prototype · not for sale") == 1, f"Unexpected product status labels: {statuses}"
                   guide = await page.request.get(os.environ["PAGES_URL"] + "products/launch-guide.md")
                   assert guide.status == 200, f"Launch guide HTTP {guide.status}"
                   assert "Standard product introduction package" in await guide.text()

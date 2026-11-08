@@ -1344,3 +1344,77 @@ Decision gate (0–5 each; heuristic): JSON API **22/30** (buyer evidence 2, tim
 Next actions: wait for the PayAPI canary email; re-read Agent402 when its endpoint is accessible; retrieve GitHub Traffic from the owner's authorized UI/API; verify Pages deployment; obtain real specialist feedback on Issue #22 before building a paid bundle. Do not resubmit PayAPI or attempt paid Agent402 calls without evidence.
 
 **This addendum does not claim revenue, a customer, a canary pass, a public Pages deployment, or a successful settlement. Verified revenue remains $0.00.**
+
+
+## Run 13 — mandatory daily feedback, traffic and marketplace audit (2026-11-08 23:24:51 Asia/Tehran)
+
+**Status: PARTIAL. Verified revenue: $0.00.** No new independent external feedback was found.
+
+### Feedback sources and ownership
+
+- Issue #13: 3 comments. Independent external author **shigeki7777**, 2026-10-29 09:10:29Z: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/issues/13#issuecomment-6492617263. Requests exact JSON Pointer/sample/expected-versus-actual diagnostics, machine-readable JSON/JUnit export and a mixed valid/invalid batch. Current implementation has JSON export and JUnit XML; no new external reply.
+- Issue #13's two later replies are by project owner **falconprojectai-arch**, not independent feedback.
+- Issue #18: 37 comments; latest owner and github-actions[bot] comments are project/automation notes. Issues #21 and #22 have zero comments. Issue #22 was created by the project owner at 2026-11-08 08:00:40Z; it is not buyer feedback.
+- PR review submissions: #20=0, #16=0, #2=0, #1=0. Repository Discussions are disabled. DEV article: 0 comments. Reddit public page read returned cache miss, so current comments remain unverified.
+
+### GitHub Traffic audit
+
+- Rolling 14-day window: **2026-10-25 23:24:51 → 2026-11-08 23:24:51 Asia/Tehran**.
+- Retrieval time: **2026-11-08 23:24:51 Asia/Tehran**.
+- Views, unique visitors, clones, referrers and popular paths: **unavailable, not zero**.
+- All four REST paths (/traffic/views, /traffic/clones, /traffic/popular/referrers, /traffic/popular/paths) were rejected by the connected GitHub fetch wrapper with HTTP 400: “GitHub Fetch URL is not an allowed public GitHub repository or search endpoint.” The current connector does not expose those traffic endpoints. No count or trend is inferred.
+
+### PayAPI Market and Agent402
+
+- PayAPI listing **54bd4f89-23f8-47e7-b507-039362b51198**: **pending_review / not live**. The only email is from notifications@payapi.market at 2026-11-03 05:28:56Z; it says the form was accepted, the listing is not live, and PayAPI will fund one canary from its own wallet. No newer email, canary attempt/result, receipt, views or paid calls were verified. Public lookup returned page_not_found. Do not fund or sign a canary.
+- Agent402 current read: health=1, routable=true, networks=[eip155:8453], paywall HTTP 402, payToByNetwork Base address present, routerDispatchEligible=false, reason=settlement_required, executeViaCallableNow=true only on the unproven lane (underlying price $0.005 plus $0.005 routing fee). No settlement, distinct payer, receipt or paid customer is verified.
+- true402 public record: transactions=0, settled=null, trustScore=0, lastSeen=2026-11-04. Agent Bazaar resource 75152 is public and labels the provider verified, but usage/settlement is not exposed. x402scan displays 0 transactions, $0.00 volume and 0 buyers. TechTools Launchpad ID 7727 is public, upvotes=0; no views count is present in the record.
+
+### Distribution status — no new submissions
+
+- **published/successful:** DEV article https://dev.to/falconprojectaiarch/7-checks-before-trusting-an-api-or-ai-agent-json-response-1mii — current 0 comments. Product intro: https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/
+- **published/successful, last-known; current recheck blocked:** Reddit https://www.reddit.com/r/SideProject/comments/1xhfg2y/i_built_a_small_json_contract_tester_for_checking/ — current comments unverified due cache miss. Product intro: same product URL above.
+- **pending review:** DevXTools https://devxtools.dev/submit/; The Tool Directory https://thetooldirectory.com/submit-a-tool/; Launching Next https://www.launchingnext.com/submit/; Ignlab https://launch.ignlab.net/; PromoteIndex https://promoteindex.com/submit; PayAPI listing lookup https://payapi.market/agent/get?id=54bd4f89-23f8-47e7-b507-039362b51198. Product intro for each: https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/. No new acceptance or rejection was verified.
+- **published/successful — directory discovery only:** TechTools Launchpad ID 7727 https://techtools.cz/tools/launchpad/?tool=7727; Agent Bazaar 75152 https://bazaar.saylorinnovations.com/resources/75152; true402 https://true402.dev/api/v1/services/a5ccc7ac-2153-403a-91a8-be5be7a69073; x402scan https://www.x402scan.com/server/fc25a6e2-6e6e-4cfc-b00c-bc594b2636f3. Product intro for each: same product URL above. These are discovery records, not paid calls or settlement.
+- **blocked:** ShipBoost https://shipboost.io/submit — logo upload not confirmed; no public listing. Product intro: same product URL above.
+
+### Product and release action
+
+Deploy control dashboard workflow run #285 deployed to GitHub Pages successfully but failed its post-deploy catalogue smoke test: the test still expected 5 cards while the catalogue now contains 6 (five smoke-tested products plus the ECU Workshop Forms research prototype, which intentionally has no screenshot). The workflow also did not copy the ECU research page into the Pages artifact or trigger on its directory. Run 13 adds that directory to the path filter, copies its self-contained index.html into the artifact, tests its page, and changes the catalogue assertion to expect 6 cards, 5 valid screenshots and one clearly labelled research prototype. This is a release-quality fix, not a product feature claim.
+
+## Separate non-JSON opportunity — COD Return-Cost Calculator
+
+**Selected hypothesis:** a low-cost offline workbook for online sellers using cash-on-delivery. It estimates incremental failed-delivery costs and tests whether a hypothetical lower failure rate could justify a per-order confirmation expense. This is independent of the Falcon repository and JSON Contract Tester.
+
+- Evidence: CodWatchdog offers 60 free messages/month, then $9/month and $29/month; Meta message costs are billed separately and the merchant must connect a WhatsApp Business Account. https://codwatchdog.com/
+- WhatPro claims 500+ active stores and a 5.0 rating; these are vendor-reported signals, not independently verified usage. https://whatpro.app/en/
+- Adjacent digital-download competition: Airbnb turnover templates at $4.99, $13.29 and $19, alongside free alternatives. https://www.etsy.com/listing/4503484631/vacation-rental-turnover-binder-airbnb ; https://www.etsy.com/listing/4566067003/airbnb-turnover-and-cleaning-schedule ; https://plainsheetstudio.com/short-term-rentals/templates/str-operations-kit/ ; https://tendform.com/templates/cleaner-turnover-checklist
+- Niche data is available free from Census Business Builder and BLS data tools; a paid data product must add curation or a decision workflow rather than repackage public tables. https://www.census.gov/data/data-tools/cbb.Overview.html ; https://www.bls.gov/data/tools.htm
+- AI receptionist competitors show $49/month and free trials, but phone provisioning, call consent, integrations and support increase setup and maintenance. https://www.itsello.com/
+- Affiliate/lead-routing: targeted searches did not establish an official Iran-eligible publisher program with a verified payout path; treat this angle as unverified, not nonexistent.
+
+### Prototype and test
+
+Created an offline four-sheet Excel workbook (Calculator, Courier Comparison, Read Me, راهنمای فارسی) and ZIP package in the current session; not committed to the Falcon repository and not submitted to any marketplace. The workbook has no macros, external links, customer-level data, API credentials, bank fields or automated messaging. Formula checks and three edge cases passed; ZIP integrity and workbook structure were re-opened and verified.
+
+Synthetic example only: 300 monthly COD orders; current failed rate 20%; target scenario 15%; reverse shipping 80,000, packaging 15,000 and handling 30,000 units. Incremental failed-order cost=125,000; 15 fewer failed orders; gross avoided incremental cost=1,875,000; confirmation expense=300,000; net scenario impact=1,575,000; break-even improvement=0.8 percentage points. Outbound shipping is excluded from savings because it is incurred for successful and failed orders; product value is not counted because returned inventory may be resold. These are not measured merchant results.
+
+**Price hypothesis:** 149,000 toman for an expanded Persian/English pack, unvalidated. Buyer: small online sellers with COD orders. Free validation path: give a one-sheet sample only to opt-in sellers and collect three feedback responses before building a paid version. Potential automated fulfilment: Digyno supports XLSX delivery immediately, 3% fee, no setup/monthly fee; seller eKYC, same-name Sheba and admin approval are mandatory. It holds new-seller proceeds 72 hours and lists a 100,000-toman withdrawal minimum. Digyno's AI-generated-content rule was not found, so no submission is made until policy is confirmed. https://digyno.com/sell
+
+## Iran / Persian / rial payment rails
+
+- **Digyno:** 3% per sale, no setup/monthly fee, automatic file delivery, XLSX/PDF/ZIP/DOCX/CSV accepted, macros/executables not accepted. eKYC, same-name Sheba, seller approval; new sellers' proceeds held 72 hours until five successful sales, then 24 hours; minimum withdrawal 100,000 toman. AI-content policy not found. https://digyno.com/sell
+- **PayPing:** product and invoice payment links, daily settlement instructions; fees are 1% capped at 3,000/4,000/5,000 toman depending on plan. Registration requires accurate identity details and a same-name Sheba. Payment links on social networks other than domestic social networks are prohibited. https://payping.ir/terms/
+- **Zarinpal:** standard fee 0.5% capped at 16,000 toman plus 500 fixed; first membership month is described as free except Shaparak; pricing page lists eNamad issuance at 600,000 toman. https://www.zarinpal.com/pricing
+- **Zibal:** natural-person onboarding requires an Iranian mobile in the applicant's name, email, same-name Sheba and national-ID document; tax tracking code, eNamad and valid permit are listed as prerequisites. Current fee was not independently confirmed in this pass. https://help.zibal.ir/article/registration/
+- **IDPay:** official pages timed out in this pass; current fees, onboarding and settlement were not verified. https://idpay.ir/
+- No card-to-card/manual-transfer route was selected because automated reconciliation and current provider/bank rules were not verified. No account, KYC, payout or bank setting was changed. No bank or identity detail was collected or stored.
+
+## Next highest-value actions
+
+1. Verify the Pages deployment run after the workflow fix; ensure the ECU prototype link returns HTTP 200 and catalogue smoke test passes.
+2. Keep PayAPI pending review and wait for the provider-funded canary result; do not make a paid POST.
+3. Recheck independent feedback and the exact same 14-day Traffic window when an authorized traffic UI/API route is available.
+4. Validate the COD calculator with three opt-in sellers before any paid listing; do not upload to Digyno until its AI-content policy and seller KYC are resolved.
+
+**No customers, paid calls, sales, canary receipts, on-chain settlement or revenue are claimed. Verified revenue remains $0.00.**
