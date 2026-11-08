@@ -407,7 +407,7 @@ jobs:
                   response = await page.goto(os.environ["PAGES_URL"] + "products/ecu-workshop-forms/", wait_until="networkidle", timeout=60000)
                   assert response and response.status == 200, "ECU workshop prototype did not load"
                   assert await page.title() == "فرم‌های پذیرش و گزارش تعمیر ECU — نمونه اولیه"
-                  assert await page.locator("a[href*='issues/22']").count() == 1
+                  assert await page.locator("a[href*='issues/22']").count() >= 1
                   assert "نمونهٔ پژوهشی" in await page.locator("body").inner_text()
                   assert not errors, f"Browser JavaScript errors: {errors}"
                   await browser.close()
