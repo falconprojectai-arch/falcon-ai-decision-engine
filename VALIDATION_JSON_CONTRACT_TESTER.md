@@ -1227,3 +1227,118 @@ A further official seller-policy read changed the local distribution decision:
 - Updated next action: obtain/verify Digyno's AI-content policy before any listing. If it does not allow this product, keep the prototype private and switch to a genuinely owner-authored product or another compliant marketplace; do not submit to FaraFile.
 
 This addendum does not change status to published, accepted, used, paid, or revenue. Verified revenue remains $0.00.
+
+
+---
+
+# Run 12 — 2026-11-08 — Daily revenue, feedback, traffic and marketplace audit
+
+**Status: PARTIAL.** Issues, PR reviews, Gmail, DEV and current public market/payment pages were inspected. GitHub Traffic, current Agent402 JSON, the PayAPI public listing lookup, the Reddit thread and the Pages deployment could not be independently re-read.  
+**Verified revenue: $0.00.** No customer payment, paid API call, provider canary, on-chain receipt or settlement was verified.
+
+## Feedback and community audit
+
+### Independent external feedback
+- **shigeki7777 — GitHub Issue #13 — 2026-10-29 (exact timestamp in the prior audit: 09:10:29Z).** Requested exact JSON Pointer/sample index/expected-vs-actual diagnostics, machine-readable output, and a deliberately mixed batch. Link: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/issues/13#issuecomment-6492617263
+- No new independent external issue/discussion/PR-review feedback was found in this run. The previous requests are already covered by detailed diagnostics, JSON export and the current JUnit XML source.
+
+### Project-owned and automation records (not independent feedback)
+- Issue #13: 3 comments total (one external, two project-owner).
+- Issue #18: 35 comments total; latest entries are project-owner research and `github-actions[bot]` cadence comments.
+- Issue #19: one project-owner comment.
+- Issue #21: zero comments.
+- Issue #22: new public feedback issue; zero external replies at audit time.
+- Discussions disabled (`has_discussions=false`).
+- Review submissions: none on PR #20, #16, #15, #1 or #2.
+- PR #20 is open/unmerged; Cloudflare preview build failure comment from 2026-11-05: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/pull/20#issuecomment-6653000865
+- PR #16 remains a draft; Cloudflare preview build failure comment from 2026-11-03: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/pull/16#issuecomment-6597431984
+- PR bot comments are deployment telemetry, not customer feedback.
+
+### Public communities and known directory responses
+- DEV article visible, current page shows **0 comments**: https://dev.to/falconprojectaiarch/7-checks-before-trusting-an-api-or-ai-agent-json-response-1mii
+- Reddit post last known published; current page fetch returned a cache miss, so its current comments were not verified: https://www.reddit.com/r/SideProject/comments/1xhfg2y/i_built_a_small_json_contract_tester_for_checking/
+- Gmail search for PayAPI and known directory/listing replies found no newer PayAPI email or directory response. This inbox search does not prove that every external directory was checked.
+
+## GitHub Traffic — unavailable, not zero
+
+- Requested rolling period: **2026-10-25 11:24:12 through 2026-11-08 11:24:12 Asia/Tehran**.
+- Retrieval attempt: **2026-11-08 11:24:12 Asia/Tehran**.
+- Views, unique visitors, referrers, popular paths and clones: **unavailable**.
+- Actual blocker: the connected GitHub fetch action rejected all four traffic REST URLs with HTTP 400: “GitHub Fetch URL is not an allowed public GitHub repository or search endpoint.” Repository metadata reports admin permission, but the connector wrapper does not expose these traffic endpoints. No GitHub Traffic UI session was available.
+- No counts were guessed and no numeric comparison was made. Next action: retrieve the same 14-day window in the owner's GitHub Insights → Traffic UI or an authorized API client that exposes traffic endpoints.
+
+## PayAPI Market listing
+
+- Listing ID: `54bd4f89-23f8-47e7-b507-039362b51198`.
+- Last provider-confirmed state: **`pending_review`**, from `notifications@payapi.market` on 2026-11-03 05:28:56Z. Gmail search found no newer message.
+- Public lookup attempted: https://payapi.market/agent/get?id=54bd4f89-23f8-47e7-b507-039362b51198 — public reader returned an internal fetch error today; current public status not re-confirmed.
+- Canary status: **not attempted/confirmed in accessible evidence**. Provider's own-wallet canary remains the expected path; no seller funding or signature is requested.
+- No canary result, paid call, receipt or revenue is claimed.
+
+A separate PayAPI listing, **Agent Tool Result Contract Validator**, is provided by **Apex AI Assets**, not Falcon. PayAPI's public page reports one Base route verified by a $0.005 USDC test payment on 2026-11-01: https://payapi.market/api/agent-tool-result-contract-validator. This is marketplace/competitor evidence only; it is not the Falcon listing or Falcon revenue.
+
+## Agent402 seller record
+
+- Record: https://agent402.tools/api/index?seller=https%3A%2F%2Fjson-contract-tester-api.falcon-project-ai.workers.dev
+- Current fetch: internal error; current fields not re-confirmed.
+- Last verified snapshot (2026-11-07, previous audit): `health=1`, `routable=true`, Base route present, `payToByNetwork` present, `executeViaCallableNow=true` on the exposed execute-via lane, and `routerDispatchEligible=false` because `settlement_required`.
+- No current call, receipt, settlement or customer purchase verified. Directory discovery and route metadata are not proof of settlement.
+
+## Separate non-JSON opportunity advanced: Persian ECU workshop forms
+
+**Hypothesis:** a low-price Persian printable/editable form pack for independent ECU and automotive-electrical shops: intake, unit identification, diagnostic notes, work/parts record, final test and hand-over. It complements workshop software and contains no repair instructions, calibration values, wiring diagrams, copied technical data or customer records.
+
+### Demand evidence
+- GT-Car explicitly serves car washes, mechanics, battery/electrical shops and engine-diagnostic/tuning services. Its public pricing shows 499,000–999,000 toman monthly and 4,999,000–9,999,000 toman annually, with a 40-day trial: https://gt-car.ir/
+- ICTCar public Telegram channel shows about 5.38K subscribers; two downloadable wiring/technical-pack posts show 4.17K and 5.39K views, and a 1405 labor-rate post shows 2.87K views. These are attention signals, not sales for our product: https://t.me/s/Ictcar
+- The inspected Etsy pet-sitting form bundle is listed at $12, has two item reviews, and its seller's shop shows 5.7K overall sales. Another shop's pet-sitting kit had no item reviews despite 1.8K overall shop sales. This supports demand for ready-made operational forms in another niche, not demand for ECU forms. Etsy fees include $0.20 per listing and 6.5% transaction fees; Etsy Payments requires a bank account in an eligible country. Sources: https://www.etsy.com/listing/1681785189/pet-sitting-forms-bundle-pet-sitting ; https://help.etsy.com/hc/en-us/articles/115014483627-What-are-the-Fees-and-Taxes-for-Selling-on-Etsy ; https://help.etsy.com/hc/en-us/articles/360002120927-What-is-Etsy-Payments
+
+### Concrete asset changes
+- Added research prototype: `products/ecu-workshop-forms/index.html` (commit `6c95effd17aa578d87f2df5acb12f68cd1d1d930`).
+- Added product catalogue card (commit `942b4fdf36cd060a9365aa652f84a7bf18201684`).
+- Updated dashboard audit and added prototype link (commit `f2cd6a674e934005139f3eaeba0dfe9772bf0d5c`).
+- Created Issue #22 for specialist feedback: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/issues/22
+- GitHub file reads verified RTL, print-to-PDF, feedback link, no POST submission, and “not for sale” disclosure.
+- Public Pages URL is pending deployment verification; the web reader returned an internal error. Do not mark the Pages sample as publicly live until it opens successfully.
+- Research price hypothesis only: 149,000–249,000 toman one-time; unvalidated and not displayed as a current sale price.
+
+### Channel state register
+
+| Channel | State | Direct channel | Product introduction |
+|---|---|---|---|
+| GitHub Issue #22 | published/successful (issue created; no external reply yet) | https://github.com/falconprojectai-arch/falcon-ai-decision-engine/issues/22 | https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/ecu-workshop-forms/ |
+| GitHub Pages ECU sample | pending review (repository commit exists; public rendering not verified) | https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/ecu-workshop-forms/ | same |
+| ICTCar Telegram | researched-not-submitted; no submission permission established | https://t.me/s/Ictcar | https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/ecu-workshop-forms/ |
+| Digyno seller marketplace | researched-not-submitted; KYC/store approval required; AI-assisted-content rule not found | https://digyno.com/sell | same |
+| BluePal payment link | researched-not-submitted; identity/same-name settlement account required; automatic file delivery not verified | https://bluepal.ir/pricing | same |
+
+No external directory submission, unsolicited post, DM, account creation, payment, seller application or payout-setting change was made.
+
+## Iran / Persian / rial payment rail comparison
+
+- **Digyno:** 3% fee, no registration/monthly fee, automatic digital delivery; seller eKYC and store approval; funds move to wallet 72 hours after delivery or buyer confirmation, then withdrawal to card/Sheba. Best apparent low-code fulfilment candidate if category approval is obtained. AI-assisted-content rule was not found; do not submit until confirmed. https://digyno.com/sell
+- **BluePal:** no setup/monthly fee; 1.2% per successful payment capped at 15,000 toman; payment links and daily settlement; up to three refunds/month free. Onboarding requires identity verification and a same-name Sheba. Payment links do not themselves deliver files. https://bluepal.ir/pricing ; https://bluepal.ir/how-it-works
+- **PayPing:** product/invoice links and daily settlement; terms require registration identity and a same-name Sheba. Payment links on social networks other than domestic social networks are prohibited. Do not share a PayPing link on Telegram/Instagram. https://payping.ir/terms/
+- **Zibal:** natural-person onboarding requires an Iranian mobile number in the applicant's name, email, same-name Sheba and national-ID document; official help also lists tax tracking code, eNamad and valid permit as prerequisites. https://help.zibal.ir/article/registration/
+- **Zarinpal:** published standard fee 0.5% capped at 16,000 toman plus 500 toman; first membership month described as free except Shaparak fee; eNamad issuance listed at 600,000 toman. Mandatory onboarding conditions were not fully verified in this pass. https://www.zarinpal.com/pricing
+
+No provider account was created, no KYC was submitted, and no bank/identity details were entered, stored or transmitted. Card-to-card/manual transfer is not selected because it weakens automated reconciliation.
+
+## Six-angle non-JSON comparison
+
+1. **AI receptionist:** Zoom lists $29.99/100 minutes; Greet lists $49.95–$199.95/month. Phone minutes, number provisioning, recording/consent, escalation and support make this weak for zero-upfront/no-routine-labor execution. https://zoom.us/pricing/receptionist ; https://usegreet.com/
+2. **Local-business workflow automation:** GT-Car shows a real paid software category, but a full SaaS entails onboarding/support; ECU forms are a narrower complement.
+3. **Digital downloads/content:** Etsy has real instant-download purchases and seller fees, but Iran payout eligibility is not verified; not selected.
+4. **Niche data/research:** automotive technical packs attract views, but accuracy, copyright and update burden are too high; the forms pack avoids copying technical data.
+5. **Marketplaces/affiliate/lead routing:** Digyno's auto-delivery marketplace is promising after KYC; no affiliate/lead-routing path with verified zero-cost payout was established.
+6. **Other:** no second independent path passed the evidence and zero-cost gates.
+
+## Golden River and next action
+
+The JSON Contract Tester API remains the Golden River candidate: existing product, existing API, PayAPI submission already accepted into review, provider-funded canary expected, low per-call price and high potential automation. The canary is not a sale until an independent provider/settlement record proves it.
+
+Decision gate (0–5 each; heuristic): JSON API **22/30** (buyer evidence 2, time 3, zero cost 5, automation 5, low support 4, legal/platform 3); ECU forms **21/30** (3,3,5,4,4,2). AI receptionist 11/30; local-business SaaS 16/30; Etsy pet-sitter templates 14/30; niche data 16/30; affiliate/lead-routing 16/30.
+
+Next actions: wait for the PayAPI canary email; re-read Agent402 when its endpoint is accessible; retrieve GitHub Traffic from the owner's authorized UI/API; verify Pages deployment; obtain real specialist feedback on Issue #22 before building a paid bundle. Do not resubmit PayAPI or attempt paid Agent402 calls without evidence.
+
+**This addendum does not claim revenue, a customer, a canary pass, a public Pages deployment, or a successful settlement. Verified revenue remains $0.00.**
