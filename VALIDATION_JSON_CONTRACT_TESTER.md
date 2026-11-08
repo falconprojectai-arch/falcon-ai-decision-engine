@@ -1418,3 +1418,14 @@ Synthetic example only: 300 monthly COD orders; current failed rate 20%; target 
 4. Validate the COD calculator with three opt-in sellers before any paid listing; do not upload to Digyno until its AI-content policy and seller KYC are resolved.
 
 **No customers, paid calls, sales, canary receipts, on-chain settlement or revenue are claimed. Verified revenue remains $0.00.**
+
+
+### Final verification addendum — 2026-11-08
+
+- GitHub Pages workflow run **#287** succeeded: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/42518320107. Run #286 deployed the artifact but failed the first ECU prototype test because the page intentionally contains two feedback links while the assertion expected exactly one. The assertion was relaxed to require at least one; #287 passed the ECU page test and product catalogue test. Public titles verified for the dashboard, product collection and ECU prototype. The ECU page remains a research prototype, not a paid listing.
+- Zibal official pricing now verified: 1% per successful payment, capped at 20,000 toman, plus 10% VAT on the fee; no setup or monthly fee; periodic settlement per account cycle with faster settlement configurable. https://zibal.ir/pricing
+- PayPing official terms verified: 1% fee capped at 3,000/4,000/5,000 toman by plan; daily settlement instructions; same-name Sheba; payment links on social networks other than domestic networks are prohibited. https://payping.ir/terms/
+- Zarinpal official pricing: 0.5% capped at 16,000 toman plus 500 fixed; first membership month free except Shaparak; eNamad issuance listed at 600,000 toman. https://www.zarinpal.com/pricing
+- Correction on Digyno: current seller page confirms 3% and automatic file delivery, but its text re-read today does not explicitly confirm zero setup/monthly fees; treat those as unverified. Its AI-generated-content policy remains unverified.
+- Sanctions/legal caveat: OFAC says 31 CFR 560.540 authorizes only qualifying communications-related services/software and is not blanket permission for unrelated commercial digital products or commercial-entity web hosting in Iran; FAQ 1257 (updated 2026-08-07) warns about dealings with specifically designated Iranian digital-asset exchanges. This is not a legal conclusion about the owner, product or any particular exchange. https://ofac.treasury.gov/faqs/1087 ; https://ofac.treasury.gov/faqs/1110 ; https://ofac.treasury.gov/faqs/added/2026-06-02
+- TinyFish wallet at 2026-11-08 20:07:24Z: -$0.008. No top-up or paid browser automation was performed.
