@@ -199,3 +199,10 @@ Wait for PayAPI's provider-funded canary result. If it succeeds, capture the exa
 If the owner later chooses a rial product, BluePal requires owner-only review and KYC in its official secure dashboard; this is not required for the current API path.
 
 **No customer, paid API call, canary pass, transaction receipt, settlement or revenue is claimed. Verified revenue remains $0.00.**
+
+
+## Deployment addendum — 2026-11-09 10:34:19 Asia/Tehran
+
+- Dashboard deployment workflow run **42576742427** completed successfully at 2026-11-09T07:04:19Z: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/42576742427.
+- Direct public GitHub Pages fetch was rejected by the web reader as inaccessible; workflow success is verified, public rendering is not independently re-read.
+- No revenue or marketplace status changed: verified revenue $0.00; PayAPI pending_review/not live; canary unconfirmed.
