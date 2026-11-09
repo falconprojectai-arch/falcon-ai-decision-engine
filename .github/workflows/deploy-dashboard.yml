@@ -127,9 +127,10 @@ jobs:
                           await page.close()
                       async def localbiz(page):
                           await page.locator("#name").fill("Northside Cafe")
-                          await page.locator("#contact").fill("sample@example.test")
+                          await page.locator("#contact").fill("+15555550123")
                           await page.locator("#need").fill("Website enquiry")
                           await page.locator("#leadForm button[type=submit]").click()
+                          await page.locator("#rows button").first.click()
                       async def stock(page):
                           await page.locator("#sku").fill("SKU-104")
                           await page.locator("#name").fill("Coffee beans")
@@ -328,10 +329,24 @@ jobs:
               async with async_playwright() as p:
                   browser = await p.chromium.launch()
                   async def follow(page):
-                      await page.locator("#name").fill("Test customer")
+                      await page.locator("#name").fill("Email customer")
+                      await page.locator("#contact").fill("sample@example.test")
                       await page.locator("#need").fill("Quote")
                       await page.locator("#leadForm button[type=submit]").click()
                       assert await page.locator("#open").inner_text() == "1"
+                      await page.locator("#rows button").first.click()
+                      assert await page.locator("#whatsapp").is_disabled()
+                      await page.locator("#name").fill("WhatsApp customer")
+                      await page.locator("#contact").fill("09121234567")
+                      await page.locator("#need").fill("Quote")
+                      await page.locator("#leadForm button[type=submit]").click()
+                      await page.locator("#rows button").nth(2).click()
+                      assert await page.locator("#whatsapp").is_enabled()
+                      link = await page.locator("#whatsapp").get_attribute("data-url")
+                      assert link.startswith("https://wa.me/989121234567?text="), link
+                      await page.evaluate("window.open = (url) => { window.__whatsappOpened = url; return null; }")
+                      await page.locator("#whatsapp").click()
+                      assert await page.evaluate("window.__whatsappOpened") == link
                   async def stock(page):
                       await page.locator("#sku").fill("TEST-1")
                       await page.locator("#name").fill("Test item")
