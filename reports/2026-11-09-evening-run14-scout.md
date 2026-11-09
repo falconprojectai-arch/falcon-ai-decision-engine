@@ -13,7 +13,7 @@
 - PayAPI Market: last confirmed `pending_review / not live`; canary not yet attempted/confirmed.
 - Agent402: not freshly readable; last-known dispatch state still blocks settlement-verified routing.
 - No new external distribution submission or community comment was made.
-- A concrete LocalBiz product improvement and automated browser smoke test were added on a branch; they are pending CI/PR review, not yet published.
+- LocalBiz WhatsApp draft handoff was merged in [PR #23](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/pull/23). PR tests, main tests and the full GitHub Pages deployment/Chromium smoke suite passed. The web reader still cannot fetch the GitHub Pages URL directly, so deployment is verified by the workflow's browser tests rather than a separate web-reader fetch.
 
 ## A. Falcon / JSON Contract Tester audit
 
@@ -108,7 +108,7 @@ On branch `scout-run14-20261109`, LocalBiz FollowUp gained a user-triggered **Op
 - The user reviews the message and presses Send; nothing is sent automatically.
 - No WhatsApp API, cloud sync, background reminder, server-side contact transfer or payment processing was added.
 - README, product catalogue and Chromium smoke test were updated. The test checks email rejection, Iranian phone normalization and the click handler.
-- The branch changes are pending CI/PR review; they are not yet published or accepted.
+- Merged via [PR #23](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/pull/23) at 2026-11-09T19:06:07Z. PR tests [42679945687](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/42679945687), post-merge tests [42680097238](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/42680097238) and the full Pages deploy/Chromium smoke suite [42680098006](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/42680098006) all completed successfully. The LocalBiz page, WhatsApp draft behavior, catalogue and dashboard passed the deployed browser checks. The web reader still cannot fetch the GitHub Pages URL directly; no separate reader-level verification is claimed.
 
 ### Price and time hypotheses
 
@@ -117,6 +117,31 @@ On branch `scout-run14-20261109`, LocalBiz FollowUp gained a user-triggered **Op
 - Time to first paid customer: unknown. A 2–4 week validation window is only a low-confidence planning estimate.
 - Free validation: provide a sample to three opt-in sellers, observe use on five real leads each, and ask whether the WhatsApp handoff is useful before building a paid pack.
 - Do not use unsolicited DMs, mass messaging or unapproved groups.
+
+
+
+## Comparative execution matrix — estimates, not measured results
+
+| Model | Competition / demand signal | Free-tier feasibility | Automation potential | Time to first paid customer | Maintenance | Main policy/legal risk | Zero-cost validation |
+|---|---|---|---|---|---|---|---|
+| AI-agent marketplace | Medium-high competition; Rokha publishes free listings and USDC shares, but no fresh task demand or Iran seller eligibility was verified. | Listing free; 5 runs/day and 10 questions/day; paid run packs and Lab are optional. | High after a buyer exists; model steps use seller-owned keys. | Unknown; 2–8 weeks is only a planning range. | Medium-high (agent reliability, keys, support). | High uncertainty around platform/payout eligibility and USDC off-ramp. | Watch public tasks and list only if a relevant funded task appears; no paid runs or seller signup now. |
+| LocalBiz offline-first follow-up | High competition: Promall Lite 899k/month, Pro 1.49m and Pro Max 3.29m; Directoo offers smart replies, comment-to-DM and 24-hour scheduled follow-up. | $0 static hosting; no WhatsApp API or cloud bill. | Medium: draft handoff is one click, but the user still sends; a separate PDF/XLSX pack could be auto-delivered. | Unknown; 2–4 weeks after three opt-in tests is a low-confidence estimate. | Low-medium for static app; support mainly browser/local-storage questions. | Medium-high uncertainty for Iran sales via US-hosted pages; local gateway KYC and product approval required. | Three opt-in sellers, five leads each; record task completion and willingness to pay, no unsolicited DMs. |
+| Downloadable template pack | High competition from free templates; a niche Persian follow-up pack may still fit very small sellers who reject monthly CRMs. | Digyno has no registration/monthly fee and 3% per sale; automated file delivery. | High fulfilment automation for permitted PDF/XLSX/CSV, not for scripts/apps. | 1–3 weeks after seller approval is a planning estimate, not a forecast. | Low once the pack is accurate; occasional content updates/refunds. | Seller eKYC, same-name Sheba, admin review, file policy and consumer/refund rules. | Publish a free one-page sample only after owner KYC and product-policy review; gather opt-in feedback first. |
+| Niche data/research | Buyers may pay for curated insight, but Regrid's self-serve API is subscription/per-record and the base price is not visible publicly. | No permanent free API tier verified. | Medium-high after data rights and pipelines are solved. | 4–12 weeks, low confidence. | High (source changes, licensing, QA). | High licensing and data provenance risk. | Produce one licensed sample report; no scraping or repackaging restricted datasets. |
+| Affiliate / lead routing | Very high competition; Amazon pays only for qualifying purchases through tagged links. | No listing cost, but no guaranteed traffic or payout. | High after audience and compliant attribution exist. | 1–3 months, low confidence. | Medium (content freshness, disclosures, link checks). | High eligibility/payout uncertainty; FTC disclosure obligations. | Publish one genuinely useful comparison page with clear disclosure; no affiliate account created. |
+| General workshop templates | Free templates and free shop tools reduce willingness to pay; the ECU-specific prototype has no external validation. | PDF/XLSX are cheap to create and deliver. | High delivery automation, low ongoing compute. | 2–6 weeks, low confidence. | Low. | Moderate niche/product liability and customer-data handling. | Test one free sample with three opt-in shops before packaging. |
+
+### Language priority
+
+English/global acquisition remains first for the Falcon tool. For LocalBiz, Persian is the strongest immediate buyer-language hypothesis because the payment rail and competitor evidence are Iranian; the current product page remains English and the app is not yet validated with Persian sellers. No fresh Spanish-specific buyer signal or payout path was found, so no Spanish localization/submission was attempted.
+
+### Sanctions / hosting caveat
+
+OFAC FAQ 1087 explains that 31 CFR 560.540 authorizes specified cloud services/software incident to internet communications. FAQ 1110 also states that the authorization excludes web-hosting services for websites of commercial entities located in Iran. LocalBiz is a business follow-up tool, not automatically covered by that general license. This does not determine the owner's legal status or the legality of a particular transaction; owner-specific legal advice is required before using a US-hosted service to target Iranian commercial entities: https://ofac.treasury.gov/faqs/1087 · https://ofac.treasury.gov/faqs/1110.
+
+### Progress metric (not probability)
+
+**Success progress: 50% = 6 of 12 measurable milestones completed.** Completed: public JSON tester; implemented/tested contract diagnostics and JUnit output; public DEV article; previously verified directory presence; public LocalBiz prototype; merged/deployed WhatsApp draft handoff with successful Chromium smoke test. Remaining: PayAPI settlement-verified canary; Agent402 settlement-verified routing; three independent LocalBiz seller validations; owner-approved Iranian payout route; automated paid fulfilment; first independently verified customer payment. This percentage is milestone completion only, not a probability of earning money.
 
 ## C. Iran / Persian / rial monetization
 
@@ -129,14 +154,14 @@ On branch `scout-run14-20261109`, LocalBiz FollowUp gained a user-triggered **Op
 | IDPay | Official site/docs were not readable in this run. | Current fees, KYC, settlement and refund terms remain unverified. [Official site](https://idpay.ir/) |
 | Digyno | 3% per sale; no registration/monthly fee; automatic file delivery; 100,000-toman minimum withdrawal; new seller proceeds held 72h until five successful sales, then 24h. | eKYC, admin approval, same-name verified Sheba; PDF/XLSX/ZIP/DOCX/CSV accepted, executable/script/macro files rejected; dispute hold/refund review. [Seller terms](https://digyno.com/sell) |
 
-No card-to-card/manual-transfer model was selected because automated reconciliation and current bank/provider rules were not verified. No account, KYC, payout setting or bank data was touched. The owner must enter identity and payout information only in the chosen provider's official secure dashboard. Any U.S.-nexus/sanctions question needs owner-specific legal review; no blanket legal clearance is inferred.
+No card-to-card/manual-transfer model was selected because automated reconciliation and current bank/provider rules were not verified. No account, KYC, payout setting or bank data was touched. The owner must enter identity and payout information only in the chosen provider's official secure dashboard. OFAC FAQs 1087 and 1110 show that the communications-related general license is limited and excludes certain hosting for commercial-entity websites in Iran; this LocalBiz use is not assumed covered. Owner-specific legal review is required before using a US-hosted service to target Iranian commercial entities.
 
 ## D. Next actions and revenue
 
-1. Run the LocalBiz Chromium smoke test and merge the branch only if CI passes.
+1. Validate LocalBiz with three opt-in sellers before any paid pack or listing; measure actual use and willingness to pay.
 2. Keep PR #20 unmerged until the authenticated Cloudflare preview failure is understood.
 3. Wait for PayAPI's provider-funded canary; do not make a paid POST or fund/sign anything as seller.
-4. After LocalBiz deployment, validate with three opt-in sellers before any paid pack or listing.
-5. If a paid Persian download is pursued, use Digyno only for permitted PDF/XLSX/CSV files after owner KYC and seller approval; the HTML/JS app itself is not eligible for its downloadable-file route.
+4. If a paid Persian download is pursued, Digyno can deliver a separate permitted PDF/XLSX/CSV pack after owner KYC and seller approval; the HTML/JS app itself is not eligible for its downloadable-file route.
+5. Before targeting Iranian commercial entities through a US-hosted web service, obtain owner-specific legal review: OFAC's 31 CFR 560.540 is limited to qualifying communications-related services/software and specifically excludes certain web-hosting for websites of commercial entities located in Iran.
 
 **Verified revenue: $0.00.** Research, listings, usage and product progress are not income.
