@@ -1470,3 +1470,10 @@ Synthetic example only: 300 monthly COD orders; current failed rate 20%; target 
 - **Next action:** wait for the provider-funded PayAPI canary. If a paid canary still returns 402, capture the exact response and fix that issue before resubmission. Never fund or sign the canary as seller.
 
 Full report: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/blob/main/reports/2026-11-09-golden-desk-daily-audit.md
+
+
+### Deployment verification addendum — 2026-11-09 10:34:19 Asia/Tehran
+
+- Dashboard deployment workflow run **42576742427** completed with `conclusion=success` at 2026-11-09T07:04:19Z: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/42576742427.
+- The public GitHub Pages URL fetch was rejected by the web reader as inaccessible. Therefore the deployment workflow is verified successful, but direct public-page rendering was not independently re-read in this run.
+- Revenue and marketplace states are unchanged: $0.00 verified revenue; PayAPI pending_review/not live; canary unconfirmed.
