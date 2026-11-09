@@ -137,7 +137,7 @@ English/global acquisition remains first for the Falcon tool. For LocalBiz, Pers
 
 ### Sanctions / hosting caveat
 
-OFAC FAQ 1087 explains that 31 CFR 560.540 authorizes specified cloud services/software incident to internet communications. FAQ 1110 also states that the authorization excludes web-hosting services for websites of commercial entities located in Iran. LocalBiz is a business follow-up tool, not automatically covered by that general license. This does not determine the owner's legal status or the legality of a particular transaction; owner-specific legal advice is required before using a US-hosted service to target Iranian commercial entities: https://ofac.treasury.gov/faqs/1087 · https://ofac.treasury.gov/faqs/1110.
+OFAC FAQ 1087 limits 31 CFR 560.540 to qualifying communications-related services/software and specified cloud support. FAQ 1088 explicitly contrasts qualifying communications tools with enterprise-management software such as payroll, which is not generally considered qualifying. FAQ 1110 excludes certain web-hosting for websites of commercial entities located in Iran. LocalBiz is a business follow-up/CRM-like tool, so no blanket clearance is inferred for a US-hosted version or a US provider. This does not determine the owner's legal status or the legality of a particular transaction; owner-specific legal advice is required before targeting Iranian commercial entities: https://ofac.treasury.gov/faqs/1087 · https://ofac.treasury.gov/faqs/1088 · https://ofac.treasury.gov/faqs/1110.
 
 ### Progress metric (not probability)
 
@@ -165,3 +165,14 @@ No card-to-card/manual-transfer model was selected because automated reconciliat
 5. Before targeting Iranian commercial entities through a US-hosted web service, obtain owner-specific legal review: OFAC's 31 CFR 560.540 is limited to qualifying communications-related services/software and specifically excludes certain web-hosting for websites of commercial entities located in Iran.
 
 **Verified revenue: $0.00.** Research, listings, usage and product progress are not income.
+
+
+### Monetization decision refinement — 2026-11-09 22:40 Asia/Tehran
+
+The monetized hypothesis is **not** a paid LocalBiz HTML/JS app. Digyno's official seller rules permit PDF/XLSX/ZIP/DOCX/CSV and automatic delivery but reject programs, scripts and macro-enabled files, including inside ZIP. Therefore keep the browser app free and test a separate Persian PDF/XLSX follow-up pack (message sequences + non-macro tracker) as the paid item. Digyno's 3% fee, same-name Sheba, eKYC, seller approval, 100,000-toman minimum withdrawal and 72-hour hold for the first five successful sales are explicit onboarding/settlement gates: https://digyno.com/sell.
+
+The best candidate remains a hypothesis because Promall and Directoo already offer extensive automation: Promall Lite is 899,000 toman/month, Pro 1.49m and Pro Max 3.29m; Directoo advertises keyword replies, comment-to-DM, customer management and scheduled follow-up up to 24 hours. A low-cost template pack must win on simplicity, no monthly fee and no setup, not claim equivalent automation: https://promall.io/pricing · https://directoo.ir/.
+
+The US-hosting/legal gate is material. OFAC FAQ 1088 says a US cloud provider should evaluate whether enterprise-management software is authorized; payroll-management software is given as an example that is not generally considered communications-related. FAQ 1110 excludes certain web-hosting services for commercial-entity websites in Iran. This LocalBiz use is not assumed covered by 31 CFR 560.540; obtain owner-specific legal review before selling/hosting for Iranian commercial customers: https://ofac.treasury.gov/faqs/1087 · https://ofac.treasury.gov/faqs/1088 · https://ofac.treasury.gov/faqs/1110.
+
+English/global acquisition remains first for the Falcon tool. For the separate paid pack, Persian has a practical buyer/channel fit because Iranian online-shop tools and local rial checkout are evidenced; Spanish has no current buyer or payout evidence, so no Spanish localization or submission was made.
