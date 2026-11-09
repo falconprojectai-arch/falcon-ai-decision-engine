@@ -217,3 +217,13 @@ If the owner later chooses a rial product, BluePal requires owner-only review an
 ### Agent402 snapshot freshness — 2026-11-09
 
 The seller index was read on 2026-11-09, but its embedded `paywall.at` timestamp is **2026-11-06T21:01:18.287Z**. Treat the returned health/paywall/dispatch fields as the latest indexed snapshot, not a fresh route probe on 9 November. No paid call was executed.
+
+
+### Direct competitor / pricing check — 2026-11-09
+
+- Agent402's public **Schema guard** skill pack advertises **$0.004 per call** or free proof-of-work. One paid call runs four tools: JSON Schema validate, schema inference, JSON diff and formatting/canonicalization. Its public feature list includes `pattern`, `format`, `anyOf/allOf/oneOf/not` and a broader draft-07 subset. Source: https://agent402.tools/skills/schema-guard
+- ClineTools also advertises a free browser/CLI/MCP API contract tester: https://clinetools.com/tool-contract-test
+- No paid transaction count or sales receipt for Schema guard was exposed in the inspected page; its published price and feature list are competitor evidence, not proof of conversion.
+- Our honest differentiator is **1–10 samples in one $0.005 batch**, per-sample PASS/FAIL diagnostics and the existing JUnit XML export. Our hosted validator supports a narrower documented subset, so it must not be positioned as full draft-07 validation. No price cut is justified without buyer/conversion evidence.
+- Decision gate (0–5): JSON API buyer evidence 2, time-to-first-sale 2, zero-cost feasibility 5, automation 5, low support 4, legal/platform 3 = **21/30**. The one-time manual review scores 2/4/5/1/1/3 = **16/30** and remains a human-work fallback, not the automated primary route.
+- Next action: keep the API as Golden River, lead with batch economics and JUnit-ready output, and require a valid batch plus 2xx + `PAYMENT-RESPONSE` + on-chain receipt before counting any paid call. Do not lower the price based on competitor list price alone.
