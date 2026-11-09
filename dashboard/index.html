@@ -986,6 +986,7 @@ document.getElementById('clear').addEventListener('click',()=>{notes.value='';tr
   <p><strong>گام بعدی:</strong> فقط منتظر Canary تأمین‌شده از کیف پول PayAPI بمان؛ اگر پس از پرداخت هنوز 402 برگشت، پاسخ دقیق را ثبت و همان خطا را اصلاح کن. خود فروشنده funding یا signature انجام ندهد.</p>
 <p><strong>انتشار داشبورد:</strong> GitHub Actions run <a href="https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/42576742427">42576742427</a> با conclusion=success تمام شد؛ اما خواندن مستقیم URL عمومی GitHub Pages توسط web reader رد شد، بنابراین نمایش عمومی مستقل را ادعا نمی‌کنیم.</p>
 <p><strong>دروازهٔ تسویه API:</strong> طبق README و Buyer Quickstart، GET/HEAD فقط discovery هستند؛ درخواست billable باید POST با batch معتبر باشد. خطای 4xx تسویه محسوب نمی‌شود؛ فقط پاسخ 2xx به‌همراه <code>PAYMENT-RESPONSE</code> و رسید آن‌چین فروش تأییدشده است. <a href="https://github.com/falconprojectai-arch/falcon-ai-decision-engine/blob/main/products/json-contract-tester-api/BUYER_QUICKSTART.md">راهنمای خریدار ↗</a></p>
+<p><strong>تازگی رکورد Agent402:</strong> رکورد امروز خوانده شد، اما timestamp داخلی paywall برابر <code>2026-11-06T21:01:18.287Z</code> است؛ بنابراین health/paywall snapshot را دادهٔ تازهٔ تست پرداخت تلقی نکن. هیچ call پرداختی اجرا نشد.</p>
 </section>
 
 </body>
