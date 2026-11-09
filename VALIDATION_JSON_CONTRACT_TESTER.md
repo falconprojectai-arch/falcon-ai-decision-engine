@@ -1477,3 +1477,9 @@ Full report: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/b
 - Dashboard deployment workflow run **42576742427** completed with `conclusion=success` at 2026-11-09T07:04:19Z: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/42576742427.
 - The public GitHub Pages URL fetch was rejected by the web reader as inaccessible. Therefore the deployment workflow is verified successful, but direct public-page rendering was not independently re-read in this run.
 - Revenue and marketplace states are unchanged: $0.00 verified revenue; PayAPI pending_review/not live; canary unconfirmed.
+
+
+### API settlement gate — 2026-11-09
+
+- Current API README and buyer quickstart explicitly state that GET/HEAD are discovery probes only; a billable validation must be POST with a valid batch body. Malformed JSON or a body over 64 KiB is rejected before payment; a JSON body with an invalid schema/batch shape can return HTTP 400 after payment verification. The x402 middleware settles only after a successful response. Count a sale only when the response is 2xx, includes `PAYMENT-RESPONSE`, and has an on-chain receipt. A 402 challenge, a 4xx response, or an unverified callable flag is not a sale.
+- Buyer instructions already warn to validate the payload against OpenAPI before authorizing payment: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/blob/main/products/json-contract-tester-api/BUYER_QUICKSTART.md
