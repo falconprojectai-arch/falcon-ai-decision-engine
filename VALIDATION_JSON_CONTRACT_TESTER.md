@@ -1483,3 +1483,8 @@ Full report: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/b
 
 - Current API README and buyer quickstart explicitly state that GET/HEAD are discovery probes only; a billable validation must be POST with a valid batch body. Malformed JSON or a body over 64 KiB is rejected before payment; a JSON body with an invalid schema/batch shape can return HTTP 400 after payment verification. The x402 middleware settles only after a successful response. Count a sale only when the response is 2xx, includes `PAYMENT-RESPONSE`, and has an on-chain receipt. A 402 challenge, a 4xx response, or an unverified callable flag is not a sale.
 - Buyer instructions already warn to validate the payload against OpenAPI before authorizing payment: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/blob/main/products/json-contract-tester-api/BUYER_QUICKSTART.md
+
+
+### Agent402 snapshot freshness — 2026-11-09
+
+The seller index was read on 2026-11-09, but its embedded `paywall.at` timestamp is **2026-11-06T21:01:18.287Z**. Treat the returned health/paywall/dispatch fields as the latest indexed snapshot, not a fresh route probe on 9 November. No paid call was executed.
