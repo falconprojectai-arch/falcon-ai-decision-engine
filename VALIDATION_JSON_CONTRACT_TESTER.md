@@ -1507,3 +1507,8 @@ The seller index was read on 2026-11-09, but its embedded `paywall.at` timestamp
 - **Digital products:** Payhip's free plan is $0/month plus 5% but requires connecting one of its 13 supported payment processors; the current list includes PayPal, Stripe and other foreign processors, not BluePal. Gumroad requires bank or PayPal payout and a $100 regular payout minimum; this is not a verified crypto-only route. No seller account or listing was created: https://payhip.com/pricing · https://help.payhip.com/article/173-how-do-i-get-paid · https://gumroad.com/help/article/13-getting-paid
 - **Paid agent marketplace comparison:** AI Agent Marketplace advertises free customer task posting but charges providers $45/month for listings and pays via Stripe; rejected under zero-upfront-cost and Iran payout constraints: https://ai-agentmarketplace.com/pricing
 - **Language fit:** English/global pages were evaluated first; Persian buyer and rial checkout were assessed separately. No fresh Spanish-specific buyer signal or payout evidence surfaced, so no Spanish localization or submission was attempted.
+
+
+### Implementation honesty — 2026-11-09
+
+- Current README explicitly says live opportunity discovery, live source/provider verification, real worker adapters, payment-provider verification, reinvestment and live dashboard telemetry are not implemented. ARCHITECTURE says the worker is a safe dry-run planner and the dashboard is static/not connected to live runtime telemetry. Treat the repository as a dry-run foundation until each adapter is separately configured, tested and evidenced. This scheduled research workflow is not itself an always-on autonomous business. The six Golden Desk roles are logical review functions, not six deployed independent agents.
