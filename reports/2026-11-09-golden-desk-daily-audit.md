@@ -206,3 +206,9 @@ If the owner later chooses a rial product, BluePal requires owner-only review an
 - Dashboard deployment workflow run **42576742427** completed successfully at 2026-11-09T07:04:19Z: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/42576742427.
 - Direct public GitHub Pages fetch was rejected by the web reader as inaccessible; workflow success is verified, public rendering is not independently re-read.
 - No revenue or marketplace status changed: verified revenue $0.00; PayAPI pending_review/not live; canary unconfirmed.
+
+
+### API settlement gate — 2026-11-09
+
+- Current API README and buyer quickstart explicitly state that GET/HEAD are discovery probes only; a billable validation must be POST with a valid batch body. Malformed JSON or a body over 64 KiB is rejected before payment; a JSON body with an invalid schema/batch shape can return HTTP 400 after payment verification. The x402 middleware settles only after a successful response. Count a sale only when the response is 2xx, includes `PAYMENT-RESPONSE`, and has an on-chain receipt. A 402 challenge, a 4xx response, or an unverified callable flag is not a sale.
+- Buyer instructions already warn to validate the payload against OpenAPI before authorizing payment: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/blob/main/products/json-contract-tester-api/BUYER_QUICKSTART.md
