@@ -55,3 +55,11 @@ Do not build the paid bundle or activate checkout until:
 ## Safety and privacy
 
 Use synthetic data in public feedback. Do not submit customer names, phone numbers, registration plates, VINs, firmware files, credentials, or payment details to GitHub issues or public channels.
+
+## Market evidence update — 2026-11-10
+
+Generic job cards are heavily commoditized. JobCardOS offers a free A4 card and a paid branded service-history/WhatsApp workflow from R249/month: https://jobcardos.com/job-card-template. Node Studio offers a free one-page workshop card: https://nodestudio.live/templates/car-workshop-job-card-template. An Etsy digital repair-shop job-card/invoice system was listed at $16.49; its seller shop showed 7 total shop sales, no reviews and 2 months on Etsy, not product-specific sales: https://www.etsy.com/listing/4601854943/auto-repair-shop-job-card-invoice-system.
+
+**Decision:** do not sell a generic job card. The only plausible differentiation is an ECU-specific Persian intake, diagnostic/work record and hand-over pack with editable files. Issue #22 still has zero comments, so willingness to pay is unvalidated. The 149,000–249,000 toman price range remains a hypothesis only. Keep the sample free until three working ECU/auto-electrical technicians independently review the fields and confirm a gap beside their current paperwork/software.
+
+**Payment/legal gate:** Zarinpal, Zibal and PayPing publish rial checkout rails, but merchant KYC and settlement setup remain owner-only. Zibal requires applicant mobile, same-name Sheba, ID, tax code, eNamad and valid permit. PayPing requires identity/bank/business verification, eNamad and tax file; non-domestic social-network payment links are prohibited. IDPay site/docs were inaccessible. OFAC FAQ 1110 excludes hosting websites of commercial entities located in Iran from the general authorization; do not assume GitHub Pages is cleared for an Iran-located commercial seller. No payment account or payout details were touched.
