@@ -1054,6 +1054,43 @@ document.getElementById('clear').addEventListener('click',()=>{notes.value='';tr
 <p>OFAC FAQ 1110 وب‌میزبانی وب‌سایت‌های کسب‌وکارهای واقع در ایران را از مجوز عمومی 560.540 خارج می‌کند؛ برای فروش تجاری ایران از GitHub Pages پوشش حقوقی را فرض نکنید و پیش از monetization بررسی حقوقی/پلتفرمی لازم است. <a href="https://ofac.treasury.gov/faqs/1087">OFAC 1087</a> · <a href="https://ofac.treasury.gov/faqs/1088">1088</a> · <a href="https://ofac.treasury.gov/faqs/1110">1110</a></p>
 <p><strong>درآمد تأییدشده: $0.00.</strong> اقدام بعدی: منتظر canary پرداخت‌شده از کیف پول PayAPI بمان؛ اگر پس از پرداخت هنوز 402 برگشت، پاسخ دقیق را ثبت و اصلاح کن. برای ECU forms، پیش از نسخه پولی سه بازبینی opt-in از تعمیرکار و حل eligibility/hosting لازم است.</p>
 <p><a href="https://github.com/falconprojectai-arch/falcon-ai-decision-engine/blob/main/reports/2026-11-10-golden-desk-run11.md">گزارش کامل Run 11</a></p>
+
+<div class="card" style="margin-top:18px">
+<h2>Golden Desk — Daily Audit Run 12 · 2026-11-10 10:48 Asia/Tehran</h2>
+<p><strong>وضعیت: partial.</strong> بازخورد عمومی، PRها، Gmail، مقاله DEV، PayAPI و Agent402 بررسی شدند. GitHub Traffic به‌دلیل خطای واقعی ابزار قابل دریافت نبود.</p>
+<h3>بازخورد و مخزن</h3>
+<ul>
+<li>مخزن عمومی: ۲۱ issue باز، ۰ star، ۰ fork؛ Discussions غیرفعال است. <a href="https://github.com/falconprojectai-arch/falcon-ai-decision-engine">مخزن</a></li>
+<li>بازخورد مستقل جدید: صفر. تنها بازخورد مستقل ثبت‌شده همچنان shigeki7777 در Issue #13 در ۲۹ اکتبر است؛ درخواست JSON Pointer، sample index، expected/actual، خروجی ماشین‌خوان و batch ترکیبی. <a href="https://github.com/falconprojectai-arch/falcon-ai-decision-engine/issues/13#issuecomment-6492617263">نظر مستقل</a></li>
+<li>Tester اکنون JSON و JUnit XML export دارد؛ README هر دو را مستند کرده است. <a href="https://github.com/falconprojectai-arch/falcon-ai-decision-engine/tree/main/products/json-contract-tester">محصول و مستندات</a></li>
+<li>PR #23 ادغام شده و فقط draft دستی WhatsApp را اضافه می‌کند؛ ارسال خودکار نیست. PR #20 باز و unmergeable است؛ PR #16 همچنان draft است. Review رسمی در PRهای بررسی‌شده: صفر.</li>
+<li>مقاله DEV عمومی و قابل مشاهده است، ۰ نظر. Reddit به‌علت Cache miss قابل بازبینی نبود. Issueهای #21 و #22 نیز درخواست بازخورد عمومی‌اند و هنوز ۰ نظر دارند.</li>
+</ul>
+<h3>GitHub Traffic — unavailable</h3>
+<p>دوره ۱۴روزه: 2026-10-27 10:48:10 تا 2026-11-10 10:48:10 Asia/Tehran. Views، unique visitors، referrers، popular paths، clones و unique cloners در دسترس نیستند. چهار endpoint ترافیک GitHub با HTTP 400 از allowlist اتصال رد شدند؛ صفحه Insights نیز با ERR_SOCKS_CONNECTION_FAILED باز نشد. هیچ عددی تخمین زده نشده است.</p>
+<h3>PayAPI Market و Agent402</h3>
+<ul>
+<li>PayAPI listing <strong>pending_review / not live</strong>؛ ایمیل ۳ نوامبر می‌گوید فرم پذیرفته شده، اما live نیست و PayAPI یک canary را از کیف پول خودش می‌پردازد. Lookup عمومی دقیق ID اکنون HTTP 404 not_found است؛ canary و receipt گزارش نشده‌اند. <a href="https://payapi.market/agent/get?id=54bd4f89-23f8-47e7-b507-039362b51198">listing</a> · <a href="https://payapi.market/faq">FAQ</a></li>
+<li>FAQ فعلی PayAPI درباره تأمین canary متن متناقض دارد؛ هیچ وجهی ارسال نشده و هیچ top-up یا امضایی انجام نمی‌شود.</li>
+<li>Agent402: paywall=402، شبکه Base تنها؛ routerDispatchEligible=false به‌دلیل settlement_required؛ executeViaCallableNow=true فقط در مسیر unproven با سقف ۰٫۰۵ دلار. calls/views/settlement/receipt عمومی ارائه نشده‌اند. این کشف مسیر، اثبات تسویه نیست. <a href="https://agent402.tools/api/index?seller=https%3A%2F%2Fjson-contract-tester-api.falcon-project-ai.workers.dev">seller record</a></li>
+</ul>
+<h3>کانال‌ها</h3>
+<ul>
+<li>DEV article: <strong>published/successful</strong>، عمومی، ۰ نظر. <a href="https://dev.to/falconprojectaiarch/7-checks-before-trusting-an-api-or-ai-agent-json-response-1mii">کانال</a> · <a href="https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/">محصول</a></li>
+<li>DevXTools و The Tool Directory: <strong>pending review</strong>؛ ایمیل جدید یا listing عمومی ایندکس‌شده پیدا نشد. <a href="https://devxtools.dev/submit/">DevXTools</a> · <a href="https://thetooldirectory.com/submit-a-tool/">Tool Directory</a> · <a href="https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/">معرفی محصول</a></li>
+<li>PromoteIndex، Ignlab و Launching Next: وضعیت pending/انتشار تأییدنشده از آخرین ثبت؛ پاسخ تازه‌ای دیده نشد. <a href="https://promoteindex.com/submit">PromoteIndex</a> · <a href="https://launch.ignlab.net/">Ignlab</a> · <a href="https://www.launchingnext.com/submit/">Launching Next</a> · <a href="https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/">معرفی محصول</a></li>
+<li>Reddit: visibility فعلی <strong>unverified</strong> به‌علت Cache miss؛ بازنشر برای دور زدن moderation انجام نشد. <a href="https://www.reddit.com/r/SideProject/comments/1xhfg2y/i_built_a_small_json_contract_tester_for_checking/">کانال</a> · <a href="https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/">محصول</a></li>
+<li>Digyno برای فرضیهٔ فایل دیجیتال فارسی: <strong>researched-not-submitted</strong>؛ ۳٪ کارمزد، بدون هزینه ثبت‌نام/ماهانه و تحویل خودکار، اما KYC، شبا هم‌نام و تأیید مدیر لازم است. صفحه معرفی محصول پیشنهادی هنوز ساخته نشده؛ محصول مرتبط فعلی فقط LocalBiz است. <a href="https://digyno.com/sell">کانال فروشنده</a> · <a href="https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/localbiz-followup/">محصول مرتبط، نه همان فایل پیشنهادی</a></li>
+</ul>
+<h3>مسیر جایگزین خارج از JSON</h3>
+<p>فرضیه: بستهٔ دانلودی فارسی برای فروشندگان کوچک Instagram/WhatsApp شامل پاسخ‌های آماده، پیگیری بی‌پاسخ، اعتراض قیمت، وضعیت سفارش و فایل پیگیری XLSX/CSV. قیمت فرضی ۹۹ تا ۱۴۹ هزار تومان؛ هنوز هیچ خریدار، فروش یا listing تأیید نشده است. Digyno تحویل خودکار فایل دارد، اما فروشنده باید eKYC و تأیید فروشگاه را تکمیل کند. Manychat Free تا ۲۵ مخاطب فعال و ۴ automation دارد و WhatsApp در Free نیست؛ پلن Pro برابر ۲۹ دلار/ماه است. <a href="https://help.manychat.com/en/articles/17742189-free-plan">Manychat Free</a> · <a href="https://manychat.com/es/pricing">Pricing</a></p>
+<h3>پرداخت ریالی و ریسک</h3>
+<p>زیبال: ۱٪ تا سقف ۲۰٬۰۰۰ تومان + VAT، بدون setup/monthly؛ نیازمند موبایل به نام متقاضی، شبا هم‌نام، کد مالیاتی، اینماد و مجوز. پی‌پینگ: ۱٪ تا سقف ۵٬۰۰۰ تومان + ۵۰۰ ثابت + VAT، لینک محصول/فاکتور و تسویه روزانه؛ KYC و شبا هم‌نام، و لینک پرداخت در شبکه‌های اجتماعی غیرایرانی ممنوع. زرین‌پال: تسویه مستقیم روزانه فقط با حساب پشتیبان متصل به پنل مالیاتی؛ لینک بدون سایت در این بررسی از سند رسمی به‌طور کامل تأیید نشد. IDPay timeout داد. انتقال کارت‌به‌کارت به‌دلیل reconciliation دستی انتخاب نشد. <a href="https://zibal.ir/pricing">Zibal</a> · <a href="https://payping.ir/terms/">PayPing Terms</a> · <a href="https://www.zarinpal.com/landing/fast-settlement/">ZarinPal settlement</a> · <a href="https://idpay.ir/">IDPay</a></p>
+<p>OFAC FAQ 1110 می‌گوید میزبانی وب‌سایت کسب‌وکار تجاری واقع در ایران از مجوز عمومی 560.540 مستثناست؛ پیش از فروش تجاری از GitHub Pages، بررسی حقوقی/پلتفرمی لازم است. <a href="https://ofac.treasury.gov/faqs/1110">OFAC FAQ 1110</a></p>
+<p><strong>درآمد تأییدشده: $0.00.</strong> اقدام بعدی: API پایدار بماند و نتیجهٔ canary وعده‌داده‌شده از PayAPI پیگیری شود؛ هیچ پرداخت یا امضایی از طرف فروشنده انجام نشود. زمان پیوستهٔ ۱۰ دقیقه‌ای با stopwatch قابل اثبات نبود و ادعای آن نمی‌شود.</p>
+<p><a href="https://github.com/falconprojectai-arch/falcon-ai-decision-engine/blob/main/reports/2026-11-10-run12-golden-desk.md">گزارش کامل Run 12</a></p>
+</div>
+
 </section>
 </body>
 </html>
