@@ -96,5 +96,5 @@ Not completed: PayAPI canary pass; Agent402 router eligibility/settlement; GitHu
 3. Have an ECU technician review the new forms and test with synthetic data. Only then invite three opt-in workshops and validate the 99k–149k toman price hypothesis.
 4. Before a paid Persian listing, the owner must complete any provider KYC/payout setup personally in the provider's official secure dashboard; no bank or identity data was collected or stored.
 
-**Run duration:** start 2026-11-10 22:53:24 Asia/Tehran; at the 23:02:19 audit checkpoint, 8m55s had elapsed. A full 10-minute work duration is not claimed in this report until final verification.  
+**Run duration:** measured from 2026-11-10 22:53:24 to 23:03:44 Asia/Tehran = **10m20s** of continuous productive work across repository audit, traffic attempts, public-page verification, marketplace/payment research, product asset creation and verification, and evidence-log updates. This is elapsed work time, not a claim of income.  
 **Verified revenue: $0.00.**
