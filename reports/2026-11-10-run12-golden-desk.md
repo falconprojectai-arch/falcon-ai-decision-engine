@@ -140,3 +140,10 @@ Scores are 0–5 estimates, not probabilities or sales forecasts.
 **Owner-only blockers for the separate Iranian digital-download route:** account creation and eKYC on the chosen marketplace, plus same-name settlement details entered only by the owner in the provider's official secure dashboard. No sensitive information was collected here.
 
 **Work-duration honesty:** the runtime did not provide a reliable continuous-work stopwatch; no claim of 10 minutes elapsed is made.
+
+
+## Final verification
+
+- Report file, dashboard and validation log were fetched again after commit and their Run 12 sections/links were present.
+- GitHub Actions test runs succeeded: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/42774876502 and https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/42774880858.
+- GitHub Pages deployment and all Chromium smoke tests completed successfully in https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/42774876381 (completed 2026-11-10T07:24:08Z).
