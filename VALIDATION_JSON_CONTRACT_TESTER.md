@@ -1618,3 +1618,64 @@ No card-to-card/manual-transfer model was selected because automatic reconciliat
 - Promall's current official prices are 899,000 toman/month Lite, 1.49m Pro and 3.29m Pro Max; Directoo advertises keyword replies, comment-to-DM, CRM and 24-hour follow-up. A paid pack must compete on low one-time price and simplicity, not pretend to match full automation: https://promall.io/pricing · https://directoo.ir/.
 - OFAC FAQ 1088 says a US cloud provider should evaluate whether enterprise-management software is authorized; payroll-management software is an example not generally considered communications-related. FAQ 1110 excludes certain web-hosting for commercial-entity websites in Iran. No 31 CFR 560.540 clearance is assumed for this business follow-up product: https://ofac.treasury.gov/faqs/1087 · https://ofac.treasury.gov/faqs/1088 · https://ofac.treasury.gov/faqs/1110.
 - English/global acquisition remains first for Falcon. Persian is the practical language hypothesis for the separate local seller pack because local competitor and rial-payment evidence exists. No Spanish-specific buyer/payout signal was found.
+
+### Daily audit — 2026-11-10 10:11 Asia/Tehran (Run 11, partial)
+
+**Audit status: partial.** Checked current issues, issue comments, pull requests, formal PR reviews, PR bot comments, Gmail, DEV article comments, public product pages, PayAPI lookup and Agent402 index. Discussions are disabled (has_discussions=false). Reddit returned a cache miss. GitHub Traffic could not be read through the connected integration.
+
+- Independent external feedback: shigeki7777 on Issue #13, created 2026-10-29T09:10:29Z. Requested JSON Pointer/sample diagnostics, expected/actual values, JSON/JUnit output and mixed-batch testing. https://github.com/falconprojectai-arch/falcon-ai-decision-engine/issues/13#issuecomment-6492617263.
+- No new independent feedback. Issues #21 and #22 have zero comments. DEV article is public and displays Top comments (0): https://dev.to/falconprojectaiarch/7-checks-before-trusting-an-api-or-ai-agent-json-response-1mii. Owner comments and cadence bot messages are project-owned, not independent.
+- Formal reviews on PRs #1, #2, #15, #16, #20 and #23 returned zero. PR #16/#20 have Cloudflare deployment-bot comments only. PR #23 merged 2026-11-09. No human inline review threads.
+- Gmail search: no new response after 2026-11-08 for PayAPI, DevXTools, The Tool Directory, PromoteIndex, Ignlab or Launching Next. Reddit page cache miss; current visibility unverified.
+
+#### GitHub Traffic — unavailable
+- Retrieval time: 2026-11-10 10:11:21 Asia/Tehran. Rolling 14-day period: 2026-10-27 10:11:21 through 2026-11-10 10:11:21 Tehran (UTC 2026-10-27T06:41:21Z through 2026-11-10T06:41:21Z).
+- Views, unique visitors, referrers, popular paths and clones unavailable. All four /traffic/* endpoints returned HTTP 400 from the GitHub fetch allowlist; connector has no Traffic action. Prior period was also unavailable; no numeric comparison.
+
+#### PayAPI Market / Agent402
+- PayAPI listing 54bd4f89-23f8-47e7-b507-039362b51198: latest email notifications@payapi.market at 2026-11-03T05:28:56Z says accepted but not live; provider said it would make a wallet-funded canary. No later email. Public lookup HTTP 404 not_found. State pending_review / not live; 404 is not proof of rejection. Canary not reported. No resubmission or seller-funded test. https://payapi.market/agent/get?id=54bd4f89-23f8-47e7-b507-039362b51198.
+- Agent402 fetched 2026-11-10T06:14:29.885Z. networks=[eip155:8453], paywall HTTP 402, routerDispatchEligible=false due settlement_required / below the settlement floor. executeViaCallableNow=true for three routes, but all are unproven with unprovenMaxUsd=0.05. No views/calls/receipts exposed. Discovery is not settlement proof. https://agent402.tools/api/index?seller=https%3A%2F%2Fjson-contract-tester-api.falcon-project-ai.workers.dev.
+
+#### Channel status
+| Channel | State | Channel link | Product link |
+|---|---|---|---|
+| DEV Community | published/successful; visible, 0 comments | https://dev.to/falconprojectaiarch/7-checks-before-trusting-an-api-or-ai-agent-json-response-1mii | https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/ |
+| DevXTools | pending review; no new response/listing found | https://devxtools.dev/submit/ | https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/ |
+| The Tool Directory | pending review; no new response/listing found | https://thetooldirectory.com/submit-a-tool/ | https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/ |
+| Reddit r/SideProject | blocked for current visibility verification; cache miss | https://www.reddit.com/r/SideProject/comments/1xhfg2y/i_built_a_small_json_contract_tester_for_checking/ | https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/ |
+| PayAPI Market | pending_review / not live; canary unreported | https://payapi.market/agent/get?id=54bd4f89-23f8-47e7-b507-039362b51198 | https://json-contract-tester-api.falcon-project-ai.workers.dev/ |
+| Agent402 | researched-not-submitted; discovery exists, settlement unproven | https://agent402.tools/api/index?seller=https%3A%2F%2Fjson-contract-tester-api.falcon-project-ai.workers.dev | https://json-contract-tester-api.falcon-project-ai.workers.dev/ |
+| GitHub Issue #22 | published/successful as public feedback request; 0 comments | https://github.com/falconprojectai-arch/falcon-ai-decision-engine/issues/22 | https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/ecu-workshop-forms/ |
+
+No new third-party listing, directory submission, community post or outreach was made.
+
+#### Non-JSON scan — five angles
+- AI-agent services: AI Agent Marketplace provider plan $45/month plus 12%; Freelance Clearing free seller offers, $2 job post, 10% completion fee, 17 jobs/$925 transacted, Stripe bank payout with Iran eligibility unverified. https://ai-agentmarketplace.com/pricing · https://freelanceclearing.com/.
+- Local-business automation: Promall 899k/1.49m/3.29m toman monthly; Directoo promo 499.5k–999.5k monthly. Both bundle CRM/order/Instagram automation; LocalBiz remains local-only and manual-send. https://promall.io/pricing · https://directoo.ir/pricing.
+- Digital products: Gumroad no monthly fee, but 10% + $0.50 direct and 30% Discover; country payout methods vary. https://gumroad.com/pricing.
+- Niche data: Regrid self-serve monthly subscription plus per-record pricing, starting at 2,000 parcel records/month; not zero-upfront. https://support.regrid.com/reference/plan-options.
+- Affiliate/lead-routing: Amazon Associates agreement and tagged links required; FTC requires clear disclosure; no audience or Iran-compatible payout verified. https://affiliate-program.amazon.com/help/operating/agreement · https://www.ftc.gov/business-guidance/resources/ftcs-endorsement-guides-what-people-are-asking.
+- ECU forms: JobCardOS and Node Studio offer free general forms; Etsy $16.49 listing with seller shop 7 total sales/no reviews/2 months (not product-specific sales). https://jobcardos.com/job-card-template · https://nodestudio.live/templates/car-workshop-job-card-template · https://www.etsy.com/listing/4601854943/auto-repair-shop-job-card-invoice-system.
+
+#### Iran / Persian / rial rails
+| Provider | Published fee/capabilities | Onboarding and limits |
+|---|---|---|
+| Zarinpal | 0.5% up to 16,000 toman + 500 fixed; first month free except Shaparak; OAuth2/GraphQL; daily settlement advertised. | Access token after authentication; seller eligibility not completed. https://www.zarinpal.com/pricing · https://www.zarinpal.com/docs/apiDocs/ · https://www.zarinpal.com/docs/apiDocs/auth |
+| Zibal | 1% capped at 20,000 toman; 10% VAT on fee; no setup/monthly; periodic settlement. | Applicant mobile, same-name Sheba, ID, tax code, eNamad, valid permit. https://zibal.ir/pricing · https://help.zibal.ir/article/registration/ |
+| PayPing | 1% capped at 5,000 toman + 500 fixed + VAT; daily settlement; product/invoice links, API, refunds. | KYC, bank/business, eNamad, tax file; non-domestic social-network payment links prohibited. https://payping.ir/pricing/ · https://payping.ir/faq/ · https://payping.ir/terms/ |
+| IDPay | Site timed out; docs inaccessible. | Fee/KYC/settlement/refunds unverified. https://idpay.ir/ |
+
+No manual card-to-card route selected because automated reconciliation and current bank rules were not verified. No account/KYC/payout changes; no bank/card/IBAN/identity data collected.
+
+OFAC FAQ 1087/1088 limits the general license to qualifying communications-related cloud services/software and provider due diligence; FAQ 1110 excludes hosting websites of commercial entities located in Iran. Do not assume GitHub Pages is cleared for an Iran-located commercial seller; owner-specific legal/platform review is required before monetizing this Iran-facing site. https://ofac.treasury.gov/faqs/1087 · https://ofac.treasury.gov/faqs/1088 · https://ofac.treasury.gov/faqs/1110.
+
+#### Decision gate
+| Candidate | Buyer | Speed | Zero cost | Automation | Low support | Legal/platform | Total |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| JSON Contract Tester API | 2 | 3 | 5 | 5 | 4 | 3 | 22/30 |
+| Persian ECU forms pack | 1 | 3 | 5 | 4 | 4 | 2 | 19/30 |
+| LocalBiz FollowUp | 2 | 2 | 5 | 3 | 3 | 2 | 17/30 |
+
+Scores are decision estimates, not conversion probabilities. Golden River remains the API because it is already deployed and can serve machine customers without recurring manual fulfilment. Buyer evidence remains weak. Do not resubmit PayAPI; wait for the provider-funded canary. If a paid canary still returns 402, record the exact response and fix only the confirmed cause.
+
+**Verified revenue: $0.00.** Research, publication, product availability, directory discovery and commits are not income.
