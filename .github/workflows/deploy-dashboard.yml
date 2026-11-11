@@ -463,3 +463,44 @@ jobs:
 
           asyncio.run(main())
           PY
+
+      - name: Smoke-test affiliate infrastructure guides in Chromium
+        env:
+          PAGES_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          python - <<'PY'
+          import asyncio, os
+          from playwright.async_api import async_playwright
+
+          async def main():
+              async with async_playwright() as p:
+                  browser = await p.chromium.launch()
+                  errors = []
+                  page = await browser.new_page()
+                  page.on("pageerror", lambda error: errors.append(str(error)))
+                  base = os.environ["PAGES_URL"] + "products/dev-agent-toolbox/"
+                  response = await page.goto(base + "blockchain-infrastructure.html", wait_until="networkidle", timeout=60000)
+                  assert response and response.status == 200
+                  assert "Blockchain Infrastructure" in await page.title()
+                  assert await page.locator('a[rel="sponsored nofollow"][href*="stabledomains.net/?ref=ff6ueixx"]').count() == 1
+                  iframe = page.locator('iframe[title="StableDomains domain search"]')
+                  assert await iframe.count() == 1
+                  assert "ref=ff6ueixx" in await iframe.get_attribute("src")
+                  response = await page.goto(base + "agent-integration-patterns.html", wait_until="networkidle", timeout=60000)
+                  assert response and response.status == 200
+                  assert await page.title() == "AI Agent Integration Patterns: StableDomains + SwiftNodes"
+                  body = await page.locator("body").inner_text()
+                  assert "X-SD-Ref" in body and "SWIFTNODES_API_KEY" in body
+                  assert "explicit approval" in body.lower()
+                  assert await page.locator('a[rel="sponsored nofollow"][href*="swiftnodes.io/?ref=xxuxt8dw"]').count() == 1
+                  response = await page.request.get(os.environ["PAGES_URL"] + "sitemap.xml")
+                  assert response.status == 200
+                  sitemap = await response.text()
+                  assert "agent-integration-patterns.html" in sitemap and "blockchain-infrastructure.html" in sitemap
+                  response = await page.request.get(os.environ["PAGES_URL"] + "robots.txt")
+                  assert response.status == 200 and "sitemap.xml" in await response.text()
+                  assert not errors, f"Browser JavaScript errors: {errors}"
+                  await browser.close()
+
+          asyncio.run(main())
+          PY
