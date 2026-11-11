@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "properties": {
+    "business_type": {"type": "string"},
+    "service_or_product": {"type": "string"},
+    "enquiry_summary": {"type": "string"},
+    "enquiry_received_at": {"type": "string"},
+    "lead_status": {"type": "string", "enum": ["new", "quote_sent", "waiting_for_reply", "booked", "won", "lost"]},
+    "contact_channel": {"type": "string", "enum": ["email", "sms", "whatsapp", "phone", "other"]},
+    "followup_consent": {"type": "string", "enum": ["explicit", "existing_relationship_basis", "unclear", "opted_out"]},
+    "constraints": {"type": "array", "items": {"type": "string"}},
+    "customer_language": {"type": "string"}
+  },
+  "required": ["business_type", "enquiry_summary", "lead_status", "contact_channel", "followup_consent"],
+  "additionalProperties": false
+}
