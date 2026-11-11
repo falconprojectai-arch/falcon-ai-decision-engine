@@ -8,7 +8,7 @@ import { validateBatch, LIMITS } from './validator.js';
 
 const app = new Hono();
 
-const serviceDescription = 'JSON Schema validation API for AI agents, LLM structured outputs, API responses, webhook payloads, and backend data contracts. Validate 1–10 JSON samples in one batch against a documented JSON Schema subset; receive per-sample PASS/FAIL results and structured JSON Pointer diagnostics for contract testing and regression checks. Not full JSON Schema; the pattern keyword is unsupported. $0.005 USDC per batch on Base Mainnet via x402 v2 exact.';
+const serviceDescription = 'JSON Schema validation API for AI agents, LLM structured outputs, API responses, webhook payloads, and backend data contracts. Validate 1–10 JSON samples in one batch against a documented JSON Schema subset; receive per-sample PASS/FAIL results and structured JSON Pointer diagnostics. Unsupported schema keywords are rejected explicitly instead of silently treated as valid; this is not full JSON Schema. $0.005 USDC per batch on Base Mainnet via x402 v2 exact.';
 const requestExample = {
   schema: {
     type: 'object',
@@ -375,7 +375,7 @@ app.use('*', async (c, next) => {
     amount: '5000',
     maxTimeoutSeconds: 60
   }];
-  const description = 'Validate 1–10 JSON outputs against the documented JSON Schema subset; receive structured PASS/FAIL results and JSON Pointer diagnostics.';
+  const description = 'Validate 1–10 JSON outputs against the documented JSON Schema subset; receive structured PASS/FAIL results and JSON Pointer diagnostics. Unsupported schema keywords are rejected explicitly.';
   // GET and HEAD expose the same unpaid 402 challenge for read-only marketplace
   // probes. The actual billable operation remains POST only.
   const mw = paymentMiddleware({
