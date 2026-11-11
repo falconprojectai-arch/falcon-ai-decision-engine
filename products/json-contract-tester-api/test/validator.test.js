@@ -81,3 +81,30 @@ test('rejects unsupported additionalProperties schema forms', () => {
   assert.equal(r.code, 'unsupported_schema');
   assert.equal(r.unsupportedKeywords[0].keyword, 'additionalProperties');
 });
+
+
+test('enforces additionalProperties:false in nested objects with an exact JSON Pointer', () => {
+  const r = validateBatch({
+    schema: {
+      type: 'object',
+      properties: {
+        payload: {
+          type: 'object',
+          properties: { id: { type: 'integer' } },
+          additionalProperties: false
+        }
+      }
+    },
+    outputs: [{ json: { payload: { id: 1, debug: true } } }]
+  });
+  assert.equal(r.ok, true);
+  assert.equal(r.data.results[0].passed, false);
+  assert.deepEqual(r.data.results[0].errors, [{
+    instancePath: '/payload/debug',
+    schemaPath: '#/properties/payload/additionalProperties',
+    keyword: 'additionalProperties',
+    message: 'Unexpected property',
+    expected: ['id'],
+    actual: 'present: debug'
+  }]);
+});
