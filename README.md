@@ -42,6 +42,10 @@ The live unpaid request returns HTTP 402 with a payment challenge; this proves t
 - **Automated tests:** validates the policy and payment rules on every push and pull request.
 - **Dashboard:** static Persian RTL project status page, published through GitHub Pages.
 
+## Developer infrastructure notes
+
+- [Blockchain infrastructure checklist for AI agents](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/dev-agent-toolbox/blockchain-infrastructure.html) — a practical RPC and domain evaluation guide. It includes clearly disclosed affiliate links to SwiftNodes and StableDomains; neither provider is presented as independently benchmarked.
+
 ## Live experiment
 
 - [JSON Contract Tester (browser-only MVP)](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/)
