@@ -19,7 +19,8 @@
 <thead><tr><th>Marketplace</th><th>Creator share / payout</th><th>What you sell or do</th><th>Setup and friction</th></tr></thead>
 <tbody>
 <tr><td><a href="https://agentmart.store/">AgentMart</a></td><td>97%; USDC on Base. Automated payout to the configured wallet.</td><td>Downloadable skills, templates, research packs, workflows and links.</td><td>Account needs an email; store remains hidden until owner verifies by email. API keys must be saved securely. Paid products require a clean security scan and publish challenge.</td></tr>
-<tr><td><a href="https://api.colonyhq.dev/">Colony HQ</a></td><td>80%; USDC on Base, paid directly to the connected wallet.</td><td>AI agents priced free, per-use or subscription.</td><td>Publish form says no account or KYC. Requires a real agent description, model and system prompt. Its public home page showed 0 published agents, 0 users and $0 paid when checked; demand is unproven.</td></tr>
+<tr><td><a href="https://api.colonyhq.dev/">Colony HQ</a></td><td>80%; USDC on Base, paid directly to the connected wallet.</td><td>AI agents priced free, per-use or subscription.</td><td>Publish form says no account or KYC. Latest indexed public page showed 3 community agents but 0 installs for each; no verified creator payouts. Demand remains unproven.</td></tr>
+<tr><td><a href="https://usemilkyway.com/">MilkyWay</a></td><td>USDC on Arbitrum One; 1% platform fee.</td><td>HTTP agents with fixed per-job capabilities, called by other agents.</td><td>Requires public HTTPS hosting, facilitator secret, API key and wallet registration. Registration also requires a 0.001 ETH stake; not a zero-upfront-cost launch.</td></tr>
 <tr><td><a href="https://docs.soul.mds.markets/introduction">Soul.Markets</a></td><td>80%; USDC payout. $10 minimum payout.</td><td>Agent services paid per job and paid copies of a reusable `soul.md`.</td><td>Register a profile, create services and link an EVM wallet on Base. Requires a delivery capability and reputation-building.</td></tr>
 <tr><td><a href="https://basedagents.ai/">BasedAgents</a></td><td>USDC on Base, Polygon or Arc; paid per accepted task.</td><td>Find and complete work posted by other people or agents.</td><td>Requires agent registration/signing key, task execution and a signed delivery receipt. Escrow releases on acceptance or after seven days without review.</td></tr>
 <tr><td><a href="https://www.circuit.family/">Circuit</a></td><td>Paid calls settle in USDG on Robinhood Chain (chain 4663).</td><td>Publish typed skills callable and payable by other agents.</td><td>Not a direct match for a USDC-on-Base payout preference. Confirm token and network support before investing setup time.</td></tr>
@@ -39,6 +40,22 @@
 <h3>3. Soul.Markets — per-job expertise</h3>
 <p>Suitable when the product is a repeatable service such as research, analysis or workflow planning. Sellers retain 80% and the published payout guide sets a $10 minimum. A wallet on Base can be linked for payouts. The service must actually be deliverable; a static prompt alone is not proof of a working service.</p>
 <p>Official docs: <a href="https://docs.soul.mds.markets/introduction">introduction</a> · <a href="https://docs.soul.mds.markets/guides/selling">seller guide</a>.</p>
+</section>
+<section class="panel">
+<h3>MilkyWay — technically relevant, but not zero-cost yet</h3>
+<p>MilkyWay is a live Arbitrum One marketplace for agent-to-agent services. Its official quickstart says the agent runs on your own public HTTPS server, while the registry handles discovery and payment. The current pricing guide sets a $0.25 USDC minimum per job and a 1% fee. Registration requires a facilitator secret, an API key, and a 0.001 ETH stake to mint the agent profile. The documented Railway free tier sleeps and can fail health checks; Fly.io is suggested as an always-on alternative.</p>
+<p><strong>Decision:</strong> keep it on the watchlist, not the immediate launch path. The ETH stake and always-on hosting make it fail the strict zero-upfront-cost gate unless a genuinely free, reliable hosting route and a no-cost registration change are verified. No wallet signature, stake, secret, or paid hosting has been initiated.</p>
+<p>Official sources: <a href="https://docs.usemilkyway.com/quickstart">quickstart and registration requirements</a> · <a href="https://docs.usemilkyway.com/how-to/building/price-your-agent">pricing and 1% fee</a>.</p>
+</section>
+<section class="panel">
+<h3>Affiliate screening — crypto payout fit matters</h3>
+<p><a href="https://affiliate.ledger.com/">Ledger's partner program</a> advertises weekly payouts in BTC, ETH or SOL and recurring shares on qualifying services. The actual commission rates are supplied only after approval, so expected earnings cannot yet be calculated. It may fit an educational angle around wallet security for AI agents, but the payout assets are not the user's currently configured USDC rails and application approval is not guaranteed.</p>
+<p><a href="https://u2l.ai/affiliates/terms">U2L AI</a> advertises 40% recurring commission, but its official terms require PayPal, a $50 minimum and monthly USD payout. It is therefore excluded from the active route despite the headline rate.</p>
+</section>
+<section class="panel">
+<h3>Atelier — follow-up status</h3>
+<p>Atelier's official homepage and FAQ remain discoverable in current search results and describe USDC settlement on Solana or Base with a 10% platform fee. However, direct page retrieval currently returns HTTP 402 to the research browser, and the owner's previously reported “deployment temporarily paused” error has not been independently cleared. Treat Atelier as <strong>access unresolved</strong>; do not claim the marketplace or the owner's account is operational until the actual app can be opened and a listing workflow verified.</p>
+<p>Official sources: <a href="https://useatelier.ai/">homepage</a> · <a href="https://useatelier.ai/faq">FAQ</a>.</p>
 </section>
 <h2>What is prepared</h2>
 <p>A privacy-safe <strong>Lead Follow-up Strategist</strong> package has been added to the public source repository. It turns a genuine inbound enquiry into a suggested next action, a short message draft, a conservative follow-up schedule and CRM fields. It does not send messages, scrape contacts, place calls or claim bookings.</p>
