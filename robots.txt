@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://falconprojectai-arch.github.io/falcon-ai-decision-engine/sitemap.xml
