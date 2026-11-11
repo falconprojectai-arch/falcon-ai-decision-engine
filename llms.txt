@@ -59,6 +59,7 @@ Supported subset:
 
 - [Blockchain infrastructure checklist](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/dev-agent-toolbox/blockchain-infrastructure.html): vendor-neutral checklist for evaluating RPC providers and domain registrars.
 - [AI agent integration patterns](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/dev-agent-toolbox/agent-integration-patterns.html): practical examples for RPC/MCP setup and passing StableDomains referral metadata on user-approved orders.
+- [AI-agent marketplaces](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/dev-agent-toolbox/agent-marketplaces.html): comparison of creator marketplaces, payout networks, fees and onboarding friction.
 
 ## Affiliate disclosures
 
