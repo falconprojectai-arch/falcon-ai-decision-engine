@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Practical integration patterns for AI agents: pass an affiliate ref to StableDomains orders and connect to SwiftNodes RPC/MCP without exposing secrets.">
+<meta name="robots" content="index,follow">
+<title>AI Agent Integration Patterns: StableDomains + SwiftNodes</title>
+<style>
+:root{color-scheme:light dark;font:16px/1.65 system-ui,sans-serif}*{box-sizing:border-box}body{max-width:900px;margin:auto;padding:24px}h1,h2{line-height:1.2}pre{overflow:auto;padding:16px;border:1px solid color-mix(in srgb,CanvasText 25%,transparent);border-radius:10px;background:color-mix(in srgb,CanvasText 5%,Canvas)}code{font-family:ui-monospace,monospace;font-size:.92em}.muted{opacity:.72}.panel{border:1px solid color-mix(in srgb,CanvasText 25%,transparent);border-radius:12px;padding:18px;margin:18px 0}.btn{display:inline-block;border:1px solid currentColor;border-radius:8px;padding:8px 12px;text-decoration:none;font-weight:650}.small{font-size:.9rem}@media(max-width:650px){body{padding:16px}}
+</style></head>
+<body>
+<p class="muted"><a href="./index.html">Dev &amp; Agent Toolbox</a> / <a href="./blockchain-infrastructure.html">Infrastructure checklist</a> / Agent integration</p>
+<h1>Integrating blockchain infrastructure into an AI agent</h1>
+<p>This guide shows two practical patterns: passing an affiliate reference when an agent creates a domain order, and connecting an agent to blockchain RPC tools. The examples use public documentation and placeholders for credentials. They do not make purchases or sign transactions.</p>
+<p class="muted small">Last reviewed: 12 November 2026. Provider features and terms can change; verify the linked official docs before deployment.</p>
+<section class="panel">
+<h2>1. StableDomains: attach a referral code to an order</h2>
+<p>StableDomains documents a <code>ref</code> field on order, cart and transfer requests, and the <code>X-SD-Ref</code> header for REST. This lets a tool builder preserve referral attribution when a user explicitly asks an agent to register a domain. The user still controls the purchase and payment step.</p>
+<p>Example REST request (replace the example domain and API key only in your own environment):</p>
+<pre><code>curl -X POST https://stabledomains.net/api/v1/orders \
+  -H "Authorization: Bearer $STABLEDOMAINS_API_KEY" \
+  -H "Content-Type: application/json" \
+  -H "X-SD-Ref: ff6ueixx" \
+  -H "Idempotency-Key: $(uuidgen)" \
+  -d '{"domain":"your-project-name.com","years":1,"chain":"base","token":"USDC"}'</code></pre>
+<p>Equivalent MCP tool call:</p>
+<pre><code>{
+  "name": "create_order",
+  "arguments": {
+    "domain": "your-project-name.com",
+    "years": 1,
+    "ref": "ff6ueixx"
+  }
+}</code></pre>
+<p>Important safeguards:</p>
+<ul>
+<li>Do not create an order unless the user explicitly requested that domain purchase.</li>
+<li>Show the final domain, term, renewal price and payment requirements before asking for approval.</li>
+<li>Do not store API keys in prompts, public repositories or browser code.</li>
+<li>Never ask a user for a seed phrase or private key.</li>
+<li>Do not pay or sign on behalf of a user without explicit transaction approval.</li>
+</ul>
+<p>Official references: <a href="https://stabledomains.net/developers">developer docs</a>, <a href="https://stabledomains.net/affiliates/toolkit">affiliate toolkit</a>, <a href="https://stabledomains.net/affiliates">program terms</a>.</p>
+<p><a class="btn" href="https://stabledomains.net/?ref=ff6ueixx" rel="sponsored nofollow">Explore StableDomains</a></p>
+<p class="muted small">Affiliate disclosure: the link above is a referral link. Eligible paid orders may generate commission for the site owner. The program states commission is 10% of its margin, paid in USDC on Base subject to its terms.</p>
+</section>
+<section class="panel">
+<h2>2. SwiftNodes: connect an agent to RPC tools</h2>
+<p>SwiftNodes documents a hosted MCP endpoint for compatible agent clients. Public tools can be used without a key; authenticated RPC usage requires an API key. Keep that key in a secret manager or environment variable.</p>
+<p>Example MCP configuration (use your own secret environment variable; do not commit a real key):</p>
+<pre><code>{
+  "mcpServers": {
+    "swiftnodes": {
+      "url": "https://rpc.swiftnodes.io/mcp",
+      "headers": {
+        "Authorization": "Bearer ${SWIFTNODES_API_KEY}"
+      }
+    }
+  }
+}</code></pre>
+<p>Example read-only JSON-RPC request for Base:</p>
+<pre><code>curl -X POST "https://rpc.swiftnodes.io/rpc/base?key=$SWIFTNODES_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}'</code></pre>
+<p>Before production, check supported methods and chain availability, measure latency and errors from your deployment region, review the active plan's request limits, rotate credentials and configure a fallback. A working endpoint is not a guarantee of uptime or suitability for every workload.</p>
+<p>Official references: <a href="https://swiftnodes.io/docs/mcp">MCP setup</a>, <a href="https://swiftnodes.io/docs/supported-chains">supported chains</a>, <a href="https://swiftnodes.io/affiliates">affiliate terms</a>.</p>
+<p><a class="btn" href="https://swiftnodes.io/?ref=xxuxt8dw" rel="sponsored nofollow">Explore SwiftNodes</a></p>
+<p class="muted small">Affiliate disclosure: the link above is a referral link. Eligible subscriptions may generate 20% recurring commission for the referrer, paid in USDC subject to SwiftNodes' terms.</p>
+</section>
+<section class="panel">
+<h2>3. A safe agent workflow</h2>
+<ol>
+<li>Discover options and retrieve current prices using read-only calls.</li>
+<li>Present alternatives, renewal costs, supported network and provider limits to the user.</li>
+<li>Ask for explicit approval before creating a paid order or using a balance.</li>
+<li>Use idempotency keys and bounded retries for order creation.</li>
+<li>Return the provider's order ID and payment instructions; never claim success before the provider confirms it.</li>
+<li>Keep referral metadata transparent and secondary to the user's choice.</li>
+</ol>
+</section>
+<footer class="muted small"><p>Educational material only. This page does not provide financial advice, promise provider performance or authorize purchases. Affiliate relationships are disclosed above.</p><p><a href="./index.html">Back to Dev &amp; Agent Toolbox</a></p></footer>
+</body></html>
