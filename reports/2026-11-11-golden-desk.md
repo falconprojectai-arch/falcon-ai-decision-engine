@@ -128,11 +128,12 @@ No channel was submitted, paid, or altered this run. Submission status and publi
 | Route | Buyer evidence | Time to first sale | Zero-cost | Automation | Low support | Legal/platform | Total |
 |---|---:|---:|---:|---:|---:|---:|---:|
 | JSON API via PayAPI/x402 (conditional) | 2 | 2 | 5 | 5 | 3 | 0 | 17 |
-| Home-bakery costing workbook via Digyno (conditional) | 3 | 2 | 5 | 5 | 4 | 0 | 19 |
+| Home-bakery costing workbook via Digyno (rejected) | 2 | 2 | 5 | 5 | 4 | 0 | 18 |
 | Manychat local-business setup | 3 | 2 | 2 | 2 | 1 | 1 | 11 |
 | AI-agent marketplace listing | 2 | 2 | 0 | 4 | 2 | 0 | 10 |
 | Niche reports subscription | 2 | 2 | 2 | 1 | 1 | 1 | 9 |
 | Affiliate / lead routing | 1 | 1 | 4 | 4 | 2 | 0 | 12 |
+| Claw Earn USDC tasks (monitor only) | 3 | 1 | 0 | 4 | 2 | 0 | 10 |
 
 A zero in legal/platform feasibility blocks execution regardless of total. The two highest-scoring routes are **gated**, not cleared: API hosting eligibility and the domestic payout/KYC constraint must be resolved first. The score is a prioritization aid, not a revenue forecast.
 
@@ -142,6 +143,6 @@ A zero in legal/platform feasibility blocks execution regardless of total. The t
 - **No product/Worker production deployment, payment, account creation, KYC, wallet signature, external listing or outreach was performed.** GitHub Pages dashboard deployment succeeded: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/42987705685. The deployed site assembles `dashboard/index.html` at the root URL https://falconprojectai-arch.github.io/falcon-ai-decision-engine/; `/dashboard/` is not a published path.
 - **Next highest-value action:** obtain a clear PayAPI canary result under the original provider-funded email terms, then independently verify the Base settlement receipt and returned product. In parallel, get owner-specific legal eligibility advice for commercial hosting from Iran before accepting any paid traffic. Do not fund the contradictory FAQ top-up.
 - If the legal gate fails, keep the API free/dry-run and do not redirect effort into domestic bank-based products until a lawful, usable payout rail exists.
-- Keep the home-bakery workbook at researched-not-submitted until a genuine local opt-in buyer signal and a feasible payout route are both evidenced.
+- Keep the generic home-bakery workbook rejected; do not build or list unless a genuinely different unmet need and a feasible payout route are evidenced.
 
 **Verified revenue: $0.00.** Research, listings, API health, 402 challenges, CI success, marketplace discovery and product hypotheses are not revenue.
