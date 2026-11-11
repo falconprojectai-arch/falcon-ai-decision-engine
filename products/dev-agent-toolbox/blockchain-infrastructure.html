@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="A practical checklist for choosing blockchain RPC infrastructure and domain registration for AI agents and Web3 applications.">
+<meta name="robots" content="index,follow">
+<title>Blockchain Infrastructure Checklist for AI Agents | Dev & Agent Toolbox</title>
+<link rel="canonical" href="https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/dev-agent-toolbox/blockchain-infrastructure.html">
+<style>
+:root{color-scheme:light dark;font:16px/1.65 system-ui,sans-serif}*{box-sizing:border-box}body{max-width:850px;margin:0 auto;padding:24px}h1,h2{line-height:1.2}a{overflow-wrap:anywhere}.muted{opacity:.75}.panel{border:1px solid color-mix(in srgb,CanvasText 25%,transparent);border-radius:12px;padding:18px;margin:18px 0}.tag{font-size:.85rem;border:1px solid currentColor;border-radius:99px;padding:2px 8px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.btn{display:inline-block;border:1px solid currentColor;border-radius:8px;padding:8px 12px;text-decoration:none;font-weight:650}.small{font-size:.9rem}@media(max-width:650px){.grid{grid-template-columns:1fr}body{padding:16px}}
+</style>
+</head>
+<body>
+<header>
+<p class="muted"><a href="./index.html">Dev &amp; Agent Toolbox</a> / Infrastructure notes</p>
+<h1>Choosing infrastructure for blockchain apps and AI agents</h1>
+<p>A practical, vendor-neutral checklist for two separate decisions: how your application reads and writes blockchain data, and how you choose and manage a domain for a project or agent.</p>
+<p class="small muted">Last reviewed: 12 November 2026 · This is an evaluation guide, not a benchmark or an endorsement based on hands-on testing.</p>
+</header>
+<section class="panel">
+<h2>1. Evaluate an RPC provider before integrating it</h2>
+<p>An RPC endpoint is part of your application's reliability boundary. Do not choose a provider from a headline request limit alone. Run a small test against the exact chains, methods and regions your workload needs.</p>
+<ol>
+<li><strong>Chain and method coverage:</strong> confirm the specific networks and RPC methods you call, including archive or trace methods if your app needs them.</li>
+<li><strong>Latency by region:</strong> measure p50, p95 and p99 latency from the deployment region that will make requests.</li>
+<li><strong>Reliability:</strong> record timeouts, HTTP errors, JSON-RPC errors and rate-limit responses over a representative test window.</li>
+<li><strong>Limits and billing:</strong> verify requests-per-second, monthly quotas, burst behavior, overage pricing and what happens when a quota is exhausted.</li>
+<li><strong>Operational controls:</strong> check API-key rotation, usage visibility, status reporting, WebSocket behavior and support escalation.</li>
+<li><strong>Portability:</strong> keep the RPC URL and credentials in configuration, not source code, so you can switch providers or add a fallback.</li>
+</ol>
+<p>For a fair comparison, send the same read-only request set to each candidate and log timestamp, chain, method, latency, status and response validity. Never benchmark with a wallet private key or production signing secret.</p>
+<div class="panel">
+<h3>One provider to include in your shortlist: SwiftNodes</h3>
+<p>SwiftNodes advertises blockchain RPC endpoints and an affiliate program. Review its current supported-chain list, documentation, plan limits and pricing, then run your own workload tests before adopting it. We have not independently benchmarked its performance, and this page does not claim otherwise.</p>
+<p><a class="btn" href="https://swiftnodes.io/?ref=xxuxt8dw" rel="sponsored nofollow">View SwiftNodes</a></p>
+<p class="small muted">Affiliate disclosure: this link is a referral link. If you subscribe through it, the site owner may earn a commission in USDC. Your price is not represented as discounted by this referral.</p>
+</div>
+</section>
+<section class="panel">
+<h2>2. Evaluate domain registration for a project or agent</h2>
+<p>A domain is a long-lived identity and routing dependency. Before registering, check:</p>
+<ul>
+<li><strong>Ownership and renewal:</strong> who controls the account, how renewals work, and how expiry notices are delivered.</li>
+<li><strong>DNS and security:</strong> DNS record support, DNSSEC availability, transfer locks and account recovery options.</li>
+<li><strong>Privacy and registry rules:</strong> available WHOIS privacy, restrictions for the chosen TLD, and any identity requirements.</li>
+<li><strong>Payment and API:</strong> accepted payment methods, supported networks, API/MCP capabilities and whether an agent can act safely with limited credentials.</li>
+<li><strong>Total cost:</strong> compare first-year price, renewal price, transfer costs, taxes and any add-on fees.</li>
+</ul>
+<div class="panel">
+<h3>One option to evaluate: StableDomains</h3>
+<p>StableDomains describes domain registration and management with USDC/USDT payment options and developer interfaces including REST and MCP. Check the exact TLD, renewal price, supported chain and registry conditions before ordering.</p>
+<p><a class="btn" href="https://stabledomains.net/?ref=ff6ueixx" rel="sponsored nofollow">Explore StableDomains</a></p>
+<p class="small muted">Affiliate disclosure: this link is a referral link. The site owner may receive a commission on eligible paid registrations, renewals or transfers. The program describes commission as a share of its margin, not a fixed percentage of the domain's retail price.</p>
+</div>
+</section>
+<section class="panel">
+<h2>3. A small pre-deployment checklist</h2>
+<ul>
+<li>[ ] I verified that the provider supports the exact chain and methods my app uses.</li>
+<li>[ ] I measured latency and error rates from my actual deployment region.</li>
+<li>[ ] I know the quota, burst limit, overage price and failure behavior.</li>
+<li>[ ] I can rotate credentials and switch endpoints without changing application code.</li>
+<li>[ ] I checked the domain's renewal price, DNS controls and transfer process.</li>
+<li>[ ] I tested API/MCP permissions with the least privilege available.</li>
+<li>[ ] I documented a fallback and a recovery path.</li>
+</ul>
+<p>Keep provider claims separate from your own measurements. A successful health check is not proof of production reliability, and a published feature list is not proof that a feature meets your workload's needs.</p>
+</section>
+<footer class="muted small">
+<p>Editorial note: This guide contains affiliate links. Recommendations are shortlist candidates only; verify current product terms directly with each provider. No provider has paid for placement in this guide.</p>
+<p><a href="./index.html">Back to the free Dev &amp; Agent Toolbox</a></p>
+</footer>
+</body>
+</html>
