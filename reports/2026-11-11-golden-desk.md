@@ -67,37 +67,38 @@ There is **no currently verified, legally/payment-cleared route to first revenue
 
 ## Separate non-JSON deep-web track
 
-Five distinct opportunity angles were researched; the sources were opened/read where available.
+Five distinct opportunity angles were researched; current source pages were opened and read.
 
-1. **AI-agent-run services / marketplaces**
-   - AI Agent Store publicly lists 20 fixed-price offers from $19, with a median displayed delivery time of 1 day; category examples include browser tasks, QA, monitoring and research. Seller fee is 15%, no buyer fee: https://aiagentstore.ai/hire-ai-agents
+1. **AI-agent-run services and marketplaces**
+   - AI Agent Store lists 20 fixed-price offers from $19 with a median displayed delivery time of 1 day; examples include browser tasks, QA, monitoring and research. Seller fee is 15%, no buyer fee. Its terms state seller payouts go to a Stripe payout account after Stripe verification: https://aiagentstore.ai/hire-ai-agents and https://aiagentstore.ai/terms-of-service
    - AI Agent Marketplace advertises a $45/month provider subscription plus 12% platform fee: https://ai-agentmarketplace.com/pricing
-   - Twin Store costs $29/month Plus, $149/month Pro and from $399/month Store, and pays to Stripe: https://twin.so/store
-   - Decision: not a zero-upfront route. The Stripe payout path is also unavailable for an Iran-based seller according to Stripe's supported-country list.
+   - Twin Store costs $29/month Plus, $149/month Pro and from $399/month Store; customer payments go to Stripe: https://twin.so/store
+   - Claw Earn is a separate USDC-on-Base task marketplace. At retrieval it showed **0 available, 1 in progress, 83 completed**. New workers face a 30% first-task stake, 20% for the next two tasks and 10% thereafter; writes require wallet signatures: https://aiagentstore.ai/claw-earn/ai-agent-tasks/available and https://aiagentstore.ai/claw-earn/docs/overview
+   - Decision: no executable path. AI Agent Store/Twin seller payouts require Stripe; Claw Earn has no available task and requires upfront stake and signatures. No account, task, stake or signature was created.
 
 2. **Local-business workflow automation**
-   - Manychat's current Free plan (updated 2026-10-29) supports 25 active contacts/month, one user, two channels selected from Instagram, TikTok, Facebook Messenger and Telegram, and four live automations; WhatsApp, SMS and email are excluded: https://help.manychat.com/en/articles/17742189-free-plan
-   - This can validate simple opt-in Instagram FAQ flows, but the free cap and no-WhatsApp limit make it a weak paid client offer; onboarding and ongoing support remain manual.
-   - Decision: researched, not submitted or configured.
+   - Manychat Free supports 25 active contacts/month, one user, two channels selected from Instagram, TikTok, Facebook Messenger and Telegram, and four live automations; WhatsApp, SMS and email are excluded: https://help.manychat.com/en/articles/17742189-free-plan
+   - The free cap and no-WhatsApp limit make this a weak paid client offer; onboarding and ongoing support remain manual. Researched-not-submitted.
 
-3. **Digital products / content**
-   - New distinct hypothesis: a Persian **home-bakery costing and order-quote workbook** (ingredients, pack/unit conversions, labor, packaging, waste, overhead, delivery, margin, deposits and order profit), not the previously explored inventory/order workbook or ECU forms.
-   - International competitor evidence: ProsperaLab's Etsy home-bakery pricing spreadsheet is listed at $5.10 sale price; the listing has 5 favorites and no item reviews shown, while the shop reports 1k total sales and 4.8/64 shop rating (shop-level figures, not product-specific sales): https://www.etsy.com/listing/4560383805/bakery-pricing-spreadsheet-recipe-cost
-   - The product has 7 tabs and instant digital delivery; multiple similar competitor listings appear on the page. Free recipe-costing sheets/tools are also available, so a generic ingredient-only calculator is not differentiated.
-   - Crumb & Ledger lists a home-bakery calculator at €19 one-time, but its page returned 502 on this read: https://www.crumbandledger.com/
-   - Persian price hypothesis: 99,000–149,000 toman one-time, unvalidated. A local-language differentiator would be Toman pricing, local units/pack sizes, packaging/delivery and deposit calculation. No Persian buyer signal was verified.
-   - Etsy is blocked for this seller context: Iran is absent from Etsy Payments' eligible-country list, and the seller must use a bank account from the selected eligible country. Etsy also charges $0.20 per listing and 6.5% transaction fee plus country-specific processing: https://help.etsy.com/hc/en-us/articles/115015710408-Countries-Eligible-for-Etsy-Payments and https://www.etsy.com/sell
-   - Digyno accepts XLSX and offers automatic file delivery with 3% commission and no signup/monthly fee, but requires seller login, Iranian mobile in the seller's own name, eKYC, national ID/DOB match, selfie video, same-name Sheba, manager approval and product approval. New-seller proceeds are held 72 hours until five successful sales; minimum withdrawal is 100,000 toman: https://digyno.com/sell
-   - FaraFile allows a free seller account and file review, but takes 40% of the listed price plus a minimum 15% affiliate commission; payout is after 24 hours. Its rules prohibit AI-generated files. No seller account or submission was attempted: https://farafile.ir/page/sale
-   - Decision: **researched-not-submitted**. Existing crypto-only receiving constraint conflicts with local bank/Sheba settlement; no account/KYC/product listing exists.
+3. **Digital products and content**
+   - The initial Persian home-bakery costing/quote workbook hypothesis was **rejected**. BakeBahar already offers a Persian Toman calculator for ingredients, packaging, labor, energy, overhead/depreciation, waste, yield and target margin: https://bakebahar.ir/pricing-pastry/
+   - BakeBahar's article is dated 25 Mordad 1405 and shows 0 comments. Its embedded survey reports 0% in this browser only; that is not a market-wide result.
+   - Global free alternatives include CostMyDish (free up to 3 dishes/20 ingredients; Hobbyist $6.99/month) and Bakery Pricing Planner (free, ad-supported, up to 15 products/50 ingredients, offline): https://www.costmydish.com/ and https://productpriceplanner.com/
+   - Etsy competitor evidence: ProsperaLab's home-bakery spreadsheet is $5.10, with 5 favorites and no item reviews shown; the shop's 1k sales and 4.8/64 rating are shop-level, not product-level: https://www.etsy.com/listing/4560383805/bakery-pricing-spreadsheet-recipe-cost
+   - Decision: reject the generic workbook. The direct local free calculator and saturated free global tier remove differentiation. The 99,000–149,000 toman price hypothesis is withdrawn; no product was built.
+   - Etsy is blocked for this seller context: Iran is absent from Etsy Payments' eligible-country list, and the seller must use a bank account from the selected eligible country: https://help.etsy.com/hc/en-us/articles/115015710408-Countries-Eligible-for-Etsy-Payments
+   - Digyno accepts XLSX and offers automatic file delivery with 3% commission, but requires eKYC, national ID/DOB match, selfie video, same-name Sheba and manager/product approval; new-seller proceeds are held 72 hours until five successful sales: https://digyno.com/sell
+   - FaraFile takes 40% of the listed price plus a minimum 15% affiliate commission, pays after 24 hours, and prohibits AI-generated files. No seller account or submission was attempted: https://farafile.ir/page/sale
 
 4. **Niche data / research products**
-   - Whop's “Done-For-You Niche Reports” is listed at $100/month, but describes hand-researched reports, not evidence of sales or automatic fulfilment: https://whop.com/hungry-market-scanner/products/done-for-you-niche-reports/
+   - Whop's Done-For-You Niche Reports is listed at $100/month but describes hand-researched reports, not automatic fulfilment or exposed sales evidence: https://whop.com/hungry-market-scanner/products/done-for-you-niche-reports/
    - Support burden and manual research are high; not selected.
 
 5. **Affiliate / lead routing**
-   - No payout route with verified Iran eligibility was found in this run. Etsy and Stripe country restrictions reinforce the payout blocker. No affiliate account or lead-routing submission was made.
-   - Decision: not selected; do not build around a payout assumption.
+   - AI Agent Store affiliate terms set a $10 minimum payout, NET-15 and PayPal-only payout; incompatible with the current receiving constraint: https://aiagentstore.ai/terms-of-service
+   - No affiliate account or lead-routing submission was made.
+
+**Non-JSON conclusion:** no candidate cleared buyer evidence, zero-upfront feasibility, automation and payout eligibility simultaneously. The bakery workbook was rejected; Claw Earn is monitor-only until tasks are actually available and its stake/signature requirements are compatible.
 
 ## Iran / Persian / rial payment rail audit
 
@@ -117,6 +118,9 @@ Five distinct opportunity angles were researched; the sources were opened/read w
 | Reddit r/SideProject | published previously; current visibility recheck inconclusive | https://www.reddit.com/r/SideProject/comments/1xhfg2y/i_built_a_small_json_contract_tester_for_checking/ | https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/ |
 | PayAPI Market | pending review; public lookup 404; canary unreported | https://payapi.market/agent/get?id=54bd4f89-23f8-47e7-b507-039362b51198 | https://json-contract-tester-api.falcon-project-ai.workers.dev/ |
 | Digyno | researched-not-submitted; seller KYC/Sheba and approval required | https://digyno.com/sell | Not created; no product page or listing |
+| AI Agent Store | blocked; seller payout requires Stripe verification | https://aiagentstore.ai/hire-ai-agents | Not created; no offer |
+| Claw Earn | researched-not-submitted / no tasks available; first-task stake and wallet signature required | https://aiagentstore.ai/claw-earn/ai-agent-tasks/available | Not created; no task offer |
+| Manychat | researched-not-submitted; free plan excludes WhatsApp and caps active contacts | https://help.manychat.com/en/articles/17742189-free-plan | Not created; no automation or offer |
 | FaraFile | researched-not-submitted; 40% platform share, 15% minimum affiliate commission, AI-generated files prohibited | https://farafile.ir/page/sale | Not created; no product page or listing |
 | Etsy | blocked; Iran not eligible for Etsy Payments | https://help.etsy.com/hc/en-us/articles/115015710408-Countries-Eligible-for-Etsy-Payments | Not created; no shop or listing |
 | DevXTools / The Tool Directory / PromoteIndex / Ignlab / Launching Next | prior pending/unverified states unchanged; no new response in Gmail | existing submission pages in prior log | JSON Contract Tester product page |
@@ -128,14 +132,14 @@ No channel was submitted, paid, or altered this run. Submission status and publi
 | Route | Buyer evidence | Time to first sale | Zero-cost | Automation | Low support | Legal/platform | Total |
 |---|---:|---:|---:|---:|---:|---:|---:|
 | JSON API via PayAPI/x402 (conditional) | 2 | 2 | 5 | 5 | 3 | 0 | 17 |
-| Home-bakery costing workbook via Digyno (rejected) | 2 | 2 | 5 | 5 | 4 | 0 | 18 |
+| Home-bakery costing workbook (rejected) | 2 | 2 | 5 | 5 | 4 | 0 | 18 |
 | Manychat local-business setup | 3 | 2 | 2 | 2 | 1 | 1 | 11 |
 | AI-agent marketplace listing | 2 | 2 | 0 | 4 | 2 | 0 | 10 |
 | Niche reports subscription | 2 | 2 | 2 | 1 | 1 | 1 | 9 |
 | Affiliate / lead routing | 1 | 1 | 4 | 4 | 2 | 0 | 12 |
 | Claw Earn USDC tasks (monitor only) | 3 | 1 | 0 | 4 | 2 | 0 | 10 |
 
-A zero in legal/platform feasibility blocks execution regardless of total. The two highest-scoring routes are **gated**, not cleared: API hosting eligibility and the domestic payout/KYC constraint must be resolved first. The score is a prioritization aid, not a revenue forecast.
+A zero in legal/platform feasibility blocks execution regardless of total. The JSON API remains gated by hosting eligibility and PayAPI settlement; the generic bakery workbook is rejected; Claw Earn is monitor-only because there are no available tasks and the first task requires stake and signatures. No non-JSON route clears the gate. The score is a prioritization aid, not a revenue forecast.
 
 ## Builder, distribution and next actions
 
