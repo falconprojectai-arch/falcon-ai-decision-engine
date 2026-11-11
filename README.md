@@ -45,6 +45,7 @@ The live unpaid request returns HTTP 402 with a payment challenge; this proves t
 ## Developer infrastructure notes
 
 - [Blockchain infrastructure checklist for AI agents](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/dev-agent-toolbox/blockchain-infrastructure.html) — a practical RPC and domain evaluation guide. It includes clearly disclosed affiliate links to SwiftNodes and StableDomains; neither provider is presented as independently benchmarked.
+- [AI agent integration patterns](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/dev-agent-toolbox/agent-integration-patterns.html) — example REST/MCP workflows for domain orders and blockchain RPC, with user-approval and credential-safety notes.
 
 ## Live experiment
 
