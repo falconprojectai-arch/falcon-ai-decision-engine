@@ -46,7 +46,7 @@ Designed for Cloudflare Workers Free, within bounded limits: 64 KiB request body
 
 ## Validation scope
 
-This is a documented subset only: type, required, properties, additionalProperties: false, items, enum, const, numeric bounds, string length, and array length. The hosted API rejects the regex pattern keyword to avoid unbounded regex CPU use. It is not full JSON Schema.
+This is a documented subset only: type, required, properties, additionalProperties (boolean true/false only), items (single object schema only), enum, const, numeric bounds, string length, and array length. Annotation-only keywords such as title, description, default, examples, $schema and $comment are ignored. Any other schema keyword or unsupported schema form is rejected with HTTP 400, code `unsupported_schema`, and an `unsupportedKeywords` list containing each keyword and its schemaPath. This includes pattern, format, $ref, oneOf, anyOf, allOf, patternProperties and similar features. Unsupported features are never silently treated as PASS. It is not full JSON Schema.
 
 ## Test
 
@@ -69,3 +69,8 @@ The live Worker now applies CORS to `/health`, `/.well-known/x402`, `/openapi.js
 - [PayAPI Market submission](https://payapi.market/agent/get?id=54bd4f89-23f8-47e7-b507-039362b51198) — pending review; public lookup currently returns not_found, and no canary result or receipt has been received.
 
 Directory registration is a discovery milestone only. No paid API call or on-chain settlement has been independently verified.
+
+
+## Unsupported-schema safety — 2026-11-11
+
+The hosted API now scans schema-bearing locations before evaluating samples and fails closed when it encounters an unsupported keyword or schema form. The response uses `code: "unsupported_schema"` and returns `unsupportedKeywords: [{ keyword, schemaPath }]`. The scanner deliberately does not recurse into ordinary data under `enum`, `default` or `examples`, so a JSON property named `oneOf` is not misclassified as a schema keyword. This is a bounded compatibility safeguard; schema/sample SHA-256 fingerprints and an offline CLI remain separate follow-up work.
