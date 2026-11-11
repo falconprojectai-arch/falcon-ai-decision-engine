@@ -41,3 +41,70 @@ test('rejects regex pattern schemas before payment to avoid unbounded regex work
   assert.equal(r.ok, false);
   assert.match(r.error, /does not support the pattern keyword/);
 });
+
+
+test('rejects nested unsupported composition keywords instead of silently passing', () => {
+  const r = validateBatch({
+    schema: { type: 'object', properties: { status: { oneOf: [{ const: 'ok' }, { const: 'done' }] } } },
+    outputs: [{ json: { status: 'ok' } }]
+  });
+  assert.equal(r.ok, false);
+  assert.equal(r.status, 400);
+  assert.equal(r.code, 'unsupported_schema');
+  assert.deepEqual(r.unsupportedKeywords, [{ keyword: 'oneOf', schemaPath: '#/properties/status/oneOf' }]);
+  assert.match(r.error, /oneOf/);
+});
+
+test('rejects references and formats explicitly', () => {
+  const r = validateBatch({
+    schema: { type: 'string', format: 'email', $ref: '#/$defs/email' },
+    outputs: [{ json: 'buyer@example.test' }]
+  });
+  assert.equal(r.ok, false);
+  assert.equal(r.code, 'unsupported_schema');
+  assert.deepEqual(r.unsupportedKeywords.map(x => x.keyword).sort(), ['$ref', 'format']);
+});
+
+test('does not treat ordinary JSON data inside enum as schema keywords', () => {
+  const value = { oneOf: 'ordinary-data' };
+  const r = validateBatch({ schema: { enum: [value] }, outputs: [{ json: value }] });
+  assert.equal(r.ok, true);
+  assert.equal(r.data.results[0].passed, true);
+});
+
+test('rejects unsupported additionalProperties schema forms', () => {
+  const r = validateBatch({
+    schema: { type: 'object', additionalProperties: { type: 'string' } },
+    outputs: [{ json: { note: 'ok' } }]
+  });
+  assert.equal(r.ok, false);
+  assert.equal(r.code, 'unsupported_schema');
+  assert.equal(r.unsupportedKeywords[0].keyword, 'additionalProperties');
+});
+
+
+test('enforces additionalProperties:false in nested objects with an exact JSON Pointer', () => {
+  const r = validateBatch({
+    schema: {
+      type: 'object',
+      properties: {
+        payload: {
+          type: 'object',
+          properties: { id: { type: 'integer' } },
+          additionalProperties: false
+        }
+      }
+    },
+    outputs: [{ json: { payload: { id: 1, debug: true } } }]
+  });
+  assert.equal(r.ok, true);
+  assert.equal(r.data.results[0].passed, false);
+  assert.deepEqual(r.data.results[0].errors, [{
+    instancePath: '/payload/debug',
+    schemaPath: '#/properties/payload/additionalProperties',
+    keyword: 'additionalProperties',
+    message: 'Unexpected property',
+    expected: ['id'],
+    actual: 'present: debug'
+  }]);
+});
