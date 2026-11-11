@@ -494,6 +494,13 @@ jobs:
                   assert "X-SD-Ref" in body and "SWIFTNODES_API_KEY" in body
                   assert "explicit approval" in body.lower()
                   assert await page.locator('a[rel="sponsored nofollow"][href*="swiftnodes.io/?ref=xxuxt8dw"]').count() == 1
+                  response = await page.goto(base + "agent-marketplaces.html", wait_until="networkidle", timeout=60000)
+                  assert response and response.status == 200
+                  assert await page.title() == "Where to Sell AI Agent Skills and Services | Dev & Agent Toolbox"
+                  market_body = await page.locator("body").inner_text()
+                  assert "AgentMart" in market_body and "Colony HQ" in market_body and "Soul.Markets" in market_body
+                  assert "0 published agents" in market_body
+                  assert await page.locator('a[href*="marketplace/lead-followup-strategist"]').count() == 1
                   response = await page.request.get(os.environ["PAGES_URL"] + "sitemap.xml")
                   assert response.status == 200
                   sitemap = await response.text()
