@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Compare AI-agent marketplaces that pay creators in stablecoins: fees, payout networks, onboarding and the work required to earn.">
+<meta name="robots" content="index,follow">
+<title>Where to Sell AI Agent Skills and Services | Dev & Agent Toolbox</title>
+<link rel="canonical" href="https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/dev-agent-toolbox/agent-marketplaces.html">
+<style>
+:root{color-scheme:light dark;font:16px/1.65 system-ui,sans-serif}*{box-sizing:border-box}body{max-width:900px;margin:auto;padding:24px}h1,h2{line-height:1.2}table{width:100%;border-collapse:collapse;display:block;overflow-x:auto}th,td{padding:10px;border:1px solid color-mix(in srgb,CanvasText 25%,transparent);text-align:left;vertical-align:top}.panel{border:1px solid color-mix(in srgb,CanvasText 25%,transparent);border-radius:12px;padding:18px;margin:18px 0}.muted{opacity:.72}.small{font-size:.9rem}code{overflow-wrap:anywhere}
+</style></head>
+<body>
+<p class="muted"><a href="./index.html">Dev &amp; Agent Toolbox</a> / AI-agent marketplaces</p>
+<h1>Where to sell AI-agent skills and services</h1>
+<p>A practical comparison for builders who want to sell reusable workflows, agent skills or per-task services and receive stablecoin payouts. Marketplace terms, eligibility and activity can change; check the linked official sources before publishing.</p>
+<p class="small muted">Reviewed 12 November 2026. This page is an independent comparison, not an endorsement. No marketplace paid for placement.</p>
+<h2>Quick comparison</h2>
+<table>
+<thead><tr><th>Marketplace</th><th>Creator share / payout</th><th>What you sell or do</th><th>Setup and friction</th></tr></thead>
+<tbody>
+<tr><td><a href="https://agentmart.store/">AgentMart</a></td><td>97%; USDC on Base. Automated payout to the configured wallet.</td><td>Downloadable skills, templates, research packs, workflows and links.</td><td>Account needs an email; store remains hidden until owner verifies by email. API keys must be saved securely. Paid products require a clean security scan and publish challenge.</td></tr>
+<tr><td><a href="https://api.colonyhq.dev/">Colony HQ</a></td><td>80%; USDC on Base, paid directly to the connected wallet.</td><td>AI agents priced free, per-use or subscription.</td><td>Publish form says no account or KYC. Requires a real agent description, model and system prompt. Its public home page showed 0 published agents, 0 users and $0 paid when checked; demand is unproven.</td></tr>
+<tr><td><a href="https://docs.soul.mds.markets/introduction">Soul.Markets</a></td><td>80%; USDC payout. $10 minimum payout.</td><td>Agent services paid per job and paid copies of a reusable `soul.md`.</td><td>Register a profile, create services and link an EVM wallet on Base. Requires a delivery capability and reputation-building.</td></tr>
+<tr><td><a href="https://basedagents.ai/">BasedAgents</a></td><td>USDC on Base, Polygon or Arc; paid per accepted task.</td><td>Find and complete work posted by other people or agents.</td><td>Requires agent registration/signing key, task execution and a signed delivery receipt. Escrow releases on acceptance or after seven days without review.</td></tr>
+<tr><td><a href="https://www.circuit.family/">Circuit</a></td><td>Paid calls settle in USDG on Robinhood Chain (chain 4663).</td><td>Publish typed skills callable and payable by other agents.</td><td>Not a direct match for a USDC-on-Base payout preference. Confirm token and network support before investing setup time.</td></tr>
+</tbody></table>
+<h2>Best low-friction candidates</h2>
+<section class="panel">
+<h3>1. AgentMart — reusable downloads</h3>
+<p>Best fit for a small, ready-made skill or workflow pack. Sellers keep 97% after the 3% platform fee; checkout supports USDC on Base. Uploads are scanned before publishing. The owner must verify the store through an email link, and a real Base payout address must be configured for x402 checkout.</p>
+<p>Official docs: <a href="https://agentmart.store/skill.md">seller and API guide</a> · <a href="https://agentmart.store/terms">terms</a>.</p>
+</section>
+<section class="panel">
+<h3>2. Colony HQ — prompt-driven agents</h3>
+<p>Potentially the shortest route to a paid agent listing: the publish page exposes a form for name, description, category, model, system prompt and price. The platform states that creators receive 80% in USDC on Base and do not need an account or KYC. However, the public home page showed no published agents, users or creator payouts at review time, so treat it as an early experiment rather than proven demand.</p>
+<p>Publish page: <a href="https://api.colonyhq.dev/create">Colony publish form</a>.</p>
+</section>
+<section class="panel">
+<h3>3. Soul.Markets — per-job expertise</h3>
+<p>Suitable when the product is a repeatable service such as research, analysis or workflow planning. Sellers retain 80% and the published payout guide sets a $10 minimum. A wallet on Base can be linked for payouts. The service must actually be deliverable; a static prompt alone is not proof of a working service.</p>
+<p>Official docs: <a href="https://docs.soul.mds.markets/introduction">introduction</a> · <a href="https://docs.soul.mds.markets/guides/selling">seller guide</a>.</p>
+</section>
+<h2>What is prepared</h2>
+<p>A privacy-safe <strong>Lead Follow-up Strategist</strong> package has been added to the public source repository. It turns a genuine inbound enquiry into a suggested next action, a short message draft, a conservative follow-up schedule and CRM fields. It does not send messages, scrape contacts, place calls or claim bookings.</p>
+<ul>
+<li><a href="https://github.com/falconprojectai-arch/falcon-ai-decision-engine/tree/main/marketplace/lead-followup-strategist">Open the skill package and test cases</a></li>
+<li>Designed for local service businesses, shops and online sellers.</li>
+<li>Includes consent checks, opt-out handling, privacy minimization and five acceptance tests.</li>
+</ul>
+<h2>Important safeguards</h2>
+<ul>
+<li>Do not publish customer records, contact lists, credentials, private prompts or confidential business details.</li>
+<li>Do not promise that a skill will send messages or book customers unless those integrations exist and are authorized.</li>
+<li>Never put a wallet private key, seed phrase, API key or store secret in a public repository or chat.</li>
+<li>Do not pay for boosts, deposits or paid tiers just to test a marketplace. Prefer free listing routes.</li>
+<li>Count only verified on-chain settlement as revenue. Listings, views, installs and pending balances are not income.</li>
+</ul>
+<footer class="small muted"><p>Program terms and product availability are controlled by each provider. This comparison is informational and may become outdated.</p><p><a href="./index.html">Back to Dev &amp; Agent Toolbox</a></p></footer>
+</body></html>
