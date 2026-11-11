@@ -43,7 +43,7 @@ There is **no currently verified, legally/payment-cleared route to first revenue
 - Retrieval time: 2026-11-11 11:59:34 Asia/Tehran (2026-11-11T08:29:34Z).
 - Exact rolling window checked: 2026-10-28 11:59:34 through 2026-11-11 11:59:34 Asia/Tehran (2026-10-28T08:29:34Z through 2026-11-11T08:29:34Z).
 - Views, unique visitors, referrers, popular paths, clones and unique cloners: **unavailable**.
-- Direct GitHub Fetch attempts for `/traffic/views` and `/traffic/clones` returned `INVALID_ARGUMENT / HTTP 400: not an allowed public GitHub repository or search endpoint`. The connected GitHub tool exposes no dedicated Insights/Traffic action. The read-only browser check for the Insights page redirected to GitHub sign-in; no credentials were entered. Owner-only Traffic metrics remain unavailable.
+- Direct GitHub Fetch attempts for all four endpoints—`/traffic/views`, `/traffic/clones`, `/traffic/popular/paths` and `/traffic/popular/referrers`—returned `INVALID_ARGUMENT / HTTP 400: not an allowed public GitHub repository or search endpoint`. The connected GitHub tool exposes no dedicated Insights/Traffic action. The read-only browser check for the Insights page redirected to GitHub sign-in; no credentials were entered. Owner-only Traffic metrics remain unavailable.
 - The preceding Run 14 audit (2026-11-11 11:34:21 Asia/Tehran) also marked Traffic unavailable, so no numeric comparison is possible. No counts were inferred.
 
 ## PayAPI Market and Agent402
