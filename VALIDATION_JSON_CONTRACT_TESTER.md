@@ -1975,18 +1975,21 @@ Not completed: PayAPI canary pass; Agent402 router eligibility/settlement; GitHu
 - Reddit: published in prior verification; current visibility inconclusive. Channel: https://www.reddit.com/r/SideProject/comments/1xhfg2y/i_built_a_small_json_contract_tester_for_checking/ ; product: https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/
 - PayAPI: **pending review**; public lookup 404; canary unreported. Channel: https://payapi.market/agent/get?id=54bd4f89-23f8-47e7-b507-039362b51198 ; product: https://json-contract-tester-api.falcon-project-ai.workers.dev/
 - Digyno: **researched-not-submitted**; no seller account, KYC, product page or listing. Channel: https://digyno.com/sell ; product introduction: not created.
+- AI Agent Store: **blocked**; seller payout requires Stripe verification. Channel: https://aiagentstore.ai/hire-ai-agents ; product introduction: not created.
+- Claw Earn: **researched-not-submitted**; 0 tasks available at retrieval, first task requires 30% stake and wallet signatures. Channel: https://aiagentstore.ai/claw-earn/ai-agent-tasks/available ; product introduction: not created.
+- Manychat: **researched-not-submitted**; free tier excludes WhatsApp and caps active contacts at 25/month. Channel: https://help.manychat.com/en/articles/17742189-free-plan ; product introduction: not created.
 - FaraFile: **researched-not-submitted**; no account/listing. Channel: https://farafile.ir/page/sale ; product introduction: not created.
 - Etsy: **blocked** for Iran seller eligibility. Channel: https://help.etsy.com/hc/en-us/articles/115015710408-Countries-Eligible-for-Etsy-Payments ; product introduction: not created.
 - DevXTools, The Tool Directory, PromoteIndex, Ignlab and Launching Next remain at prior pending/unverified states; no new Gmail response.
 
 ### Dashboard deployment and final verification
 - GitHub Pages deployment for dashboard/index.html completed successfully: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/42987705685. The published dashboard is assembled at https://falconprojectai-arch.github.io/falcon-ai-decision-engine/; `/dashboard/` is not a published path.
-- A visible link to this late audit report was added to the dashboard and will be deployed by the current Pages workflow.
+- A visible link to this late audit report was added to the dashboard and is now publicly visible.
 - Full report: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/blob/main/reports/2026-11-11-golden-desk.md
 
 ### Decision and next action
 - Conditional Golden River: JSON Contract Tester API via PayAPI/x402, because the asset is already deployed and per-call automation is possible. It remains **on hold** until a provider-funded canary succeeds, an on-chain receipt is visible and commercial hosting eligibility is cleared.
 - Best distinct non-JSON hypothesis considered: home-bakery costing/quote workbook. It was rejected after finding a free Persian calculator and multiple free alternatives; no build/list. AI Agent Store services require Stripe payout verification; Claw Earn has no available tasks and requires upfront stake/signatures. No non-JSON candidate clears the gate this run.
-- GitHub Pages dashboard deployment completed successfully: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/42987705685. The deployed site assembles `dashboard/index.html` at the site root (https://falconprojectai-arch.github.io/falcon-ai-decision-engine/); `/dashboard/` is not a published path. No Worker/product deployment, channel submission, outreach, payment, signature, account creation, KYC or external listing occurred.
+- GitHub Pages dashboard deployment completed successfully: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/42988503490. The deployed site assembles `dashboard/index.html` at the site root (https://falconprojectai-arch.github.io/falcon-ai-decision-engine/); `/dashboard/` is not a published path. No Worker/product deployment, channel submission, outreach, payment, signature, account creation, KYC or external listing occurred.
 
 **Verified revenue: $0.00.** This audit is not evidence of a sale or payment.
