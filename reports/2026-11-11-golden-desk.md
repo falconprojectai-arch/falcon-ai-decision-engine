@@ -16,7 +16,7 @@ There is **no currently verified, legally/payment-cleared route to first revenue
 - Repository: https://github.com/falconprojectai-arch/falcon-ai-decision-engine
 - Public repo remains available; default branch: `main`.
 - Issues updated on/after 2026-11-10: #18 and #13 were returned by the repository-scoped search.
-- GitHub Discussions: prior repository metadata records discussions disabled; no discussion feed was available to inspect in this run.
+- GitHub repository metadata returned `has_discussions=false`; no discussion feed exists to inspect.
 - Issue #13 currently has 5 comments: 2 independent external comments and 3 project-owned replies.
 - **New independent external feedback:** VibeMirror-coder, 2026-11-10 20:06:28Z, Issue #13: https://github.com/falconprojectai-arch/falcon-ai-decision-engine/issues/13#issuecomment-6777980077
   - Operator disclosed an adjacent JSON-cleanup API and optional x402 policy-check service.
@@ -25,7 +25,7 @@ There is **no currently verified, legally/payment-cleared route to first revenue
   - Prefers CLI/CI for repeatable testing and browser for redacted debugging.
   - This is a qualified integration/problem signal, **not** proof of use, a lead, a paid customer or willingness to pay.
 - Previously recorded independent feedback remains shigeki7777 on Issue #13 (2026-10-29): exact failure paths, sample index, expected/actual and machine-readable JSON/JUnit output. The browser tester already exports JSON and JUnit XML.
-- Project-owned follow-up: owner response on Issue #13 links Draft PR #24. Project-owned alternative-path log on Issue #18 (2026-11-11 07:40:18Z) describes a Persian small-seller inventory/order workbook; it is a hypothesis, not external feedback or a sale. The earlier ECU workshop form note on Issue #18 is also project-owned.
+- Project-owned follow-up: owner response on Issue #13 links Draft PR #24. Issue #18 has 52 comments: 22 by the owner and 30 by github-actions[bot], with 0 independent external commenters. Project-owned alternative-path logs on Issue #18 (including the 2026-11-11 inventory/order workbook note) are hypotheses, not external feedback or sales. The earlier ECU workshop form note is also project-owned.
 - Issue #22 and #23 comment checks returned no comments.
 - PR review submissions checked on #1, #2, #15, #16, #20, #23 and #24: **0**. Inline review threads checked on #15, #16, #20, #23 and #24: **0**.
 - PR #24, “Fail closed on unsupported JSON Schema keywords,” remains open and Draft, 6 commits, 5 files, 111 additions / 11 deletions. It rejects unsupported schema keywords/forms with `unsupported_schema` and schema-path diagnostics. Its two reported GitHub Actions workflows completed successfully: Test Revenue Machine and JSON Contract Tester API Tests. No merge or production deployment was performed.
@@ -51,7 +51,7 @@ There is **no currently verified, legally/payment-cleared route to first revenue
 - Listing ID: `54bd4f89-23f8-47e7-b507-039362b51198`.
 - Exact status: **pending_review / not live; canary not reported**.
 - Gmail evidence: 2026-11-03T05:28:56Z from notifications@payapi.market says the form was accepted, not live; PayAPI would pay one call from its own wallet; no action needed unless they email.
-- Public lookup at https://payapi.market/agent/get?id=54bd4f89-23f8-47e7-b507-039362b51198 returned `not_found`; the lookup reported 2,671 records searched. No listing views, paid calls, public feedback, transaction hash or settlement receipt was exposed.
+- Public lookup at https://payapi.market/agent/get?id=54bd4f89-23f8-47e7-b507-039362b51198 returned `not_found` (2,671 records searched). Exact-ID search returned 0 matches after 1,475 records; product-name search was broad (626 token matches) and did not surface this listing in the first 20. No listing views, paid calls, public feedback, transaction hash or settlement receipt was exposed.
 - PayAPI FAQ (last updated 2026-11-08): https://payapi.market/faq. It says a canary up to $0.10 is paid from PayAPI's own wallet, but also contains a contradictory instruction to send the test price plus 20% in USDC. This conflicts with the 3 November email and the owner's instruction. **No seller funds were sent and no signature was requested or made.** Wait for a clear provider email; do not top up or sign.
 - The FAQ states settlement-verified requires a real paid call, returned product and on-chain receipt; a 402 health check is not settlement.
 
@@ -138,8 +138,8 @@ A zero in legal/platform feasibility blocks execution regardless of total. The t
 
 ## Builder, distribution and next actions
 
-- **Concrete work completed:** re-audited current GitHub feedback and PR checks; re-read official payment/marketplace terms; checked PayAPI Gmail and public listing; fetched Agent402 seller record; updated the dashboard audit marker, validation log and this daily report.
-- **No production code, deployment, payment, account creation, KYC, wallet signature, external listing or outreach was performed.**
+- **Concrete work completed:** re-audited GitHub feedback and PR checks; re-read official payment/marketplace terms; checked PayAPI Gmail, exact-ID search and public listing; fetched Agent402 seller record; updated the dashboard audit marker, added a visible report link, synchronized the validation log and daily report; verified GitHub Pages deployment.
+- **No product/Worker production deployment, payment, account creation, KYC, wallet signature, external listing or outreach was performed.** GitHub Pages dashboard deployment succeeded.
 - **Next highest-value action:** obtain a clear PayAPI canary result under the original provider-funded email terms, then independently verify the Base settlement receipt and returned product. In parallel, get owner-specific legal eligibility advice for commercial hosting from Iran before accepting any paid traffic. Do not fund the contradictory FAQ top-up.
 - If the legal gate fails, keep the API free/dry-run and do not redirect effort into domestic bank-based products until a lawful, usable payout rail exists.
 - Keep the home-bakery workbook at researched-not-submitted until a genuine local opt-in buyer signal and a feasible payout route are both evidenced.
