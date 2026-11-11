@@ -23,13 +23,15 @@
   -H "Content-Type: application/json" \
   -H "X-SD-Ref: ff6ueixx" \
   -H "Idempotency-Key: $(uuidgen)" \
-  -d '{"domain":"your-project-name.com","years":1,"chain":"base","token":"USDC"}'</code></pre>
+  -d '{"domain":"your-project-name.com","years":1,"dry_run":true}'</code></pre>
+<p>This is a dry run: it checks availability and pricing without creating an order or charging the user. Only remove <code>dry_run</code> after the user reviews the final quote and explicitly approves proceeding.</p>
 <p>Equivalent MCP tool call:</p>
 <pre><code>{
   "name": "create_order",
   "arguments": {
     "domain": "your-project-name.com",
     "years": 1,
+    "dry_run": true,
     "ref": "ff6ueixx"
   }
 }</code></pre>
@@ -43,7 +45,7 @@
 </ul>
 <p>Official references: <a href="https://stabledomains.net/developers">developer docs</a>, <a href="https://stabledomains.net/affiliates/toolkit">affiliate toolkit</a>, <a href="https://stabledomains.net/affiliates">program terms</a>.</p>
 <p><a class="btn" href="https://stabledomains.net/?ref=ff6ueixx" rel="sponsored nofollow">Explore StableDomains</a></p>
-<p class="muted small">Affiliate disclosure: the link above is a referral link. Eligible paid orders may generate commission for the site owner. The program states commission is 10% of its margin, paid in USDC on Base subject to its terms.</p>
+<p class="muted small">Affiliate disclosure: the link above is a referral link. Eligible paid orders may generate commission for the site owner. Commission is calculated under the program's current published terms and paid in USDC on Base subject to those terms.</p>
 </section>
 <section class="panel">
 <h2>2. SwiftNodes: connect an agent to RPC tools</h2>
