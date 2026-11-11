@@ -89,7 +89,7 @@ Five distinct opportunity angles were researched; current source pages were open
    - Decision: reject the generic workbook. The direct local free calculator and saturated free global tier remove differentiation. The 99,000–149,000 toman price hypothesis is withdrawn; no product was built.
    - Etsy is blocked for this seller context: Iran is absent from Etsy Payments' eligible-country list, and the seller must use a bank account from the selected eligible country: https://help.etsy.com/hc/en-us/articles/115015710408-Countries-Eligible-for-Etsy-Payments
    - Digyno accepts XLSX and offers automatic file delivery with 3% commission, but requires eKYC, national ID/DOB match, selfie video, same-name Sheba and manager/product approval; new-seller proceeds are held 72 hours until five successful sales: https://digyno.com/sell
-   - FaraFile takes 40% of the listed price plus a minimum 15% affiliate commission, pays after 24 hours, and prohibits AI-generated files. No seller account or submission was attempted: https://farafile.ir/page/sale
+   - FaraFile's seller guide reports 299,200 successful sales across 41,151 files and 2,553 storefronts (platform-wide, not niche-specific). It takes 40% of the listed price plus a minimum 15% affiliate commission, pays to a bank account after 24 hours, and prohibits AI-generated files. No seller account or submission was attempted: https://farafile.ir/page/sale
 
 4. **Niche data / research products**
    - Whop's Done-For-You Niche Reports is listed at $100/month but describes hand-researched reports, not automatic fulfilment or exposed sales evidence: https://whop.com/hungry-market-scanner/products/done-for-you-niche-reports/
@@ -99,7 +99,7 @@ Five distinct opportunity angles were researched; current source pages were open
    - AI Agent Store affiliate terms set a $10 minimum payout, NET-15 and PayPal-only payout; incompatible with the current receiving constraint: https://aiagentstore.ai/terms-of-service
    - No affiliate account or lead-routing submission was made.
 
-**Non-JSON conclusion:** no candidate cleared buyer evidence, zero-upfront feasibility, automation and payout eligibility simultaneously. The bakery workbook was rejected; Claw Earn is monitor-only until tasks are actually available and its stake/signature requirements are compatible.
+**Non-JSON conclusion:** no candidate cleared buyer evidence, zero-upfront feasibility, automation and payout eligibility simultaneously. The bakery workbook was rejected. Claw Earn is the best distinct candidate to monitor because it has 83 completed tasks and USDC settlement, but 0 tasks were open at retrieval and the first task requires a 30% stake plus wallet signatures; no task was accepted.
 
 ## Iran / Persian / rial payment rail audit
 
