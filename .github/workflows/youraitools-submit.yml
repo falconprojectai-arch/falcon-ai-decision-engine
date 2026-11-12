@@ -124,7 +124,7 @@ jobs:
               "name": "JSON Contract Tester API",
               "url": api_root + "/",
               "payTo": pay_to,
-              "category": "developer-tools",
+              "category": "dev-tools",
               "description": (
                   "Validate 1–10 JSON samples per batch against a documented JSON Schema subset and "
                   "receive per-sample PASS/FAIL results with JSON Pointer diagnostics. The paid route "
