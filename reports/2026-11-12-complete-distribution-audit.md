@@ -217,3 +217,11 @@ The first two deployment attempts exposed smoke-test defects, not product defect
 - The deployed dashboard contains the current Persian project title, 9 Agensi live skills, 10 TechTools listings, and 6 CHAAAM review submissions.
 - The deployed product hub contains the 9 Agensi skill pages, the 10 TechTools links, and six CHAAAM pending-review entries.
 - The latest public pages were fetched after deployment; these are deployed, not just committed in GitHub.
+
+
+## 14. AgenticMart.org official submission and seller-term recheck
+
+- The current submit page explicitly advertises free repository listings and a free automated scan. The form first checks a public GitHub repository URL, then offers “Sign in with GitHub to submit” before the final submit/scan action. No account, OAuth, or submission was performed.
+- The current seller agreement (last updated 2026-11-05) requires Stripe Connect Express for paid selling, including Stripe identity and business verification. It charges a 12% platform fee, with Stripe processing fees deducted separately. Optional Gold Seller costs $19/month. Paid selling is therefore excluded under the no-account/KYC/no-spend constraints.
+- This is distinct from the parked agenticmart.com domain (GoDaddy sale page) and from AgentMart.store.
+- Official sources: https://agenticmart.org/submit · https://agenticmart.org/seller-terms · https://agenticmart.org/verification
