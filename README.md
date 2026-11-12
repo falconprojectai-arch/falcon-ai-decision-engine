@@ -4,6 +4,10 @@ A small, testable foundation for low-cost automation with a strict revenue gate.
 
 **Primary KPI:** independently verified revenue per day. Claims, clicks, leads, and unverified payment messages do not count as revenue.
 
+## Product hub
+
+- [Product catalog and marketplace listing statuses](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/marketplace-hub.html)
+
 ## Paid API/Agent Contract Review
 
 A small manual service is available for a first validation: one JSON Schema or documented contract, up to 10 redacted sample payloads, a PASS/FAIL summary, and practical recommendations. Launch price: **$4 USD equivalent in USDT**, with delivery within 2 business days after payment and materials are confirmed.
