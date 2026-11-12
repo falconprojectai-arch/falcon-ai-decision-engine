@@ -191,3 +191,11 @@ Latest known GitHub Actions at the time of the last check:
 - The deployment workflow's smoke tests were updated to check the current Persian dashboard, the approved Agensi state, TechTools IDs, the six CHAAAM review submissions, and all eight product-index cards. The ECU-specific browser smoke test was removed; the legacy static files were not modified.
 - Test run **43157971905** completed successfully on commit `fc650b7896289750e2a825e4efb952354014c2ab`.
 - Deployment run **43157971904** was still in progress at the last poll. Do not claim the latest GitHub Pages dashboard/hub/sitemap is deployed until that run succeeds and the live pages are fetched successfully.
+
+
+## 12. PayAPI Market and Agent402 recheck
+
+- Connected Gmail search found only the original PayAPI Market message dated 2026-11-03. It explicitly says the JSON Contract Tester API form was accepted but **not live**; PayAPI planned to make one call from its own wallet and said it would email if the post-payment call still returned 402. The message says no owner action is needed unless they email. No newer PayAPI message was found in the last 30 days.
+- The public PayAPI listing URL attempted during this audit returned HTTP 404; this does not establish approval. Keep the listing pending/unverified until a new official message or provider dashboard status appears.
+- Current Agent402 seller record fetch at 2026-11-12 04:58 UTC returned `routable=true`, health 1, three declared routes, Base network only, and a live unpaid HTTP 402 challenge. The POST route has `executeViaCallableNow=true` in the small unproven lane, but `routerDispatchEligible=false` because settlement history is below the router's proven-seller floor. Its request contract is declared but not runtime-verified. The router's displayed $0.01 route-execute price includes $0.005 underlying API price plus a $0.005 routing fee. No paid call was made.
+- x402scan currently reports 0 transactions, $0.00 volume and 0 buyers. true402 reports 0 transactions and marks the service new. These independently reinforce that no sale or settlement is evidenced.
