@@ -20,6 +20,15 @@ These free skills have been submitted to Agensi. They are pending review and are
 - [ExpenseSnap](https://agensi.io/skills/expensesnap): local time and expense log with CSV/JSON export.
 - [CronPulse](https://agensi.io/skills/cronpulse): offline analysis of exported scheduled-job and agent run logs.
 
+## Additional discovery channels — not submitted
+
+- [AgenticMart](https://agenticmart.org/submit): free listings and scans; seller account requires GitHub sign-in. Paid checkout is not yet open; paid selling terms specify Stripe Connect/KYC. Not submitted.
+- [DevTools Daily](https://www.devtoolsdaily.com/directory/submit/): free editorial queue; sign-in required; at most five free listings are published weekly. Not submitted.
+- [Product Hunt](https://www.producthunt.com/launch): free launches, but require a personal account and verified email; new accounts may need a one-week wait. Not submitted.
+- [Best of AI](https://submit.bestofai.io/submit): free listing option with manual review; account may be needed to track submissions. Not submitted.
+- [Dev Pages](https://devpages.io/submit-a-tool): free queue requires sign-in and adding its badge to the product site. Not submitted.
+- [Tools AI Online](https://www.tools-ai.online/submit-tool): no-account free form, but requires a contact email, 500+ character description, 16:9 JPG/PNG cover, and CAPTCHA. Not submitted; no owner email was assumed.
+
 ## Primary products
 
 - [JSON Contract Tester — free browser tool](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/): Validate JSON examples against a documented schema subset locally in the browser. Inputs are processed in the browser and are not uploaded by this tool.
