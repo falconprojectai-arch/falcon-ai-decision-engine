@@ -26,6 +26,12 @@ Select the relevant skill from the repository. The source packages are organized
 | JSON Contract Tester | Validation guidance for API/AI JSON outputs against a documented JSON Schema subset. | [Source](json-contract-tester/SKILL.md) · [Agensi](https://agensi.io/skills/json-contract-tester) · [Browser tool](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/) · [TechTools](https://techtools.cz/tools/launchpad/?tool=9746) |
 | Dev & Agent Toolbox | Safe selection and use of browser-only developer utilities. | [Source](dev-agent-toolbox/SKILL.md) · [Agensi](https://agensi.io/skills/dev-agent-toolbox) · [Browser toolbox](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/dev-agent-toolbox/) · [TechTools](https://techtools.cz/tools/launchpad/?tool=9747) |
 
+
+## Discovery and indexing
+
+- **skills.sh** does not provide a manual submission form or crawl every GitHub repository. Its index is driven by genuine `npx skills add <owner>/<repo>` install telemetry. This repository is installable now; its skills will appear only after real users install it and the service indexes the telemetry. We do not create artificial self-installs or inflate install counts.
+- **SkillsMP** describes automatic indexing of public GitHub repositories containing valid `SKILL.md` files. The repository was not yet returned by public search at the last check; indexing is not claimed until verified.
+
 ## Marketplace status
 
 All nine free Agensi listings are approved and live. The creator dashboard last reported zero uses, ratings and reviews. A public source package or directory listing does not imply customer usage or revenue.
