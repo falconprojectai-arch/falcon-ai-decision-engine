@@ -173,3 +173,21 @@ Latest known GitHub Actions at the time of the last check:
 6. Improve the highest-value product funnel, prioritizing a direct customer path rather than additional low-signal directories.
 7. Recheck affiliate terms and actual referral evidence where accessible; never infer commissions.
 8. Keep the revenue gate strict: no revenue until an independent settlement record verifies the amount, asset, network, transaction and fees.
+
+
+## 10. Affiliate terms rechecked against current official pages
+
+- **StableDomains** official affiliate page currently states a fixed commission of **$0.60 per referred .com** and **$0.51 per referred .xyz** paid registration, renewal or transfer, weekly in USDC on Base after review. Minimum payout is $5, 30-day attribution, first referrer wins, self-referrals are blocked, and smaller balances roll over. The owner's existing referral link is https://stabledomains.net/?ref=ff6ueixx. No referral conversion or commission is confirmed.
+  - Official source: https://stabledomains.net/affiliates
+- **SwiftNodes** official page currently states **20% recurring commission** on referred customer payments for the life of the subscription, paid in USDC. Each commission has a 30-day hold; payouts are monthly at a $50 minimum on Base, Arbitrum or Polygon. Any signed-in user has an automatic referral link; the owner's existing link is https://swiftnodes.io/?ref=xxuxt8dw. No referral conversion or commission is confirmed.
+  - Official source: https://swiftnodes.io/affiliates
+- The owner-confirmed SwiftNodes payout address remains `0x8e35C3cB1e14DaDde79c2cA7dec890f9c6B34ac`; the selected network remains unverified because the official payout dashboard was not authenticated. No settings were changed.
+
+## 11. Crawlability and release workflow
+
+- `dashboard/sitemap.xml` now includes the product index, all seven active browser product pages, and the JSON Contract Tester API payment preflight. The product index no longer promotes the excluded ECU research prototype; its underlying files and legacy static route were not edited.
+- `products/index.html` now presents eight active entries: seven browser products plus the separately priced x402 API. Each entry links to its live product, source, and relevant marketplace listing.
+- `dashboard/index.html` is a fresh Persian RTL project dashboard with current channel counts, exact links, true blockers and the strict $0 revenue gate.
+- The deployment workflow's smoke tests were updated to check the current Persian dashboard, the approved Agensi state, TechTools IDs, the six CHAAAM review submissions, and all eight product-index cards. The ECU-specific browser smoke test was removed; the legacy static files were not modified.
+- Test run **43157971905** completed successfully on commit `fc650b7896289750e2a825e4efb952354014c2ab`.
+- Deployment run **43157971904** was still in progress at the last poll. Do not claim the latest GitHub Pages dashboard/hub/sitemap is deployed until that run succeeds and the live pages are fetched successfully.
