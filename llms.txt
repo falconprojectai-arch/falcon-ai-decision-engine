@@ -42,6 +42,11 @@ All nine free skills below are approved and live in the creator dashboard as of 
   - [x402 v2 manifest](https://json-contract-tester-api.falcon-project-ai.workers.dev/.well-known/x402.json)
   - [No-payment preflight](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester-api/payment-preflight.html)
 - [Dev & Agent Toolbox](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/dev-agent-toolbox/): Free developer utilities for API and agent workflows.
+- [LocalBiz FollowUp](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/localbiz-followup/): local-first lead and customer enquiry tracker for shops, service providers and online sellers; no cloud sync or automatic message sending.
+- [StockPulse](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/stockpulse/): manual SKU inventory, reorder-threshold and gross-margin estimator with local browser storage.
+- [MCPGuard Lite](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/mcpguard-lite/): local heuristic review of MCP/agent JSON configuration; not a full security audit.
+- [ExpenseSnap](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/expensesnap/): local time and expense logger with project summaries and CSV/JSON export.
+- [CronPulse](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/cronpulse/): offline analyzer for exported scheduled-job and AI-agent run history; no live monitoring or auto-restart.
 
 ## Additional free discovery listings — TechTools Launchpad
 
