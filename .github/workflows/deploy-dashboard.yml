@@ -492,7 +492,8 @@ jobs:
                       assert name in hub_body, f"Missing product listing: {name}"
                   assert "approved/live" in hub_body.lower() and "security approved" in hub_body.lower()
                   assert "review pending" in hub_body.lower()
-                  assert await page.locator('a[href*="tool=7727"]').count() == 1\n                  assert await page.locator('a[href*="tool=9754"]').count() == 1
+                  assert await page.locator('a[href*="tool=7727"]').count() == 1
+                  assert await page.locator('a[href*="tool=9754"]').count() == 1
                   assert not errors, f"Browser JavaScript errors: {errors}"
                   await browser.close()
 
