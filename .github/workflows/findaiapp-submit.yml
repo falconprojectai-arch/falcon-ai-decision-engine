@@ -1,10 +1,6 @@
 name: Publish remaining four Falcon Agent Skills to FindAIapp
 
 on:
-  push:
-    branches: ["main"]
-    paths:
-      - ".github/workflows/findaiapp-submit.yml"
   workflow_dispatch:
 
 permissions:
@@ -15,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Validate and publish five distinct public skills anonymously
+      - name: Validate and publish remaining four distinct public skills anonymously
         run: |
           python - <<'PY'
           import json
