@@ -30,6 +30,10 @@ jobs:
               "LocalBiz FollowUp",
               "JSON Contract Tester",
               "MCPGuard Lite",
+              "Dev & Agent Toolbox",
+              "StockPulse",
+              "ExpenseSnap",
+              "CronPulse",
           ]
           headers = {"Accept": "application/json", "User-Agent": "FalconFindAIappVerifier/1.0"}
 
@@ -42,28 +46,28 @@ jobs:
                   for child in value:
                       yield from walk(child)
 
+          # One read-only catalogue request finds all nine; no POST or duplicate submission is made.
+          req = urllib.request.Request(base + "/items?kind=skill&limit=100", headers=headers, method="GET")
+          with urllib.request.urlopen(req, timeout=25) as response:
+              catalogue = json.loads(response.read().decode("utf-8", "replace"))
+          found = {}
+          for item in walk(catalogue):
+              name = item.get("name") or item.get("name_en")
+              if name in names and item.get("id") and item.get("page"):
+                  found[name] = item
+
           results = []
           for name in names:
-              query = urllib.parse.urlencode({"q": name})
-              req = urllib.request.Request(base + "/search?" + query, headers=headers, method="GET")
-              with urllib.request.urlopen(req, timeout=25) as response:
-                  search_data = json.loads(response.read().decode("utf-8", "replace"))
-              matches = []
-              for item in walk(search_data):
-                  if item.get("name") == name or item.get("name_en") == name:
-                      if item.get("id") and item.get("page"):
-                          matches.append(item)
-              if not matches:
-                  results.append({"name": name, "found": False})
+              item = found.get(name)
+              if not item:
+                  result = {"name": name, "found": False}
+                  results.append(result)
                   print("NOT_FOUND", name)
                   continue
-              item = matches[0]
               page = item.get("page")
-              page_status = None
-              if page:
-                  page_req = urllib.request.Request(page, headers=headers, method="GET")
-                  with urllib.request.urlopen(page_req, timeout=25) as page_response:
-                      page_status = page_response.status
+              page_req = urllib.request.Request(page, headers=headers, method="GET")
+              with urllib.request.urlopen(page_req, timeout=25) as page_response:
+                  page_status = page_response.status
               result = {
                   "name": name,
                   "found": True,
