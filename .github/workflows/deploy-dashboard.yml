@@ -501,14 +501,21 @@ jobs:
                   assert await page.title() == "Where to Sell AI Agent Skills and Services | Dev & Agent Toolbox"
                   market_body = await page.locator("body").inner_text()
                   assert "AgentMart" in market_body and "Colony HQ" in market_body and "Soul.Markets" in market_body
-                  assert "0 published agents" in market_body
-                  assert await page.locator('a[href*="marketplace/lead-followup-strategist"]').count() == 1
+                  assert "What is prepared" in market_body
+                  assert await page.locator('a[href*="tree/main/marketplace/lead-followup-strategist"]').count() == 1
                   response = await page.request.get(os.environ["PAGES_URL"] + "sitemap.xml")
                   assert response.status == 200
                   sitemap = await response.text()
                   assert "agent-integration-patterns.html" in sitemap and "blockchain-infrastructure.html" in sitemap
                   response = await page.request.get(os.environ["PAGES_URL"] + "robots.txt")
                   assert response.status == 200 and "sitemap.xml" in await response.text()
+                  response = await page.goto(os.environ["PAGES_URL"] + "products/marketplace-hub.html", wait_until="networkidle", timeout=60000)
+                  assert response and response.status == 200
+                  assert await page.title() == "Falcon Project AI — Product Hub"
+                  hub_body = await page.locator("body").inner_text()
+                  for name in ["Lead Follow-up Strategist", "Quote-to-Booking Workflow Planner", "JSON Contract Tester", "Dev & Agent Toolbox", "LocalBiz FollowUp", "StockPulse", "MCPGuard Lite", "ExpenseSnap", "CronPulse"]:
+                      assert name in hub_body, f"Missing product listing: {name}"
+                  assert "pending review" in hub_body.lower() and "awaiting security scan/review" in hub_body.lower()
                   assert not errors, f"Browser JavaScript errors: {errors}"
                   await browser.close()
 
