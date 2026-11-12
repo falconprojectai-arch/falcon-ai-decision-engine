@@ -225,3 +225,11 @@ The first two deployment attempts exposed smoke-test defects, not product defect
 - The current seller agreement (last updated 2026-11-05) requires Stripe Connect Express for paid selling, including Stripe identity and business verification. It charges a 12% platform fee, with Stripe processing fees deducted separately. Optional Gold Seller costs $19/month. Paid selling is therefore excluded under the no-account/KYC/no-spend constraints.
 - This is distinct from the parked agenticmart.com domain (GoDaddy sale page) and from AgentMart.store.
 - Official sources: https://agenticmart.org/submit · https://agenticmart.org/seller-terms · https://agenticmart.org/verification
+
+
+## 15. Agent Skills index behavior clarified from official maintainer discussion
+
+- Vercel's `skills.sh` does **not** crawl all public GitHub repositories and has no manual submission step. The maintainers' public guidance says listings are driven by genuine `npx skills add <owner>/<repo>` install telemetry. A repo becomes searchable after real installs generate enough telemetry; the exact threshold and index cadence are not documented. GitHub topics do not trigger indexing.
+- We did not run a self-install merely to manufacture an install event or inflate a public metric. The repository is publicly installable now; indexing remains unverified until genuine users install it.
+- SkillsMP says it automatically indexes public GitHub repositories containing valid `SKILL.md` files; our repository was not returned in the current public search. Do not claim it is indexed until it appears.
+- Official maintainer discussion: https://github.com/vercel-labs/skills/issues/880 and https://github.com/vercel-labs/skills/issues/1315
