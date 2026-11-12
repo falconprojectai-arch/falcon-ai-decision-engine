@@ -9,8 +9,10 @@ A small, testable foundation for low-cost automation with a strict revenue gate.
 ## Product hub
 
 - [Public Agent Skills and install instructions](skills/README.md)
+- [9 approved Agensi Agent Skills](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/blob/main/skills/README.md)
+- [10 free TechTools Launchpad listings](https://techtools.cz/tools/launchpad/)
 - [TechTools Launchpad directory listings](https://techtools.cz/tools/launchpad/)
-- [CHAAAM submissions — five items in editorial review](https://chaaam.com/directory)
+- [CHAAAM submissions — six items in editorial review](https://chaaam.com/directory)
 
 - [Product catalog and marketplace listing statuses](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/marketplace-hub.html)
 
