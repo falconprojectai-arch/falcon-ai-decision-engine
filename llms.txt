@@ -43,6 +43,23 @@ These free skills have been submitted to Agensi. They are pending review and are
   - [No-payment preflight](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester-api/payment-preflight.html)
 - [Dev & Agent Toolbox](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/dev-agent-toolbox/): Free developer utilities for API and agent workflows.
 
+## Additional free discovery listings — TechTools Launchpad
+
+The following product pages have public TechTools Launchpad listings. Three new records were accepted with HTTP 201 on 12 November 2026; the remaining records were verified by exact-URL lookup.
+
+- [JSON Contract Tester](https://techtools.cz/tools/launchpad/?tool=9746)
+- [Dev & Agent Toolbox](https://techtools.cz/tools/launchpad/?tool=9747)
+- [Lead Follow-up Strategist](https://techtools.cz/tools/launchpad/?tool=9748)
+- [LocalBiz FollowUp](https://techtools.cz/tools/launchpad/?tool=7543)
+- [StockPulse](https://techtools.cz/tools/launchpad/?tool=7544)
+- [MCPGuard Lite](https://techtools.cz/tools/launchpad/?tool=7545)
+- [ExpenseSnap](https://techtools.cz/tools/launchpad/?tool=7546)
+- [CronPulse](https://techtools.cz/tools/launchpad/?tool=7547)
+
+## Public Agent Skills repository
+
+The installable `SKILL.md` packages are published under [skills/](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/tree/main/skills). [Installation catalogue](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/blob/main/skills/README.md). A public GitHub source is eligible for third-party indexing, but indexing by SkillsMP/skills.sh has not yet been confirmed.
+
 ## API contract
 
 Request JSON:
@@ -78,7 +95,7 @@ Supported subset:
 
 - [x402scan — JSON Contract Tester API](https://www.x402scan.com/server/fc25a6e2-6e6e-4cfc-b00c-bc594b2636f3): public listing; POST /v1/validate-batch is visible. The listing currently reports 0 transactions, $0.00 volume, and 0 buyers.
 - [Agent Bazaar listing](https://bazaar.saylorinnovations.com/resources/75152): public discovery record; method compatibility and settlement are not established by the directory record.
-- [TechTools Launchpad listing](https://techtools.cz/tools/launchpad/?tool=7727): public listing; current displayed visit count is 0.
+- [TechTools Launchpad listing](https://techtools.cz/tools/launchpad/?tool=9746): public listing; current displayed visit count is 0.
 - [true402 listing](https://true402.dev/api/v1/services/a5ccc7ac-2153-403a-91a8-be5be7a69073): public service record; 0 transactions and no settlement proof currently exposed.
 - Directory discovery, a 402 challenge, and a canary-pending marketplace submission are not revenue. Count revenue only after a successful paid response and independently verifiable settlement evidence.
 
