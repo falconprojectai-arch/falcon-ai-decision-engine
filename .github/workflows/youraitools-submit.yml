@@ -1,0 +1,197 @@
+name: Submit JSON Contract Tester API to YourAITools
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/youraitools-submit.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Verify the live unpaid x402 challenge and submit the free listing
+        run: |
+          python - <<'PY'
+          import base64
+          import json
+          import os
+          import re
+          import sys
+          import urllib.error
+          import urllib.request
+
+          api_root = "https://json-contract-tester-api.falcon-project-ai.workers.dev"
+          paid_path = "/v1/validate-batch"
+          submit_url = "https://api.youraitools.co/listing/v1/submit"
+          expected_asset = "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913"
+
+          def get(url):
+              request = urllib.request.Request(
+                  url,
+                  headers={
+                      "Accept": "application/json",
+                      "User-Agent": "FalconYourAIToolsSubmit/1.0",
+                      "Cache-Control": "no-cache",
+                  },
+                  method="GET",
+              )
+              try:
+                  response = urllib.request.urlopen(request, timeout=25)
+                  return response.status, response.headers, response.read().decode("utf-8", "replace")
+              except urllib.error.HTTPError as error:
+                  return error.code, error.headers, error.read().decode("utf-8", "replace")
+
+          def decode_challenge(value):
+              candidates = [value.strip()]
+              try:
+                  candidates.append(base64.b64decode(value.strip() + "=" * (-len(value.strip()) % 4)).decode("utf-8"))
+              except Exception:
+                  pass
+              try:
+                  candidates.append(base64.urlsafe_b64decode(value.strip() + "=" * (-len(value.strip()) % 4)).decode("utf-8"))
+              except Exception:
+                  pass
+              for candidate in candidates:
+                  try:
+                      parsed = json.loads(candidate)
+                      if isinstance(parsed, dict):
+                          return parsed
+                  except Exception:
+                      continue
+              raise ValueError("PAYMENT-REQUIRED header was not valid JSON or base64-encoded JSON")
+
+          def collect_requirements(value, found):
+              if isinstance(value, dict):
+                  if "payTo" in value and "network" in value and "amount" in value:
+                      found.append(value)
+                  for child in value.values():
+                      collect_requirements(child, found)
+              elif isinstance(value, list):
+                  for child in value:
+                      collect_requirements(child, found)
+
+          # Confirm the API is currently healthy before creating a public directory record.
+          health_status, _, health_body = get(api_root + "/health")
+          if health_status != 200:
+              raise SystemExit(f"ABORT: API health check returned HTTP {health_status}: {health_body[:400]}")
+          print("HEALTH_OK", health_body[:300])
+
+          # This is an unpaid read-only probe. It must return the exact expected Base USDC challenge.
+          probe_status, probe_headers, probe_body = get(api_root + paid_path)
+          if probe_status != 402:
+              raise SystemExit(f"ABORT: unpaid probe expected HTTP 402, received {probe_status}: {probe_body[:500]}")
+
+          challenge_header = (
+              probe_headers.get("PAYMENT-REQUIRED")
+              or probe_headers.get("X-PAYMENT-REQUIRED")
+              or probe_headers.get("X-PAYMENT-REQUIRED-V2")
+          )
+          if not challenge_header:
+              raise SystemExit("ABORT: HTTP 402 response did not include a recognized PAYMENT-REQUIRED header")
+
+          challenge = decode_challenge(challenge_header)
+          requirements = []
+          collect_requirements(challenge, requirements)
+          requirement = next(
+              (
+                  item for item in requirements
+                  if str(item.get("network", "")).lower() == "eip155:8453"
+                  and str(item.get("asset", "")).lower() == expected_asset
+              ),
+              None,
+          )
+          if requirement is None:
+              raise SystemExit("ABORT: no Base Mainnet native-USDC payment requirement was found in the live challenge")
+
+          try:
+              amount = int(str(requirement.get("amount")))
+          except Exception:
+              raise SystemExit("ABORT: challenge amount was not an integer atomic-unit value")
+          if amount != 5000:
+              raise SystemExit(f"ABORT: live Base USDC amount changed from the documented 5000 atomic units: {amount}")
+
+          pay_to = str(requirement.get("payTo", ""))
+          if not re.fullmatch(r"0x[a-fA-F0-9]{40}", pay_to):
+              raise SystemExit("ABORT: live Base challenge did not provide a valid EVM payTo address")
+
+          payload = {
+              "name": "JSON Contract Tester API",
+              "url": api_root + "/",
+              "payTo": pay_to,
+              "category": "developer-tools",
+              "description": (
+                  "Validate 1–10 JSON samples per batch against a documented JSON Schema subset and "
+                  "receive per-sample PASS/FAIL results with JSON Pointer diagnostics. The paid route "
+                  "is POST /v1/validate-batch at $0.005 USDC per batch on Base Mainnet (eip155:8453). "
+                  "This is a limited schema subset, not full JSON Schema. Do not send secrets or "
+                  "confidential production payloads."
+              ),
+              "manifest": {
+                  "type": "x402",
+                  "resources": [
+                      {
+                          "path": paid_path,
+                          "method": "POST",
+                          "price": "$0.005",
+                      }
+                  ],
+              },
+          }
+
+          request = urllib.request.Request(
+              submit_url,
+              data=json.dumps(payload).encode("utf-8"),
+              headers={
+                  "Accept": "application/json",
+                  "Content-Type": "application/json",
+                  "User-Agent": "FalconYourAIToolsSubmit/1.0",
+              },
+              method="POST",
+          )
+          try:
+              with urllib.request.urlopen(request, timeout=30) as response:
+                  response_status = response.status
+                  response_body = response.read().decode("utf-8", "replace")
+          except urllib.error.HTTPError as error:
+              response_status = error.code
+              response_body = error.read().decode("utf-8", "replace")
+
+          try:
+              result = json.loads(response_body)
+          except Exception:
+              result = {"raw": response_body[:1200]}
+
+          print("SUBMISSION_HTTP_STATUS", response_status)
+          print("SUBMISSION_RESULT", json.dumps(result, ensure_ascii=False)[:2500])
+
+          if response_status not in (200, 201, 202):
+              raise SystemExit("SUBMISSION_NOT_ACCEPTED: no paid option or retry was attempted")
+
+          listing_id = result.get("id")
+          status_url = result.get("status_url")
+          if status_url:
+              status, _, status_body = get(status_url)
+              print("IMMEDIATE_STATUS_HTTP", status)
+              print("IMMEDIATE_STATUS", status_body[:1500])
+
+          summary = {
+              "http_status": response_status,
+              "id": listing_id,
+              "status": result.get("status"),
+              "slug": result.get("slug"),
+              "status_url": status_url,
+              "gateway_url_when_approved": result.get("gateway_url_when_approved"),
+              "pay_to_address_logged": False,
+              "paid_review_or_featured_option_used": False,
+          }
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as output:
+              output.write("## YourAITools free listing submission\n\n")
+              output.write("```json\n" + json.dumps(summary, indent=2) + "\n```\n")
+              output.write("\nThe x402 check was unpaid. No wallet signature, transfer, paid review, or featured placement was used.\n")
+          PY
