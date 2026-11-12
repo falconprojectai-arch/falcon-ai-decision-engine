@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Validate and publish remaining four distinct public skills anonymously
+      - name: Validate and publish one bounded batch of distinct public skills anonymously
         run: |
           python - <<'PY'
           import json
@@ -136,8 +136,8 @@ jobs:
           except Exception:
               result = {"raw": body[:2000]}
           print("BATCH_HTTP_STATUS", status)
-          print("BATCH_SUMMARY", json.dumps({"created": data.get("created"), "duplicates": data.get("duplicates"), "failed": data.get("failed"), "results": summary_records}, ensure_ascii=False)[:4000])
           if status not in (200, 201):
+              print("BATCH_ERROR", body[:2500])
               raise SystemExit("BATCH_NOT_ACCEPTED")
 
           data = result.get("data") if isinstance(result.get("data"), dict) else {}
@@ -155,6 +155,7 @@ jobs:
                   "page": item.get("page") or record.get("page"),
                   "error": record.get("error"),
               })
+          print("BATCH_SUMMARY", json.dumps({"created": data.get("created"), "duplicates": data.get("duplicates"), "failed": data.get("failed"), "results": summary_records}, ensure_ascii=False)[:4000])
 
           summary = {
               "http_status": status,
