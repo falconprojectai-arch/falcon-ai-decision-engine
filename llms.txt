@@ -76,6 +76,14 @@ Six free submissions were accepted by the public CHAAAM form on 12 November 2026
 
 Review status can be checked at [CHAAAM directory](https://chaaam.com/directory); submission information is at [CHAAAM submit](https://chaaam.com/submit/).
 
+## Additional Agent Skills discovery attempts — 12 November 2026
+
+- [AgentSkill.sh](https://agentskill.sh/submit): free direct GitHub import; the public import flow found 10 SKILL.md files in this repository but reported all 10 as failed. No skills were imported. No login, email, CAPTCHA, OAuth or payment was required; ownership verification is optional. Revisit only after diagnosing the import failure.
+- [Skillstore](https://skillstore.io/submit): the form advertises anonymous public-repository submission and security review. An attempted submission could not complete because the browser session returned network errors; no request ID or review state was created.
+- [Skills Directory](https://www.skillsdir.dev/add): currently returns “This deployment is temporarily paused”; no submission attempted.
+- [skills.re](https://skills.re/submit): public GitHub-import form was inspected, but no submission was attempted because the browser session reached its credit limit before interacting with the form.
+- These are not approved/live listings and do not imply usage or revenue.
+
 ## Public Agent Skills repository
 
 The installable `SKILL.md` packages are published under [skills/](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/tree/main/skills), including Quote-to-Booking Workflow Planner. [Installation catalogue](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/blob/main/skills/README.md). A public GitHub source is eligible for third-party indexing, but indexing by SkillsMP/skills.sh has not yet been confirmed.
