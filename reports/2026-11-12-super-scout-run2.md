@@ -1,6 +1,6 @@
 # Super Scout — 2026-11-12 (run 2)
 
-**Execution window:** GitHub Actions evidence from 2026-11-12 11:04–11:13 UTC.  
+**Execution window:** GitHub Actions evidence from 2026-11-12 11:04–11:22 UTC.  
 **Spend:** $0. No paid tool call, top-up, ad, paid listing, identity step, OAuth, payout change, signature or transfer was used.  
 **Revenue:** $0.00 independently verified net settled proceeds; rolling 7-day average remains $0.00/day.
 
@@ -32,7 +32,7 @@
 
 ### 2. ANALYST — candidate scores
 
-Scores are 0–5. Higher support burden means more operational effort; for comparability, the support column below is scored as **low support burden** (higher is better). Confidence reflects evidence quality, not earnings probability.
+Scores are 0–5. For the **low support burden** column, higher means less ongoing support is expected. Confidence reflects evidence quality, not earnings probability.
 
 | Candidate | Buyer evidence | Time to first sale | Zero-cost feasibility | Automation | Low support burden | Legal/platform feasibility | Confidence |
 |---|---:|---:|---:|---:|---:|---:|---|
