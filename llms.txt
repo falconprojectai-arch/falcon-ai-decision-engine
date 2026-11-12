@@ -2,6 +2,10 @@
 
 > Developer utilities for JSON contracts, API responses, and AI-agent output validation.
 
+## Product hub
+
+- [All products and marketplace listings](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/marketplace-hub.html): current catalog with verified publication states.
+
 ## Primary products
 
 - [JSON Contract Tester — free browser tool](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/): Validate JSON examples against a documented schema subset locally in the browser. Inputs are processed in the browser and are not uploaded by this tool.
