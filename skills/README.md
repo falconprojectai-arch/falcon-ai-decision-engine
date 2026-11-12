@@ -17,7 +17,8 @@ Select the relevant skill from the repository. The source packages are organized
 | Skill | Purpose | Public product/source |
 |---|---|---|
 | Lead Follow-up Strategist | Consent-aware follow-up plans and message drafts for genuine inbound business leads. | [Source](lead-followup-strategist/SKILL.md) · [Agensi](https://agensi.io/skills/lead-follow-up-strategist) · [TechTools](https://techtools.cz/tools/launchpad/?tool=9748) |
-| Quote-to-Booking Workflow Planner | Quote checklist, missing-information review and human-approved booking handoff for service businesses. | [Source](quote-to-booking-workflow-planner/SKILL.md) · [Agensi](https://agensi.io/skills/quote-to-booking-workflow-planner) |\n| LocalBiz FollowUp | Enquiry stages, next actions and draft follow-up workflows for shops and online sellers. | [Source](localbiz-followup/SKILL.md) · [Agensi](https://agensi.io/skills/localbiz-followup) · [Browser app](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/localbiz-followup/) · [TechTools](https://techtools.cz/tools/launchpad/?tool=7543) |
+| Quote-to-Booking Workflow Planner | Quote checklist, missing-information review and human-approved booking handoff for service businesses. | [Source](quote-to-booking-workflow-planner/SKILL.md) · [Agensi](https://agensi.io/skills/quote-to-booking-workflow-planner) |
+| LocalBiz FollowUp | Enquiry stages, next actions and draft follow-up workflows for shops and online sellers. | [Source](localbiz-followup/SKILL.md) · [Agensi](https://agensi.io/skills/localbiz-followup) · [Browser app](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/localbiz-followup/) · [TechTools](https://techtools.cz/tools/launchpad/?tool=7543) |
 | StockPulse | Manual SKU inventory, reorder thresholds and estimated gross margin. | [Source](stockpulse/SKILL.md) · [Agensi](https://agensi.io/skills/stockpulse) · [Browser app](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/stockpulse/) · [TechTools](https://techtools.cz/tools/launchpad/?tool=7544) |
 | MCPGuard Lite | Heuristic local review of MCP and AI-agent configuration files. | [Source](mcpguard-lite/SKILL.md) · [Agensi](https://agensi.io/skills/mcpguard-lite) · [Browser app](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/mcpguard-lite/) · [TechTools](https://techtools.cz/tools/launchpad/?tool=7545) |
 | ExpenseSnap | Local time and expense logging with export-ready summaries. | [Source](expensesnap/SKILL.md) · [Agensi](https://agensi.io/skills/expensesnap) · [Browser app](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/expensesnap/) · [TechTools](https://techtools.cz/tools/launchpad/?tool=7546) |
@@ -27,7 +28,7 @@ Select the relevant skill from the repository. The source packages are organized
 
 ## Marketplace status
 
-The nine free Agensi listings are separate from these public GitHub packages. At the latest check, all nine Agensi listings were submitted and pending review; do not infer approval from the existence of these GitHub files or TechTools listings.
+All nine free Agensi listings are approved and live. The creator dashboard last reported zero uses, ratings and reviews. A public source package or directory listing does not imply customer usage or revenue.
 
 ## Scope and safety
 
