@@ -60,6 +60,13 @@ Toobit has published support for USDC deposits on Base. However, an exchange dep
 
 The live Worker now applies CORS to `/health`, `/.well-known/x402`, `/openapi.json` and the API route. GET and HEAD discovery probes on `/v1/validate-batch` are protected by the same unpaid x402 challenge so read-only marketplace indexers can verify the service; the actual billable validation operation remains POST. Independent browser-compatible HTTP checks confirm Health 200 with `Access-Control-Allow-Origin: *`, OPTIONS 204, malformed JSON 400, and a valid unpaid POST 402. The discovery manifest and OpenAPI JSON are live and have been accepted by Agent402's free directory. A generic Agent402 paywall probe initially got 400 because schema validation ran before payment; the request pipeline has since been changed so syntactically valid JSON reaches the x402 challenge before schema validation. After payment, schema-invalid requests can return a billable 400.
 
+## Additional marketplace review — 2026-11-12
+
+- [YourAITools x402/MCP directory](https://youraitools.co/for-agents) offers free third-party submissions with 0% cut and no account/CAPTCHA. First listings are subject to manual review and payTo screening.
+- Existing submission record: [status API](https://api.youraitools.co/listing/v1/submit/sub_zreyutibyh). It was created on 2026-11-04 and remained `pending_review` on 2026-11-12. Automated health/payment checks passed and no flags were reported; manual approval is still outstanding.
+- A duplicate-safe check for the same API URL returned HTTP 409 and identified this existing record. No duplicate was created, and no paid review or Featured placement was purchased.
+- Do not describe this directory listing as live until the status changes to approved and the public gateway page is independently verified.
+
 ## Public discovery listings — 2026-11-05
 
 - [x402scan](https://www.x402scan.com/server/fc25a6e2-6e6e-4cfc-b00c-bc594b2636f3) — public listing verified; four resources registered, including POST /v1/validate-batch. Current listing activity: 0 transactions, $0.00 volume, 0 buyers.
