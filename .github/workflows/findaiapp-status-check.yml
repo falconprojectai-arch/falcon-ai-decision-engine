@@ -1,0 +1,85 @@
+name: Verify FindAIapp Agent Skill pages
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/findaiapp-status-check.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - name: Verify the five published skill records and their public pages
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import urllib.parse
+          import urllib.request
+
+          base = "https://www.ouraiw.com/api/v1"
+          names = [
+              "Lead Follow-up Strategist",
+              "Quote-to-Booking Workflow Planner",
+              "LocalBiz FollowUp",
+              "JSON Contract Tester",
+              "MCPGuard Lite",
+          ]
+          headers = {"Accept": "application/json", "User-Agent": "FalconFindAIappVerifier/1.0"}
+
+          def walk(value):
+              if isinstance(value, dict):
+                  yield value
+                  for child in value.values():
+                      yield from walk(child)
+              elif isinstance(value, list):
+                  for child in value:
+                      yield from walk(child)
+
+          results = []
+          for name in names:
+              query = urllib.parse.urlencode({"q": name})
+              req = urllib.request.Request(base + "/search?" + query, headers=headers, method="GET")
+              with urllib.request.urlopen(req, timeout=25) as response:
+                  search_data = json.loads(response.read().decode("utf-8", "replace"))
+              matches = []
+              for item in walk(search_data):
+                  if item.get("name") == name or item.get("name_en") == name:
+                      if item.get("id") and item.get("page"):
+                          matches.append(item)
+              if not matches:
+                  results.append({"name": name, "found": False})
+                  print("NOT_FOUND", name)
+                  continue
+              item = matches[0]
+              page = item.get("page")
+              page_status = None
+              if page:
+                  page_req = urllib.request.Request(page, headers=headers, method="GET")
+                  with urllib.request.urlopen(page_req, timeout=25) as page_response:
+                      page_status = page_response.status
+              result = {
+                  "name": name,
+                  "found": True,
+                  "id": item.get("id"),
+                  "page": page,
+                  "page_http_status": page_status,
+                  "publisher": item.get("publisher"),
+                  "kind": item.get("kind"),
+                  "category": item.get("category"),
+              }
+              results.append(result)
+              print("VERIFIED", json.dumps(result, ensure_ascii=False))
+
+          summary = {"verified_count": sum(1 for x in results if x.get("page_http_status") == 200), "results": results}
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as output:
+              output.write("## FindAIapp public skill verification\n\n")
+              output.write("```json\n" + json.dumps(summary, indent=2, ensure_ascii=False) + "\n```\n")
+              output.write("\nRead-only checks; no duplicate listings or payments were created.\n")
+          PY
