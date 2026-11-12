@@ -199,3 +199,21 @@ Latest known GitHub Actions at the time of the last check:
 - The public PayAPI listing URL attempted during this audit returned HTTP 404; this does not establish approval. Keep the listing pending/unverified until a new official message or provider dashboard status appears.
 - Current Agent402 seller record fetch at 2026-11-12 04:58 UTC returned `routable=true`, health 1, three declared routes, Base network only, and a live unpaid HTTP 402 challenge. The POST route has `executeViaCallableNow=true` in the small unproven lane, but `routerDispatchEligible=false` because settlement history is below the router's proven-seller floor. Its request contract is declared but not runtime-verified. The router's displayed $0.01 route-execute price includes $0.005 underlying API price plus a $0.005 routing fee. No paid call was made.
 - x402scan currently reports 0 transactions, $0.00 volume and 0 buyers. true402 reports 0 transactions and marks the service new. These independently reinforce that no sale or settlement is evidenced.
+
+
+## 13. Final deployment verification — successful
+
+The first two deployment attempts exposed smoke-test defects, not product defects: one assertion searched for link URLs in visible body text, and the corrected assertion initially contained a literal escaped newline. Both were fixed in the workflow. The final run passed:
+
+- Test Revenue Machine: **43158391088 — success**.
+- Deploy control dashboard: **43158391075 — success**, all deployment and Chromium smoke-test steps passed.
+- Live HTTP verification returned **200** for:
+  - https://falconprojectai-arch.github.io/falcon-ai-decision-engine/
+  - https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/
+  - https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/marketplace-hub.html
+  - https://falconprojectai-arch.github.io/falcon-ai-decision-engine/sitemap.xml
+  - https://falconprojectai-arch.github.io/falcon-ai-decision-engine/llms.txt
+- The deployed product index contains exactly 8 active cards (7 browser products + 1 paid API), five real screenshot assets, eight source links, and the expected status labels.
+- The deployed dashboard contains the current Persian project title, 9 Agensi live skills, 10 TechTools listings, and 6 CHAAAM review submissions.
+- The deployed product hub contains the 9 Agensi skill pages, the 10 TechTools links, and six CHAAAM pending-review entries.
+- The latest public pages were fetched after deployment; these are deployed, not just committed in GitHub.
