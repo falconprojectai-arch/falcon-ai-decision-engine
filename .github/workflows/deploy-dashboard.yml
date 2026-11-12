@@ -10,6 +10,7 @@ on:
       - "products/dev-agent-toolbox/**"
       - "products/json-contract-tester-api/**"
       - "products/index.html"
+      - "products/marketplace-hub.html"
       - "products/launch-guide.md"
       - "products/localbiz-followup/**"
       - "products/stockpulse/**"
@@ -93,6 +94,7 @@ jobs:
           cp products/dev-agent-toolbox/agent-marketplaces.html site/products/dev-agent-toolbox/agent-marketplaces.html
           cp products/json-contract-tester-api/payment-preflight.html site/products/json-contract-tester-api/payment-preflight.html
           cp products/index.html site/products/index.html
+          cp products/marketplace-hub.html site/products/marketplace-hub.html
           cp products/localbiz-followup/index.html site/products/localbiz-followup/index.html
           cp products/stockpulse/index.html site/products/stockpulse/index.html
           cp products/mcpguard-lite/index.html site/products/mcpguard-lite/index.html
