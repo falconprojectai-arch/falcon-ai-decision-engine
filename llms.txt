@@ -20,6 +20,23 @@ All nine free skills below are approved and live in the creator dashboard as of 
 - [ExpenseSnap](https://agensi.io/skills/expensesnap): local time and expense log with CSV/JSON export.
 - [CronPulse](https://agensi.io/skills/cronpulse): offline analysis of exported scheduled-job and agent run logs.
 
+
+## FindAIapp — five Agent Skill pages published and verified
+
+Five distinct skills were validated and published anonymously on 12 November 2026. Each English detail page returned HTTP 200. The platform labels the publisher as AI · ChatGPT; these anonymous records are immutable. No usage, customer or revenue is claimed.
+
+- [Lead Follow-up Strategist](https://www.ouraiw.com/en/p/6af59e5b7ead224390a7afdd/lead-follow-up-strategist)
+- [Quote-to-Booking Workflow Planner](https://www.ouraiw.com/en/p/6af59e5b7ead224390a7afde/quote-to-booking-workflow-planner)
+- [LocalBiz FollowUp](https://www.ouraiw.com/en/p/6af59e5b7ead224390a7afdf/localbiz-followup)
+- [JSON Contract Tester](https://www.ouraiw.com/en/p/6af59e5b7ead224390a7afe0/json-contract-tester)
+- [MCPGuard Lite](https://www.ouraiw.com/en/p/6af59e5b7ead224390a7afe1/mcpguard-lite)
+
+## Existing x402 directory submission — manual review pending
+
+- [YourAITools for agents](https://youraitools.co/for-agents) offers free x402/MCP submission with 0% cut and no account or CAPTCHA; first listings receive manual review and automated payTo screening.
+- An existing [JSON Contract Tester API record](https://api.youraitools.co/listing/v1/submit/sub_zreyutibyh) is `pending_review` as of 12 November 2026. Its automated health and payment checks passed, but it is not approved/live. A duplicate-safe check returned HTTP 409 for the same URL; no duplicate was created.
+- No paid review or Featured placement was purchased.
+
 ## Additional discovery channels — not submitted
 
 - [AgenticMart](https://agenticmart.org/submit): free listings and scans; seller account requires GitHub sign-in. Paid checkout is not yet open; paid selling terms specify Stripe Connect/KYC. Not submitted.
@@ -42,7 +59,7 @@ All nine free skills below are approved and live in the creator dashboard as of 
   - [x402 v2 manifest](https://json-contract-tester-api.falcon-project-ai.workers.dev/.well-known/x402.json)
   - [No-payment preflight](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester-api/payment-preflight.html)
 - [Dev & Agent Toolbox](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/dev-agent-toolbox/): Free developer utilities for API and agent workflows.
-- [LocalBiz FollowUp](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/localbiz-followup/): local-first lead and customer enquiry tracker for shops, service providers and online sellers; no cloud sync or automatic message sending.
+- [LocalBiz FollowUp](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/localbiz-followup/): local-first lead and customer enquiry tracker for shops, service providers and online sellers, now including last-contact date, next action and notes; no cloud sync, background alerts or automatic message sending.
 - [StockPulse](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/stockpulse/): manual SKU inventory, reorder-threshold and gross-margin estimator with local browser storage.
 - [MCPGuard Lite](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/mcpguard-lite/): local heuristic review of MCP/agent JSON configuration; not a full security audit.
 - [ExpenseSnap](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/expensesnap/): local time and expense logger with project summaries and CSV/JSON export.
