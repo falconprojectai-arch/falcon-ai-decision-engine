@@ -1,10 +1,6 @@
-name: Verify FindAIapp Agent Skill pages
+name: Verify nine FindAIapp Agent Skill pages
 
 on:
-  push:
-    branches: ["main"]
-    paths:
-      - ".github/workflows/findaiapp-status-check.yml"
   workflow_dispatch:
 
 permissions:
@@ -15,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 4
     steps:
-      - name: Verify the five published skill records and their public pages
+      - name: Verify all nine published skill records and their public pages
         run: |
           python - <<'PY'
           import json
