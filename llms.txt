@@ -6,9 +6,9 @@
 
 - [All products and marketplace listings](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/marketplace-hub.html): current catalog with verified publication states.
 
-## Agensi skill listings — submitted, pending review
+## Agensi skill listings — approved and live
 
-These free skills have been submitted to Agensi. They are pending review and are not yet confirmed live or approved. Do not treat listing submission as usage or revenue.
+All nine free skills below are approved and live in the creator dashboard as of 12 November 2026. The dashboard currently reports zero uses, ratings, and reviews. Do not treat a live listing as usage or revenue.
 
 - [Lead Follow-up Strategist](https://agensi.io/skills/lead-follow-up-strategist): consent-aware follow-up drafts for genuine inbound leads; draft-only.
 - [Quote-to-Booking Workflow Planner](https://agensi.io/skills/quote-to-booking-workflow-planner): structure enquiries, quote preparation and booking next steps; human approval required.
