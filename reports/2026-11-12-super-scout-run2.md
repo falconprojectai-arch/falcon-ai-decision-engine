@@ -6,7 +6,7 @@
 
 ## Executive result
 
-1. **FindAIapp:** five distinct Agent Skills were validated, published anonymously in one batch, and independently verified. API response: HTTP 200; created=5, duplicates=0, failed=0. All five English detail pages returned HTTP 200. Attribution is shown as **AI · ChatGPT**. Anonymous listings are immutable.
+1. **FindAIapp:** nine distinct Agent Skills were validated and published anonymously in two batches, then independently verified. The first batch returned HTTP 200 with 5 created, 0 duplicates and 0 failures. The second batch returned HTTP 200; its workflow script failed after the write while formatting the summary, but a read-only catalogue check subsequently found all four new records. All nine English detail pages returned HTTP 200. Attribution is shown as **AI · ChatGPT**. Anonymous listings are immutable.
 2. **YourAITools:** the JSON Contract Tester API already has a record, `sub_zreyutibyh`, created 2026-11-04 and still `pending_review`. Automated checks passed and flags were empty; first listing is waiting for manual review. Our duplicate-safe check returned HTTP 409 for the same URL, so no duplicate was created. No paid review was purchased.
 3. **LocalBiz FollowUp:** added last-contact date, next action, notes, broader search, and CSV export fields. Existing browser smoke tests passed before the final test update; the updated deployment smoke test now exercises these fields.
 4. **Affiliate content:** rechecked official SwiftNodes and StableDomains terms. Corrected the SwiftNodes rate-limit caveat in the developer guide and retained variable-margin wording for StableDomains.
@@ -26,6 +26,8 @@
 
 **Domain affiliate.** StableDomains' current official page describes 10% of platform margin, weekly USDC on Base, $5 minimum and review before payout ([official program](https://stabledomains.net/affiliates)). Older fixed per-domain figures should not be repeated as current terms. Existing referral URL: [StableDomains](https://stabledomains.net/?ref=ff6ueixx). No conversion or commission verified.
 
+**Curated GitHub lists.** [devanasolver/awesome-agent-skills](https://github.com/devanasolver/awesome-agent-skills) accepts an author's own repo if it is public, licensed, recently committed, demonstrably useful and not a copy; it requires one repo per PR and no affiliate/tracking links. The Falcon repo meets the content checks. The connected GitHub app reports `push=false` on the target repo and exposes no fork-creation action, so no fork, branch or PR was attempted. [VoltAgent/awesome-agent-skills](https://github.com/VoltAgent/awesome-agent-skills) requires real community adoption, which is not evidenced because the current skills have zero reported uses.
+
 **Free launch directories and MCP registry.** Ignlab Launch reports a free no-account directory with 7,122+ tools and 636 Developer Tools listings ([official page](https://launch.ignlab.net/)); no write endpoint/form contract was established, so no submission was attempted. SkillDrop surfaced a free skills route but the site returned HTTP 530. The official MCP Registry is not a fit yet because the portfolio does not currently expose a standalone MCP server; a web app or SKILL.md file must not be misrepresented as an MCP server.
 
 ### 2. ANALYST — candidate scores
@@ -41,6 +43,7 @@ Scores are 0–5. Higher support burden means more operational effort; for compa
 | StableDomains affiliate | 2 | 2 | 5 | 4 | 3 | 4 | Medium |
 | Ignlab Launch | 2 | 2 | 5 | 3 | 4 | 4 | Low-medium |
 | SkillDrop | 2 | 2 | 5 | 2 | 4 | 4 | Low |
+| Curated GitHub list PR | 3 | 2 | 5 | 2 | 4 | 5 | Medium (fit); blocked by fork capability |
 
 **Skeptic notes:** FindAIapp has immediate indexing but no buyer-use evidence in this run and anonymous listings cannot be edited. YourAITools is a stronger direct-pay fit but still pending manual review. LocalBiz addresses a real workflow pain, yet its current single-user/local-only scope does not solve inbox aggregation, team collaboration or automated WhatsApp replies. SwiftNodes has a recurring affiliate model, but the referral dashboard and account attribution remain unverified. None of these signals is revenue.
 
@@ -57,13 +60,17 @@ Updated the README, launch-guide product index, LocalBiz skill package and deplo
 
 ### 4. DISTRIBUTION — exact outcomes
 
-**FindAIapp:** GitHub Actions run [43206639634](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/43206639634) completed successfully. Five skills created, zero duplicates, zero failures. Read-only verification run [43206824469](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/43206824469) completed successfully; all five English pages returned HTTP 200:
+**FindAIapp:** GitHub Actions run [43206639634](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/43206639634) completed successfully for the first five skills. The second batch returned HTTP 200 but its workflow summary step failed after the write due a script-order bug; no retry was made. Read-only verification run [43208085654](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/43208085654) found all nine records and verified every English page returned HTTP 200:
 
 - [Lead Follow-up Strategist](https://www.ouraiw.com/en/p/6af59e5b7ead224390a7afdd/lead-follow-up-strategist)
 - [Quote-to-Booking Workflow Planner](https://www.ouraiw.com/en/p/6af59e5b7ead224390a7afde/quote-to-booking-workflow-planner)
 - [LocalBiz FollowUp](https://www.ouraiw.com/en/p/6af59e5b7ead224390a7afdf/localbiz-followup)
 - [JSON Contract Tester](https://www.ouraiw.com/en/p/6af59e5b7ead224390a7afe0/json-contract-tester)
 - [MCPGuard Lite](https://www.ouraiw.com/en/p/6af59e5b7ead224390a7afe1/mcpguard-lite)
+- [Dev & Agent Toolbox](https://www.ouraiw.com/en/p/6af5a0797ead224390a7afe2/dev-agent-toolbox)
+- [StockPulse](https://www.ouraiw.com/en/p/6af5a0797ead224390a7afe3/stockpulse)
+- [ExpenseSnap](https://www.ouraiw.com/en/p/6af5a0797ead224390a7afe4/expensesnap)
+- [CronPulse](https://www.ouraiw.com/en/p/6af5a0797ead224390a7afe5/cronpulse)
 
 **YourAITools:** the first POST returned HTTP 400 because the category slug was invalid; the corrected duplicate-safe check returned HTTP 409 and identified the existing pending record. Status check [43206294526](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/43206294526) returned HTTP 200 and confirmed the record is still pending review. No second listing or paid option was created.
 
