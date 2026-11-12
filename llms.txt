@@ -6,6 +6,20 @@
 
 - [All products and marketplace listings](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/marketplace-hub.html): current catalog with verified publication states.
 
+## Agensi skill listings — submitted, pending review
+
+These free skills have been submitted to Agensi. They are pending review and are not yet confirmed live or approved. Do not treat listing submission as usage or revenue.
+
+- [Lead Follow-up Strategist](https://agensi.io/skills/lead-follow-up-strategist): consent-aware follow-up drafts for genuine inbound leads; draft-only.
+- [Quote-to-Booking Workflow Planner](https://agensi.io/skills/quote-to-booking-workflow-planner): structure enquiries, quote preparation and booking next steps; human approval required.
+- [JSON Contract Tester](https://agensi.io/skills/json-contract-tester): test API/agent JSON outputs against a documented schema subset.
+- [Dev & Agent Toolbox](https://agensi.io/skills/dev-agent-toolbox): workflow guide for browser-based developer utilities.
+- [LocalBiz FollowUp](https://agensi.io/skills/localbiz-followup): local browser lead tracker for small businesses and online sellers.
+- [StockPulse](https://agensi.io/skills/stockpulse): local inventory, reorder threshold and gross-margin tracker.
+- [MCPGuard Lite](https://agensi.io/skills/mcpguard-lite): heuristic local review of MCP/agent JSON configuration; not a full security audit.
+- [ExpenseSnap](https://agensi.io/skills/expensesnap): local time and expense log with CSV/JSON export.
+- [CronPulse](https://agensi.io/skills/cronpulse): offline analysis of exported scheduled-job and agent run logs.
+
 ## Primary products
 
 - [JSON Contract Tester — free browser tool](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/): Validate JSON examples against a documented schema subset locally in the browser. Inputs are processed in the browser and are not uploaded by this tool.
