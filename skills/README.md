@@ -1,5 +1,7 @@
 # Public Agent Skills
 
+[![skills.sh](https://skills.sh/b/falconprojectai-arch/falcon-ai-decision-engine)](https://skills.sh/falconprojectai-arch/falcon-ai-decision-engine) · [GitHub repository](https://github.com/falconprojectai-arch/falcon-ai-decision-engine)
+
 This repository publishes reusable Agent Skills in the open `SKILL.md` format. They are procedural instructions, not standalone integrations. Review each package before installation.
 
 ## Install
@@ -14,14 +16,14 @@ Select the relevant skill from the repository. The source packages are organized
 
 | Skill | Purpose | Public product/source |
 |---|---|---|
-| Lead Follow-up Strategist | Consent-aware follow-up plans and message drafts for genuine inbound business leads. | [Source](lead-followup-strategist/SKILL.md) · [TechTools](https://techtools.cz/tools/launchpad/?tool=9748) |
-| LocalBiz FollowUp | Enquiry stages, next actions and draft follow-up workflows for shops and online sellers. | [Source](localbiz-followup/SKILL.md) · [Browser app](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/localbiz-followup/) · [TechTools](https://techtools.cz/tools/launchpad/?tool=7543) |
-| StockPulse | Manual SKU inventory, reorder thresholds and estimated gross margin. | [Source](stockpulse/SKILL.md) · [Browser app](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/stockpulse/) · [TechTools](https://techtools.cz/tools/launchpad/?tool=7544) |
-| MCPGuard Lite | Heuristic local review of MCP and AI-agent configuration files. | [Source](mcpguard-lite/SKILL.md) · [Browser app](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/mcpguard-lite/) · [TechTools](https://techtools.cz/tools/launchpad/?tool=7545) |
-| ExpenseSnap | Local time and expense logging with export-ready summaries. | [Source](expensesnap/SKILL.md) · [Browser app](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/expensesnap/) · [TechTools](https://techtools.cz/tools/launchpad/?tool=7546) |
-| CronPulse | Offline analysis of exported scheduled-job and agent run history. | [Source](cronpulse/SKILL.md) · [Browser app](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/cronpulse/) · [TechTools](https://techtools.cz/tools/launchpad/?tool=7547) |
-| JSON Contract Tester | Validation guidance for API/AI JSON outputs against a documented JSON Schema subset. | [Source](json-contract-tester/SKILL.md) · [Browser tool](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/) · [TechTools](https://techtools.cz/tools/launchpad/?tool=9746) |
-| Dev & Agent Toolbox | Safe selection and use of browser-only developer utilities. | [Source](dev-agent-toolbox/SKILL.md) · [Browser toolbox](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/dev-agent-toolbox/) · [TechTools](https://techtools.cz/tools/launchpad/?tool=9747) |
+| Lead Follow-up Strategist | Consent-aware follow-up plans and message drafts for genuine inbound business leads. | [Source](lead-followup-strategist/SKILL.md) · [Agensi](https://agensi.io/skills/lead-follow-up-strategist) · [TechTools](https://techtools.cz/tools/launchpad/?tool=9748) |
+| Quote-to-Booking Workflow Planner | Quote checklist, missing-information review and human-approved booking handoff for service businesses. | [Source](quote-to-booking-workflow-planner/SKILL.md) · [Agensi](https://agensi.io/skills/quote-to-booking-workflow-planner) |\n| LocalBiz FollowUp | Enquiry stages, next actions and draft follow-up workflows for shops and online sellers. | [Source](localbiz-followup/SKILL.md) · [Agensi](https://agensi.io/skills/localbiz-followup) · [Browser app](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/localbiz-followup/) · [TechTools](https://techtools.cz/tools/launchpad/?tool=7543) |
+| StockPulse | Manual SKU inventory, reorder thresholds and estimated gross margin. | [Source](stockpulse/SKILL.md) · [Agensi](https://agensi.io/skills/stockpulse) · [Browser app](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/stockpulse/) · [TechTools](https://techtools.cz/tools/launchpad/?tool=7544) |
+| MCPGuard Lite | Heuristic local review of MCP and AI-agent configuration files. | [Source](mcpguard-lite/SKILL.md) · [Agensi](https://agensi.io/skills/mcpguard-lite) · [Browser app](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/mcpguard-lite/) · [TechTools](https://techtools.cz/tools/launchpad/?tool=7545) |
+| ExpenseSnap | Local time and expense logging with export-ready summaries. | [Source](expensesnap/SKILL.md) · [Agensi](https://agensi.io/skills/expensesnap) · [Browser app](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/expensesnap/) · [TechTools](https://techtools.cz/tools/launchpad/?tool=7546) |
+| CronPulse | Offline analysis of exported scheduled-job and agent run history. | [Source](cronpulse/SKILL.md) · [Agensi](https://agensi.io/skills/cronpulse) · [Browser app](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/cronpulse/) · [TechTools](https://techtools.cz/tools/launchpad/?tool=7547) |
+| JSON Contract Tester | Validation guidance for API/AI JSON outputs against a documented JSON Schema subset. | [Source](json-contract-tester/SKILL.md) · [Agensi](https://agensi.io/skills/json-contract-tester) · [Browser tool](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/) · [TechTools](https://techtools.cz/tools/launchpad/?tool=9746) |
+| Dev & Agent Toolbox | Safe selection and use of browser-only developer utilities. | [Source](dev-agent-toolbox/SKILL.md) · [Agensi](https://agensi.io/skills/dev-agent-toolbox) · [Browser toolbox](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/dev-agent-toolbox/) · [TechTools](https://techtools.cz/tools/launchpad/?tool=9747) |
 
 ## Marketplace status
 
