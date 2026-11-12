@@ -53,3 +53,43 @@ The successful run:
 - x402.jobs seller resource registration requires an API key. Do not claim a listing was submitted until the API confirms it.
 - Never pay a listing fee or make a test payment from the user's funds without a separate explicit instruction.
 - Revenue remains zero until an independent buyer payment is verified against provider settlement evidence.
+
+## LocalBiz FollowUp quick start
+
+LocalBiz FollowUp is a browser-only enquiry tracker for small shops, service providers and online sellers. Use it to keep the next customer action visible; it does not send messages or sync records to a cloud account.
+
+### Example: an online-shop product enquiry
+
+A customer asks through Instagram whether a product is in stock and what delivery costs. You answer, but the customer wants time to decide.
+
+1. Open [LocalBiz FollowUp](./localbiz-followup/).
+2. Add the customer's name and the contact method they used. Keep only the minimum information needed.
+3. Enter the product or service they asked about.
+4. Set a sensible follow-up date and choose the current stage, such as **New** or **Waiting**.
+5. When the date arrives, filter for **Due today / overdue** and choose **Draft**.
+6. Review and personalize the message. Copy it or open the WhatsApp draft; you decide whether and when to send it.
+7. Update the stage when the customer buys, declines or needs more time.
+
+Example draft:
+
+> Hi Sara, I’m following up on your question about the blue backpack. Would you like me to confirm the available colours or delivery options for you?
+
+This is only a starting point. Check the conversation history, respect opt-outs and contact customers only through channels they have agreed to use.
+
+### A simple daily routine
+
+- **Start of day:** review enquiries due today or overdue.
+- **Before contacting anyone:** check the latest conversation and whether another message is appropriate.
+- **After a reply:** update the stage and next action.
+- **End of day:** export CSV or JSON backups if you need an external record.
+
+### Privacy and limitations
+
+- Records stay in the current browser's local storage; they do not automatically sync between devices.
+- Export backups before clearing browser data.
+- Do not store payment-card details, passwords, identity documents or sensitive personal information.
+- The app prepares drafts only. It has no WhatsApp API, automatic sending, cloud account, background reminders or payment processing.
+- Test with fictional data before entering real customer information.
+
+[Open LocalBiz FollowUp](./localbiz-followup/) · [Read the Agent Skill](../skills/localbiz-followup/SKILL.md)
+
