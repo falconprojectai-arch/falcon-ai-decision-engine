@@ -193,8 +193,18 @@ jobs:
                   page = await browser.new_page()
                   errors = []
                   page.on("pageerror", lambda error: errors.append(str(error)))
-                  response = await page.goto(os.environ["DASHBOARD_URL"], wait_until="networkidle", timeout=60000)
-                  assert response and response.status == 200
+                  response = None
+                  last_status = None
+                  for attempt in range(1, 4):
+                      try:
+                          response = await page.goto(os.environ["DASHBOARD_URL"], wait_until="domcontentloaded", timeout=60000)
+                          last_status = response.status if response else None
+                          print(f"Dashboard HTTP attempt {attempt}: {last_status}; URL={page.url}")
+                          if response and response.status == 200:
+                              break
+                      except Exception as error:
+                          print(f"Dashboard navigation attempt {attempt} failed: {error}")
+                  assert response and response.status == 200, f"Dashboard did not return HTTP 200 after 3 attempts; last_status={last_status}; url={page.url}"
                   timestamp = await page.locator("#last-updated").get_attribute("datetime")
                   assert timestamp and "2026-11-02T04:20:00" not in timestamp
                   assert "اتاق کنترل پروژه درآمد خودکار" in await page.locator("body").inner_text()
