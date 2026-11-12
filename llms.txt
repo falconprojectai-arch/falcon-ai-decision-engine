@@ -45,12 +45,13 @@ All nine free skills below are approved and live in the creator dashboard as of 
 
 ## Additional free discovery listings — TechTools Launchpad
 
-The following products and API have public TechTools Launchpad listings. Three new records were accepted with HTTP 201 on 12 November 2026; the remaining records were verified by exact-URL lookup.
+The following products and API have public TechTools Launchpad listings. Four new records were accepted with HTTP 201 on 12 November 2026; the remaining six records were verified by exact-URL lookup.
 
 - [JSON Contract Tester API — paid x402 API, 0.005 USDC/batch on Base](https://techtools.cz/tools/launchpad/?tool=7727)
 - [JSON Contract Tester — free browser tool](https://techtools.cz/tools/launchpad/?tool=9746)
 - [Dev & Agent Toolbox](https://techtools.cz/tools/launchpad/?tool=9747)
 - [Lead Follow-up Strategist](https://techtools.cz/tools/launchpad/?tool=9748)
+- [Quote-to-Booking Workflow Planner](https://techtools.cz/tools/launchpad/?tool=9754)
 - [LocalBiz FollowUp](https://techtools.cz/tools/launchpad/?tool=7543)
 - [StockPulse](https://techtools.cz/tools/launchpad/?tool=7544)
 - [MCPGuard Lite](https://techtools.cz/tools/launchpad/?tool=7545)
@@ -71,7 +72,7 @@ Review status can be checked at [CHAAAM directory](https://chaaam.com/directory)
 
 ## Public Agent Skills repository
 
-The installable `SKILL.md` packages are published under [skills/](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/tree/main/skills). [Installation catalogue](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/blob/main/skills/README.md). A public GitHub source is eligible for third-party indexing, but indexing by SkillsMP/skills.sh has not yet been confirmed.
+The installable `SKILL.md` packages are published under [skills/](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/tree/main/skills), including Quote-to-Booking Workflow Planner. [Installation catalogue](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/blob/main/skills/README.md). A public GitHub source is eligible for third-party indexing, but indexing by SkillsMP/skills.sh has not yet been confirmed.
 
 ## API contract
 
