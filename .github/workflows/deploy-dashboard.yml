@@ -134,6 +134,10 @@ jobs:
                           await page.locator("#name").fill("Northside Cafe")
                           await page.locator("#contact").fill("+15555550123")
                           await page.locator("#need").fill("Website enquiry")
+                          await page.locator("#lastContact").fill("2026-11-10")
+                          await page.locator("#next").fill("2026-11-12")
+                          await page.locator("#nextAction").fill("Send estimate")
+                          await page.locator("#notes").fill("Asked for a written estimate")
                           await page.locator("#leadForm button[type=submit]").click()
                           await page.locator("#rows button").first.click()
                       async def stock(page):
@@ -337,8 +341,18 @@ jobs:
                       await page.locator("#name").fill("Email customer")
                       await page.locator("#contact").fill("sample@example.test")
                       await page.locator("#need").fill("Quote")
+                      await page.locator("#lastContact").fill("2026-11-10")
+                      await page.locator("#next").fill("2026-11-12")
+                      await page.locator("#nextAction").fill("Send quote")
+                      await page.locator("#notes").fill("Customer requested a written quote")
                       await page.locator("#leadForm button[type=submit]").click()
                       assert await page.locator("#open").inner_text() == "1"
+                      row = await page.locator("#rows tr").first.inner_text()
+                      for expected in ["2026-11-10", "2026-11-12", "Send quote", "Customer requested a written quote"]:
+                          assert expected in row, row
+                      await page.locator("#search").fill("written quote")
+                      assert await page.locator("#rows tr").count() == 1
+                      await page.locator("#search").fill("")
                       await page.locator("#rows button").first.click()
                       assert await page.locator("#whatsapp").is_disabled()
                       await page.locator("#name").fill("WhatsApp customer")
