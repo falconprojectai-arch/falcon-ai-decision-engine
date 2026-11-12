@@ -1,10 +1,6 @@
 name: Check existing YourAITools listing status
 
 on:
-  push:
-    branches: ["main"]
-    paths:
-      - ".github/workflows/youraitools-status-check.yml"
   workflow_dispatch:
 
 permissions:
