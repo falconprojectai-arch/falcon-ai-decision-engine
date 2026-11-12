@@ -45,9 +45,10 @@ All nine free skills below are approved and live in the creator dashboard as of 
 
 ## Additional free discovery listings — TechTools Launchpad
 
-The following product pages have public TechTools Launchpad listings. Three new records were accepted with HTTP 201 on 12 November 2026; the remaining records were verified by exact-URL lookup.
+The following products and API have public TechTools Launchpad listings. Three new records were accepted with HTTP 201 on 12 November 2026; the remaining records were verified by exact-URL lookup.
 
-- [JSON Contract Tester](https://techtools.cz/tools/launchpad/?tool=9746)
+- [JSON Contract Tester API — paid x402 API, 0.005 USDC/batch on Base](https://techtools.cz/tools/launchpad/?tool=7727)
+- [JSON Contract Tester — free browser tool](https://techtools.cz/tools/launchpad/?tool=9746)
 - [Dev & Agent Toolbox](https://techtools.cz/tools/launchpad/?tool=9747)
 - [Lead Follow-up Strategist](https://techtools.cz/tools/launchpad/?tool=9748)
 - [LocalBiz FollowUp](https://techtools.cz/tools/launchpad/?tool=7543)
@@ -55,6 +56,18 @@ The following product pages have public TechTools Launchpad listings. Three new 
 - [MCPGuard Lite](https://techtools.cz/tools/launchpad/?tool=7545)
 - [ExpenseSnap](https://techtools.cz/tools/launchpad/?tool=7546)
 - [CronPulse](https://techtools.cz/tools/launchpad/?tool=7547)
+
+## CHAAAM submissions — editorial review pending
+
+Five free submissions were accepted by the public CHAAAM form on 12 November 2026. The site returned its official thank-you page and states accepted forms enter a human review queue; none is yet confirmed live.
+
+- JSON Contract Tester — https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/
+- Dev & Agent Toolbox — https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/dev-agent-toolbox/
+- MCPGuard Lite — https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/mcpguard-lite/
+- CronPulse — https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/cronpulse/
+- Lead Follow-up Strategist — https://agensi.io/skills/lead-follow-up-strategist
+
+Review status can be checked at [CHAAAM directory](https://chaaam.com/directory); submission information is at [CHAAAM submit](https://chaaam.com/submit/).
 
 ## Public Agent Skills repository
 
