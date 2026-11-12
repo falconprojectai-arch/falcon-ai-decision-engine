@@ -233,3 +233,12 @@ The first two deployment attempts exposed smoke-test defects, not product defect
 - We did not run a self-install merely to manufacture an install event or inflate a public metric. The repository is publicly installable now; indexing remains unverified until genuine users install it.
 - SkillsMP says it automatically indexes public GitHub repositories containing valid `SKILL.md` files; our repository was not returned in the current public search. Do not claim it is indexed until it appears.
 - Official maintainer discussion: https://github.com/vercel-labs/skills/issues/880 and https://github.com/vercel-labs/skills/issues/1315
+
+
+## 16. Latest marketplace-guide deployment — successful
+
+After the AgenticMart/Colony HQ comparison guide was refreshed, the latest GitHub Pages deployment completed:
+- Test Revenue Machine run **43158966282** — success.
+- Deploy control dashboard run **43158966269** — success.
+- The live marketplace guide now includes the current AgenticMart.org GitHub-sign-in and paid seller terms, the Colony HQ wallet-connect blocker, and the verified distribution snapshot.
+- After this deployment, the live marketplace guide, product index (8 cards), product hub, dashboard, sitemap and `llms.txt` all returned HTTP 200. The product index no longer promotes the excluded ECU research prototype.
