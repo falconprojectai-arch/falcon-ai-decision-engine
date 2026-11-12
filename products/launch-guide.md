@@ -18,7 +18,7 @@ The repository also keeps an SVG interface illustration for each product as a fa
 
 | Product | User problem | Current capability | Important limit |
 |---|---|---|---|
-| [LocalBiz FollowUp](./localbiz-followup/) | Losing track of enquiries and follow-ups | Customer records, status, follow-up dates, reply drafts, CSV export | Local browser storage; no messaging integration or shared team database |
+| [LocalBiz FollowUp](./localbiz-followup/) | Losing track of enquiries and follow-ups | Customer records, source, last contact, next action, notes, status, follow-up dates, reply drafts and CSV export | Local browser storage; due list updates only while open; no messaging integration or shared team database |
 | [StockPulse](./stockpulse/) | Spreadsheet-based stock and margin tracking | SKU records, reorder thresholds, stock value and gross-margin calculations, CSV import/export | No live store/accounting sync; calculations depend on entered cost and price data |
 | [MCPGuard Lite](./mcpguard-lite/) | Risky agent/MCP configuration patterns | Local heuristic scan for exposed secrets, risky commands, broad access and insecure configuration patterns | Not a full security audit; false positives and missed risks are possible |
 | [ExpenseSnap](./expensesnap/) | Scattered billable-time and project-expense records | Time and expense entries, project/client totals, invoice-ready CSV/JSON summary | Not tax/accounting software; no timer, invoicing, payments or cloud sync |
