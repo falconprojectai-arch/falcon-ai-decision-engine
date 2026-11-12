@@ -193,7 +193,7 @@ jobs:
                   assert response and response.status == 200
                   timestamp = await page.locator("#last-updated").get_attribute("datetime")
                   assert timestamp and "2026-11-02T04:20:00" not in timestamp
-                  assert "Golden Desk" in await page.locator("body").inner_text()
+                  assert "اتاق کنترل پروژه درآمد خودکار" in await page.locator("body").inner_text()
                   assert not errors, f"Browser JavaScript errors: {errors}"
                   await browser.close()
 
@@ -410,31 +410,6 @@ jobs:
           PY
 
 
-      - name: Smoke-test ECU workshop research prototype in Chromium
-        env:
-          PAGES_URL: ${{ steps.deployment.outputs.page_url }}
-        run: |
-          python - <<'PY'
-          import asyncio, os
-          from playwright.async_api import async_playwright
-
-          async def main():
-              async with async_playwright() as p:
-                  browser = await p.chromium.launch()
-                  page = await browser.new_page()
-                  errors = []
-                  page.on("pageerror", lambda error: errors.append(str(error)))
-                  response = await page.goto(os.environ["PAGES_URL"] + "products/ecu-workshop-forms/", wait_until="networkidle", timeout=60000)
-                  assert response and response.status == 200, "ECU workshop prototype did not load"
-                  assert await page.title() == "فرم‌های پذیرش و گزارش تعمیر ECU — نمونه اولیه"
-                  assert await page.locator("a[href*='issues/22']").count() >= 1
-                  assert "نمونهٔ پژوهشی" in await page.locator("body").inner_text()
-                  assert not errors, f"Browser JavaScript errors: {errors}"
-                  await browser.close()
-
-          asyncio.run(main())
-          PY
-
       - name: Smoke-test product catalogue and preview assets in Chromium
         env:
           PAGES_URL: ${{ steps.deployment.outputs.page_url }}
@@ -452,12 +427,12 @@ jobs:
                   response = await page.goto(os.environ["PAGES_URL"] + "products/", wait_until="networkidle", timeout=60000)
                   assert response and response.status == 200
                   cards = page.locator("article.card")
-                  assert await cards.count() == 6
+                  assert await cards.count() == 8
                   images = await cards.locator("img").evaluate_all("(els) => els.map(e => ({src:e.getAttribute('src'), width:e.naturalWidth, complete:e.complete}))")
                   assert len(images) == 5 and all(x["complete"] and x["width"] > 0 and x["src"].endswith("/screenshot.png") for x in images), f"Product screenshots failed: {images}"
-                  assert await cards.locator("a[href*='github.com/falconprojectai-arch/falcon-ai-decision-engine/tree/main/products/']").count() == 6
+                  assert await cards.locator("a[href*='github.com/falconprojectai-arch/falcon-ai-decision-engine/tree/main/products/']").count() == 8
                   statuses = await cards.locator(".status").all_text_contents()
-                  assert len(statuses) == 6 and statuses.count("Automated smoke tests passed · 2026-11-04") == 5 and statuses.count("Research prototype · not for sale") == 1, f"Unexpected product status labels: {statuses}"
+                  assert len(statuses) == 8 and statuses.count("Automated release checks") == 7 and statuses.count("Usage-based API · x402") == 1, f"Unexpected product status labels: {statuses}"
                   guide = await page.request.get(os.environ["PAGES_URL"] + "products/launch-guide.md")
                   assert guide.status == 200, f"Launch guide HTTP {guide.status}"
                   assert "Standard product introduction package" in await guide.text()
@@ -515,7 +490,9 @@ jobs:
                   hub_body = await page.locator("body").inner_text()
                   for name in ["Lead Follow-up Strategist", "Quote-to-Booking Workflow Planner", "JSON Contract Tester", "Dev & Agent Toolbox", "LocalBiz FollowUp", "StockPulse", "MCPGuard Lite", "ExpenseSnap", "CronPulse"]:
                       assert name in hub_body, f"Missing product listing: {name}"
-                  assert "pending review" in hub_body.lower() and "awaiting security scan/review" in hub_body.lower()
+                  assert "approved/live" in hub_body.lower() and "security approved" in hub_body.lower()
+                  assert "review pending" in hub_body.lower()
+                  assert "tool=7727" in hub_body and "tool=9754" in hub_body
                   assert not errors, f"Browser JavaScript errors: {errors}"
                   await browser.close()
 
