@@ -93,3 +93,50 @@ This is only a starting point. Check the conversation history, respect opt-outs 
 
 [Open LocalBiz FollowUp](./localbiz-followup/) · [Read the Agent Skill](../skills/localbiz-followup/SKILL.md)
 
+## JSON Contract Tester quick start
+
+Use JSON Contract Tester to check whether a batch of API or AI-agent responses matches the contract your application expects. The tool runs in the browser and does not upload the pasted schema or test data.
+
+### Example: validate an AI support-agent response
+
+Suppose your application expects every response to contain a boolean `ok` field and a non-empty string `answer` field, with no extra top-level properties.
+
+Use this schema:
+
+```json
+{
+  "type": "object",
+  "required": ["ok", "answer"],
+  "properties": {
+    "ok": { "type": "boolean" },
+    "answer": { "type": "string", "minLength": 1 }
+  },
+  "additionalProperties": false
+}
+```
+
+Paste one JSON value per non-empty line in the test-output box:
+
+```json
+{"ok":true,"answer":"Your order is being processed."}
+{"ok":true,"answer":""}
+{"ok":"yes","answer":"Your order is being processed."}
+{"ok":true,"answer":"Done","debug":"internal"}
+```
+
+The first record should pass. The remaining records should fail for a missing non-empty answer, the wrong type for `ok`, and an unexpected `debug` property respectively.
+
+### Workflow
+
+1. Write the smallest schema that describes the response your application actually consumes.
+2. Paste representative valid, invalid, and edge-case outputs, one JSON value per line.
+3. Run validation and inspect the JSON Pointer path and reason for each failure.
+4. Fix the producer, schema, or test fixture according to the intended contract; do not simply weaken validation to make failures disappear.
+5. Export JUnit XML if you want to connect the results to a separate CI workflow.
+
+### Important limits
+
+This browser tool implements a documented subset of JSON Schema, not the complete specification. It supports common keywords such as `type`, `required`, `properties`, `items`, `enum`, `const`, numeric/string/array bounds, `pattern`, and `additionalProperties: false`. It does not support references, combinators such as `oneOf` or `anyOf`, full `format` checks, or every JSON Schema feature. Unknown keywords are ignored. A PASS means the data passed the supported rules only; use a full standards-compliant validator for production or security-critical contracts.
+
+[Open JSON Contract Tester](./json-contract-tester/) · [Read the Agent Skill](../skills/json-contract-tester/SKILL.md)
+
