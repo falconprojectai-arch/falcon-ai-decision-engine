@@ -1,0 +1,40 @@
+name: Check existing YourAITools listing status
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/youraitools-status-check.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Read the existing submission status without creating another listing
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import urllib.request
+
+          status_url = "https://api.youraitools.co/listing/v1/submit/sub_zreyutibyh"
+          request = urllib.request.Request(
+              status_url,
+              headers={"Accept": "application/json", "User-Agent": "FalconYourAIToolsStatusCheck/1.0"},
+              method="GET",
+          )
+          with urllib.request.urlopen(request, timeout=25) as response:
+              body = response.read().decode("utf-8", "replace")
+              result = json.loads(body)
+              print("HTTP_STATUS", response.status)
+              print("LISTING_STATUS", json.dumps(result, ensure_ascii=False)[:4000])
+              with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as summary:
+                  summary.write("## Existing YourAITools listing status\n\n")
+                  summary.write("```json\n" + json.dumps(result, indent=2) + "\n```\n")
+                  summary.write("\nRead-only status check; no listing, payment, or payout setting was changed.\n")
+          PY
