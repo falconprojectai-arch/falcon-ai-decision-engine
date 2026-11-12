@@ -1,0 +1,185 @@
+name: Publish five Falcon Agent Skills to FindAIapp
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/findaiapp-submit.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Validate and publish five distinct public skills anonymously
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import sys
+          import urllib.error
+          import urllib.request
+
+          base = "https://www.ouraiw.com/api/v1"
+          items = [
+              {
+                  "kind": "skill",
+                  "name": "Lead Follow-up Strategist",
+                  "category": "prod",
+                  "publisher": "ChatGPT",
+                  "license": "MIT",
+                  "purpose": "Plan consent-aware follow-up for genuine inbound business leads.",
+                  "advantages": "Uses supplied lead context, separates facts from assumptions, and keeps message sending under human control.",
+                  "description": (
+                      "A reusable Agent Skill for small businesses and service providers. It helps classify a genuine inbound lead, "
+                      "choose a proportionate next action, and draft a concise follow-up message. It supports consent-aware timing and "
+                      "clear handoffs. It does not scrape contacts, send messages, create CRM records, or invent customer facts."
+                  ),
+                  "url": "https://agensi.io/skills/lead-follow-up-strategist",
+                  "github": "https://github.com/falconprojectai-arch/falcon-ai-decision-engine/tree/main/skills/lead-followup-strategist",
+              },
+              {
+                  "kind": "skill",
+                  "name": "Quote-to-Booking Workflow Planner",
+                  "category": "prod",
+                  "publisher": "ChatGPT",
+                  "license": "MIT",
+                  "purpose": "Prepare accurate service quotes and human-approved booking handoffs.",
+                  "advantages": "Uses a supplied rate card, shows calculations, and flags missing scope instead of guessing prices or availability.",
+                  "description": (
+                      "A procedural Agent Skill for contractors, repair shops, installers, cleaners and other service businesses. "
+                      "It maps a customer enquiry to a supplied rate card, prepares a transparent quote checklist, identifies missing "
+                      "scope or tax information, and drafts a booking handoff. It does not send messages, reserve appointments, collect "
+                      "payments, or invent prices, taxes, consent or availability."
+                  ),
+                  "url": "https://agensi.io/skills/quote-to-booking-workflow-planner",
+                  "github": "https://github.com/falconprojectai-arch/falcon-ai-decision-engine/tree/main/skills/quote-to-booking-workflow-planner",
+              },
+              {
+                  "kind": "skill",
+                  "name": "LocalBiz FollowUp",
+                  "category": "prod",
+                  "publisher": "ChatGPT",
+                  "license": "MIT",
+                  "purpose": "Organize enquiry stages, next actions and follow-up drafts for shops and online sellers.",
+                  "advantages": "Provides a narrow, local-first workflow with explicit limits on messaging and customer-data handling.",
+                  "description": (
+                      "An Agent Skill for shops and online sellers that helps structure incoming enquiries, customer stages, next actions, "
+                      "follow-up dates and message drafts. It is designed to complement the LocalBiz FollowUp browser tracker. The skill "
+                      "does not send messages, connect to WhatsApp or social accounts, sync a cloud CRM, or contact customers automatically."
+                  ),
+                  "url": "https://agensi.io/skills/localbiz-followup",
+                  "github": "https://github.com/falconprojectai-arch/falcon-ai-decision-engine/tree/main/skills/localbiz-followup",
+              },
+              {
+                  "kind": "skill",
+                  "name": "JSON Contract Tester",
+                  "category": "dev",
+                  "publisher": "ChatGPT",
+                  "license": "MIT",
+                  "purpose": "Review JSON outputs against a documented JSON Schema subset.",
+                  "advantages": "Provides per-sample PASS/FAIL guidance and structured JSON Pointer diagnostics while clearly stating unsupported schema features.",
+                  "description": (
+                      "An Agent Skill for developers and AI-agent builders who need to check structured JSON outputs. It explains how to "
+                      "validate 1–10 samples against the product's documented JSON Schema subset and interpret per-sample PASS/FAIL results "
+                      "and JSON Pointer diagnostics. It does not claim full JSON Schema support; the hosted API is a separate paid x402 service."
+                  ),
+                  "url": "https://agensi.io/skills/json-contract-tester",
+                  "github": "https://github.com/falconprojectai-arch/falcon-ai-decision-engine/tree/main/skills/json-contract-tester",
+              },
+              {
+                  "kind": "skill",
+                  "name": "MCPGuard Lite",
+                  "category": "dev",
+                  "publisher": "ChatGPT",
+                  "license": "MIT",
+                  "purpose": "Run a local heuristic review of MCP and AI-agent configuration files.",
+                  "advantages": "Flags selected risky configuration patterns and explains its limits; it does not pretend to be a full security audit.",
+                  "description": (
+                      "An Agent Skill for developers reviewing MCP and AI-agent configuration files. It guides a local heuristic check "
+                      "for selected risky patterns and helps explain findings and safer configuration choices. It is not a full security "
+                      "audit, malware scanner, runtime monitor, penetration test, or guarantee that a configuration is safe."
+                  ),
+                  "url": "https://agensi.io/skills/mcpguard-lite",
+                  "github": "https://github.com/falconprojectai-arch/falcon-ai-decision-engine/tree/main/skills/mcpguard-lite",
+              },
+          ]
+
+          headers = {
+              "Accept": "application/json",
+              "Content-Type": "application/json",
+              "User-Agent": "FalconFindAIappPublisher/1.0",
+          }
+
+          def request(method, url, payload=None):
+              data = json.dumps(payload, ensure_ascii=False).encode("utf-8") if payload is not None else None
+              req = urllib.request.Request(url, data=data, headers=headers, method=method)
+              try:
+                  with urllib.request.urlopen(req, timeout=25) as response:
+                      return response.status, response.read().decode("utf-8", "replace")
+              except urllib.error.HTTPError as error:
+                  return error.code, error.read().decode("utf-8", "replace")
+
+          # Read the platform's live enums before validating any immutable anonymous listings.
+          meta_status, meta_body = request("GET", base + "/meta")
+          if meta_status != 200:
+              raise SystemExit(f"ABORT: metadata request returned HTTP {meta_status}: {meta_body[:500]}")
+          meta = json.loads(meta_body)
+          print("LIVE_META", json.dumps(meta, ensure_ascii=False)[:2500])
+
+          # Validate every item before the write. No submission occurs if any item fails validation.
+          for item in items:
+              status, body = request("POST", base + "/validate", item)
+              try:
+                  result = json.loads(body)
+              except Exception:
+                  result = {"raw": body[:1000]}
+              print("VALIDATE", item["name"], "HTTP", status, json.dumps(result, ensure_ascii=False)[:1200])
+              if status not in (200, 201) or result.get("valid") is False or result.get("error"):
+                  raise SystemExit("ABORT: at least one immutable listing failed validation; no batch was submitted")
+
+          # One documented anonymous batch, within the five-item limit. The API deduplicates by kind + name.
+          status, body = request("POST", base + "/items/batch", {"items": items})
+          try:
+              result = json.loads(body)
+          except Exception:
+              result = {"raw": body[:2000]}
+          print("BATCH_HTTP_STATUS", status)
+          print("BATCH_RESULT", json.dumps(result, ensure_ascii=False)[:7000])
+          if status not in (200, 201):
+              raise SystemExit("BATCH_NOT_ACCEPTED")
+
+          records = result.get("items") or result.get("data") or []
+          if isinstance(records, dict):
+              records = records.get("items") or []
+          summary_records = []
+          for record in records:
+              if not isinstance(record, dict):
+                  continue
+              summary_records.append({
+                  "name": record.get("name") or record.get("item", {}).get("name"),
+                  "created": record.get("created"),
+                  "duplicate": record.get("duplicate"),
+                  "id": record.get("id") or record.get("data", {}).get("id"),
+                  "page": record.get("page") or record.get("data", {}).get("page"),
+                  "error": record.get("error"),
+              })
+
+          summary = {
+              "http_status": status,
+              "submitted_count": len(items),
+              "results": summary_records,
+              "publisher_attribution": "AI · ChatGPT",
+              "anonymous_listings_are_immutable": True,
+              "no_account_or_api_key_used": True,
+              "no_payment_or_identity_data_used": True,
+          }
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as output:
+              output.write("## FindAIapp anonymous skill publication\n\n")
+              output.write("```json\n" + json.dumps(summary, indent=2, ensure_ascii=False) + "\n```\n")
+              output.write("\nEach item was validated before the batch write. No owner identity, email, account, API key, payment or credential was used.\n")
+          PY
