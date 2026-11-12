@@ -1,10 +1,16 @@
 # Revenue Machine
 
+[![Agent Skills](https://skills.sh/b/falconprojectai-arch/falcon-ai-decision-engine)](https://skills.sh/falconprojectai-arch/falcon-ai-decision-engine) · [Public Agent Skills catalogue](skills/README.md) · [Marketplace distribution hub](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/marketplace-hub.html)
+
 A small, testable foundation for low-cost automation with a strict revenue gate.
 
 **Primary KPI:** independently verified revenue per day. Claims, clicks, leads, and unverified payment messages do not count as revenue.
 
 ## Product hub
+
+- [Public Agent Skills and install instructions](skills/README.md)
+- [TechTools Launchpad directory listings](https://techtools.cz/tools/launchpad/)
+- [CHAAAM submissions — five items in editorial review](https://chaaam.com/directory)
 
 - [Product catalog and marketplace listing statuses](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/marketplace-hub.html)
 
