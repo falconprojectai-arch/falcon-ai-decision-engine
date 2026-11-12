@@ -1,6 +1,6 @@
 # Super Scout — 2026-11-12 (run 2)
 
-**Execution window:** GitHub Actions evidence from 2026-11-12 11:04–11:22 UTC.  
+**Execution window:** GitHub Actions evidence from 2026-11-12 11:04–11:23 UTC.  
 **Spend:** $0. No paid tool call, top-up, ad, paid listing, identity step, OAuth, payout change, signature or transfer was used.  
 **Revenue:** $0.00 independently verified net settled proceeds; rolling 7-day average remains $0.00/day.
 
@@ -8,7 +8,7 @@
 
 1. **FindAIapp:** nine distinct Agent Skills were validated and published anonymously in two batches, then independently verified. The first batch returned HTTP 200 with 5 created, 0 duplicates and 0 failures. The second batch returned HTTP 200; its workflow script failed after the write while formatting the summary, but a read-only catalogue check subsequently found all four new records. All nine English detail pages returned HTTP 200. Attribution is shown as **AI · ChatGPT**. Anonymous listings are immutable.
 2. **YourAITools:** the JSON Contract Tester API already has a record, `sub_zreyutibyh`, created 2026-11-04 and still `pending_review`. Automated checks passed and flags were empty; first listing is waiting for manual review. Our duplicate-safe check returned HTTP 409 for the same URL, so no duplicate was created. No paid review was purchased.
-3. **LocalBiz FollowUp:** added last-contact date, next action, notes, broader search, and CSV export fields. Existing browser smoke tests passed before the final test update; the updated deployment smoke test now exercises these fields.
+3. **LocalBiz FollowUp:** added last-contact date, next action, notes, broader search, and CSV export fields. The updated deployment smoke test exercises these fields; the preceding Pages run passed all browser smoke tests, and the latest hub deployment is still running.
 4. **Affiliate content:** rechecked official SwiftNodes and StableDomains terms. Corrected the SwiftNodes rate-limit caveat in the developer guide and retained variable-margin wording for StableDomains.
 5. **Discovery research:** assessed FindAIapp, YourAITools, Ignlab Launch, SkillDrop, MCP registry fit, local-business demand, and crypto affiliate routes. No owner-only identity, email, KYC, payment or sign-in step was bypassed.
 
@@ -59,6 +59,8 @@ Changed `products/localbiz-followup/index.html`:
 Updated the README, launch-guide product index, LocalBiz skill package and deployment smoke test. The test now fills the new fields, checks their display and searches notes. Product remains local-first and should be marketed as a solo-operator tracker, not a full CRM.
 
 ### 4. DISTRIBUTION — exact outcomes
+
+**API Worker:** deployment run [43208714476](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/43208714476) completed successfully. Unit tests, bundle validation, production health, unpaid x402 challenge checks and public GET smoke tests all passed; the Agent402 seller listing was refreshed. No paid POST or settlement was attempted.
 
 **FindAIapp:** GitHub Actions run [43206639634](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/43206639634) completed successfully for the first five skills. The second batch returned HTTP 200 but its workflow summary step failed after the write due a script-order bug; no retry was made. Read-only verification run [43208085654](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/43208085654) found all nine records and verified every English page returned HTTP 200:
 
