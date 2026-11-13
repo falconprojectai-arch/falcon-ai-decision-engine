@@ -21,7 +21,7 @@
 
 **B. Creator marketplaces and payout models**
 
-- [Techne Skills](https://techneskills.ai/founding-creators/terms): founding offer has a 10% platform fee and a 14-day requirement to ship a real, runnable skill. The application requires a seven-step form, email sign-in and a personal call. Stripe/Connect fees apply, and its terms prohibit promoting competing platforms on Techne. Not suitable under current no-owner-login/no-Stripe-payout constraints.
+- [Techne Skills](https://techneskills.ai/founding-creators/terms): founding offer has a 10% platform fee and a 14-day requirement to ship a real, runnable skill. The application page requires email magic-link sign-in; it says shortlisted applicants get a personal call. The application page estimates ~6 minutes, while the terms page describes a seven-step form taking around 15 minutes. Stripe/Connect fees apply, and its terms prohibit promoting competing platforms on Techne. Not suitable under current no-owner-login/no-Stripe-payout constraints.
 - [SkillExchange](https://skillexchange.market/terms): creator registration requires GitHub or Google OAuth; payouts are fiat EUR through Stripe Connect. The public creator page's 80/20 versus 85/15 fee claims are inconsistent. Not submitted.
 - [Skillzy](https://skillzy.ai/terms): advertises free instant listings and an 80% seller share, but payouts require Stripe Connect onboarding and identity checks. No crypto payout route; listings are not pre-reviewed, leaving seller security/IP responsibility. Not submitted.
 
