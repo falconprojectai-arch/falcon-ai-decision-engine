@@ -7,7 +7,7 @@
 - Verified affiliate conversions/commissions: **0**
 - Rolling 7-day average net settled proceeds: **$0.00/day**
 - New third-party listings submitted in this run: **0**. New channels were either incompatible with the payout/owner-input constraints or required a genuine MCP server that does not yet exist.
-- Owned-repository content, navigation, machine-readable catalogue and evidence-log updates were committed. Static validation passed for LocalBiz metadata/JSON-LD, truthful manual-send disclosure, affiliate terms/disclosures, MCP eligibility wording, navigation links, channel matrix and this report. GitHub Pages deployment/public verification is still pending; these commits are not described as live until the deployed pages are fetched successfully.
+- Owned-repository content, navigation, machine-readable catalogue and evidence-log updates were committed. Static validation passed for LocalBiz metadata/WebApplication JSON-LD, MCP guide title/description/Open Graph/TechArticle JSON-LD, truthful manual-send disclosure, affiliate terms/disclosures, MCP eligibility wording, navigation links, channel matrix and this report. GitHub Pages deployment/public verification is still pending; these commits are not described as live until the deployed pages are fetched successfully.
 
 ## Work completed by workstream
 
