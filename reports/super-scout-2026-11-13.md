@@ -7,7 +7,7 @@
 - Verified affiliate conversions/commissions: **0**
 - Rolling 7-day average net settled proceeds: **$0.00/day**
 - New third-party listings submitted in this run: **0**. New channels were either incompatible with the payout/owner-input constraints or required a genuine MCP server that does not yet exist.
-- Three owned-repository content updates and the channel-matrix reconciliation were committed. GitHub Pages deployment/public verification is still pending; these commits are not described as live until the deployed pages are fetched successfully.
+- Owned-repository content, navigation, machine-readable catalogue and evidence-log updates were committed. Static validation passed for LocalBiz metadata/JSON-LD, truthful manual-send disclosure, affiliate terms/disclosures, MCP eligibility wording, navigation links, channel matrix and this report. GitHub Pages deployment/public verification is still pending; these commits are not described as live until the deployed pages are fetched successfully.
 
 ## Work completed by workstream
 
@@ -88,11 +88,19 @@ Scores are 0–5, not conversion probabilities. Higher support-burden score mean
    - Updated both affiliate disclosures to the current published terms and date.
    - Commit: `5d7a73d4139280ab68a02a036af6d6d25579af`.
 
-4. `reports/channel-matrix.md`
-   - Reconciled Agensi, SkillStore, SwiftNodes, StableDomains, mcpub, Techne, SkillExchange and Skillzy states; added the decision gate and evidence links.
-   - Commit: `e40e52e3adbdaef77635a90e810b67cf0e7781ff`, followed by the Agensi evidence update `d6b1dc13a563bf12b0f5d6ef2552ba2ada5675a8`.
+4. `products/dev-agent-toolbox/index.html`, `products/marketplace-hub.html` and `llms.txt`
+   - Renamed navigation to the MCP server launch checklist and updated the machine-readable guide description.
+   - Commits: `a3cdfab80e5b8385bc2b6a2f675ee294280954d2`, `ad13d29395df108ec0583a51c5cb1fb1d1435270`, `a98c3485c572d8527d1b08f13d9922d612c62111`.
 
-**Static checks passed:** LocalBiz JSON-LD parses; metadata/canonical/Open Graph tags exist; manual-send disclosure remains; both affiliate term blocks and the mcpub distinction are present. This is a source-level check only. Latest GitHub Pages deployment and public-page verification are still pending.
+5. `reports/channel-matrix.md`
+   - Reconciled Agensi, SkillStore, SwiftNodes, StableDomains, mcpub, Techne, SkillExchange and Skillzy states; added the decision gate and evidence links.
+   - Commits: `e40e52e3adbdaef77635a90e810b67cf0e7781ff` and `d6b1dc13a563bf12b0f5d6ef2552ba2ada5675a8`.
+
+6. `reports/super-scout-2026-11-13.md`
+   - Added this dated evidence report.
+   - Commit: `194fac576e651f59c414db80135f2094248a6357`.
+
+**Static checks passed:** LocalBiz JSON-LD parses; metadata/canonical/Open Graph tags exist; manual-send disclosure remains; affiliate term blocks and disclosures, MCP eligibility wording, navigation links, channel matrix and report content all passed source-level assertions. Latest GitHub Pages deployment and public-page verification are still pending.
 
 ## 4. DISTRIBUTION
 
