@@ -94,7 +94,7 @@ Scores are 0–5, not conversion probabilities. Higher support-burden score mean
 
 5. `reports/channel-matrix.md`
    - Reconciled Agensi, SkillStore, SwiftNodes, StableDomains, mcpub, Techne, SkillExchange and Skillzy states; added the decision gate and evidence links.
-   - Commits: `e40e52e3adbdaef77635a90e810b67cf0e7781ff`, `d6b1dc13a563bf12b0f5d6ef2552ba2ada5675a8` and `7427ef8f460f3ed144315913fd51d58a855882e4`.
+   - Commits: `e40e52e3adbdaef77635a90e810b67cf0e7781ff`, `d6b1dc13a563bf12b0f5d6ef2552ba2ada5675a8`, `7427ef8f460f3ed144315913fd51d58a855882e4` and `a8644c21c6d1cc77de52bca20899e1d72dfcd490`.
 
 6. `reports/super-scout-2026-11-13.md`
    - Added this dated evidence report.
