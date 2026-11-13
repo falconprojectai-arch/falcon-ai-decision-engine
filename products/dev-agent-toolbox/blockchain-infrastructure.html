@@ -14,12 +14,12 @@
 <body>
 <header>
 <p class="muted"><a href="./index.html">Dev &amp; Agent Toolbox</a> / Infrastructure notes / <a href="./agent-integration-patterns.html">AI agent integration examples</a></p>
-<h1>Choosing infrastructure for blockchain apps and AI agents</h1>
-<p>A practical, vendor-neutral checklist for two separate decisions: how your application reads and writes blockchain data, and how you choose and manage a domain for a project or agent.</p>
-<p class="small muted">Last reviewed: 12 November 2026 · This is an evaluation guide, not a benchmark or an endorsement based on hands-on testing.</p>
+<h1>Launching an MCP server: RPC, domains and discovery</h1>
+<p>A practical, vendor-neutral checklist for launching a remote MCP server: choose an RPC dependency, register and manage a domain, implement a secure endpoint, and verify discovery before listing. Provider links below are disclosed referrals, not performance endorsements.</p>
+<p class="small muted">Last reviewed: 13 November 2026 · This is an evaluation guide, not a benchmark or an endorsement based on hands-on testing.</p>
 </header>
 <section class="panel">
-<h2>1. Evaluate an RPC provider before integrating it</h2>
+<h2>1. Choose and verify an RPC provider</h2>
 <p>An RPC endpoint is part of your application's reliability boundary. Do not choose a provider from a headline request limit alone. Run a small test against the exact chains, methods and regions your workload needs.</p>
 <ol>
 <li><strong>Chain and method coverage:</strong> confirm the specific networks and RPC methods you call, including archive or trace methods if your app needs them.</li>
@@ -32,7 +32,8 @@
 <p>For a fair comparison, send the same read-only request set to each candidate and log timestamp, chain, method, latency, status and response validity. Never benchmark with a wallet private key or production signing secret.</p>
 <div class="panel">
 <h3>One provider to include in your shortlist: SwiftNodes</h3>
-<p>SwiftNodes advertises blockchain RPC endpoints and an affiliate program. Review its <a href="https://swiftnodes.io/chains">supported-chain list</a>, <a href="https://swiftnodes.io/affiliates">affiliate terms</a>, plan limits and pricing, then run your own workload tests before adopting it. We have not independently benchmarked its performance, and this page does not claim otherwise.</p>
+<p>SwiftNodes advertises blockchain RPC endpoints and a hosted MCP interface. Review its <a href="https://swiftnodes.io/chains">supported-chain list</a>, <a href="https://swiftnodes.io/affiliates">official affiliate terms</a>, active plan limits and pricing, then run your own workload tests before adopting it. We have not independently benchmarked its performance, and this page does not claim otherwise.</p>
+<p class="small muted">Published affiliate terms checked 13 November 2026: 20% of each referred customer's payment for the life of the subscription; 30-day hold; USDC payout on Base, Arbitrum or Polygon; $50 minimum; monthly payout. Refunds or chargebacks can reverse commissions. Verify the current terms before relying on them.</p>
 <p><a class="btn" href="https://swiftnodes.io/?ref=xxuxt8dw" rel="sponsored nofollow">View SwiftNodes</a></p>
 <p class="small muted">Affiliate disclosure: this link is a referral link. If you subscribe through it, the site owner may earn a commission in USDC. Your price is not represented as discounted by this referral.</p>
 </div>
@@ -49,7 +50,8 @@
 </ul>
 <div class="panel">
 <h3>One option to evaluate: StableDomains</h3>
-<p>StableDomains describes domain registration and management with USDC/USDT payment options and developer interfaces including <a href="https://stabledomains.net/developers">REST and MCP documentation</a>. Review its <a href="https://stabledomains.net/affiliates">affiliate terms</a> too. Check the exact TLD, renewal price, supported chain and registry conditions before ordering.</p>
+<p>StableDomains describes domain registration and management with USDC/USDT payment options and developer interfaces including <a href="https://stabledomains.net/developers">REST and MCP documentation</a>. Review its <a href="https://stabledomains.net/affiliates">official affiliate terms</a> too. Check the exact TLD, renewal price, supported chain and registry conditions before ordering.</p>
+<p class="small muted">Published affiliate terms checked 13 November 2026: $0.60 per eligible .com and $0.51 per eligible .xyz registration, renewal or transfer attributed within 30 days; first referrer wins; self-referrals are excluded; USDC on Base is paid weekly after review when the balance reaches $5. Smaller balances roll over. These amounts are the provider's published commission, not a discount to the buyer.</p>
 <p><a class="btn" href="https://stabledomains.net/?ref=ff6ueixx" rel="sponsored nofollow">Explore StableDomains</a></p>
 <div class="panel">
 <h3>Search for a domain</h3>
@@ -60,7 +62,17 @@
 </div>
 </section>
 <section class="panel">
-<h2>3. A small pre-deployment checklist</h2>
+<h2>3. Implement and verify the MCP endpoint</h2>
+<p>For a remote MCP server, use the current <a href="https://modelcontextprotocol.io/specification/2025-11-25/basic/transports">Streamable HTTP transport specification</a> or a maintained official SDK. A directory listing is not proof that the endpoint works.</p>
+<ol>
+<li><strong>Expose one MCP endpoint:</strong> support JSON-RPC over HTTP POST and implement the required initialization and capability negotiation. If you do not offer a server-initiated SSE stream, return HTTP 405 for GET as the transport specification permits.</li>
+<li><strong>Validate origin and host:</strong> reject invalid Origin values; apply host validation and appropriate authentication for protected tools. A public read-only demo should still cap request size, depth and work per call.</li>
+<li><strong>Test real tool calls:</strong> verify initialize, tools/list and at least one tools/call against a client. Test malformed input, unknown methods, errors and limits; do not treat a health endpoint alone as MCP conformance.</li>
+<li><strong>Keep secrets out of source:</strong> use environment secrets, least-privilege keys and redacted test data. Never ask users to paste private keys or recovery phrases into prompts.</li>
+<li><strong>Separate directories:</strong> the community directory <a href="https://mcpub.dev/">mcpub</a> asks submitters to serve <code>/.well-known/mcp.json</code> and a functioning MCP endpoint, then accepts a free, accountless submission. That file is a mcpub intake requirement, not a replacement for the MCP protocol. The <a href="https://registry.modelcontextprotocol.io/">official MCP Registry</a> is a separate service with its own metadata and publisher-verification process.</li>
+</ol>
+<p>We have not submitted the JSON Contract Tester API to mcpub: it is currently a REST/x402 API, not a published MCP server. Do not list a plain REST endpoint as MCP.</p>
+<h2>4. A small pre-deployment checklist</h2>
 <ul>
 <li>[ ] I verified that the provider supports the exact chain and methods my app uses.</li>
 <li>[ ] I measured latency and error rates from my actual deployment region.</li>
