@@ -81,8 +81,9 @@ Scores are 0–5, not conversion probabilities. Higher support-burden score mean
 2. `products/dev-agent-toolbox/blockchain-infrastructure.html`
    - Refocused the guide on launching a remote MCP server: RPC selection, domains, endpoint verification and directory distinctions.
    - Added current published SwiftNodes and StableDomains affiliate terms and retained visible referral disclosures.
+   - Added current SEO title/description, Open Graph/Twitter tags and TechArticle JSON-LD.
    - Explicitly states the JSON Contract Tester API is REST/x402, not an MCP server, so it has not been submitted to mcpub.
-   - Commit: `2121c5d3be82bca54be9949cd520115fae6e71cc`.
+   - Commits: `2121c5d3be82bca54be9949cd520115fae6e71cc` and `383b0b125ddb55518dd31f60f6e1930af1532f6c`.
 
 3. `products/dev-agent-toolbox/agent-integration-patterns.html`
    - Updated both affiliate disclosures to the current published terms and date.
