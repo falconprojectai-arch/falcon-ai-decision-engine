@@ -43,6 +43,7 @@ Last reconciled: 2026-11-14. Full run notes: [Super Scout 2026-11-14](./super-sc
 
 ## Revenue ledger
 
+- Last reconciled: 2026-11-14. Gmail searches found no new USDT payment-verification or free preflight requests since 2026-11-12; this is not an on-chain audit.
 - Independently verified net settled revenue: **$0.00**
 - Verified paid API calls: **0**
 - Verified affiliate conversions/commissions: **0**
