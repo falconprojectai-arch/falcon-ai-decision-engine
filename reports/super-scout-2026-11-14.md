@@ -27,7 +27,11 @@ A listing, directory view, HTTP 402 challenge, pending review, click, registrati
 
 The [API Contract Validator](https://agensi.io/skills/api-contract-validator) peer skill had 13 uses and 3 votes. Its detailed workflow addresses OpenAPI spec drift, runtime response mismatches and breaking changes. This is a useful problem signal, but 13 uses do not prove paid demand. Our current JSON Contract Tester only validates its documented JSON Schema subset; it does not lint OpenAPI specs, compare spec versions or run CI gates.
 
-### 2. MCP and developer directories
+### 2. Existing community distribution signal
+
+Two indexed [r/SideProject posts](https://www.reddit.com/r/SideProject/comments/1xhexo5/i_built_a_small_json_contract_tester_for_checking/) and [a second post about the same browser tool](https://www.reddit.com/r/SideProject/comments/1xhfg2y/i_built_a_small_json_contract_tester_for_checking/) dated 2026-10-28 surfaced with 0 and 1 vote respectively in the search results. The thread pages could not be opened in this review, so comments or deeper engagement were not verified. This is not a buyer signal. No repost, comment or direct message was made; avoid repeating the same broad pitch.
+
+### 3. MCP and developer directories
 
 [mcpub](https://mcpub.dev/) advertises free, accountless submission but requires a real MCP endpoint and a `/.well-known/mcp.json` server card. The current JSON Contract Tester API is REST/x402, not an MCP server. It was not submitted as MCP and must not be described as one.
 
