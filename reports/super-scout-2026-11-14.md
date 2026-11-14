@@ -49,6 +49,8 @@ The previously inspected [Upwork speed-to-lead brief](https://www.upwork.com/fre
 
 ### 6. Creator marketplace quality
 
+The free [Quote Proposal Agent](https://agensi.io/skills/quote-proposal-agent) showed 22 uses and 2 votes, with no reviews; its creator profile showed 116 skills and 2,819 total uses. Its useful pattern is qualification before pricing, explicit inclusions/exclusions, calculations from real rates, and a low-pressure 24-hour / 3-day / 7-day follow-up cadence. The free [Spark Media](https://agensi.io/skills/ai-digital-marketing-tool-spark-media) and [SEO Audit Agent](https://agensi.io/skills/seo-audit-agent-full-website-seo-checker) showed 77 and 76 uses respectively. These are platform activity signals, not earnings or proof of customer conversion. No private creator conversation occurred.
+
 [SkillChain](https://www.skillchain.me/) advertises SOL escrow purchases and an 85% creator share. The public marketplace counters for skills, agents, purchases and volume were blank, and seller registration, payout mechanics, fees and moderation terms were not independently verified. It is deferred; no account, wallet or listing action was taken.
 
 ### 7. Affiliate economics
