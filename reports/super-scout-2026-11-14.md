@@ -35,25 +35,25 @@ Two indexed [r/SideProject posts](https://www.reddit.com/r/SideProject/comments/
 
 [mcpub](https://mcpub.dev/) advertises free, accountless submission but requires a real MCP endpoint and a `/.well-known/mcp.json` server card. The current JSON Contract Tester API is REST/x402, not an MCP server. It was not submitted as MCP and must not be described as one.
 
-### 3. Local-business follow-up
+### 4. Local-business follow-up
 
 The previously inspected [Upwork speed-to-lead brief](https://www.upwork.com/freelance-jobs/apply/Speed-Lead-System-for-HVAC-Roofing_~022113721182841106844/) described 150–300 monthly leads and a $1,500–$2,500 budget, with more than 50 proposals at the time checked. That is evidence of demand for operational CRM/SMS follow-up, not for a browser-only tracker. LocalBiz FollowUp still stores records in local browser storage and drafts messages; it does not send SMS, connect to a CRM, handle missed calls or sync a team database. Keep the limitation prominent and do not pitch it as the requested automation.
 
-### 4. No-account SaaS distribution
+### 5. No-account SaaS distribution
 
 [Ignlab Launch](https://launch.ignlab.net/) homepage checked 2026-11-14 showed 7,646+ tools and 668 Developer Tools listings. It advertises free submission without an account or paywall, editorial review and a private edit link. The actual form fields and CAPTCHA/anti-bot requirements were not verified. No submission was attempted and no write endpoint was guessed. If a safe inspection later confirms no owner-only fields and no CAPTCHA, test one relevant browser tool only; do not batch-submit the portfolio.
 
-### 5. Additional AI-tools directory
+### 6. Additional AI-tools directory
 
 [AI Tools Directory](https://aitoolsdirectory.com/submit-tool) describes itself as a free resource with manual review, but it accepts AI-related tools only and explicitly excludes crypto-related products. Its optional Fast Track is paid ($39) and is not considered. A browser-only JSON Contract Tester listing might fit if the form permits it, but the form's contact/CAPTCHA requirements were not verified; nothing was submitted.
 
-### 6. Creator marketplace quality
+### 7. Creator marketplace quality
 
 The free [Quote Proposal Agent](https://agensi.io/skills/quote-proposal-agent) showed 22 uses and 2 votes, with no reviews; its creator profile showed 116 skills and 2,819 total uses. Its useful pattern is qualification before pricing, explicit inclusions/exclusions, calculations from real rates, and a low-pressure 24-hour / 3-day / 7-day follow-up cadence. The free [Spark Media](https://agensi.io/skills/ai-digital-marketing-tool-spark-media) and [SEO Audit Agent](https://agensi.io/skills/seo-audit-agent-full-website-seo-checker) showed 77 and 76 uses respectively. These are platform activity signals, not earnings or proof of customer conversion. The free [ERPNext CRM Free Trial Pack](https://agensi.io/skills/erpnext-v15-crm-free-trial-pack) showed 29 uses, a 5-star rating from one review, and a free two-skill preview of a paid 37-skill suite; its creator profile showed 40 total uses. It demonstrates a free diagnostic/trial-to-paid-bundle packaging pattern, but not verified sales, and requires an authorized ERPNext v15 tenant for live diagnostics. No private creator conversation occurred.
 
 [SkillChain](https://www.skillchain.me/) advertises SOL escrow purchases and an 85% creator share. The public marketplace counters for skills, agents, purchases and volume were blank, and seller registration, payout mechanics, fees and moderation terms were not independently verified. It is deferred; no account, wallet or listing action was taken.
 
-### 7. Affiliate economics
+### 8. Affiliate economics
 
 - [SwiftNodes official affiliate terms](https://swiftnodes.io/affiliates): 20% of each referred customer's payment for the life of the subscription; 30-day hold; USDC on Base, Arbitrum or Polygon; $50 minimum; monthly payouts. The public referral URL exists, but the private dashboard, account attribution, payout address/network and conversion statistics remain unverified. TinyFish profiles rechecked 2026-11-14 list only `github.com` and `google.com` as signed-in sites; `swiftnodes.io` is absent, so no authenticated browser run was attempted. The browser automation wallet has $0; no top-up was made.
 - StableDomains' official pages conflict. The [main affiliate page](https://stabledomains.net/affiliates) and [program page](https://stabledomains.net/affiliates/program) say 10% of margin, while the [referral-link page](https://stabledomains.net/affiliates/link) and [developer page](https://stabledomains.net/developers) still say $0.60 per .com and $0.51 per .xyz. The pages agree on 30-day first-referrer attribution, weekly USDC on Base and a $5 minimum subject to review. The public guides now disclose this conflict; do not rely on a specific commission amount until the provider/dashboard resolves it.
