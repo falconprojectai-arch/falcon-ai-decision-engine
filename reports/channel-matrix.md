@@ -51,10 +51,10 @@ Last reconciled: 2026-11-14. Full run notes: [Super Scout 2026-11-14](./super-sc
 
 ## 2026-11-14 decision gate
 
-- **Golden River:** keep the infrastructure-content funnel with disclosed SwiftNodes and StableDomains referrals as the low-maintenance route, but downgrade confidence: neither referral dashboard nor any conversion is verified, and StableDomains' official pages conflict on the commission basis.
-- **Alternate:** the bounded $4 USDT manual API/agent contract review, using the free browser tester and checklist as acquisition assets. It is less automated but offers a direct paid outcome; the payment page clearly discloses TRC20/BEP20 only, manual verification and no card checkout. No sale is verified.
+- **Golden River / first-sale experiment:** the bounded $4 USDT manual API/agent contract review, using the free browser tester and checklist as acquisition assets. It is less automated but offers a direct paid outcome; no sale is verified.
+- **Alternate low-maintenance route:** keep the infrastructure-content funnel with disclosed SwiftNodes and StableDomains referrals. Confidence is low: neither referral dashboard nor any conversion is verified, and StableDomains' official pages conflict on the commission basis.
 - **Machine route:** keep JSON Contract Tester API via x402/Agent402 as an automatable secondary experiment; last verified evidence still showed 0 paid transactions and 0 buyers. No paid POST or settlement is proven.
 - **Do not promote as equivalent capabilities:** LocalBiz remains a browser-only manual tracker, not a missed-call/SMS/CRM automation system; the current REST/x402 API is not an MCP server and is not eligible for mcpub.
 - **Defer:** SkillChain until public buyer activity and seller/payout terms are verifiable; seller marketplaces requiring Stripe Connect/KYC; any listing with unverified owner-contact/CAPTCHA requirements.
 - **Owner-only blockers:** SwiftNodes private dashboard cannot be inspected without a funded browser automation wallet; the available wallet has $0 and its $10 minimum top-up violates the zero-spend rule. No payout settings, wallet network or transfers were changed.
-- **Build/deploy gate:** the old Pages run deployed the site but failed on a stale title assertion; the assertion was corrected in commit `83908a5`. The latest Pages run is pending/in progress and must pass before public deployment claims are refreshed.
+- **Build/deploy gate:** the guide passed the affiliate-guide smoke test in [run 43584520761](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/43584520761). Later hub/llms/channel-matrix edits triggered newer Pages runs; the newest run must pass before claiming those latest changes are live.
