@@ -83,7 +83,7 @@ A zero legal/platform score would block an action. SkillChain is deferred at 1 b
 
 ## Open blockers and next evidence
 
-- **Deployment:** latest Pages-affecting run [43585024798](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/43585024798) completed successfully on commit `5ff48109`; the deploy job and all smoke tests passed. It includes the final StableDomains disclosure correction. Later report/matrix-only commits do not change the Pages artifact.
+- **Deployment:** latest Pages-affecting run [43585217323](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/43585217323) completed successfully on commit `50232287`; the deploy job and all smoke tests passed. It includes the StableDomains disclosure correction and the 14 November SwiftNodes terms-date refresh. Later report/matrix-only commits do not change the Pages artifact.
 - **SwiftNodes:** private dashboard and referral stats remain inaccessible through the zero-credit browser tool. A $10 top-up is prohibited; do not request one.
 - **StableDomains:** commission calculation conflict remains unresolved; payout dashboard and referral statistics are not verified.
 - **SkillStore:** exact receipt ID is missing; do not resubmit.
