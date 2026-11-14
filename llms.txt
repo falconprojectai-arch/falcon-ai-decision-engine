@@ -8,7 +8,7 @@
 
 ## Agensi skill listings — approved and live
 
-All nine free skills below are approved and live in the creator dashboard as of 12 November 2026. The dashboard currently reports zero uses, ratings, and reviews. Do not treat a live listing as usage or revenue.
+All nine free skills below were rechecked on 14 November 2026 and remain approved and live in the creator dashboard. The dashboard reports zero uses, ratings, and reviews for all nine. Do not treat a live listing as usage or revenue.
 
 - [Lead Follow-up Strategist](https://agensi.io/skills/lead-follow-up-strategist): consent-aware follow-up drafts for genuine inbound leads; draft-only.
 - [Quote-to-Booking Workflow Planner](https://agensi.io/skills/quote-to-booking-workflow-planner): structure enquiries, quote preparation and booking next steps; human approval required.
@@ -100,7 +100,7 @@ Review status can be checked at [CHAAAM directory](https://chaaam.com/directory)
 ## Additional Agent Skills discovery attempts — 12 November 2026
 
 - [AgentSkill.sh](https://agentskill.sh/submit): free direct GitHub import; the public import flow found 10 SKILL.md files in this repository but reported all 10 as failed. No skills were imported. No login, email, CAPTCHA, OAuth or payment was required; ownership verification is optional. Revisit only after diagnosing the import failure.
-- [Skillstore](https://skillstore.io/submit): the form advertises anonymous public-repository submission and security review. An attempted submission could not complete because the browser session returned network errors; no request ID or review state was created.
+- [SkillStore](https://skillstore.io/submit): anonymous public-repository submission on 12 November 2026 returned a Pending receipt for an estimated 10 skills. Only receipt prefix `dde1d29d...` was preserved; the exact status ID and public approval remain unverified. Do not resubmit.
 - [Skills Directory](https://www.skillsdir.dev/add): currently returns “This deployment is temporarily paused”; no submission attempted.
 - [skills.re](https://skills.re/submit): public GitHub-import form was inspected, but no submission was attempted because the browser session reached its credit limit before interacting with the form.
 - These are not approved/live listings and do not imply usage or revenue.
@@ -154,6 +154,9 @@ Supported subset:
 - [AI agent integration patterns](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/dev-agent-toolbox/agent-integration-patterns.html): practical examples for RPC/MCP setup and passing StableDomains referral metadata on user-approved orders.
 - [AI-agent marketplaces](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/dev-agent-toolbox/agent-marketplaces.html): comparison of creator marketplaces, payout networks, fees and onboarding friction.
 
+- [Ignlab Launch](https://launch.ignlab.net/): checked 14 November 2026. The directory advertises free, no-account submission, editorial review and a private edit link. Actual form fields and CAPTCHA/anti-bot requirements were not verified, so no submission was made.
+- [SkillChain](https://www.skillchain.me/): researched 14 November 2026. The public site advertises SOL settlement and an 85% creator share, but its visible marketplace totals for skills, agents, purchases and volume are blank. No seller terms, buyer activity or payout evidence was verified; not submitted.
+
 ## Affiliate disclosures
 
-The infrastructure guides include clearly disclosed referral links to [SwiftNodes](https://swiftnodes.io/affiliates) and [StableDomains](https://stabledomains.net/affiliates). Referral commissions, attribution and payouts are governed by each provider's current published terms. No provider performance is claimed to have been independently benchmarked by this project.
+The infrastructure guides include clearly disclosed referral links to [SwiftNodes](https://swiftnodes.io/affiliates) and [StableDomains](https://stabledomains.net/affiliates). SwiftNodes' public page advertises 20% recurring commission, a 30-day hold, USDC on Base/Arbitrum/Polygon and a $50 monthly minimum. StableDomains' official pages currently conflict: the main affiliate/program pages say 10% of margin, while the referral-link/developer pages still say $0.60 per .com and $0.51 per .xyz; shared terms include 30-day attribution, weekly USDC on Base and a $5 minimum. Verify the current dashboard/provider terms before relying on a StableDomains commission amount. No conversion or commission is verified; no provider performance is claimed to have been independently benchmarked by this project.
