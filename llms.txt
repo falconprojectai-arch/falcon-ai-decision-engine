@@ -154,7 +154,7 @@ Supported subset:
 - [AI agent integration patterns](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/dev-agent-toolbox/agent-integration-patterns.html): practical examples for RPC/MCP setup and passing StableDomains referral metadata on user-approved orders.
 - [AI-agent marketplaces](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/dev-agent-toolbox/agent-marketplaces.html): comparison of creator marketplaces, payout networks, fees and onboarding friction.
 
-- [Ignlab Launch](https://launch.ignlab.net/): checked 14 November 2026. The directory advertises free, no-account submission, editorial review and a private edit link. Actual form fields and CAPTCHA/anti-bot requirements were not verified, so no submission was made.
+- [Ignlab Launch](https://launch.ignlab.net/): checked 14 November 2026. The homepage showed 7,646+ tools and 668 Developer Tools listings, and advertises free, no-account submission, editorial review and a private edit link. Actual form fields and CAPTCHA/anti-bot requirements were not verified, so no submission was made.
 - [SkillChain](https://www.skillchain.me/): researched 14 November 2026. The public site advertises SOL settlement and an 85% creator share, but its visible marketplace totals for skills, agents, purchases and volume are blank. No seller terms, buyer activity or payout evidence was verified; not submitted.
 
 ## Affiliate disclosures
