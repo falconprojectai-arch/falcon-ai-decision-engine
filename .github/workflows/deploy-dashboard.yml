@@ -483,7 +483,7 @@ jobs:
                   base = os.environ["PAGES_URL"] + "products/dev-agent-toolbox/"
                   response = await page.goto(base + "blockchain-infrastructure.html", wait_until="networkidle", timeout=60000)
                   assert response and response.status == 200
-                  assert await page.title() == "Blockchain Infrastructure Checklist for AI Agents | Dev & Agent Toolbox"
+                  assert await page.title() == "MCP Server Launch Checklist: RPC, Domains & Discovery | Dev & Agent Toolbox"
                   assert await page.locator('a[rel="sponsored nofollow"][href*="stabledomains.net/?ref=ff6ueixx"]').count() == 1
                   iframe = page.locator('iframe[title="StableDomains domain search"]')
                   assert await iframe.count() == 1
