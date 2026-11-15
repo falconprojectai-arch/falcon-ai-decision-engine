@@ -76,7 +76,7 @@ Run one focused 14-day experiment. If there are no qualified buyer conversations
 
 - Repository evidence at the reset date: Agensi creator dashboard previously showed zero uses/ratings/reviews; TechTools has ten public listings; CHAAAM and other review queues must not be represented as live; Skillstore public profile recently showed nine published skills. None proves a sale.
 - JSON Contract Tester API docs explicitly say no paid settlement has been verified; x402scan previously showed zero transactions, volume and buyers.
-- Current service checkout is a manual USDT process and the form itself does not verify payment. This is an operational weakness to check before driving traffic.
+- Current service checkout is a manual USDC-on-BEP20 process; the page itself does not verify payment. Token contract, recipient, amount and on-chain settlement require manual verification.
 - External market evidence: a 2026 public analysis of freelance software listings found high proposal competition (median 45 bids in its sample); therefore generic freelance bidding is not the default acquisition plan. A 2026 x402 market analysis reported highly concentrated volume; per-call monetization is not assumed to produce quick revenue. These are directional sources, not a forecast for this project.
 
 ## Success definition
