@@ -20,7 +20,7 @@ This is a probability-weighted decision, not a guarantee. No buyer or settled re
 
 **Offer:** “I will check one JSON Schema or documented contract against up to 10 redacted example payloads and return a concise PASS/FAIL table, the exact mismatch paths, and practical fixes.”
 
-**Current public price:** 4 USDT, one-time. Delivery promise: within 60 minutes after payment and complete materials are confirmed. The clock starts only after both conditions are met; if the submitted scope is incomplete or exceeds the stated limit, clarify scope before accepting payment. This is a manually reviewed bounded service, not an automated SaaS or security audit.
+**Reference price:** $4 USD, one-time. This is a price reference only: payment is currently disabled pending independent verification of the receiving destination and exact token/network. The page must route prospects to a no-obligation inquiry and must not display an address or ask for a transfer. If a verified payment route becomes available, the delivery target is within 60 minutes after payment and complete materials are confirmed; clarify scope before accepting any order. This is a manually reviewed bounded service, not an automated SaaS or security audit.
 
 **Acquisition path:** useful free browser tester → one specific checklist/tutorial demonstrating a realistic failure → free one-payload preflight request → paid 10-payload review. The free preflight is a qualification step, not a promise of unlimited free consulting.
 
@@ -35,7 +35,7 @@ Keep JSON Contract Tester API at its existing $0.005 USDC/batch on Base as an op
 ### 1. Remove funnel ambiguity
 - Use one primary call to action on the JSON Contract Tester page: free local test first; then the bounded human review offer.
 - Keep the API as a clearly separate “for agent developers” option.
-- Keep the 4 USDT price, scope, crypto-only limitation, network warnings, privacy rules, and manual payment-verification disclaimer explicit.
+- Keep the $4 USD reference price, scope and privacy rules explicit. Until the payment destination passes independent owner-control and token/network verification, show inquiry-only status, suppress payment instructions and do not ask prospects to transfer funds.
 - Never promise instant/automatic review, full JSON Schema conformance, security certification, or production correctness.
 - Keep the free preflight request form limited to a short issue description and email; explicitly prohibit secrets, real customer data and payload uploads.
 
@@ -48,7 +48,7 @@ Keep JSON Contract Tester API at its existing $0.005 USDC/batch on Base as an op
 
 ### 3. Qualify the payment path before promoting checkout
 - Do not change wallet addresses, networks, payout settings, or payment processor configuration.
-- The owner supplied and confirmed the USDC receiving address for BNB Smart Chain (BEP20): `0x48bf49eca7f6ef784ff524a8f58e156232746ca6`. The public service page accepts 4 USDC on BEP20 as the 1:1 equivalent of the 4 USDT price. Accepted token contract: Binance-Peg USDC on BNB Smart Chain, `0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d` (BscScan: https://bscscan.com/token/0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d). Confirm network/token details with each buyer in writing before transfer; never rely on token name alone.
+- A receiving address and Binance-Peg USDC on BNB Smart Chain (BEP20) were previously displayed, but owner-control has not been independently verified in this workflow. The current public page therefore withholds the address and token instructions. Do not republish the old destination, request payment, or assume USDT/USDC equivalence. Re-enable payment only after the owner verifies control and the exact token contract/network through a safe, non-transfer verification method.
 - A form submission or transaction hash is not proof of payment. Manually verify chain, token, amount, recipient, confirmation and fees before recording revenue or starting paid delivery.
 - If the currently displayed rails cannot be verified, keep the page transparent and route prospects to a no-obligation inquiry; do not ask anyone to pay an unverified address.
 
@@ -66,7 +66,7 @@ Run one focused 14-day experiment. If there are no qualified buyer conversations
 
 ## Portfolio disposition
 
-- **Active:** JSON Contract Tester browser demo + 4 USDT manual review funnel.
+- **Active:** JSON Contract Tester browser demo + $4 USD reference-price, inquiry-only human review offer. Payment is paused pending destination verification.
 - **Secondary / maintain only:** JSON Contract Tester x402 API, public skills and existing directory listings.
 - **Passive / monitor only:** StableDomains and SwiftNodes affiliate links; no extra work unless attributable conversions or meaningful audience evidence appear.
 - **Parked:** new directory submissions, generic agent marketplace exploration, additional broad developer utilities, and active LocalBiz/StockPulse/MCPGuard/ExpenseSnap/CronPulse promotion. Preserve public assets; do not delete them.
@@ -76,7 +76,7 @@ Run one focused 14-day experiment. If there are no qualified buyer conversations
 
 - Repository evidence at the reset date: Agensi creator dashboard previously showed zero uses/ratings/reviews; TechTools has ten public listings; CHAAAM and other review queues must not be represented as live; Skillstore public profile recently showed nine published skills. None proves a sale.
 - JSON Contract Tester API docs explicitly say no paid settlement has been verified; x402scan previously showed zero transactions, volume and buyers.
-- Current service checkout is a manual USDC-on-BEP20 process; the page itself does not verify payment. Token contract, recipient, amount and on-chain settlement require manual verification.
+- No service payment is currently accepted. The former USDC-on-BEP20 instructions were withheld because wallet control is not independently verified. A future payment must be manually checked for chain, token contract, amount, recipient, confirmation and fees before delivery or revenue recognition.
 - External market evidence: a 2026 public analysis of freelance software listings found high proposal competition (median 45 bids in its sample); therefore generic freelance bidding is not the default acquisition plan. A 2026 x402 market analysis reported highly concentrated volume; per-call monetization is not assumed to produce quick revenue. These are directional sources, not a forecast for this project.
 
 ## Success definition
