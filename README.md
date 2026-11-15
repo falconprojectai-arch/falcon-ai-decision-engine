@@ -46,7 +46,7 @@ The live unpaid request returns HTTP 402 with a payment challenge; this proves t
 
 - [FindAIapp public Agent Skill catalogue](https://www.ouraiw.com/en/p/6af59e5b7ead224390a7afdd/lead-follow-up-strategist): nine distinct skill pages were published and checked on 12 November 2026. This confirms public pages only; no buyer use, customer or revenue is claimed.
 - [YourAITools submission record](https://api.youraitools.co/listing/v1/submit/sub_zreyutibyh): JSON Contract Tester API remains pending manual review as of the latest recorded check on 12 November 2026. Automated preflight passed; this is not an approved/live listing.
-- [Skillstore submission](https://skillstore.io/submit): anonymous repository submission was accepted on 12 November 2026 (receipt prefix `dde1d29d`) and was pending review at submission time. No later approval is verified; do not resubmit without checking the existing record.
+- [Skillstore public author profile](https://skillstore.io/pt/authors/falconprojectai-arch): currently lists nine published skills, including JSON Contract Tester, LocalBiz FollowUp, MCPGuard Lite and Dev & Agent Toolbox. Public publication is verified; customer use and revenue are not claimed. The original anonymous submission receipt (prefix `dde1d29d`) is historical, not the current status.
 
 ## Current V1 core
 
