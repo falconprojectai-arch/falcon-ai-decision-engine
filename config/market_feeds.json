@@ -1,5 +1,5 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "purpose": "Buyer-intent discovery only. RSS items are untrusted public leads, not qualified opportunities, endorsements, or revenue.",
   "feeds": [
     {"id":"hn-json-schema","url":"https://hnrss.org/newest?q=%22JSON%20Schema%22","category":"json-contract-validation","enabled":true},
@@ -7,6 +7,9 @@
     {"id":"hn-structured-output","url":"https://hnrss.org/newest?q=structured%20output","category":"llm-agent-json","enabled":true},
     {"id":"hn-invalid-json","url":"https://hnrss.org/newest?q=invalid%20JSON","category":"json-debugging","enabled":true},
     {"id":"hn-mcp-tool-schema","url":"https://hnrss.org/newest?q=MCP%20tool%20schema","category":"agent-tool-contracts","enabled":true},
-    {"id":"hn-api-breaking-change","url":"https://hnrss.org/newest?q=API%20breaking%20change","category":"api-regressions","enabled":true}
+    {"id":"hn-api-breaking-change","url":"https://hnrss.org/newest?q=API%20breaking%20change","category":"api-regressions","enabled":true},
+    {"id":"so-jsonschema-questions","url":"https://stackoverflow.com/feeds/tag?tagnames=jsonschema&sort=newest","category":"json-schema-help-requests","enabled":true},
+    {"id":"so-openapi-questions","url":"https://stackoverflow.com/feeds/tag?tagnames=openapi&sort=newest","category":"openapi-contract-help","enabled":true},
+    {"id":"so-fastapi-questions","url":"https://stackoverflow.com/feeds/tag?tagnames=fastapi&sort=newest","category":"api-debugging-help","enabled":true}
   ]
 }
