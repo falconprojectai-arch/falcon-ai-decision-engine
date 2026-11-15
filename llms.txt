@@ -50,6 +50,13 @@ Nine distinct skills were validated and published anonymously in two batches on 
 - [Dev Pages](https://devpages.io/submit-a-tool): free queue requires sign-in and adding its badge to the product site. Not submitted.
 - [Tools AI Online](https://www.tools-ai.online/submit-tool): no-account free form, but requires a contact email, 500+ character description, 16:9 JPG/PNG cover, and CAPTCHA. Not submitted; no owner email was assumed.
 
+## Human-reviewed JSON contract review — inquiry only
+
+- Scope: one JSON Schema or documented JSON contract, up to 10 redacted sample payloads, a concise PASS/FAIL table, mismatch paths, and practical fixes.
+- Reference price: $4 USD one-time.
+- Payment status: temporarily unavailable pending independent verification of the receiving destination and exact token/network. Do not send funds to any previously published address. The service page is for no-obligation scope inquiries only.
+- [Service scope and inquiry page](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/dev-agent-toolbox/payment.html)
+
 ## Primary products
 
 - [JSON Contract Tester — free browser tool](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/): Validate JSON examples against a documented schema subset locally in the browser. Inputs are processed in the browser and are not uploaded by this tool.
