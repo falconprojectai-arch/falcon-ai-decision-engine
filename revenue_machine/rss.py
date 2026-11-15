@@ -12,6 +12,7 @@ from .models import Opportunity, RiskLevel
 
 MAX_FEED_BYTES = 1_000_000
 MAX_ITEMS = 50
+MAX_DESCRIPTION_CHARS = 1200
 TIMEOUT_SECONDS = 8
 
 
@@ -53,6 +54,20 @@ def _text(element: ET.Element, *names: str) -> str:
     return ""
 
 
+def _source_link(item: ET.Element) -> str:
+    link = item.find("link")
+    if link is not None:
+        value = (link.attrib.get("href") or "".join(link.itertext())).strip()
+        if value.startswith("https://"):
+            return value[:2000]
+    for child in item:
+        if child.tag.rsplit("}", 1)[-1].lower() == "link":
+            value = (child.attrib.get("href") or "".join(child.itertext())).strip()
+            if value.startswith("https://"):
+                return value[:2000]
+    return ""
+
+
 def parse_feed(xml_text: str, source_url: str) -> list[Opportunity]:
     """Parse RSS 2.0 or Atom XML; mark every discovery medium-risk pending review."""
     _validate_url(source_url)
@@ -73,12 +88,25 @@ def parse_feed(xml_text: str, source_url: str) -> list[Opportunity]:
         title = _text(item, "title", "{http://www.w3.org/2005/Atom}title")
         if not title:
             continue
+        description = _text(
+            item, "description", "summary", "content",
+            "{http://www.w3.org/2005/Atom}summary",
+            "{http://www.w3.org/2005/Atom}content",
+        )
+        published = _text(
+            item, "pubDate", "published", "updated",
+            "{http://www.w3.org/2005/Atom}published",
+            "{http://www.w3.org/2005/Atom}updated",
+        )
         candidates.append(Opportunity(
             name=title[:240],
             channel=f"rss:{host}",
-            requires_capital=True,
+            requires_capital=False,
             requires_manual_work=True,
             risk=RiskLevel.MEDIUM,
+            source_url=_source_link(item),
+            description=description[:MAX_DESCRIPTION_CHARS],
+            published_at=published[:100],
         ))
     return candidates
 
@@ -88,7 +116,7 @@ def fetch_feed(url: str) -> list[Opportunity]:
     _validate_url(url)
     request = urllib.request.Request(
         url,
-        headers={"User-Agent": "RevenueMachine-FeedReader/0.1", "Accept": "application/rss+xml, application/atom+xml, application/xml, text/xml"},
+        headers={"User-Agent": "RevenueMachine-FeedReader/0.2", "Accept": "application/rss+xml, application/atom+xml, application/xml, text/xml"},
     )
     opener = urllib.request.build_opener(_SafeRedirectHandler)
     try:
