@@ -100,7 +100,7 @@ Review status can be checked at [CHAAAM directory](https://chaaam.com/directory)
 ## Additional Agent Skills discovery attempts — 12 November 2026
 
 - [AgentSkill.sh](https://agentskill.sh/submit): free direct GitHub import; the public import flow found 10 SKILL.md files in this repository but reported all 10 as failed. No skills were imported. No login, email, CAPTCHA, OAuth or payment was required; ownership verification is optional. Revisit only after diagnosing the import failure.
-- [SkillStore](https://skillstore.io/submit): anonymous public-repository submission on 12 November 2026 returned a Pending receipt for an estimated 10 skills. Only receipt prefix `dde1d29d...` was preserved; the exact status ID and public approval remain unverified. Do not resubmit.
+- [Skillstore public author profile](https://skillstore.io/pt/authors/falconprojectai-arch): currently lists nine published skills, including JSON Contract Tester, LocalBiz FollowUp, MCPGuard Lite and Dev & Agent Toolbox. Public publication is verified; usage and revenue are not implied. The original anonymous submission receipt prefix `dde1d29d...` is historical evidence, not the current status.
 - [Skills Directory](https://www.skillsdir.dev/add): currently returns “This deployment is temporarily paused”; no submission attempted.
 - [skills.re](https://skills.re/submit): public GitHub-import form was inspected, but no submission was attempted because the browser session reached its credit limit before interacting with the form.
 - These are not approved/live listings and do not imply usage or revenue.
