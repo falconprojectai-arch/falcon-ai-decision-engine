@@ -80,3 +80,13 @@ Legal/platform score 0 would block an action. No action above was executed where
 4. Recheck Skillstore's existing submission outcome through a no-cost read-only surface if one becomes available; receipt alone is not approval.
 5. Improve the conversion path only with evidence: keep one free diagnostic demo, one clearly scoped paid contract-review offer, and one proof-led technical tutorial; avoid adding more products or broad directories until an attributable buyer signal appears.
 6. Revenue gate remains $0 until an independent receiving-provider or on-chain record proves a completed settlement and net proceeds.
+
+
+## Follow-up verification — Skillstore public publication
+- Read-only public author profile checked on 15 November 2026: https://skillstore.io/pt/authors/falconprojectai-arch
+- The profile explicitly reports **9 published skills** and lists the repository's nine products/skills, including JSON Contract Tester, LocalBiz FollowUp, MCPGuard Lite, Dev & Agent Toolbox, StockPulse, ExpenseSnap, CronPulse, Lead Follow-up Strategist and Quote-to-Booking Workflow Planner.
+- Individual public skill pages are accessible; examples: https://skillstore.io/skills/falconprojectai-arch-localbiz-followup and https://skillstore.io/skills/falconprojectai-arch-cronpulse
+- Corrected previous state: the 12 November anonymous submission receipt prefix `dde1d29d` was pending when submitted, but the current public author profile proves that nine skills are now published. The receipt is historical; do not resubmit.
+- This confirms distribution only. The public CronPulse page reports 0 downloads and 0 views; no aggregate buyer activity or paid usage was established. No sale, commission or settled revenue is claimed.
+- README, product hub and `llms.txt` were updated to replace the stale pending-only Skillstore status with the verified nine-skill public profile.
+- Remaining verification: Actions workflow run history is not exposed by the currently available GitHub connector actions; the commit-status endpoint returned an empty status list. Do not infer a successful Pages deployment from a successful repository write.
