@@ -26,6 +26,10 @@ class Opportunity:
     estimated_revenue_usd: float = 0.0
     estimated_success_probability: float = 0.0
     estimated_minutes: int = 0
+    # Discovery metadata: source links and excerpts are untrusted until reviewed.
+    source_url: str = ""
+    description: str = ""
+    published_at: str = ""
 
 
 @dataclass(frozen=True)
