@@ -42,6 +42,12 @@ The JSON Contract Tester also has a live machine-to-machine API for AI agents an
 
 The live unpaid request returns HTTP 402 with a payment challenge; this proves the paywall is active, not that a payment has settled. The API passed its unit/route tests and production health, discovery, OpenAPI, and challenge smoke tests. A PayAPI Market listing was accepted into review on 2026-11-03; it is **not live yet** and its paid canary/settlement receipt is pending. No x402 sales or revenue are currently recorded. The public Agent402 seller index also discovers the API as routable on Base; its execute-via lane is callable, while Smart Order Router dispatch remains gated on settlement proof. [Agent402 seller record](https://agent402.tools/api/index?seller=https%3A%2F%2Fjson-contract-tester-api.falcon-project-ai.workers.dev).
 
+## Additional verified distribution
+
+- [FindAIapp public Agent Skill catalogue](https://www.ouraiw.com/en/p/6af59e5b7ead224390a7afdd/lead-follow-up-strategist): nine distinct skill pages were published and checked on 12 November 2026. This confirms public pages only; no buyer use, customer or revenue is claimed.
+- [YourAITools submission record](https://api.youraitools.co/listing/v1/submit/sub_zreyutibyh): JSON Contract Tester API remains pending manual review as of the latest recorded check on 12 November 2026. Automated preflight passed; this is not an approved/live listing.
+- [Skillstore submission](https://skillstore.io/submit): anonymous repository submission was accepted on 12 November 2026 (receipt prefix `dde1d29d`) and was pending review at submission time. No later approval is verified; do not resubmit without checking the existing record.
+
 ## Current V1 core
 
 - **Scanner input layer:** validates a supplied JSON feed and can fetch bounded public HTTPS RSS/Atom feeds in dry-run mode.
