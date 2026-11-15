@@ -34,6 +34,9 @@ def load_candidates(path: Path) -> list[Opportunity]:
             estimated_revenue_usd=float(item.get("estimated_revenue_usd", 0.0)),
             estimated_success_probability=float(item.get("estimated_success_probability", 0.0)),
             estimated_minutes=item.get("estimated_minutes", 0),
+            source_url=str(item.get("source_url", "")),
+            description=str(item.get("description", "")),
+            published_at=str(item.get("published_at", "")),
         ))
     return candidates
 
@@ -78,11 +81,19 @@ def main(argv: list[str] | None = None) -> int:
         "executed": sum(plan.executed for plan in plans),
         "verified_revenue": 0,
         "plans": [
-            {"opportunity": plan.opportunity, "approved": plan.approved,
-             "mode": plan.mode, "executed": plan.executed, "reason": plan.reason}
+            {
+                "opportunity": plan.opportunity,
+                "approved": plan.approved,
+                "mode": plan.mode,
+                "executed": plan.executed,
+                "reason": plan.reason,
+                "source_url": plan.source_url,
+                "description": plan.description,
+                "published_at": plan.published_at,
+            }
             for plan in plans
         ],
-        "note": "Counts describe this run only. No external work was executed. Approved items still await explicit authorization and a configured worker; revenue remains zero until verified payment evidence is integrated.",
+        "note": "RSS titles, excerpts and links are untrusted discovery leads requiring human review. No external work was executed. Approved items still await explicit authorization and a configured worker; revenue remains zero until verified payment evidence is integrated.",
     }
     rendered = json.dumps(report, ensure_ascii=False, indent=2) + "\n"
     if args.report_out:
@@ -97,7 +108,7 @@ def main(argv: list[str] | None = None) -> int:
         try:
             append_report(args.ledger_out, report)
         except (OSError, TypeError, ValueError) as exc:
-            parser.error(f"Could not append audit ledger: {exc}")
+            parser.error(str(exc))
     print(rendered, end="")
     return 0
 
