@@ -20,7 +20,7 @@ This is a probability-weighted decision, not a guarantee. No buyer or settled re
 
 **Offer:** “I will check one JSON Schema or documented contract against up to 10 redacted example payloads and return a concise PASS/FAIL table, the exact mismatch paths, and practical fixes.”
 
-**Current public price:** 4 USDT, one-time. Delivery promise: within two business days after payment and materials are confirmed. This is a manually reviewed bounded service, not an automated SaaS or security audit.
+**Current public price:** 4 USDT, one-time. Delivery promise: within 60 minutes after payment and complete materials are confirmed. The clock starts only after both conditions are met; if the submitted scope is incomplete or exceeds the stated limit, clarify scope before accepting payment. This is a manually reviewed bounded service, not an automated SaaS or security audit.
 
 **Acquisition path:** useful free browser tester → one specific checklist/tutorial demonstrating a realistic failure → free one-payload preflight request → paid 10-payload review. The free preflight is a qualification step, not a promise of unlimited free consulting.
 
