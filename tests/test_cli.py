@@ -25,13 +25,14 @@ def test_cli_reports_dry_run_and_never_counts_claims(tmp_path: Path, capsys):
     assert report["opportunities"]["unreviewed_or_not_low_risk"] == 1
 
 
-def test_cli_can_run_rss_feed_in_dry_run(monkeypatch, capsys):
+def test_cli_can_run_rss_feed_in_dry_run_and_preserves_links(monkeypatch, capsys):
     from revenue_machine import cli
     from revenue_machine.models import Opportunity, RiskLevel
 
     monkeypatch.setattr(cli.rss, "fetch_feed", lambda url: [
         Opportunity(name="discovered", channel="rss:example.org", risk=RiskLevel.MEDIUM,
-                    requires_capital=True, requires_manual_work=True)
+                    requires_manual_work=True, source_url="https://example.org/post",
+                    description="A concrete schema mismatch.", published_at="2026-11-14")
     ])
     assert main(["--rss", "https://example.org/feed.xml"]) == 0
     report = json.loads(capsys.readouterr().out)
@@ -40,6 +41,8 @@ def test_cli_can_run_rss_feed_in_dry_run(monkeypatch, capsys):
     assert report["approved"] == 0
     assert report["executed"] == 0
     assert report["verified_revenue"] == 0
+    assert report["plans"][0]["source_url"] == "https://example.org/post"
+    assert report["plans"][0]["description"] == "A concrete schema mismatch."
 
 
 def test_cli_defaults_missing_risk_to_medium_and_blocks_it(tmp_path: Path, capsys):
@@ -51,7 +54,6 @@ def test_cli_defaults_missing_risk_to_medium_and_blocks_it(tmp_path: Path, capsy
     assert report["approved"] == 0
     assert report["executed"] == 0
     assert report["verified_revenue"] == 0
-
 
 
 def test_cli_counts_removed_invalid_opportunities(tmp_path: Path, capsys):
