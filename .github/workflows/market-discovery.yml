@@ -2,7 +2,7 @@ name: Scheduled Market Discovery
 
 on:
   schedule:
-    - cron: "23 */6 * * *"
+    - cron: "17 */2 * * *"
   workflow_dispatch:
 
 permissions:
@@ -15,7 +15,7 @@ concurrency:
 jobs:
   discover:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 8
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -23,14 +23,13 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Run bounded discovery scans
+      - name: Run bounded buyer-intent discovery scans
         shell: bash
         run: |
           set -u
           mkdir -p reports/market-discovery
           python - <<'PY'
           import json
-          import os
           import subprocess
           import sys
           from datetime import datetime, timezone
@@ -44,8 +43,9 @@ jobs:
               "verified_revenue_usd": 0,
               "feeds": [],
               "limitations": [
-                  "RSS titles are untrusted leads, not verified opportunities.",
-                  "No work is executed and no payment is attempted.",
+                  "RSS titles, excerpts and links are untrusted public leads requiring manual review.",
+                  "No comments, posts, DMs, account creation, submissions, or payments are performed.",
+                  "A source item is not a qualified buyer or proof of willingness to pay.",
                   "No item counts as revenue without independent payment-provider verification."
               ]
           }
@@ -53,30 +53,45 @@ jobs:
           for feed in config["feeds"]:
               if not feed.get("enabled", False):
                   continue
-              report_path = output_dir / f'{feed["id"]}.json'
+              report_path = output_dir / (feed["id"] + ".json")
               cmd = [
                   sys.executable, "-m", "revenue_machine",
                   "--rss", feed["url"],
                   "--report-out", str(report_path)
               ]
-              result = subprocess.run(cmd, text=True, capture_output=True, timeout=15)
-              entry = {
-                  "id": feed["id"],
-                  "category": feed.get("category", "uncategorized"),
-                  "exit_code": result.returncode,
-                  "report_file": str(report_path) if report_path.exists() else None,
-                  "error": (result.stderr or "").strip()[-1000:] if result.returncode else None
-              }
-              if result.returncode:
+              try:
+                  result = subprocess.run(cmd, text=True, capture_output=True, timeout=20)
+                  entry = {
+                      "id": feed["id"],
+                      "category": feed.get("category", "uncategorized"),
+                      "exit_code": result.returncode,
+                      "report_file": str(report_path) if report_path.exists() else None,
+                      "error": (result.stderr or "").strip()[-1000:] if result.returncode else None
+                  }
+                  if result.returncode:
+                      failures += 1
+                  elif report_path.exists():
+                      report = json.loads(report_path.read_text(encoding="utf-8"))
+                      plans = report.get("plans", [])
+                      entry["collected"] = report["opportunities"]["collected"]
+                      entry["source_links"] = sum(bool(item.get("source_url")) for item in plans)
+                      entry["descriptions"] = sum(bool(item.get("description")) for item in plans)
+                      entry["unreviewed"] = report["opportunities"]["unreviewed_or_not_low_risk"]
+                  summary["feeds"].append(entry)
+              except subprocess.TimeoutExpired:
                   failures += 1
-              elif report_path.exists():
-                  report = json.loads(report_path.read_text(encoding="utf-8"))
-                  entry["collected"] = report["opportunities"]["collected"]
-                  entry["approved"] = report["opportunities"]["accepted_by_filter"]
-                  entry["rejected"] = report["opportunities"]["rejected_by_filter"]
-              summary["feeds"].append(entry)
+                  summary["feeds"].append({
+                      "id": feed["id"], "category": feed.get("category", "uncategorized"),
+                      "exit_code": 124, "error": "Feed scan timed out after 20 seconds."
+                  })
+          total = sum(item.get("collected", 0) for item in summary["feeds"])
+          links = sum(item.get("source_links", 0) for item in summary["feeds"])
+          summary["totals"] = {
+              "items_collected": total,
+              "items_with_source_links": links,
+              "failed_feeds": failures
+          }
           summary["status"] = "partial" if failures and len(summary["feeds"]) > failures else ("failed" if failures else "completed")
-          summary["failed_feeds"] = failures
           summary_path = output_dir / "summary.json"
           summary_path.write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
           print(json.dumps(summary, ensure_ascii=False, indent=2))
