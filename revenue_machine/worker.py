@@ -12,20 +12,30 @@ class WorkPlan:
     mode: str = "dry-run"
     executed: bool = False
     reason: str = ""
+    source_url: str = ""
+    description: str = ""
+    published_at: str = ""
 
 
 class DryRunWorker:
     """Create an auditable plan for approved opportunities without executing them."""
 
     def plan(self, opportunity: Opportunity) -> WorkPlan:
+        metadata = {
+            "source_url": opportunity.source_url,
+            "description": opportunity.description,
+            "published_at": opportunity.published_at,
+        }
         if not approve(opportunity):
             return WorkPlan(
                 opportunity=opportunity.name,
                 approved=False,
                 reason="Blocked by opportunity policy; no work performed.",
+                **metadata,
             )
         return WorkPlan(
             opportunity=opportunity.name,
             approved=True,
             reason="Eligible for a future configured adapter; dry-run only.",
+            **metadata,
         )
