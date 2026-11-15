@@ -48,7 +48,7 @@ Keep JSON Contract Tester API at its existing $0.005 USDC/batch on Base as an op
 
 ### 3. Qualify the payment path before promoting checkout
 - Do not change wallet addresses, networks, payout settings, or payment processor configuration.
-- Before any stronger checkout claim, verify the currently published receiving addresses are still controlled by the owner and can accept the exact network/token. Do not infer this from an old repository value or a different affiliate wallet.
+- The owner supplied and confirmed the USDC receiving address for BNB Smart Chain (BEP20): `0x48bf49eca7f6ef784ff524a8f58e156232746ca6`. The public service page accepts 4 USDC on BEP20 as the 1:1 equivalent of the 4 USDT price. Confirm the exact USDC token contract and order details with each buyer in writing before transfer; never rely on token name alone.
 - A form submission or transaction hash is not proof of payment. Manually verify chain, token, amount, recipient, confirmation and fees before recording revenue or starting paid delivery.
 - If the currently displayed rails cannot be verified, keep the page transparent and route prospects to a no-obligation inquiry; do not ask anyone to pay an unverified address.
 
