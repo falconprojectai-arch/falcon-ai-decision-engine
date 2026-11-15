@@ -1,18 +1,12 @@
 {
-  "schema_version": 1,
-  "purpose": "Discovery only. RSS titles are untrusted leads, not qualified or monetizable opportunities.",
+  "schema_version": 2,
+  "purpose": "Buyer-intent discovery only. RSS items are untrusted public leads, not qualified opportunities, endorsements, or revenue.",
   "feeds": [
-    {
-      "id": "hacker-news-ai-tools",
-      "url": "https://hnrss.org/newest?q=AI%20tool",
-      "category": "developer-tools",
-      "enabled": true
-    },
-    {
-      "id": "hacker-news-micro-saas",
-      "url": "https://hnrss.org/newest?q=micro-SaaS",
-      "category": "digital-products",
-      "enabled": true
-    }
+    {"id":"hn-json-schema","url":"https://hnrss.org/newest?q=%22JSON%20Schema%22","category":"json-contract-validation","enabled":true},
+    {"id":"hn-api-validation","url":"https://hnrss.org/newest?q=API%20validation","category":"api-contract-validation","enabled":true},
+    {"id":"hn-structured-output","url":"https://hnrss.org/newest?q=structured%20output","category":"llm-agent-json","enabled":true},
+    {"id":"hn-invalid-json","url":"https://hnrss.org/newest?q=invalid%20JSON","category":"json-debugging","enabled":true},
+    {"id":"hn-mcp-tool-schema","url":"https://hnrss.org/newest?q=MCP%20tool%20schema","category":"agent-tool-contracts","enabled":true},
+    {"id":"hn-api-breaking-change","url":"https://hnrss.org/newest?q=API%20breaking%20change","category":"api-regressions","enabled":true}
   ]
 }
