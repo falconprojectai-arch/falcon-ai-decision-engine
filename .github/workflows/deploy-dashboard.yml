@@ -256,12 +256,16 @@ jobs:
                   response = await page.goto(os.environ["PAYMENT_URL"], wait_until="networkidle", timeout=60000)
                   assert response and response.status == 200, f"Unexpected HTTP response: {response.status if response else 'none'}"
                   assert await page.title() == "API & Agent Contract Review — Payment"
-                  assert await page.get_by_text("TD8c7KQc1qQrsBZVUF9F7aseZd1RPC9NPq").count() == 1
-                  assert await page.get_by_text("0xd243c3278707d7bee006e8b3f3105586bbf9667a").count() == 1
-                  assert await page.locator("#tx-form").count() == 1
-                  assert await page.locator("#txid").count() == 1
-                  assert await page.locator("#contact").count() == 1
-                  assert await page.get_by_role("button", name="Prepare payment confirmation").count() == 1
+                  body = await page.locator("body").inner_text()
+                  assert "$4 USD" in body
+                  assert "Payments are temporarily not being accepted." in body
+                  assert "no-obligation scope inquiry" in body
+                  assert "Do not send USDT, USDC, or any other asset" in body
+                  assert await page.locator("#receiving-address").count() == 0
+                  assert await page.locator("#tx-form").count() == 0
+                  assert await page.locator("#txid").count() == 0
+                  assert await page.get_by_role("button", name="Prepare payment confirmation").count() == 0
+                  assert await page.locator('a[href^="mailto:"]').count() == 1
                   assert not errors, f"Browser JavaScript errors: {errors}"
                   await browser.close()
 
