@@ -13,7 +13,7 @@
 - Product hub current source states nine Agensi skills live/approved and zero uses, ratings, reviews at its 14 Nov recheck; TechTools listings are live.
 - `llms.txt` records nine FindAIapp pages published and checked on 12 Nov, and YourAITools API listing `sub_zreyutibyh` pending review.
 - JSON Contract Tester demand-validation document says demand is not proven and no independent payment is recorded.
-- Paid $4 USDT contract-review page is a manual service, not an automated checkout. It accepts a transaction hash/network/email for manual review; form submission is not payment verification. The page discloses no card checkout and crypto-only limitations. Do not promise universal payment availability.
+- The $4 USD contract-review page is inquiry-only. It does not accept a transaction hash or payment; no crypto payment is currently accepted. Do not send funds to any previously published address.
 
 ## New market research — 15 Nov 2026
 
@@ -50,7 +50,7 @@ Scores ordered: buyer evidence / time-to-first-sale / zero-cost feasibility / au
 
 | Candidate | Scores | Confidence | Decision |
 |---|---:|---|---|
-| $4 bounded JSON/API contract review, acquired through free JSON tester + targeted proof-led content | 2 / 3 / 5 / 2 / 3 / 3 | Medium-low | **Golden River candidate**, because it has a concrete bounded deliverable and existing payment instructions, but buyer demand and payout usability remain unproven |
+| $4 bounded JSON/API contract review, acquired through free JSON tester + targeted proof-led content | 1 / 1 / 5 / 2 / 3 / 4 | Low | **Golden River candidate**, because the deliverable is bounded and the free demo exists; payment is inquiry-only pending independent destination verification and buyer demand remains unproven |
 | JSON Contract Tester x402 API at 0.005 USDC/batch | 1 / 2 / 5 / 4 / 4 / 3 | Medium on technical state, low on demand | Keep as alternate; no paid calls or settlement verified |
 | SwiftNodes affiliate | 1 / 1 / 5 / 5 / 4 / 2 | Low | Keep passive; $50 payout threshold and network/payout configuration not verified |
 | Silicon Circle paid tasks/skills | 1 / 1 / 0 / 2 / 2 / 1 | High | Block: no open tasks; paid submission consumes credits; payout rail mismatch |
@@ -70,7 +70,7 @@ Legal/platform score 0 would block an action. No action above was executed where
 - Silicon Circle's free install/0% fee public skill does not mean seller monetization is free: paid skill submissions cost 100 Circle Credits and the platform charges 25%; withdrawals are PayPal/Alipay only.
 - MCP directory discovery is irrelevant until a real MCP server exists.
 - SkillCafe's free submission is unavailable during maintenance.
-- The $4 service is manual and depends on the buyer being able to use one of the published crypto networks; no universal checkout or automatic payment reconciliation exists.
+- The $4 service is manual and currently inquiry-only; no crypto payment is accepted, and the receiving destination/token/network remain unverified. No universal checkout or automatic payment reconciliation exists.
 - Do not use broad outreach, mass comments, fabricated installs, or claims of customer results.
 
 ## Next exact actions
@@ -90,3 +90,17 @@ Legal/platform score 0 would block an action. No action above was executed where
 - This confirms distribution only. The public CronPulse page reports 0 downloads and 0 views; no aggregate buyer activity or paid usage was established. No sale, commission or settled revenue is claimed.
 - README, product hub and `llms.txt` were updated to replace the stale pending-only Skillstore status with the verified nine-skill public profile.
 - Remaining verification: Actions workflow run history is not exposed by the currently available GitHub connector actions; the commit-status endpoint returned an empty status list. Do not infer a successful Pages deployment from a successful repository write.
+
+
+## Operational correction — 16 November 2026
+
+- A source review found that the free English JSON Contract Tester page still contained an old optional USDT donation block with TRC20 and BEP20 addresses, plus an outdated “4 USDT” paid-service link. These legacy instructions were not verified as current or owner-controlled. The entire donation block was removed and the service link now says **$4 USD reference price, inquiry only, payments temporarily unavailable**. The paid-review page now labels its price as an inquiry-only reference price. No wallet, payout, processor, or network settings were changed; no transfer or payment was attempted.
+- Product source commits: browser tester `5562472895ec766f49983ff0dac818d0c76c099e`; review page `acc3eb62517a7e6abfbe1aadd1bc792e132ccd60`.
+- Agensi recheck on 16 November: all nine owned skills remain live and security-approved, each with 0 uses, 0 ratings and 0 reviews. The existing growth-playbook request remains open with 0 votes and no verified reply.
+- Peer marketplace check: free API Contract Validator shows 15 uses and 3 votes, no reviews; free Structured JSON Extractor shows 8 uses, 10 votes and one 5-star review. These are usage signals only. Their scopes require local tooling and differ from the browser-only tester.
+- Public Skillstore author profile rechecked 16 November: active profile with nine published skills. Publication is verified; usage and revenue are not.
+- PayAPI Gmail searches after 12 November for PayAPI, USDT, USDC and preflight found no new messages. The last known 3 November message says the submission was accepted but not live. No canary or paid call was attempted.
+- The scheduled market-discovery workflow completed successfully on 16 November (run [43843924145](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/43843924145)). Its artifact contains 90 raw Stack Overflow questions from three feeds; all remained unreviewed in the automated report, with 0 accepted, 0 executed and 0 revenue. Six Hacker News feeds failed with HTTP 502. Spot-review found no explicit paid-help request. No outreach or public interaction was made.
+- A 14 November Reddit r/mcp discussion describes cross-assistant tool-schema mismatches, but it is a technical discussion rather than a request for paid help. No comment or contact was made. The OpenAI Developer Community $ref issue has already received a support follow-up; no outreach was appropriate.
+- Revenue remains $0.00 independently verified net settled. No paid service order, paid API call, affiliate conversion or commission is established. This is not an on-chain audit.
+- Detailed current run notes: [Super Scout 2026-11-16](./super-scout-2026-11-16.md).
