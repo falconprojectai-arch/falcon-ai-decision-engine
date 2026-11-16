@@ -74,7 +74,7 @@ The manual review remains the most direct bounded paid outcome in the existing p
 ## Engineering and deployment state
 
 - PR [#24 — Fail closed on unsupported JSON Schema keywords](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/pull/24) remains open and draft, head commit `7875cad`, with no submitted reviews and no commit status checks reported by the GitHub status endpoint. It was not merged or deployed.
-- The 16 November source changes above require a fresh GitHub Pages deployment and public-page verification before claiming the public site has changed.
+- GitHub Pages deployment runs 43851274840 (browser tester), 43851280134 (review page), 43851681166 (marketplace hub), and 43851684773 (llms.txt) all completed successfully. Their Chromium smoke-test steps passed, including the deployed product and payment page. This verifies the deployment workflow and browser smoke tests; it does not verify any payment rail or recipient control.
 - The discovery workflow artifact is evidence of a successful scan run, not a functioning autonomous lead-to-sale pipeline.
 
 ## Next actions
@@ -84,3 +84,14 @@ The manual review remains the most direct bounded paid outcome in the existing p
 3. Watch the existing Agensi request, issue #13, and the already-invited synthetic interoperability examples for genuine replies; do not duplicate requests or send unsolicited outreach.
 4. Continue targeted discovery for explicit, recent requests. Do not count raw RSS items, listings, views, or technical discussions as buyer conversations.
 5. Keep the x402 API as the sole alternate, with no self-funded canary, paid POST, wallet signature, or top-up.
+
+
+## Test correction and final verification
+
+- The first test run after removing the legacy donation block failed because two old static tests still required the deleted TRC20/BEP20 addresses and their warning copy. The product change was intentional; restoring those addresses would have reintroduced unverified payment instructions.
+- Replaced those obsolete assertions with safety tests that require the old addresses, network labels, donation block, and “4 USDT” copy to remain absent, and require the paid-review page to stay inquiry-only until destination verification.
+- [Test Revenue Machine run 43852032379](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/43852032379) completed successfully: **45 tests passed**.
+- [Deploy run 43851274840](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/43851274840) deployed the browser tester and passed the deployed-product, developer-toolbox, payment-page, and catalogue Chromium smoke tests.
+- [Deploy run 43851280134](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/43851280134) deployed the review-page change and passed the same smoke-test set.
+- [Deploy run 43851681166](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/43851681166) deployed the marketplace-hub date refresh; [run 43851684773](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/actions/runs/43851684773) deployed the llms.txt date refresh. Both completed successfully with all deployment and smoke-test steps passing.
+- Source re-read after the commits confirms the free tester has no support/donation block, no legacy wallet strings, and the inquiry-only CTA; the review page has no receiving address and explicitly says payments are not accepted.
