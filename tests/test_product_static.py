@@ -65,23 +65,34 @@ def test_sample_has_one_pass_and_three_failures_including_nested_error():
     assert "additionalProperties:false" in source
 
 
-def test_usdt_addresses_and_networks_match_operator_provided_values():
+def test_free_tester_does_not_publish_unverified_crypto_addresses_or_donation_cta():
     source = PAGE.read_text(encoding="utf-8")
-    assert "TD8c7KQc1qQrsBZVUF9F7aseZd1RPC9NPq" in source
-    assert "0xd243c3278707d7bee006e8b3f3105586bbf9667a" in source
-    assert "USDT · TRC20 (TRON)" in source
-    assert "USDT · BEP20 (BNB Smart Chain)" in source
-    assert "data-copy=\"trc-address\"" in source
-    assert "data-copy=\"bep-address\"" in source
-    assert "payment does not unlock features" in source
+
+    for stale_payment_detail in (
+        "TD8c7KQc1qQrsBZVUF9F7aseZd1RPC9NPq",
+        "0xd243c3278707d7bee006e8b3f3105586bbf9667a",
+        "USDT",
+        "TRC20",
+        "BEP20",
+        "4 USDT",
+        'id="support"',
+    ):
+        assert stale_payment_detail not in source
+
+    assert "$4 USD reference price; inquiry only; payments are temporarily unavailable" in source
+    assert "API & AI-Agent Contract Review" in source
 
 
-def test_crypto_notice_is_brand_neutral_and_warns_about_network_mismatch():
-    source = PAGE.read_text(encoding="utf-8")
-    assert "Toobit" not in source
-    assert "recipient's current receiving address" in source
-    assert "supports the selected network" in source
-    assert "Crypto transfers are generally irreversible" in source
+def test_paid_review_page_is_inquiry_only_until_destination_verification():
+    review_page = ROOT / "products" / "dev-agent-toolbox" / "payment.html"
+    source = review_page.read_text(encoding="utf-8")
+
+    assert "Reference price · one-time · inquiry only" in source
+    assert "Payments are temporarily not being accepted." in source
+    assert "No payment is due for an inquiry." in source
+    assert "Do not send USDT, USDC, or any other asset to an address previously shown" in source
+    assert not re.search(r"0x[a-fA-F0-9]{40}|T[A-Za-z0-9]{33}", source)
+
 
 
 def test_validator_exposes_core_rules_and_error_paths():
