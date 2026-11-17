@@ -105,3 +105,15 @@ These observations do not yet constitute qualified buyer conversations or sales.
 ## Success definition
 
 First dollar is achieved only when at least $1 equivalent net is independently confirmed as settled to the intended recipient, after network/platform fees. A pending form, directory listing, click, wallet balance screenshot, HTTP 402 challenge, test transaction, self-payment, or unverified transaction hash does not count.
+
+
+## Implementation corrections — 17 November 2026
+
+- Reviewed the current service page, preflight checklist, free tester, and internal delivery template against the fail-closed schema guard.
+- Corrected `products/dev-agent-toolbox/REVIEW_REPORT_TEMPLATE.md`: the previous sentence said unsupported schema keywords were ignored, but the current guard rejects unsupported keywords/forms before sample evaluation. The template now instructs reviewers to mark unsupported features **not evaluated** and use a full validator where required. Commit: [fa4209b](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/commit/fa4209bdaf09787b1aaeee44fcdc75ddc19d442b).
+- Corrected a literal backslash-n separator in `products/dev-agent-toolbox/payment.html` so the Card payments/geographic availability section is a separate HTML section. Commit: [c2a8c4b](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/commit/c2a8c4bd5b0ce7653c7ebf32edc56b28720f5341).
+- Both changed files were fetched again from GitHub and the exact corrections were confirmed in repository content. The latest commit returned no combined status checks; no new deployment run was returned, and the public Pages URLs could not be verified in this check. Therefore these changes are **committed, deployment/publication unverified**.
+- Existing PR #24 remains open and draft, not merged; its head-commit API tests and revenue-machine tests were green on 17 November evidence check. Do not claim its fail-closed changes are in production until merged and deployed.
+- The existing Super Scout automation instructions were updated to the focused first-dollar strategy while preserving the existing daily 13:00 Asia/Tehran schedule. No duplicate automation was created.
+- Current blockers unchanged: payment remains inquiry-only until the owner-controlled receiving destination and exact token/network are independently verified; no qualified buyer conversation or settled revenue is recorded.
+- Next exact steps: verify deployment of commits above; reconcile PR #24 base/mergeability and tests without merging unreviewed code; inspect the live preflight form/inbox route without sending test submissions; continue searching only for recent, explicit, permitted JSON/API contract-review requests; log actual interactions and objections.
