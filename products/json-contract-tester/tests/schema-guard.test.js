@@ -76,3 +76,8 @@ test('ignores annotation data without scanning it as nested schema', () => {
   });
   assert.deepEqual(issues, []);
 });
+
+test('escapes slash and tilde in JSON Pointer schema paths', () => {
+  const issues = inspectSchema({ properties: { 'a/b~c': { format: 'email' } } });
+  assert.equal(issues[0].schemaPath, '#/properties/a~1b~0c/format');
+});
