@@ -190,3 +190,18 @@ def test_junit_export_is_a_local_browser_asset_with_expected_diagnostics():
     assert "sampleIndex" in source
     assert "instancePath" in source
     assert "schemaPath" in source
+
+
+def test_local_payment_order_ledger_is_browser_only_and_backed_up():
+    root = Path(__file__).resolve().parents[1]
+    page = (root / "products/dev-agent-toolbox/payment-ledger.html").read_text(encoding="utf-8")
+    script = (root / "products/dev-agent-toolbox/ledger.js").read_text(encoding="utf-8")
+    assert "Local operator ledger" in page
+    assert "not uploaded, synced, or backed up automatically" in page
+    assert "Export JSON backup" in page
+    assert "localStorage" in script
+    assert "fpa.payment.orders.v1" in script
+    assert "Paid — verified" in script
+    assert "0x[a-fA-F0-9]{64}" in script
+    result = subprocess.run(["node", "--check", str(root / "products/dev-agent-toolbox/ledger.js")], capture_output=True, text=True, check=False)
+    assert result.returncode == 0, result.stderr
