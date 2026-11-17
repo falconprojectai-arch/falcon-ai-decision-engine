@@ -90,6 +90,7 @@ jobs:
           cp products/dev-agent-toolbox/index.html site/products/dev-agent-toolbox/index.html
           cp products/dev-agent-toolbox/payment.html site/products/dev-agent-toolbox/payment.html
           cp products/dev-agent-toolbox/preflight.js site/products/dev-agent-toolbox/preflight.js
+          cp products/dev-agent-toolbox/payment.js site/products/dev-agent-toolbox/payment.js
           cp products/dev-agent-toolbox/contract-review-checklist.html site/products/dev-agent-toolbox/contract-review-checklist.html
           cp products/dev-agent-toolbox/blockchain-infrastructure.html site/products/dev-agent-toolbox/blockchain-infrastructure.html
           cp products/dev-agent-toolbox/agent-integration-patterns.html site/products/dev-agent-toolbox/agent-integration-patterns.html
@@ -265,18 +266,28 @@ jobs:
                   page.on("pageerror", lambda error: errors.append(str(error)))
                   response = await page.goto(os.environ["PAYMENT_URL"], wait_until="networkidle", timeout=60000)
                   script_response = await page.request.get(os.environ["PAYMENT_URL"].rsplit("/", 1)[0] + "/preflight.js")
+                  payment_script_response = await page.request.get(os.environ["PAYMENT_URL"].rsplit("/", 1)[0] + "/payment.js")
                   assert script_response.status == 200, f"Preflight script did not load: HTTP {script_response.status}"
+                  assert payment_script_response.status == 200, f"Payment script did not load: HTTP {payment_script_response.status}"
                   assert response and response.status == 200, f"Unexpected HTTP response: {response.status if response else 'none'}"
                   assert await page.title() == "API & Agent Contract Review — Payment"
                   body = await page.locator("body").inner_text()
                   assert "$4 USD" in body
                   assert "Payments are temporarily not being accepted." in body
                   assert "no-obligation scope inquiry" in body
-                  assert "Do not send USDT, USDC, or any other asset" in body
+                  assert "Payments are not open checkout." in body
+                  assert "only after you receive a written order reference" in body
+                  assert "order remains pending until a human checks" in body
                   assert await page.locator("#receiving-address").count() == 0
-                  assert await page.locator("#tx-form").count() == 0
-                  assert await page.locator("#txid").count() == 0
-                  assert await page.get_by_role("button", name="Prepare payment confirmation").count() == 0
+                  assert await page.locator("#tx-form").count() == 1
+                  assert await page.locator("#txid").count() == 1
+                  assert await page.get_by_role("button", name="Prepare payment confirmation").count() == 1
+                  await page.locator("#order-ref").fill("FPA-2026-001")
+                  await page.locator("#tx-email").fill("buyer@example.test")
+                  await page.locator("#tx-amount").fill("4")
+                  await page.locator("#txid").fill("0x" + "a" * 64)
+                  await page.locator("#tx-form button[type=submit]").click()
+                  assert "Opening your email app" in await page.locator("#tx-status").inner_text()
                   assert await page.locator("#preflight").count() == 1
                   assert await page.locator("#contact-email").count() == 1
                   assert await page.locator("#problem").count() == 1
