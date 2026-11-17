@@ -37,7 +37,7 @@ function check(value,s,path='',schemaPath='#',errors=[]){
  if(value!==null&&typeof value==='object'&&!Array.isArray(value)){
   if(Array.isArray(s.required))s.required.forEach(k=>{if(typeof k==='string'&&!Object.prototype.hasOwnProperty.call(value,k))issue(errors,pointerJoin(path,k),schemaJoin(schemaPath,'required'),'required','Missing required property',k,'missing')});
   if(s.properties&&typeof s.properties==='object'&&!Array.isArray(s.properties))Object.keys(s.properties).forEach(k=>{if(Object.prototype.hasOwnProperty.call(value,k))check(value[k],s.properties[k],pointerJoin(path,k),schemaJoin(schemaJoin(schemaPath,'properties'),k),errors)});
-  if(s.additionalProperties===false&&s.properties&&typeof s.properties==='object'&&!Array.isArray(s.properties))Object.keys(value).forEach(k=>{if(!Object.prototype.hasOwnProperty.call(s.properties,k))issue(errors,pointerJoin(path,k),schemaJoin(schemaPath,'additionalProperties'),'additionalProperties','Unexpected property',Object.keys(s.properties),'present: '+k)});
+  if(s.additionalProperties===false){const allowed=s.properties&&typeof s.properties==='object'&&!Array.isArray(s.properties)?s.properties:{};Object.keys(value).forEach(k=>{if(!Object.prototype.hasOwnProperty.call(allowed,k))issue(errors,pointerJoin(path,k),schemaJoin(schemaPath,'additionalProperties'),'additionalProperties','Unexpected property',Object.keys(allowed),'present: '+k)})}
  }
  return errors;
 }
