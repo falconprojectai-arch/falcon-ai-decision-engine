@@ -280,7 +280,7 @@ jobs:
                   assert "Local operator ledger" in ledger_body
                   assert "Export JSON backup" in ledger_body
                   ledger_script = await ledger_script_response.text()
-        assert "Paid — verified" in ledger_script
+                  assert "Paid — verified" in ledger_script
                   assert response and response.status == 200, f"Unexpected HTTP response: {response.status if response else 'none'}"
                   assert await page.title() == "API & Agent Contract Review — Payment"
                   body = await page.locator("body").inner_text()
