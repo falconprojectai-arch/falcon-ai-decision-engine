@@ -34,9 +34,9 @@ The JUnit XML export is generated locally from the current browser report; it do
 
 ## Important scope
 
-This MVP implements a documented subset of JSON Schema: `type`, `required`, `properties`, `additionalProperties: false`, `items`, `enum`, `const`, numeric bounds, string length/pattern, and array length.
+This MVP implements a documented subset of JSON Schema: `type`, `required`, `properties`, boolean `additionalProperties`, single-schema-object `items`, `enum`, `const`, numeric bounds, string length/pattern, and array length.
 
-It does **not** implement the full specification. Unsupported features include `$ref`/`$defs`, `allOf`/`anyOf`/`oneOf`/`not`, `format` assertions, boolean schemas, and schema-valued `additionalProperties`. Unknown keywords are ignored.
+It does **not** implement the full specification. Unsupported features include `$ref`/`$defs`, `allOf`/`anyOf`/`oneOf`/`not`, `format` assertions, boolean schemas, tuple-form `items`, and schema-valued `additionalProperties`. Unsupported keywords, unsupported schema forms, and invalid keyword values are rejected before sample evaluation. Annotation-only metadata such as `title`, `description`, `default`, `examples`, `$schema`, and `$comment` is ignored.
 
 A PASS means only that the value matches the rules supported by this tool. Use a full, well-tested validator for production or security-critical contracts.
 
@@ -58,7 +58,7 @@ If this is useful in a real workflow, please describe the concrete case and the 
 The browser's JUnit XML exporter has a dependency-free Node test suite. Run it from the repository root:
 
 ```bash
-node --test products/json-contract-tester/tests/junit-export.test.js
+node --test products/json-contract-tester/tests/junit-export.test.js products/json-contract-tester/tests/schema-guard.test.js
 ```
 
 The test workflow runs on pushes to `main` and pull requests that change the browser tester or its workflow. It checks mixed-batch counts, per-sample diagnostics, XML escaping, empty reports, and missing-diagnostic fallbacks. It does not upload browser inputs or execute CI tests on user data.

@@ -26,3 +26,5 @@ jobs:
           node-version: "22"
       - name: Test JUnit XML export
         run: node --test products/json-contract-tester/tests/junit-export.test.js
+      - name: Test fail-closed schema guard
+        run: node --test products/json-contract-tester/tests/schema-guard.test.js

@@ -37,12 +37,26 @@ function check(value,s,path='',schemaPath='#',errors=[]){
  if(value!==null&&typeof value==='object'&&!Array.isArray(value)){
   if(Array.isArray(s.required))s.required.forEach(k=>{if(typeof k==='string'&&!Object.prototype.hasOwnProperty.call(value,k))issue(errors,pointerJoin(path,k),schemaJoin(schemaPath,'required'),'required','Missing required property',k,'missing')});
   if(s.properties&&typeof s.properties==='object'&&!Array.isArray(s.properties))Object.keys(s.properties).forEach(k=>{if(Object.prototype.hasOwnProperty.call(value,k))check(value[k],s.properties[k],pointerJoin(path,k),schemaJoin(schemaJoin(schemaPath,'properties'),k),errors)});
-  if(s.additionalProperties===false&&s.properties&&typeof s.properties==='object'&&!Array.isArray(s.properties))Object.keys(value).forEach(k=>{if(!Object.prototype.hasOwnProperty.call(s.properties,k))issue(errors,pointerJoin(path,k),schemaJoin(schemaPath,'additionalProperties'),'additionalProperties','Unexpected property',Object.keys(s.properties),'present: '+k)});
+  if(s.additionalProperties===false){const allowed=s.properties&&typeof s.properties==='object'&&!Array.isArray(s.properties)?s.properties:{};Object.keys(value).forEach(k=>{if(!Object.prototype.hasOwnProperty.call(allowed,k))issue(errors,pointerJoin(path,k),schemaJoin(schemaPath,'additionalProperties'),'additionalProperties','Unexpected property',Object.keys(allowed),'present: '+k)})}
  }
  return errors;
 }
+function renderSchemaIssues(issues){
+ const box=document.createElement('div');box.className='result fail';
+ const title=document.createElement('strong');title.textContent='Schema rejected — no samples evaluated';box.appendChild(title);
+ const ul=document.createElement('ul');
+ issues.forEach(item=>{
+  const li=document.createElement('li');
+  li.textContent=item.message+' · keyword='+item.keyword+' · schema='+item.schemaPath;
+  ul.appendChild(li);
+ });
+ box.appendChild(ul);results.appendChild(box);
+}
 function run(){
  window.lastContractReport=null;results.replaceChildren();let schema;try{schema=JSON.parse(schemaInput.value);if(!schema||typeof schema!=='object'||Array.isArray(schema))throw new Error('Schema must be a JSON object.')}catch(e){status.textContent='Schema error: '+e.message;return}
+ if(!window.JSONContractTesterSchemaGuard||typeof window.JSONContractTesterSchemaGuard.inspectSchema!=='function'){status.textContent='Schema safety checker failed to load. Reload the page before testing.';return}
+ const schemaIssues=window.JSONContractTesterSchemaGuard.inspectSchema(schema);
+ if(schemaIssues.length){renderSchemaIssues(schemaIssues);status.textContent='Schema rejected: '+schemaIssues.length+' unsupported or invalid feature(s). No samples were evaluated.';return}
  const lines=casesInput.value.split(/\r?\n/).map((v,i)=>({text:v.trim(),line:i+1})).filter(x=>x.text);
  if(!lines.length){status.textContent='Add at least one JSON output, one per line.';return}
  let passed=0;const report=[];
@@ -53,7 +67,7 @@ function run(){
  if(errors.length){const ul=document.createElement('ul');errors.forEach(err=>{const li=document.createElement('li');li.textContent=err.message+' · keyword='+err.keyword+' · instance='+err.instancePath+' · schema='+err.schemaPath+(err.expected!==null?' · expected='+actualValue(err.expected):'')+(err.actual!==null?' · actual='+actualValue(err.actual):'');ul.appendChild(li)});box.appendChild(ul)}else{const p=document.createElement('p');p.textContent='Output matches the supported rules in this schema.';box.appendChild(p)}
  results.appendChild(box);
  });
- window.lastContractReport={reportVersion:'1.1',tool:'JSON Contract Tester',generatedAt:new Date().toISOString(),summary:{passed,total:lines.length,failed:lines.length-passed},results:report,limitation:'Subset validator; not a full JSON Schema implementation.'};
+ window.lastContractReport={reportVersion:'1.2',tool:'JSON Contract Tester',generatedAt:new Date().toISOString(),summary:{passed,total:lines.length,failed:lines.length-passed},results:report,limitation:'Subset validator; not a full JSON Schema implementation.'};
  status.textContent=passed+' of '+lines.length+' outputs passed. No data was uploaded.';
 }
 document.querySelectorAll('[data-copy]').forEach(button=>button.addEventListener('click',async()=>{const text=document.getElementById(button.dataset.copy).textContent.trim();try{await navigator.clipboard.writeText(text);$('copy-status').textContent='Address copied.'}catch(e){$('copy-status').textContent='Copy unavailable. Press and hold the address to copy it.'}}));
