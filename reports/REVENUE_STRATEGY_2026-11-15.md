@@ -149,3 +149,15 @@ First dollar is achieved only when at least $1 equivalent net is independently c
 - This confirms inbound receipt compatibility for the displayed transaction. It is not a cryptographic proof of private-key control, nor a full reconciliation test for a customer order.
 - Updated the public payment page to state that the receiving route passed a live receipt check while explicitly keeping payments paused. The address is not published on the public page. The page explains that order capture and payment reconciliation are not yet available and instructs prospects not to transfer funds until they receive written, order-specific instructions.
 - **Payment remains paused.** Before activation, implement and test a safe manual order workflow (unique order reference, exact amount, customer-supplied transaction hash, manual chain/token/recipient/amount/confirmation/fee verification, and clear acceptance/refund policy). Do not represent the service as accepting payments until that workflow is live and tested. No customer payment, paid order, or project revenue is recorded by the receipt test; it was an operational test only.
+
+
+## Manual payment confirmation workflow — 17 November 2026
+
+- Added a post-instruction payment confirmation form to `products/dev-agent-toolbox/payment.html`.
+- The form asks for the written order reference, contact email, reported USDC amount, and 32-byte transaction hash.
+- Client-side validation checks the order-reference format, email format, positive decimal amount, and 0x-prefixed 64-hex transaction hash.
+- The form opens a prefilled email draft to the project contact address. It does not upload, persist, or transmit the form automatically; the customer must review and send the draft.
+- The page explicitly says this is not open checkout. Customers must first receive written order-specific instructions and must not pay based only on the public page. A TxID submission is only a request for review; it does not mark an order paid.
+- Manual operator checklist before accepting an order: verify transaction status and confirmations on Base; confirm native USDC contract; match recipient to the controlled receiving address; match exact amount to written order instructions; record order reference and TxID; then explicitly confirm acceptance to the customer. Start work only after payment and complete redacted materials are confirmed.
+- Limitations remain: no server-side order database, no automated inbox intake, no automatic on-chain reconciliation, no refund workflow, and no automated customer acknowledgement. Email draft delivery depends on the customer's mail app and their manual send.
+- **Payment remains paused / inquiry-only until a human-operated order register and reconciliation process is actually in use and tested.** The receipt test is operational evidence, not customer revenue.
