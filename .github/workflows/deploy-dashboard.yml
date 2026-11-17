@@ -91,6 +91,8 @@ jobs:
           cp products/dev-agent-toolbox/payment.html site/products/dev-agent-toolbox/payment.html
           cp products/dev-agent-toolbox/preflight.js site/products/dev-agent-toolbox/preflight.js
           cp products/dev-agent-toolbox/payment.js site/products/dev-agent-toolbox/payment.js
+          cp products/dev-agent-toolbox/payment-ledger.html site/products/dev-agent-toolbox/payment-ledger.html
+          cp products/dev-agent-toolbox/ledger.js site/products/dev-agent-toolbox/ledger.js
           cp products/dev-agent-toolbox/contract-review-checklist.html site/products/dev-agent-toolbox/contract-review-checklist.html
           cp products/dev-agent-toolbox/blockchain-infrastructure.html site/products/dev-agent-toolbox/blockchain-infrastructure.html
           cp products/dev-agent-toolbox/agent-integration-patterns.html site/products/dev-agent-toolbox/agent-integration-patterns.html
@@ -267,8 +269,17 @@ jobs:
                   response = await page.goto(os.environ["PAYMENT_URL"], wait_until="networkidle", timeout=60000)
                   script_response = await page.request.get(os.environ["PAYMENT_URL"].rsplit("/", 1)[0] + "/preflight.js")
                   payment_script_response = await page.request.get(os.environ["PAYMENT_URL"].rsplit("/", 1)[0] + "/payment.js")
+                  ledger_response = await page.request.get(os.environ["PAYMENT_URL"].rsplit("/", 1)[0] + "/payment-ledger.html")
+                  ledger_script_response = await page.request.get(os.environ["PAYMENT_URL"].rsplit("/", 1)[0] + "/ledger.js")
                   assert script_response.status == 200, f"Preflight script did not load: HTTP {script_response.status}"
                   assert payment_script_response.status == 200, f"Payment script did not load: HTTP {payment_script_response.status}"
+                  assert ledger_response.status == 200, f"Payment ledger did not load: HTTP {ledger_response.status}"
+                  assert ledger_script_response.status == 200, f"Payment ledger script did not load: HTTP {ledger_script_response.status}"
+                  ledger_page = await page.request.get(os.environ["PAYMENT_URL"].rsplit("/", 1)[0] + "/payment-ledger.html")
+                  ledger_body = await ledger_page.text()
+                  assert "Local operator ledger" in ledger_body
+                  assert "Export JSON backup" in ledger_body
+                  assert "Paid — verified" in ledger_body
                   assert response and response.status == 200, f"Unexpected HTTP response: {response.status if response else 'none'}"
                   assert await page.title() == "API & Agent Contract Review — Payment"
                   body = await page.locator("body").inner_text()
