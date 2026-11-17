@@ -136,7 +136,7 @@ The first record should pass. The remaining records should fail for a missing no
 
 ### Important limits
 
-This browser tool implements a documented subset of JSON Schema, not the complete specification. It supports common keywords such as `type`, `required`, `properties`, `items`, `enum`, `const`, numeric/string/array bounds, `pattern`, and `additionalProperties: false`. It does not support references, combinators such as `oneOf` or `anyOf`, full `format` checks, or every JSON Schema feature. Unknown keywords are ignored. A PASS means the data passed the supported rules only; use a full standards-compliant validator for production or security-critical contracts.
+This browser tool implements a documented subset of JSON Schema, not the complete specification. It supports common keywords such as `type`, `required`, `properties`, single-schema-object `items`, `enum`, `const`, numeric/string/array bounds, `pattern`, and boolean `additionalProperties`. It does not support references, combinators such as `oneOf` or `anyOf`, full `format` checks, tuple-form `items`, boolean schemas, or every JSON Schema feature. Unsupported keywords, unsupported schema forms, and invalid keyword values are rejected before sample evaluation; annotation-only metadata such as `title`, `description`, `default`, `examples`, `$schema`, and `$comment` is ignored. A PASS means the data passed the supported rules only; use a full standards-compliant validator for production or security-critical contracts.
 
 [Open JSON Contract Tester](./json-contract-tester/) · [Read the Agent Skill](../skills/json-contract-tester/SKILL.md)
 
