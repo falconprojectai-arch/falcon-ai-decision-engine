@@ -138,3 +138,14 @@ First dollar is achieved only when at least $1 equivalent net is independently c
 - The deployment workflow now copies `preflight.js` into the Pages artifact and checks that the script returns HTTP 200. The toolbox smoke test retries transient Pages propagation before asserting HTTP 200 and the 20-tool UI.
 - **Do not overstate the conversion path:** the preflight form validates locally and opens an email draft; it does not post to a backend or prove delivery. No test inquiry was sent. Payment instructions remain disabled; no address, transfer form, or transaction-ID submission is available.
 - No qualified buyer conversation, paid order, or independently settled revenue was recorded by this implementation. First-dollar success remains unmet.
+
+
+## Receiving route verification — 17 November 2026
+
+- User-designated receiving address recorded for the planned manual-payment route: `0x6acbaf0e41534b84c60b5b6a1b4de6ad27bf90ab`.
+- Network: Base Mainnet, chain ID `8453`.
+- Asset: native USDC on Base; contract: `0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913`.
+- Receipt test supplied by the user: transaction `0xdc60484c986b87abb68c35dc73d401219d50a0fe4fee1607f9e54ae7892043f1`; BaseScan screenshot showed Success, block 58682031, and transfer of 1.005778 USDC to the abbreviated destination `0x6AcbAf0E...d27BF90AB`. The token contract was separately supplied and matched against the known native Base USDC contract. The abbreviated recipient matched the user-designated address.
+- This confirms inbound receipt compatibility for the displayed transaction. It is not a cryptographic proof of private-key control, nor a full reconciliation test for a customer order.
+- Updated the public payment page to state that the receiving route passed a live receipt check while explicitly keeping payments paused. The address is not published on the public page. The page explains that order capture and payment reconciliation are not yet available and instructs prospects not to transfer funds until they receive written, order-specific instructions.
+- **Payment remains paused.** Before activation, implement and test a safe manual order workflow (unique order reference, exact amount, customer-supplied transaction hash, manual chain/token/recipient/amount/confirmation/fee verification, and clear acceptance/refund policy). Do not represent the service as accepting payments until that workflow is live and tested. No customer payment, paid order, or project revenue is recorded by the receipt test; it was an operational test only.
