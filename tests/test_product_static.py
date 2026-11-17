@@ -100,7 +100,7 @@ def test_paid_review_page_is_inquiry_only_until_destination_verification():
     js = script.read_text(encoding="utf-8")
     assert "mailto:falcon.project.ai@gmail.com" in js
     assert "independently checked and confirmed" in js
-    assert re.search(r"\\^0x\\[a-fA-F0-9\\]\\{64\\}\\$", js)
+    assert "0x[a-fA-F0-9]{64}" in js
     result = subprocess.run(["node", "--check", str(script)], capture_output=True, text=True, check=False)
     assert result.returncode == 0, result.stderr
 
