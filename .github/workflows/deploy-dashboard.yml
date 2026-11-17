@@ -269,7 +269,9 @@ jobs:
                   assert await page.locator("#tx-form").count() == 0
                   assert await page.locator("#txid").count() == 0
                   assert await page.get_by_role("button", name="Prepare payment confirmation").count() == 0
-                  assert await page.locator('a[href^="mailto:"]').count() == 1
+                  assert await page.locator("#preflight").count() == 1
+                  assert await page.locator("#contact-email").count() == 1
+                  assert await page.locator("#problem").count() == 1
                   assert not errors, f"Browser JavaScript errors: {errors}"
                   await browser.close()
 
