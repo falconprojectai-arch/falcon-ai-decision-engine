@@ -34,7 +34,7 @@ def test_contract_tester_page_uses_local_assets_and_required_controls():
 
     assert "JSON Contract Tester" in source
     assert {"schema", "cases", "run", "sample", "download", "download-junit", "results", "status"} <= parser.ids
-    assert parser.script_sources == ["junit-export.js", "app.js"]
+    assert parser.script_sources == ["junit-export.js", "schema-guard.js", "app.js"]
     assert parser.stylesheets == ["styles.css"]
     assert "script-src 'self'" in source
     assert "Download JSON report" in source
@@ -146,7 +146,7 @@ def test_validator_function_has_intact_signature_and_single_definition():
     assert "function pointerJoin(base,part)" in source
     assert r"replace(/\//g,'~1')" in source
     assert "function issue(errors,instancePath,schemaPath,keyword,message,expected,actual)" in source
-    assert "reportVersion:'1.1'" in source
+    assert "reportVersion:'1.2'" in source
 
 
 def test_json_pointer_join_escapes_tilde_and_slash():
