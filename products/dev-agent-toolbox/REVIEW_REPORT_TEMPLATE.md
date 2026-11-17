@@ -28,7 +28,7 @@ If confidential or unredacted material is received, stop and request a sanitized
 - Validation date:
 - Supported subset checked: `type`, `required`, `properties`, `additionalProperties: false`, `items`, `enum`, `const`, numeric bounds, string length/pattern and array length.
 - Known unsupported areas to disclose where relevant: `$ref`/`$defs`, `allOf`/`anyOf`/`oneOf`/`not`, format assertions, boolean schemas, schema-valued `additionalProperties`, and any other unimplemented keyword.
-- Unknown keywords are ignored by the MVP; a PASS is not full JSON Schema conformance.
+- The current schema guard rejects unsupported keywords and unsupported schema forms before sample evaluation. Do not treat an unsupported keyword as ignored or passing; record it as **not evaluated** and request a supported contract or use a full JSON Schema validator. A PASS is not full JSON Schema conformance.
 
 ## 4. Batch summary
 
