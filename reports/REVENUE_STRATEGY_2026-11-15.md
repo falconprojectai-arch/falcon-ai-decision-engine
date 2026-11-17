@@ -161,3 +161,14 @@ First dollar is achieved only when at least $1 equivalent net is independently c
 - Manual operator checklist before accepting an order: verify transaction status and confirmations on Base; confirm native USDC contract; match recipient to the controlled receiving address; match exact amount to written order instructions; record order reference and TxID; then explicitly confirm acceptance to the customer. Start work only after payment and complete redacted materials are confirmed.
 - Limitations remain: no server-side order database, no automated inbox intake, no automatic on-chain reconciliation, no refund workflow, and no automated customer acknowledgement. Email draft delivery depends on the customer's mail app and their manual send.
 - **Payment remains paused / inquiry-only until a human-operated order register and reconciliation process is actually in use and tested.** The receipt test is operational evidence, not customer revenue.
+
+
+## Local payment order register — 17 November 2026
+
+- Added `products/dev-agent-toolbox/payment-ledger.html` and `ledger.js`, deployed as a browser-local operator register.
+- Supports creating order references, customer labels, expected USDC amount and issue date; recording TxID and manual review status; export/import JSON backup; and local deletion.
+- Status options include Awaiting payment, TxID received, Under review, Paid — verified, Rejected, Refund pending, and Refunded. The UI requires a TxID before allowing Paid — verified.
+- Data remains in the operator's current browser profile via localStorage. It is not a server-side database, does not sync between devices, and is not automatically backed up. Export/import is manual. Treat the browser profile as the ledger device and back it up securely.
+- The register does not verify chain data, does not receive customer emails automatically, and does not establish access control. It is a local operational aid only; do not expose sensitive customer information or secrets. For a true shared ledger, deploy a secured server-side database and authenticated operator access before accepting payments.
+- Static test suite passed on commit `1fb29c641ac09106b39e5ec5acf20e98f07bbbd7` (run 44114232447). Deploy workflow and browser smoke test are being run for the deployed page.
+- **Payments remain closed.** This local ledger is not a payment processor or shared order system.
