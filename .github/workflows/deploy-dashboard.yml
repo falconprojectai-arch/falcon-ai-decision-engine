@@ -85,6 +85,7 @@ jobs:
           cp products/json-contract-tester/index.html site/products/json-contract-tester/index.html
           cp products/json-contract-tester/app.js site/products/json-contract-tester/app.js
           cp products/json-contract-tester/junit-export.js site/products/json-contract-tester/junit-export.js
+          cp products/json-contract-tester/schema-guard.js site/products/json-contract-tester/schema-guard.js
           cp products/json-contract-tester/styles.css site/products/json-contract-tester/styles.css
           cp products/dev-agent-toolbox/index.html site/products/dev-agent-toolbox/index.html
           cp products/dev-agent-toolbox/payment.html site/products/dev-agent-toolbox/payment.html
@@ -286,7 +287,7 @@ jobs:
                   browser = await p.chromium.launch()
                   page = await browser.new_page()
                   errors = []
-                  asset_status = {"styles.css": None, "junit-export.js": None, "app.js": None}
+                  asset_status = {"styles.css": None, "junit-export.js": None, "schema-guard.js": None, "app.js": None}
                   def record_asset(response):
                       for asset in asset_status:
                           if response.url.endswith("/" + asset):
@@ -323,6 +324,27 @@ jobs:
                   await page.get_by_role("button", name="Run contract tests").click()
                   assert (await page.locator("#status").inner_text()).startswith("Schema error:")
                   assert await page.evaluate("window.lastContractReport") is None
+
+                  await page.locator("#schema").fill('{"$ref":"#/$defs/entry","$defs":{"entry":{"type":"object"}}}')
+                  await page.locator("#cases").fill('{"id":1}')
+                  await page.get_by_role("button", name="Run contract tests").click()
+                  assert "Schema rejected" in await page.locator("#status").inner_text()
+                  assert "$ref" in await page.locator(".result.fail").inner_text()
+                  assert await page.locator(".result.pass").count() == 0
+                  assert await page.evaluate("window.lastContractReport") is None
+
+                  await page.locator("#schema").fill('{"type":"object","properties":{"email":{"type":"string","format":"email"}}}')
+                  await page.locator("#cases").fill('{"email":"not-an-email"}')
+                  await page.get_by_role("button", name="Run contract tests").click()
+                  assert "Schema rejected" in await page.locator("#status").inner_text()
+                  assert "format" in await page.locator(".result.fail").inner_text()
+                  assert await page.locator(".result.pass").count() == 0
+
+                  await page.locator("#schema").fill('{"type":"object","title":"Metadata","default":{"oneOf":[]},"properties":{"value":{"type":"string"}},"additionalProperties":false}')
+                  await page.locator("#cases").fill('{"value":"ok"}')
+                  await page.get_by_role("button", name="Run contract tests").click()
+                  assert await page.locator("#status").inner_text() == "1 of 1 outputs passed. No data was uploaded."
+                  assert await page.locator(".result.pass").count() == 1
                   assert not errors, f"Browser JavaScript errors: {errors}"
                   await browser.close()
 
