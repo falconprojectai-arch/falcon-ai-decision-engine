@@ -117,3 +117,14 @@ First dollar is achieved only when at least $1 equivalent net is independently c
 - The existing Super Scout automation instructions were updated to the focused first-dollar strategy while preserving the existing daily 13:00 Asia/Tehran schedule. No duplicate automation was created.
 - Current blockers unchanged: payment remains inquiry-only until the owner-controlled receiving destination and exact token/network are independently verified; no qualified buyer conversation or settled revenue is recorded.
 - Next exact steps: verify deployment of commits above; reconcile PR #24 base/mergeability and tests without merging unreviewed code; inspect the live preflight form/inbox route without sending test submissions; continue searching only for recent, explicit, permitted JSON/API contract-review requests; log actual interactions and objections.
+
+
+## Preflight funnel implementation — 17 November 2026
+
+- Added a short no-payment preflight form to `products/dev-agent-toolbox/payment.html`. It asks only for a contact email and a short problem summary; it does not accept files, schemas, payloads, secrets, or customer data.
+- Added `products/dev-agent-toolbox/preflight.js`. It performs basic client-side email/length checks and opens a pre-addressed `mailto:` draft. It does not transmit or store form data. The prospect must review and send the email from their own mail app; no successful inbox delivery is implied.
+- Updated the free browser tester CTA to point to the preflight stage and clarify the $4 reference price and inquiry-only/payment-paused state.
+- Source verification: the updated HTML, JS, and tester CTA were fetched again from GitHub. The form has no file input or multipart upload; the mailto destination is the existing public project contact address.
+- **Known limitation:** this is not a hosted form backend and does not prove that the Gmail inbox is reachable or that an inquiry was delivered. A configured mail app is required. Do not claim automated lead capture or inbox receipt. A backend should only be added after a no-cost, privacy-appropriate endpoint is verified and its data handling is understood.
+- **Deployment status:** commits are present in the GitHub default branch, but the GitHub Pages deployment and live browser behavior have not yet been independently verified. Do not tell prospects the new form is live until deployment is confirmed.
+- Payment remains disabled pending independent verification of owner control and exact token/network. No buyer inquiry, paid order, or settled revenue is recorded by this implementation.
