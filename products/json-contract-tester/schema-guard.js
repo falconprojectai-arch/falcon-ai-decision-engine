@@ -14,7 +14,7 @@
   const TYPES=new Set(['null','boolean','object','array','number','integer','string']);
 
   function join(path,part){
-    return path+'/'+String(part).replace(/~/g,'~0').replace(/\\//g,'~1');
+    return path+'/'+String(part).replace(/~/g,'~0').replace(/\//g,'~1');
   }
   function isRecord(value){
     return value!==null&&typeof value==='object'&&!Array.isArray(value);
