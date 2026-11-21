@@ -218,3 +218,13 @@ First dollar is achieved only when at least $1 equivalent net is independently c
 - PR #29 remains draft and unmerged pending review of Cloudflare preview behavior and the code diff. The previous Cloudflare build log still requires an authenticated Cloudflare session; no build error can be claimed or fixed without its actual log. Do not merge or deploy solely because GitHub unit tests passed.
 - A fresh public buyer-intent search found technical pain discussions and an instructional post, but no recent explicit request for a paid JSON/API contract review with permission to recommend a service. No comments, pitches, DMs, or outreach were sent. Qualified buyer leads added: 0.
 - No payment or order changes were made. Public payment and ledger pages remain accessible, but the ledger is browser-local and has no verified shared order intake or refund workflow. Payment stays inquiry-only; net settled revenue remains $0.00.
+
+
+## Cloudflare Preview failure diagnosis and fix — 21 November 2026
+
+- The user supplied the full Cloudflare build log. Dependency installation (`bun install`) and the configured build command (`npm install`) both completed successfully with zero reported vulnerabilities. The failure was specifically the deploy command `npx wrangler preview`, which exited because the Wrangler configuration lacked the required `previews` block. This is a configuration omission, not an application compile/test failure.
+- Confirmed the active Worker config is `products/json-contract-tester-api/wrangler.jsonc`; it previously contained name/main/compatibility/observability/vars but no previews object.
+- Added the documented empty configuration entry `"previews": {}`. No production vars, secrets, PAY_TO receiver, routes, or payment settings were changed.
+- Opened replacement draft PR #30 from current main (zero commits behind, six commits ahead; mergeable true): https://github.com/falconprojectai-arch/falcon-ai-decision-engine/pull/30 . It includes the Wrangler fix plus fail-closed schema validation changes and the main-only production deployment workflow guard.
+- Superseded and closed draft PR #29 without merging. No production deployment was made.
+- The Cloudflare Preview run for PR #30 is not yet independently confirmed successful. Await the fresh Cloudflare status/build log; only after a successful preview and passing CI should the PR be considered for merge. Payment remains inquiry-only and net settled revenue remains $0.00.
