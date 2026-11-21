@@ -8,7 +8,7 @@ import { validateBatch, LIMITS } from './validator.js';
 
 const app = new Hono();
 
-const serviceDescription = 'JSON Schema validation API for AI agents, LLM structured outputs, API responses, webhook payloads, and backend data contracts. Validate 1–10 JSON samples in one batch against a documented JSON Schema subset; receive per-sample PASS/FAIL results and structured JSON Pointer diagnostics for contract testing and regression checks. Not full JSON Schema; the pattern keyword is unsupported. $0.005 USDC per batch on Base Mainnet via x402 v2 exact.';
+const serviceDescription = 'JSON Schema validation API for AI agents, LLM structured outputs, API responses, webhook payloads, and backend data contracts. Validate 1–10 JSON samples in one batch against a documented JSON Schema subset; receive per-sample PASS/FAIL results and structured JSON Pointer diagnostics for contract testing and regression checks. Unsupported schema keywords are rejected explicitly instead of silently treated as valid; this is not full JSON Schema. $0.005 USDC per batch on Base Mainnet via x402 v2 exact.';
 const requestExample = {
   schema: {
     type: 'object',
@@ -258,7 +258,7 @@ const openApiDocument = {
         },
         responses: {
           '200': { description: 'Batch validation report; individual samples may pass or fail.' },
-          '400': { description: 'Invalid schema or batch shape; returned after payment verification, before successful settlement.' },
+          '400': { description: 'Invalid schema or batch shape, including unsupported_schema with keyword and schemaPath details; unsupported features are rejected rather than treated as valid.' },
           '402': { description: 'x402 v2 payment required; inspect PAYMENT-REQUIRED.' },
           '413': { description: 'Request body exceeds 64 KiB; rejected before payment.' },
           '503': { description: 'Payment receiver is not configured.' }
@@ -418,7 +418,7 @@ app.on('HEAD', '/v1/validate-batch', c => new Response(null, { status: 405, head
 
 app.post('/v1/validate-batch', c => {
   const result = validateBatch(c.get('requestBody'));
-  if (!result.ok) return c.json({ error: result.error }, result.status);
+  if (!result.ok) return c.json({ error: result.error, code: result.code || 'invalid_request', unsupportedKeywords: result.unsupportedKeywords || [] }, result.status);
   return c.json(result.data);
 });
 app.notFound(c => c.json({ error: 'Not found.' }, 404));
