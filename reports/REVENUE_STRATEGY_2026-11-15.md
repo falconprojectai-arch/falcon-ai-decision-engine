@@ -172,3 +172,19 @@ First dollar is achieved only when at least $1 equivalent net is independently c
 - The register does not verify chain data, does not receive customer emails automatically, and does not establish access control. It is a local operational aid only; do not expose sensitive customer information or secrets. For a true shared ledger, deploy a secured server-side database and authenticated operator access before accepting payments.
 - Static test suite passed on commit `1fb29c641ac09106b39e5ec5acf20e98f07bbbd7` (run 44114232447). Deploy workflow and browser smoke test are being run for the deployed page.
 - **Payments remain closed.** This local ledger is not a payment processor or shared order system.
+
+
+## Automation reactivation and execution check — 21 November 2026
+
+- Reactivated the three existing recurring revenue automations without creating duplicates:
+  - Super Scout — Automated Income Engine: enabled; daily 13:00 Asia/Tehran.
+  - Zero-Cost Revenue & Reach Scout — Evening: enabled; daily evening schedule, 22:00 Asia/Tehran target.
+  - Golden Desk — Daily Revenue Scout: enabled; daily 10:00 Asia/Tehran target.
+- Updated the latter two prompts to remove obsolete conflicting instructions (Iranian rial/payment-gateway research, GitHub Traffic/Insights audits, broad unrelated portfolio expansion) and align them with the current single Golden River, zero-upfront-cost, payment-safety-gated strategy. All three remain independent scheduled tasks; their work may overlap, so future review should assess whether separate schedules remain useful.
+- The completed one-time “Retry five QuestStack listings” task remains disabled. It is historical and has no next run; re-enabling it would repeat a dated, already completed submission task rather than restore a recurring automation.
+- Immediate Super Scout run was requested and returned an inline execution instruction; work was started in this turn. The saved recurring schedule was not changed.
+- Current GitHub inspection: PR #24 remains open, draft, and unmerged (head `7875cad5463f33ac1886b4dd01871e5ac3744726`). Its GitHub PR payload includes Cloudflare preview build failures on 11 November for multiple commits, including the current PR head. Do not merge or claim deployment until the actual cause is diagnosed and the relevant tests/build pass. The PR's mergeable flag alone is not approval to merge.
+- Current buyer-intent search surfaced relevant discussions, not a qualified service request: [Reddit r/LLMDevs — validating tool-call arguments](https://www.reddit.com/r/LLMDevs/comments/1xshxnq/do_you_validate_tool_call_arguments_before_they/) (10 November), [Reddit r/AI_Agents — validating arguments before calls](https://www.reddit.com/r/AI_Agents/comments/1xsd5cf/validating_tool_arguments_before_the_call_saved/) (10 November), and [OpenAI Developer Community — structured outputs rejects a valid 3-level $ref chain](https://community.openai.com/t/structured-outputs-rejects-valid-3-level-ref-chain/1402752) (opened 2 October; support follow-up 12 November). These are technical pain signals only; no paid request or permission to pitch was identified. No comments or outreach were made. Qualified buyer conversations from this check: 0.
+- Payment-page/ledger public URLs could not be independently verified through the available read-only page retrieval in this check. No payment settings were changed, no funds requested, and no revenue recorded.
+- Revenue remains independently verified net settled: $0.00.
+- Next actions: diagnose PR #24 Cloudflare preview failures and run API tests; verify the deployed payment and local ledger pages using an accessible browser/runtime; determine a safe owner-control verification method and finish the order acceptance/refund procedure before any payment activation; continue only permission-based buyer-intent acquisition.
