@@ -50,11 +50,52 @@ function check(value, schema, path = '', schemaPath = '#', errors = [], depth = 
   }
   return errors;
 }
-function hasPatternKeyword(schema) {
-  if (!schema || typeof schema !== 'object') return false;
-  if (Object.prototype.hasOwnProperty.call(schema, 'pattern')) return true;
-  for (const child of Object.values(schema)) if (hasPatternKeyword(child)) return true;
-  return false;
+const SUPPORTED_SCHEMA_KEYWORDS = new Set([
+  'type', 'required', 'properties', 'additionalProperties', 'items',
+  'enum', 'const', 'minimum', 'maximum', 'minLength', 'maxLength',
+  'minItems', 'maxItems'
+]);
+const ANNOTATION_KEYWORDS = new Set([
+  '$schema', '$id', '$comment', 'title', 'description', 'default',
+  'examples', 'deprecated', 'readOnly', 'writeOnly'
+]);
+
+// Inspect only schema-bearing locations. Do not recurse into enum/default/example
+// data, where an ordinary JSON property named "oneOf" is not a schema keyword.
+function findUnsupportedKeywords(schema, schemaPath = '#', found = []) {
+  if (!schema || typeof schema !== 'object' || Array.isArray(schema)) return found;
+  for (const keyword of Object.keys(schema)) {
+    if (!SUPPORTED_SCHEMA_KEYWORDS.has(keyword) && !ANNOTATION_KEYWORDS.has(keyword)) {
+      if (found.length < 20) found.push({ keyword, schemaPath: schemaJoin(schemaPath, keyword) });
+    }
+  }
+  if (schema.properties && typeof schema.properties === 'object' && !Array.isArray(schema.properties)) {
+    for (const [name, child] of Object.entries(schema.properties)) {
+      findUnsupportedKeywords(child, schemaJoin(schemaJoin(schemaPath, 'properties'), name), found);
+    }
+  }
+  if (schema.items !== undefined) {
+    if (!schema.items || typeof schema.items !== 'object' || Array.isArray(schema.items)) {
+      if (found.length < 20) found.push({ keyword: 'items', schemaPath: schemaJoin(schemaPath, 'items') });
+    } else {
+      findUnsupportedKeywords(schema.items, schemaJoin(schemaPath, 'items'), found);
+    }
+  }
+  if (schema.additionalProperties !== undefined &&
+      schema.additionalProperties !== true && schema.additionalProperties !== false) {
+    if (found.length < 20) found.push({
+      keyword: 'additionalProperties',
+      schemaPath: schemaJoin(schemaPath, 'additionalProperties')
+    });
+  }
+  if (schema.properties !== undefined &&
+      (!schema.properties || typeof schema.properties !== 'object' || Array.isArray(schema.properties))) {
+    if (found.length < 20) found.push({
+      keyword: 'properties',
+      schemaPath: schemaJoin(schemaPath, 'properties')
+    });
+  }
+  return found;
 }
 
 function inspectTree(value, depth = 0, budget = { nodes: 0 }) {
@@ -72,7 +113,15 @@ export function validateBatch(input) {
   const { schema, outputs } = input;
   if (!schema || typeof schema !== 'object' || Array.isArray(schema)) return { ok: false, status: 400, error: 'schema must be a JSON object.' };
   if (!Array.isArray(outputs) || outputs.length < 1 || outputs.length > 10) return { ok: false, status: 400, error: 'outputs must contain between 1 and 10 samples.' };
-  if (hasPatternKeyword(schema)) return { ok: false, status: 400, error: 'The hosted API does not support the pattern keyword; use the local browser tester for regex rules.' };
+  const unsupportedKeywords = findUnsupportedKeywords(schema);
+  if (unsupportedKeywords.length) {
+    const names = [...new Set(unsupportedKeywords.map(item => item.keyword))];
+    const detail = unsupportedKeywords.map(item => `${item.keyword} at ${item.schemaPath}`).join('; ');
+    const error = names.includes('pattern')
+      ? 'The hosted API does not support the pattern keyword; use the local browser tester for regex rules.'
+      : `Unsupported JSON Schema keyword(s): ${detail}. The hosted API rejects unsupported schema features instead of silently treating them as valid.`;
+    return { ok: false, status: 400, code: 'unsupported_schema', error, unsupportedKeywords };
+  }
   const budget = { nodes: 0 };
   const schemaStats = inspectTree(schema, 0, budget);
   if (schemaStats.tooDeep) return { ok: false, status: 400, error: `schema nesting exceeds ${MAX_DEPTH}.` };
