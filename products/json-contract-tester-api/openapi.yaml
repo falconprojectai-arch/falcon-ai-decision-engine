@@ -72,18 +72,13 @@ paths:
           description: Payments are disabled pending receiver verification
     head:
       operationId: probeValidateBatchHead
-      summary: Read-only x402 discovery probe (validation requires POST)
+      summary: Read-only discovery probe (validation requires POST)
       description: >-
-        Payments are currently paused. This read-only discovery route returns
-        HTTP 503 until receiver verification is complete.
+        Payments are currently paused. This route returns HTTP 503 until
+        receiver verification is complete.
       responses:
-        '402':
-          description: x402 v2 discovery challenge when payments are enabled; no validation is performed
         '503':
           description: Payments are disabled pending receiver verification
-        '405':
-          description: Use POST for batch validation; no settlement occurs
-      x-payment-required: true
     post:
       operationId: validateJsonBatch
       summary: Validate JSON Schema for AI outputs, API responses, and webhooks
