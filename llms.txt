@@ -62,7 +62,7 @@ Nine distinct skills were validated and published anonymously in two batches on 
 - [JSON Contract Tester — free browser tool](https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/): Validate JSON examples against a documented schema subset locally in the browser. Inputs are processed in the browser and are not uploaded by this tool.
 - [JSON Contract Tester API](https://json-contract-tester-api.falcon-project-ai.workers.dev/): Stateless machine-to-machine endpoint for validating 1–10 JSON outputs in one batch.
   - Endpoint: `POST https://json-contract-tester-api.falcon-project-ai.workers.dev/v1/validate-batch`
-  - Price: 0.005 USDC per batch on Base Mainnet (`eip155:8453`).
+  - Price: 0.10 USDC per batch on Base Mainnet (`eip155:8453`).
   - Payment: x402 v2; unpaid valid requests return HTTP 402 with a `PAYMENT-REQUIRED` challenge.
   - No API key or account is required; an x402-compatible client and a wallet able to authorize Base USDC payments are required for paid calls.
   - [Buyer quickstart — Node.js and Python](https://github.com/falconprojectai-arch/falcon-ai-decision-engine/blob/main/products/json-contract-tester-api/BUYER_QUICKSTART.md)
@@ -80,7 +80,7 @@ Nine distinct skills were validated and published anonymously in two batches on 
 
 The following products and API have public TechTools Launchpad listings. Four new records were accepted with HTTP 201 on 12 November 2026; the remaining six records were verified by exact-URL lookup.
 
-- [JSON Contract Tester API — paid x402 API, 0.005 USDC/batch on Base](https://techtools.cz/tools/launchpad/?tool=7727)
+- [JSON Contract Tester API — paid x402 API, 0.10 USDC/batch on Base](https://techtools.cz/tools/launchpad/?tool=7727)
 - [JSON Contract Tester — free browser tool](https://techtools.cz/tools/launchpad/?tool=9746)
 - [Dev & Agent Toolbox](https://techtools.cz/tools/launchpad/?tool=9747)
 - [Lead Follow-up Strategist](https://techtools.cz/tools/launchpad/?tool=9748)
