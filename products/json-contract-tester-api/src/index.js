@@ -3,6 +3,7 @@ import { cors } from 'hono/cors';
 import { paymentMiddleware, x402ResourceServer } from '@x402/hono';
 import { HTTPFacilitatorClient } from '@x402/core/server';
 import { registerExactEvmScheme } from '@x402/evm/exact/server';
+import { recoverMessageAddress } from 'viem';
 import { bazaarResourceServerExtension } from '@x402/extensions/bazaar';
 import { validateBatch, LIMITS } from './validator.js';
 
@@ -288,6 +289,129 @@ async function readLimitedBody(request, maxBytes) {
   catch { return { error: 'Request body must be valid JSON.' }; }
 }
 
+
+// Wallet ownership proof. This proves control of PAY_TO without sending a
+// transaction. A Durable Object provides single-writer, persistent nonce state.
+const AUTH_TTL_MS = 5 * 60 * 1000;
+const WALLET_ADDRESS_RE = /^0x[a-fA-F0-9]{40}$/;
+const NONCE_RE = /^[0-9a-f-]{36}$/i;
+const SIGNATURE_RE = /^0x[0-9a-fA-F]{130}$/;
+
+function nonceStore(env, address) {
+  if (!env.WALLET_NONCES) throw new Error('Wallet nonce storage is not configured.');
+  const id = env.WALLET_NONCES.idFromName(address.toLowerCase());
+  return env.WALLET_NONCES.get(id);
+}
+
+app.post('/auth/challenge', async c => {
+  const payTo = c.env.PAY_TO;
+  if (!payTo || !WALLET_ADDRESS_RE.test(payTo)) {
+    return c.json({ error: 'Payment receiver is not configured.' }, 503);
+  }
+  let store;
+  try { store = nonceStore(c.env, payTo); }
+  catch { return c.json({ error: 'Wallet proof storage is not configured.' }, 503); }
+
+  const now = Date.now();
+  const expiresAt = now + AUTH_TTL_MS;
+  const nonce = crypto.randomUUID();
+  const origin = new URL(c.req.url).origin;
+  const issuedAt = new Date(now).toISOString();
+  const expirationTime = new Date(expiresAt).toISOString();
+  const message = [
+    `${new URL(origin).host} wants you to prove control of this Ethereum account:`,
+    payTo,
+    '',
+    'Authorize wallet ownership verification for JSON Contract Tester API.',
+    'This signature is a proof only. It does NOT authorize a transaction, token approval, or transfer of funds.',
+    '',
+    `URI: ${origin}`,
+    'Version: 1',
+    'Chain ID: 8453',
+    `Nonce: ${nonce}`,
+    `Issued At: ${issuedAt}`,
+    `Expiration Time: ${expirationTime}`
+  ].join('\n');
+
+  const stored = await store.fetch('https://wallet-nonce.internal/create', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ nonce, message, expiresAt })
+  });
+  if (!stored.ok) return c.json({ error: 'Could not create wallet proof challenge.' }, 503);
+  return c.json({
+    address: payTo,
+    chainId: 8453,
+    signingMethod: 'personal_sign',
+    nonce,
+    message,
+    expiresAt: expirationTime,
+    warning: 'Sign this message only. Do not approve a transaction or token spending.'
+  }, 200, { 'Cache-Control': 'no-store' });
+});
+
+app.post('/auth/verify', async c => {
+  const payTo = c.env.PAY_TO;
+  if (!payTo || !WALLET_ADDRESS_RE.test(payTo)) {
+    return c.json({ error: 'Payment receiver is not configured.' }, 503);
+  }
+  let input;
+  try { input = await c.req.json(); } catch { return c.json({ error: 'Expected JSON body.' }, 400); }
+  if (!input || typeof input !== 'object' || !NONCE_RE.test(input.nonce || '') || !SIGNATURE_RE.test(input.signature || '')) {
+    return c.json({ error: 'A valid nonce and 65-byte personal_sign signature are required.' }, 400);
+  }
+
+  let store;
+  try { store = nonceStore(c.env, payTo); }
+  catch { return c.json({ error: 'Wallet proof storage is not configured.' }, 503); }
+
+  const challengeResponse = await store.fetch(`https://wallet-nonce.internal/get?nonce=${encodeURIComponent(input.nonce)}`);
+  if (challengeResponse.status === 404) return c.json({ error: 'Challenge is missing, expired, or already used.' }, 410);
+  if (!challengeResponse.ok) return c.json({ error: 'Could not retrieve wallet proof challenge.' }, 503);
+  const challenge = await challengeResponse.json();
+
+  let recovered;
+  try {
+    recovered = await recoverMessageAddress({ message: challenge.message, signature: input.signature });
+  } catch {
+    return c.json({ error: 'Signature is invalid for this challenge.' }, 401);
+  }
+  if (recovered.toLowerCase() !== payTo.toLowerCase()) {
+    return c.json({ error: 'Signature does not match the configured receiving wallet.' }, 401);
+  }
+
+  // Atomic consume prevents concurrent replay. The Durable Object also records
+  // the verified address only after a valid signature has been recovered.
+  const consumed = await store.fetch('https://wallet-nonce.internal/consume', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ nonce: input.nonce, address: recovered })
+  });
+  if (consumed.status === 409 || consumed.status === 404) {
+    return c.json({ error: 'Challenge expired or was already used.' }, 410);
+  }
+  if (!consumed.ok) return c.json({ error: 'Could not finalize wallet proof.' }, 503);
+  const result = await consumed.json();
+  return c.json({
+    verified: true,
+    address: result.address,
+    verifiedAt: result.verifiedAt,
+    chainId: 8453,
+    paymentActivation: 'not_enabled_by_this_proof'
+  }, 200, { 'Cache-Control': 'no-store' });
+});
+
+app.get('/auth/status', async c => {
+  const payTo = c.env.PAY_TO;
+  if (!payTo || !WALLET_ADDRESS_RE.test(payTo)) return c.json({ verified: false, error: 'Payment receiver is not configured.' }, 503);
+  let store;
+  try { store = nonceStore(c.env, payTo); }
+  catch { return c.json({ verified: false, error: 'Wallet proof storage is not configured.' }, 503); }
+  const response = await store.fetch('https://wallet-nonce.internal/status');
+  if (!response.ok) return c.json({ verified: false }, 503);
+  return c.json(await response.json(), 200, { 'Cache-Control': 'no-store' });
+});
+
 app.get('/', c => c.json({
   name: 'JSON Contract Tester API',
   status: 'ok',
@@ -413,3 +537,59 @@ app.post('/v1/validate-batch', c => {
 });
 app.notFound(c => c.json({ error: 'Not found.' }, 404));
 export default app;
+
+
+// One Durable Object instance per configured receiving wallet. All nonce
+// mutations are serialized by this object and persisted across Worker requests.
+export class WalletNonceStore {
+  constructor(ctx) { this.ctx = ctx; }
+
+  async fetch(request) {
+    const url = new URL(request.url);
+    if (url.pathname === '/create' && request.method === 'POST') {
+      const input = await request.json();
+      if (!NONCE_RE.test(input.nonce || '') || typeof input.message !== 'string' ||
+          !Number.isFinite(input.expiresAt) || input.expiresAt <= Date.now() ||
+          input.expiresAt > Date.now() + AUTH_TTL_MS + 5000) {
+        return Response.json({ error: 'Invalid challenge.' }, { status: 400 });
+      }
+      await this.ctx.storage.put('activeChallenge', {
+        nonce: input.nonce, message: input.message, expiresAt: input.expiresAt
+      });
+      return Response.json({ created: true });
+    }
+
+    if (url.pathname === '/get' && request.method === 'GET') {
+      const nonce = url.searchParams.get('nonce');
+      const active = await this.ctx.storage.get('activeChallenge');
+      if (!active || active.nonce !== nonce || active.expiresAt <= Date.now()) {
+        if (active && active.expiresAt <= Date.now()) await this.ctx.storage.delete('activeChallenge');
+        return Response.json({ error: 'Not found.' }, { status: 404 });
+      }
+      return Response.json({ message: active.message, expiresAt: active.expiresAt });
+    }
+
+    if (url.pathname === '/consume' && request.method === 'POST') {
+      const input = await request.json();
+      const result = await this.ctx.storage.transaction(async txn => {
+        const active = await txn.get('activeChallenge');
+        if (!active || active.nonce !== input.nonce || active.expiresAt <= Date.now()) return null;
+        const verifiedAt = new Date().toISOString();
+        await txn.delete('activeChallenge');
+        await txn.put('verifiedWallet', { address: input.address, verifiedAt });
+        return { address: input.address, verifiedAt };
+      });
+      if (!result) return Response.json({ error: 'Expired or already consumed.' }, { status: 409 });
+      return Response.json(result);
+    }
+
+    if (url.pathname === '/status' && request.method === 'GET') {
+      const verified = await this.ctx.storage.get('verifiedWallet');
+      return Response.json(verified
+        ? { verified: true, address: verified.address, verifiedAt: verified.verifiedAt }
+        : { verified: false });
+    }
+
+    return Response.json({ error: 'Not found.' }, { status: 404 });
+  }
+}
