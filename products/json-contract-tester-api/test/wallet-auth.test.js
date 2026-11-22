@@ -4,10 +4,25 @@ import { NonceStore } from '../src/wallet-auth.js';
 
 function makeStore() {
   const values = new Map();
+  let lock = Promise.resolve();
   const storage = {
     get: async key => values.get(key),
     put: async (key, value) => values.set(key, value),
-    delete: async key => values.delete(key)
+    delete: async key => values.delete(key),
+    transaction: async callback => {
+      const previous = lock;
+      let release;
+      lock = new Promise(resolve => { release = resolve; });
+      await previous;
+      try {
+        return await callback({
+          get: async key => values.get(key),
+          delete: async key => values.delete(key)
+        });
+      } finally {
+        release();
+      }
+    }
   };
   return new NonceStore({ storage });
 }
@@ -46,4 +61,30 @@ test('nonce consumption is one-time and bound to the exact message', async () =>
     method: 'POST', body: JSON.stringify({ nonce: record.nonce, message: record.message })
   }));
   assert.equal(replay.status, 409);
+});
+
+test('multiple outstanding challenges for one wallet remain independently valid', async () => {
+  const store = makeStore();
+  const records = ['d', 'e'].map(char => ({
+    nonce: char.repeat(32), message: `message-${char}`, expiresAt: Date.now() + 60_000
+  }));
+  for (const record of records) {
+    await store.fetch(new Request('https://nonce/put', { method: 'POST', body: JSON.stringify(record) }));
+  }
+  for (const record of records) {
+    const response = await store.fetch(new Request(`https://nonce/get?nonce=${record.nonce}`));
+    assert.equal(response.status, 200);
+    assert.deepEqual(await response.json(), record);
+  }
+});
+
+test('concurrent consume attempts allow exactly one winner', async () => {
+  const store = makeStore();
+  const record = { nonce: 'f'.repeat(32), message: 'single-use', expiresAt: Date.now() + 60_000 };
+  await store.fetch(new Request('https://nonce/put', { method: 'POST', body: JSON.stringify(record) }));
+  const consume = () => store.fetch(new Request('https://nonce/consume', {
+    method: 'POST', body: JSON.stringify({ nonce: record.nonce, message: record.message })
+  }));
+  const responses = await Promise.all([consume(), consume()]);
+  assert.deepEqual(responses.map(response => response.status).sort(), [200, 409]);
 });
