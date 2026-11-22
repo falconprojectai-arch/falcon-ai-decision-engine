@@ -44,6 +44,13 @@ export function registerWalletAuth(app) {
     if (!body || typeof body.address !== 'string' || !ADDRESS_RE.test(body.address)) {
       return c.json({ error: 'A valid EVM wallet address is required.' }, 400);
     }
+    const payTo = c.env.PAY_TO;
+    if (typeof payTo !== 'string' || !ADDRESS_RE.test(payTo)) {
+      return c.json({ error: 'Receiving wallet is not configured.' }, 503);
+    }
+    if (body.address.toLowerCase() !== payTo.toLowerCase()) {
+      return c.json({ error: 'Challenge address must match the configured receiving wallet.' }, 403);
+    }
     if (!c.env.NONCE_STORE) return c.json({ error: 'Wallet-auth nonce storage is not configured.' }, 503);
     const address = body.address.toLowerCase();
     const issued = new Date();
@@ -80,6 +87,13 @@ export function registerWalletAuth(app) {
         typeof body.message !== 'string' || typeof body.signature !== 'string' ||
         !SIGNATURE_RE.test(body.signature)) {
       return c.json({ error: 'address, nonce, message, and a 65-byte EVM signature are required.' }, 400);
+    }
+    const payTo = c.env.PAY_TO;
+    if (typeof payTo !== 'string' || !ADDRESS_RE.test(payTo)) {
+      return c.json({ error: 'Receiving wallet is not configured.' }, 503);
+    }
+    if (body.address.toLowerCase() !== payTo.toLowerCase()) {
+      return c.json({ error: 'Verification address must match the configured receiving wallet.' }, 403);
     }
     if (!c.env.NONCE_STORE) return c.json({ error: 'Wallet-auth nonce storage is not configured.' }, 503);
     const lookup = await nonceStore(c.env, body.address, 'get', { nonce: body.nonce });
