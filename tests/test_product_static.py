@@ -88,19 +88,15 @@ def test_paid_review_page_is_inquiry_only_until_destination_verification():
     source = review_page.read_text(encoding="utf-8")
 
     assert "Reference price · one-time" in source
-    assert "Payments are not open checkout." in source
-    assert "written order reference, exact amount, and payment instructions" in source
-    assert "order remains pending until a human checks" in source
-    assert "Prepare payment confirmation" in source
-    assert 'id="order-ref"' in source and 'id="tx-email"' in source
-    assert 'id="tx-amount"' in source and 'id="txid"' in source
+    assert "Payments are paused." in source
+    assert "does not match the previously documented receiving destination" in source
+    assert "owner control has not been independently verified" in source
+    assert "$4 amount is a reference price, not a request for payment." in source
+    assert "Prepare payment confirmation" not in source
+    assert 'id="order-ref"' not in source and 'id="txid"' not in source
     assert not re.search(r"0x[a-fA-F0-9]{40}|T[A-Za-z0-9]{33}", source)
 
     script = ROOT / "products" / "dev-agent-toolbox" / "payment.js"
-    js = script.read_text(encoding="utf-8")
-    assert "mailto:falcon.project.ai@gmail.com" in js
-    assert "independently checked and confirmed" in js
-    assert "0x[a-fA-F0-9]{64}" in js
     result = subprocess.run(["node", "--check", str(script)], capture_output=True, text=True, check=False)
     assert result.returncode == 0, result.stderr
 
