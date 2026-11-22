@@ -202,11 +202,10 @@ const openApiDocument = {
       get: {
         operationId: 'getCdpBazaarX402Manifest',
         summary: 'x402 v2 manifest for agent marketplaces',
-        description: 'Public machine-readable manifest including the paid resource URL, Base USDC price, and receiving address.',
+        description: 'Payment discovery is disabled until the receiving wallet is independently verified.',
         security: [],
         responses: {
-          '200': { description: 'x402 v2 resource manifest' },
-          '503': { description: 'Payment receiver is not configured.' }
+          '503': { description: 'Payments are disabled pending receiver verification.' }
         }
       }
     },
@@ -214,18 +213,17 @@ const openApiDocument = {
       get: {
         operationId: 'probeValidateBatchGet',
         summary: 'Read-only x402 discovery probe (validation requires POST)',
-        description: 'Returns the same unpaid x402 challenge for marketplace discovery. GET is not the billable validation operation; use POST with the documented request body.',
+        description: 'Payments are currently paused. This read-only discovery route returns HTTP 503 until receiver verification is complete.',
         tags: ['json-schema-validation', 'api-response-validation'],
         'x-payment-required': true,
         responses: {
-          '402': { description: 'x402 v2 discovery challenge; no validation is performed.' },
-          '405': { description: 'Use POST for batch validation; no settlement occurs.' }
+          '503': { description: 'Payments are disabled pending receiver verification.' }
         }
       },
       head: {
         operationId: 'probeValidateBatchHead',
         summary: 'Read-only x402 discovery probe (validation requires POST)',
-        description: 'HEAD returns the same unpaid x402 challenge for marketplace discovery. The billable validation operation remains POST.',
+        description: 'Payments are currently paused. This read-only discovery route returns HTTP 503 until receiver verification is complete.',
         tags: ['json-schema-validation', 'api-response-validation'],
         'x-payment-required': true,
         responses: {
@@ -238,16 +236,7 @@ const openApiDocument = {
         summary: 'Validate JSON Schema for AI outputs, API responses, and webhook payloads',
         description: serviceDescription,
         tags: ['json-schema-validation', 'json-validation', 'api-response-validation', 'ai-agent-output', 'structured-output', 'webhook-validation', 'contract-testing', 'regression-testing'],
-        'x-price-usd': '0.005',
-        'x-x402-network': 'eip155:8453',
-        'x-payment-info': {
-          protocols: ['x402'],
-          price: { mode: 'fixed', currency: 'USD', amount: '0.005' },
-          network: 'eip155:8453',
-          asset: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913'
-        },
-        'x-payment-required': true,
-        requestBody: {
+                requestBody: {
           required: true,
           content: {
             'application/json': {
@@ -259,9 +248,8 @@ const openApiDocument = {
         responses: {
           '200': { description: 'Batch validation report; individual samples may pass or fail.' },
           '400': { description: 'Invalid schema or batch shape, including unsupported_schema with keyword and schemaPath details; unsupported features are rejected rather than treated as valid.' },
-          '402': { description: 'x402 v2 payment required; inspect PAYMENT-REQUIRED.' },
-          '413': { description: 'Request body exceeds 64 KiB; rejected before payment.' },
-          '503': { description: 'Payment receiver is not configured.' }
+          '413': { description: 'Request body exceeds 64 KiB.' },
+          '503': { description: 'Payments are disabled pending receiver verification.' }
         }
       }
     }
