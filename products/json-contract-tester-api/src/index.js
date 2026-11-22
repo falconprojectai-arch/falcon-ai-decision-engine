@@ -328,7 +328,7 @@ app.get('/.well-known/x402.json', c => {
         network: 'eip155:8453',
         payTo,
         asset: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
-        amount: '5000',
+        amount: '100000',
         maxTimeoutSeconds: 60
       }]
     }]
@@ -362,7 +362,7 @@ app.use('*', async (c, next) => {
     network: 'eip155:8453',
     payTo,
     asset: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
-    amount: '5000',
+    amount: '100000',
     maxTimeoutSeconds: 60
   }];
   const description = 'Validate 1–10 JSON outputs against the documented JSON Schema subset; receive structured PASS/FAIL results and JSON Pointer diagnostics.';
