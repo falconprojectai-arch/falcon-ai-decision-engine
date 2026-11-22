@@ -16,17 +16,23 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 3
     steps:
-      - name: Verify live Worker GET endpoints
+      - name: Verify live Worker health and public API contract
         env:
           WORKER_URL: https://json-contract-tester-api.falcon-project-ai.workers.dev
         run: |
           set -euo pipefail
           curl --retry 3 --retry-all-errors --retry-delay 2 -fsS "$WORKER_URL/health" \
             | jq -e '.status == "ok" and .service == "json-contract-tester-api"'
-          curl --retry 3 --retry-all-errors --retry-delay 2 -fsS "$WORKER_URL/.well-known/x402" \
-            | jq -e '.resources[] | select(.path == "/v1/validate-batch" and .method == "POST")'
           curl --retry 3 --retry-all-errors --retry-delay 2 -fsS "$WORKER_URL/openapi.json" \
             | jq -e '.paths["/v1/validate-batch"].post != null'
+          for path in /.well-known/x402 /.well-known/x402.json; do
+            status="$(curl -sS -o /tmp/manifest-body.txt -w '%{http_code}' "$WORKER_URL$path")"
+            if [ "$status" != "503" ] || ! grep -q 'Payments are disabled pending receiver verification' /tmp/manifest-body.txt; then
+              echo "Expected $path to remain paused with HTTP 503; received HTTP $status."
+              cat /tmp/manifest-body.txt
+              exit 1
+            fi
+          done
 
       - name: Verify payment pause without sending funds
         env:
