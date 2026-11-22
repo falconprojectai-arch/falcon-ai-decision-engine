@@ -21,8 +21,8 @@ class PageParser(HTMLParser):
         attrs = dict(attrs)
         if attrs.get("id"):
             self.ids.add(attrs["id"])
-        if tag == "script":
-            self.script_sources.append(attrs.get("src"))
+        if tag == "script" and attrs.get("src"):
+            self.script_sources.append(attrs["src"])
         if tag == "link" and attrs.get("rel") == "stylesheet":
             self.stylesheets.append(attrs.get("href"))
 
