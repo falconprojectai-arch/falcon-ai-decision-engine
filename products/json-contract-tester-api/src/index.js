@@ -8,7 +8,7 @@ import { validateBatch, LIMITS } from './validator.js';
 
 const app = new Hono();
 
-const serviceDescription = 'JSON Schema validation API for AI agents, LLM structured outputs, API responses, webhook payloads, and backend data contracts. Validate 1–10 JSON samples in one batch against a documented JSON Schema subset; receive per-sample PASS/FAIL results and structured JSON Pointer diagnostics for contract testing and regression checks. Unsupported schema keywords are rejected explicitly instead of silently treated as valid; this is not full JSON Schema. $0.005 USDC per batch on Base Mainnet via x402 v2 exact.';
+const serviceDescription = 'JSON Schema validation API for AI agents, LLM structured outputs, API responses, webhook payloads, and backend data contracts. Validate 1–10 JSON samples in one batch against a documented JSON Schema subset; receive per-sample PASS/FAIL results and structured JSON Pointer diagnostics for contract testing and regression checks. Unsupported schema keywords are rejected explicitly instead of silently treated as valid; this is not full JSON Schema. Paid access is currently paused pending receiving-wallet verification.';
 const requestExample = {
   schema: {
     type: 'object',
@@ -306,8 +306,8 @@ async function readLimitedBody(request, maxBytes) {
 app.get('/', c => c.json({
   name: 'JSON Contract Tester API',
   status: 'ok',
-  description: 'Paid batch validation API for JSON outputs against a documented JSON Schema subset.',
-  price: '0.005 USDC per batch on Base Mainnet (x402)',
+  description: 'Batch validation API for JSON outputs against a documented JSON Schema subset. Paid access is currently paused pending receiving-wallet verification.',
+  price: 'Payments paused; $0.005 USDC was an experimental reference price.',
   endpoints: {
     health: '/health',
     discovery: '/.well-known/x402',
@@ -317,7 +317,10 @@ app.get('/', c => c.json({
   product: 'https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester/'
 }));
 app.get('/health', c => c.json({ status: 'ok', service: 'json-contract-tester-api', version: '0.1.0' }));
-app.get('/.well-known/x402', c => c.json(discoveryManifest));
+app.get('/.well-known/x402', c => {
+  if (c.env.PAYMENTS_ENABLED !== 'true') return c.json({ error: 'Payments are disabled pending receiver verification.' }, 503);
+  return c.json(discoveryManifest);
+});
 // Coinbase CDP Bazaar-compatible x402 v2 manifest. The receiving address is
 // public payment metadata and is read from the Worker secret at request time.
 app.get('/.well-known/x402.json', c => {

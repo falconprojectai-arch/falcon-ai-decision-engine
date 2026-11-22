@@ -16,43 +16,48 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 3
     steps:
-      - name: Verify live Worker GET endpoints
+      - name: Verify live Worker health and public API contract
         env:
           WORKER_URL: https://json-contract-tester-api.falcon-project-ai.workers.dev
         run: |
           set -euo pipefail
           curl --retry 3 --retry-all-errors --retry-delay 2 -fsS "$WORKER_URL/health" \
             | jq -e '.status == "ok" and .service == "json-contract-tester-api"'
-          curl --retry 3 --retry-all-errors --retry-delay 2 -fsS "$WORKER_URL/.well-known/x402" \
-            | jq -e '.resources[] | select(.path == "/v1/validate-batch" and .method == "POST")'
           curl --retry 3 --retry-all-errors --retry-delay 2 -fsS "$WORKER_URL/openapi.json" \
             | jq -e '.paths["/v1/validate-batch"].post != null'
+          for path in /.well-known/x402 /.well-known/x402.json; do
+            status="$(curl -sS -o /tmp/manifest-body.txt -w '%{http_code}' "$WORKER_URL$path")"
+            if [ "$status" != "503" ] || ! grep -q 'Payments are disabled pending receiver verification' /tmp/manifest-body.txt; then
+              echo "Expected $path to remain paused with HTTP 503; received HTTP $status."
+              cat /tmp/manifest-body.txt
+              exit 1
+            fi
+          done
 
-      - name: Verify x402 discovery challenges without paying
+      - name: Verify payment pause without sending funds
         env:
           WORKER_URL: https://json-contract-tester-api.falcon-project-ai.workers.dev
         run: |
           set -euo pipefail
-          for method in GET HEAD; do
-            status="$(curl -sS -o /tmp/x402-$method-body.txt -D /tmp/x402-$method-headers.txt -w '%{http_code}' -X "$method" "$WORKER_URL/v1/validate-batch")"
-            if [ "$status" != "402" ] || ! grep -qi '^payment-required:' /tmp/x402-$method-headers.txt; then
-              echo "Expected $method HTTP 402 with PAYMENT-REQUIRED; received HTTP $status."
-              cat /tmp/x402-$method-body.txt
+          for path in /.well-known/x402 /.well-known/x402.json /v1/validate-batch; do
+            status="$(curl -sS -o /tmp/paused-body.txt -w '%{http_code}' "$WORKER_URL$path")"
+            if [ "$status" != "503" ] || ! grep -q 'Payments are disabled pending receiver verification' /tmp/paused-body.txt; then
+              echo "Expected $path to return the explicit payment-pause HTTP 503; received HTTP $status."
+              cat /tmp/paused-body.txt
               exit 1
             fi
-            echo "$method discovery challenge passed; no payment was sent."
+            echo "$path is safely paused (HTTP 503)."
           done
-
-          status="$(curl -sS -o /tmp/x402-post-body.txt -D /tmp/x402-post-headers.txt -w '%{http_code}' \
+          status="$(curl -sS -o /tmp/paused-post-body.txt -w '%{http_code}' \
             -X POST "$WORKER_URL/v1/validate-batch" \
             -H 'Content-Type: application/json' \
             --data '{"schema":{"type":"object"},"outputs":[{"json":{}}]}')"
-          if [ "$status" != "402" ] || ! grep -qi '^payment-required:' /tmp/x402-post-headers.txt; then
-            echo "Expected POST HTTP 402 with PAYMENT-REQUIRED; received HTTP $status."
-            cat /tmp/x402-post-body.txt
+          if [ "$status" != "503" ] || ! grep -q 'Payments are disabled pending receiver verification' /tmp/paused-post-body.txt; then
+            echo "Expected paid POST to remain disabled with HTTP 503; received HTTP $status."
+            cat /tmp/paused-post-body.txt
             exit 1
           fi
-          echo "POST buyer challenge passed; no payment was sent."
+          echo "Paid POST remains disabled; no payment was sent."
 
   deploy:
     if: github.ref == 'refs/heads/main'
@@ -112,89 +117,32 @@ jobs:
           health="$(curl --retry 5 --retry-all-errors --retry-delay 3 -fsS "$WORKER_URL/health")"
           echo "$health" | jq -e '.status == "ok" and .service == "json-contract-tester-api"'
 
-          echo "Checking discovery manifest..."
-          curl --retry 5 --retry-all-errors --retry-delay 3 -fsS "$WORKER_URL/.well-known/x402" \
-            | jq -e '.resources[] | select(.path == "/v1/validate-batch" and .method == "POST")'
-          curl --retry 5 --retry-all-errors --retry-delay 3 -fsS "$WORKER_URL/.well-known/x402.json" \
-            | jq -e '(.x402Version == 2) and (.resources[] | select(.url == (env.WORKER_URL + "/v1/validate-batch") and .accepts[0].amount == "5000" and .extensions.bazaar.info.input.method == "POST" and .outputSchema.properties.valid.type == "boolean"))'
+          echo "Checking x402 discovery is disabled until receiver verification..."
+          for path in /.well-known/x402 /.well-known/x402.json; do
+            status="$(curl -sS -o /tmp/manifest-body.txt -w '%{http_code}' "$WORKER_URL$path")"
+            if [ "$status" != "503" ] || ! grep -q 'Payments are disabled pending receiver verification' /tmp/manifest-body.txt; then
+              echo "Expected $path HTTP 503 with payment-pause message; received HTTP $status."
+              cat /tmp/manifest-body.txt
+              exit 1
+            fi
+          done
 
-          echo "Checking OpenAPI document..."
+          echo "Checking OpenAPI document remains available..."
           curl --retry 5 --retry-all-errors --retry-delay 3 -fsS "$WORKER_URL/openapi.json" \
             | jq -e '.paths["/v1/validate-batch"].post != null'
 
-          echo "Checking that protected POST returns an x402 payment challenge (no payment is sent)..."
-          status="$(curl -sS -o /tmp/x402-body.txt -D /tmp/x402-headers.txt -w '%{http_code}' \
+          echo "Checking paid POST remains disabled..."
+          status="$(curl -sS -o /tmp/paused-post-body.txt -w '%{http_code}' \
             -X POST "$WORKER_URL/v1/validate-batch" \
             -H 'Content-Type: application/json' \
             --data '{"schema":{"type":"object"},"outputs":[{"json":{}}]}')"
-          if [ "$status" != "402" ] || ! grep -qi '^payment-required:' /tmp/x402-headers.txt; then
-            echo "Expected HTTP 402 with PAYMENT-REQUIRED header; received HTTP $status."
-            cat /tmp/x402-body.txt
-            cat /tmp/x402-headers.txt
+          if [ "$status" != "503" ] || ! grep -q 'Payments are disabled pending receiver verification' /tmp/paused-post-body.txt; then
+            echo "Expected HTTP 503 payment pause; received HTTP $status."
+            cat /tmp/paused-post-body.txt
             exit 1
           fi
-          echo "Checking legacy accepts[] body for x402 directory compatibility..."
-          status="$(curl -sS -o /tmp/x402-get-body.txt -D /tmp/x402-get-headers.txt -w '%{http_code}' -X GET "$WORKER_URL/v1/validate-batch")"
-          if [ "$status" != "402" ] || ! grep -qi '^payment-required:' /tmp/x402-get-headers.txt; then
-            echo "Expected GET HTTP 402 with PAYMENT-REQUIRED; received HTTP $status."
-            cat /tmp/x402-get-body.txt
-            exit 1
-          fi
-          jq -e '.accepts[0].scheme == "exact" and .accepts[0].network == "eip155:8453" and .accepts[0].amount == "5000" and .extensions.bazaar.info.input.method == "POST"' /tmp/x402-get-body.txt
+          echo "Production payment-pause checks passed."
 
-          echo "Checking empty-body POST marketplace probe..."
-          status="$(curl -sS -o /tmp/x402-empty-post-body.txt -D /tmp/x402-empty-post-headers.txt -w '%{http_code}' -X POST "$WORKER_URL/v1/validate-batch")"
-          if [ "$status" != "402" ] || ! grep -qi '^payment-required:' /tmp/x402-empty-post-headers.txt; then
-            echo "Expected empty POST HTTP 402 with PAYMENT-REQUIRED; received HTTP $status."
-            cat /tmp/x402-empty-post-body.txt
-            exit 1
-          fi
-          jq -e '.accepts[0].scheme == "exact" and .accepts[0].amount == "5000"' /tmp/x402-empty-post-body.txt
-
-          echo "Checking Bazaar extension in the canonical PAYMENT-REQUIRED header..."
-          status="$(curl -sS -o /tmp/x402-post-body.txt -D /tmp/x402-post-headers.txt -w '%{http_code}' \
-            -X POST "$WORKER_URL/v1/validate-batch" \
-            -H 'Content-Type: application/json' \
-            --data '{"schema":{"type":"object","required":["ok"],"properties":{"ok":{"type":"boolean"}}},"outputs":[{"id":"probe","json":{"ok":true}}]}')"
-          if [ "$status" != "402" ] || ! grep -qi '^payment-required:' /tmp/x402-post-headers.txt; then
-            echo "Expected POST HTTP 402 with PAYMENT-REQUIRED; received HTTP $status."
-            cat /tmp/x402-post-body.txt
-            exit 1
-          fi
-          encoded="$(grep -i '^payment-required:' /tmp/x402-post-headers.txt | sed 's/^[^:]*:[[:space:]]*//' | tr -d '\r')"
-          printf '%s' "$encoded" | base64 -d > /tmp/x402-post-challenge.json
-          jq -e '.extensions.bazaar.info.input.method == "POST" and .extensions.bazaar.info.input.bodyType == "json" and .extensions.bazaar.info.output.type == "json"' /tmp/x402-post-challenge.json
-          echo "Production smoke tests passed."
-
-      # Free Agent402 registration refresh: re-crawl the public x402 manifest and
-      # OpenAPI after every Worker deploy. This improves discovery metadata only;
-      # it does not create or simulate a paid settlement.
-      - name: Refresh Agent402 seller listing
-        env:
-          WORKER_URL: https://json-contract-tester-api.falcon-project-ai.workers.dev
-        run: |
-          set -euo pipefail
-          echo "Refreshing the free Agent402 seller index..."
-          status="$(curl --silent --show-error -o /tmp/agent402-register.json -w '%{http_code}' \
-            -X POST https://agent402.tools/api/index/register \
-            -H 'content-type: application/json' \
-            --data "$(jq -n --arg origin "$WORKER_URL" '{origin: $origin}')")"
-          if [ "$status" = "429" ]; then
-            echo "Agent402 rate limit reached; the existing seller listing is left intact."
-            cat /tmp/agent402-register.json
-          elif [[ "$status" =~ ^2[0-9][0-9]$ ]]; then
-            cat /tmp/agent402-register.json | jq .
-            echo "Verifying refreshed public seller metadata..."
-            curl --retry 5 --retry-all-errors --retry-delay 3 -fsS \
-              "https://agent402.tools/api/index?seller=$WORKER_URL" \
-              | jq -e --arg origin "$WORKER_URL" '
-                  .origin == $origin
-                  and .routable == true
-                  and any(.tools[]; .route == "/v1/validate-batch"
-                    and ((.tags // []) | index("api-response-validation") != null))
-                '
-          else
-            echo "Agent402 registration failed with HTTP $status."
-            cat /tmp/agent402-register.json
-            exit 1
-          fi
+      # Do not refresh paid marketplace listings while the Worker is fail-closed.
+      - name: Keep Agent402 seller listing unchanged while payments are paused
+        run: echo "Payments are paused pending receiver verification; no paid marketplace listing refresh was attempted."

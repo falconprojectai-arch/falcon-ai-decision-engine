@@ -1,5 +1,8 @@
 # JSON Contract Tester API — buyer quickstart
 
+> **Payments are currently paused.** Do not fund a wallet, run the paid client examples, or attempt a transfer. Both discovery manifests and the paid route return HTTP 503 until the receiving wallet is verified and the operator explicitly re-enables payments. The price below is historical/reference information only.
+
+
 ## Before paying
 - Endpoint: `POST https://json-contract-tester-api.falcon-project-ai.workers.dev/v1/validate-batch`
 - Price: **0.005 USDC per batch**
@@ -23,7 +26,7 @@ curl -i https://json-contract-tester-api.falcon-project-ai.workers.dev/v1/valida
   }'
 ```
 
-Expected result before payment: **HTTP 402** and a `PAYMENT-REQUIRED` response header. This is only a challenge check, not a paid call.
+Current expected result: **HTTP 503** with `Payments are disabled pending receiver verification.` A 402 challenge will be restored only after the receiving wallet is verified and payments are explicitly re-enabled.
 
 Malformed JSON and request bodies over 64 KiB are rejected before payment. A JSON body that parses but has an invalid schema or batch shape is validated after payment verification and can return HTTP 400. The @x402/hono middleware settles only after a successful response; count only a successful 2xx response with PAYMENT-RESPONSE and an on-chain receipt as a completed payment. Validate requests against the OpenAPI contract before authorizing payment.
 
