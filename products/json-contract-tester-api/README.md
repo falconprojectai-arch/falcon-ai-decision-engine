@@ -30,6 +30,19 @@ A successful paid response contains valid, a batch summary, per-sample results, 
 
 A browser-based diagnostic page is available at https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester-api/payment-preflight.html. It checks health, CORS, malformed-input rejection, and the expected HTTP 503 payment-pause state without connecting a wallet, signing a payment, or spending USDC.
 
+
+## Receiving-wallet ownership proof
+
+The isolated implementation branch adds three operator-only proof endpoints:
+
+- `POST /auth/challenge` creates a five-minute, origin-bound, Base chain (8453) personal-sign challenge for the configured `PAY_TO` address.
+- `POST /auth/verify` recovers the signer with `viem`, checks it against `PAY_TO`, and atomically consumes the nonce.
+- `GET /auth/status` reports whether the configured receiver has been verified.
+
+The nonce and verification record are stored in a Cloudflare Durable Object bound as `WALLET_NONCES`; the Wrangler config includes its SQLite-class migration. Missing storage fails closed with HTTP 503. A successful proof establishes control of the signing key only; it does not activate payments, approve token spending, or transfer funds. The only permitted wallet interaction is signing the exact plain-text challenge with Rabby's personal-sign/message-sign feature. Never sign a transaction or token approval for this proof.
+
+Before production use, deploy the Durable Object migration, confirm the Worker binding exists, run the proof flow against the deployed Worker, and verify replay rejection. Keep `PAYMENTS_ENABLED` unset until the separate x402 facilitator, settlement, refund, and reconciliation checks are completed. This branch is not the live production deployment.
+
 ## Payment
 
 **Fail-closed default:** both x402 discovery manifests and the paid validation route return HTTP 503 unless the Cloudflare Worker environment variable `PAYMENTS_ENABLED` is explicitly set to the exact string `true`. Set it only after verifying the destination wallet is controlled by the project operator, matches the documented network and token, and the manual order/reconciliation/refund runbook is operational. `PAY_TO` alone must never activate payments. Keep the flag unset or false while any receiver identity or owner-control check is outstanding.
