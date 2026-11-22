@@ -38,8 +38,8 @@ const requestSchema = {
   }
 };
 
-// Machine-readable discovery metadata. Marketplaces can discover the POST route
-// without guessing its method or request body, then verify the live 402 quote.
+// Machine-readable discovery metadata is retained for a future explicitly
+// approved relaunch; the public OpenAPI document does not advertise it while paused.
 const bazaarInputExample = {
   schema: { type: 'object', required: ['ok'], properties: { ok: { type: 'boolean' } } },
   outputs: [
@@ -215,20 +215,17 @@ const openApiDocument = {
         summary: 'Read-only x402 discovery probe (validation requires POST)',
         description: 'Payments are currently paused. This read-only discovery route returns HTTP 503 until receiver verification is complete.',
         tags: ['json-schema-validation', 'api-response-validation'],
-        'x-payment-required': true,
         responses: {
           '503': { description: 'Payments are disabled pending receiver verification.' }
         }
       },
       head: {
         operationId: 'probeValidateBatchHead',
-        summary: 'Read-only x402 discovery probe (validation requires POST)',
-        description: 'Payments are currently paused. This read-only discovery route returns HTTP 503 until receiver verification is complete.',
+        summary: 'Read-only discovery probe (validation requires POST)',
+        description: 'Payments are currently paused. This route returns HTTP 503 until receiver verification is complete.',
         tags: ['json-schema-validation', 'api-response-validation'],
-        'x-payment-required': true,
         responses: {
-          '402': { description: 'x402 v2 discovery challenge; no validation is performed.' },
-          '405': { description: 'Use POST for batch validation; no settlement occurs.' }
+          '503': { description: 'Payments are disabled pending receiver verification.' }
         }
       },
       post: {
