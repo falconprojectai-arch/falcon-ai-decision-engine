@@ -126,21 +126,21 @@ export class NonceStore {
           typeof body.message !== 'string' || !Number.isFinite(body.expiresAt)) {
         return Response.json({ error: 'Invalid challenge record.' }, { status: 400 });
       }
-      await this.storage.put(`challenge:${body.nonce}`, body);
+      await this.storage.put(`challenge`, body);
       return Response.json({ stored: true });
     }
     if (url.pathname === '/get' && request.method === 'GET') {
       const value = url.searchParams.get('nonce') || '';
-      const record = await this.storage.get(`challenge:${value}`);
+      const record = await this.storage.get(`challenge`);
       if (!record || record.expiresAt <= Date.now()) {
-        if (record) await this.storage.delete(`challenge:${value}`);
+        if (record) await this.storage.delete(`challenge`);
         return Response.json({ error: 'Challenge unavailable.' }, { status: 404 });
       }
       return Response.json(record);
     }
     if (url.pathname === '/consume' && request.method === 'POST') {
       const body = await request.json();
-      const key = `challenge:${body.nonce || ''}`;
+      const key = 'challenge';
       const record = await this.storage.get(key);
       if (!record || record.expiresAt <= Date.now() || record.message !== body.message) {
         if (record && record.expiresAt <= Date.now()) await this.storage.delete(key);
