@@ -132,7 +132,7 @@ export class NonceStore {
     if (url.pathname === '/get' && request.method === 'GET') {
       const value = url.searchParams.get('nonce') || '';
       const record = await this.storage.get(`challenge`);
-      if (!record || record.expiresAt <= Date.now()) {
+      if (!record || record.nonce !== value || record.expiresAt <= Date.now()) {
         if (record) await this.storage.delete(`challenge`);
         return Response.json({ error: 'Challenge unavailable.' }, { status: 404 });
       }
@@ -142,7 +142,7 @@ export class NonceStore {
       const body = await request.json();
       const key = 'challenge';
       const record = await this.storage.get(key);
-      if (!record || record.expiresAt <= Date.now() || record.message !== body.message) {
+      if (!record || record.nonce !== body.nonce || record.expiresAt <= Date.now() || record.message !== body.message) {
         if (record && record.expiresAt <= Date.now()) await this.storage.delete(key);
         return Response.json({ error: 'Challenge unavailable.' }, { status: 409 });
       }
