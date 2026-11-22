@@ -8,7 +8,6 @@ import { validateBatch, LIMITS } from './validator.js';
 import { registerWalletAuth, NonceStore } from './wallet-auth.js';
 
 const app = new Hono();
-registerWalletAuth(app);
 export { NonceStore };
 
 const serviceDescription = 'JSON Schema validation API for AI agents, LLM structured outputs, API responses, webhook payloads, and backend data contracts. Validate 1–10 JSON samples in one batch against a documented JSON Schema subset; receive per-sample PASS/FAIL results and structured JSON Pointer diagnostics for contract testing and regression checks. Unsupported schema keywords are rejected explicitly instead of silently treated as valid; this is not full JSON Schema. Paid access is currently paused pending receiving-wallet verification.';
@@ -264,6 +263,7 @@ app.use('*', cors({
   exposeHeaders: ['PAYMENT-REQUIRED', 'PAYMENT-RESPONSE'],
   maxAge: 86400
 }));
+registerWalletAuth(app);
 const facilitator = new HTTPFacilitatorClient({ url: 'https://facilitator.payai.network' });
 const resourceServer = new x402ResourceServer(facilitator);
 registerExactEvmScheme(resourceServer);
