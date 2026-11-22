@@ -89,3 +89,35 @@ test('explicitly enabled payments still fail closed without a valid receiver', a
   assert.equal(response.status, 503);
   assert.equal((await response.json()).error, 'Payment receiver is not configured.');
 });
+
+
+test('wallet challenge fails closed until Durable Object nonce storage is configured', async () => {
+  const response = await app.fetch(
+    new Request('https://api.example.test/auth/challenge', { method: 'POST' }),
+    { PAY_TO: '0x6acbaf0e41534b84c60b5b6a1b4de6ad27bf90ab' }
+  );
+  assert.equal(response.status, 503);
+  assert.equal((await response.json()).error, 'Wallet proof storage is not configured.');
+});
+
+test('wallet verification rejects malformed proof input before storage access', async () => {
+  const response = await app.fetch(
+    new Request('https://api.example.test/auth/verify', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ nonce: 'not-a-uuid', signature: '0x1234' })
+    }),
+    { PAY_TO: '0x6acbaf0e41534b84c60b5b6a1b4de6ad27bf90ab' }
+  );
+  assert.equal(response.status, 400);
+  assert.match((await response.json()).error, /nonce and 65-byte personal_sign signature/);
+});
+
+test('wallet status reports unconfigured storage without claiming verification', async () => {
+  const response = await app.fetch(
+    new Request('https://api.example.test/auth/status'),
+    { PAY_TO: '0x6acbaf0e41534b84c60b5b6a1b4de6ad27bf90ab' }
+  );
+  assert.equal(response.status, 503);
+  assert.equal((await response.json()).verified, false);
+});
