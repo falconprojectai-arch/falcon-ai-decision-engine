@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import app from '../src/index.js';
+import app, { WalletNonceStore } from '../src/index.js';
+import { privateKeyToAccount } from 'viem/accounts';
 
 test('root route returns service information and useful endpoint links', async () => {
   const response = await app.fetch(new Request('https://api.example.test/'), {});
@@ -120,4 +121,58 @@ test('wallet status reports unconfigured storage without claiming verification',
   );
   assert.equal(response.status, 503);
   assert.equal((await response.json()).verified, false);
+});
+
+
+test('wallet proof verifies the configured signer and rejects nonce replay', async () => {
+  const account = privateKeyToAccount('0x' + '0'.repeat(63) + '1');
+  const storageMap = new Map();
+  const storage = {
+    get: async key => storageMap.get(key),
+    put: async (key, value) => { storageMap.set(key, value); },
+    delete: async key => storageMap.delete(key),
+    transaction: async callback => callback(storage)
+  };
+  const durableObject = new WalletNonceStore({ storage });
+  const namespace = {
+    idFromName: name => name,
+    get: () => ({ fetch: request => durableObject.fetch(request) })
+  };
+  const env = { PAY_TO: account.address, WALLET_NONCES: namespace };
+
+  const challengeResponse = await app.fetch(
+    new Request('https://api.example.test/auth/challenge', { method: 'POST' }),
+    env
+  );
+  assert.equal(challengeResponse.status, 200);
+  const challenge = await challengeResponse.json();
+  assert.equal(challenge.address, account.address);
+  assert.equal(challenge.chainId, 8453);
+  assert.equal(challenge.signingMethod, 'personal_sign');
+  assert.match(challenge.message, /does NOT authorize a transaction/);
+
+  const signature = await account.signMessage({ message: challenge.message });
+  const verifyResponse = await app.fetch(
+    new Request('https://api.example.test/auth/verify', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ nonce: challenge.nonce, signature })
+    }),
+    env
+  );
+  assert.equal(verifyResponse.status, 200);
+  const verified = await verifyResponse.json();
+  assert.equal(verified.verified, true);
+  assert.equal(verified.address.toLowerCase(), account.address.toLowerCase());
+  assert.equal(verified.paymentActivation, 'not_enabled_by_this_proof');
+
+  const replayResponse = await app.fetch(
+    new Request('https://api.example.test/auth/verify', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ nonce: challenge.nonce, signature })
+    }),
+    env
+  );
+  assert.equal(replayResponse.status, 410);
 });
