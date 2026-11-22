@@ -127,27 +127,32 @@ export class NonceStore {
           typeof body.message !== 'string' || !Number.isFinite(body.expiresAt)) {
         return Response.json({ error: 'Invalid challenge record.' }, { status: 400 });
       }
-      await this.storage.put(`challenge`, body);
+      await this.storage.put(`challenge:${body.nonce}`, body);
       return Response.json({ stored: true });
     }
     if (url.pathname === '/get' && request.method === 'GET') {
       const value = url.searchParams.get('nonce') || '';
-      const record = await this.storage.get(`challenge`);
+      const key = `challenge:${value}`;
+      const record = await this.storage.get(key);
       if (!record || record.nonce !== value || record.expiresAt <= Date.now()) {
-        if (record) await this.storage.delete(`challenge`);
+        if (record) await this.storage.delete(key);
         return Response.json({ error: 'Challenge unavailable.' }, { status: 404 });
       }
       return Response.json(record);
     }
     if (url.pathname === '/consume' && request.method === 'POST') {
       const body = await request.json();
-      const key = 'challenge';
-      const record = await this.storage.get(key);
-      if (!record || record.nonce !== body.nonce || record.expiresAt <= Date.now() || record.message !== body.message) {
-        if (record && record.expiresAt <= Date.now()) await this.storage.delete(key);
-        return Response.json({ error: 'Challenge unavailable.' }, { status: 409 });
-      }
-      await this.storage.delete(key);
+      const key = `challenge:${body.nonce || ''}`;
+      const consumed = await this.storage.transaction(async txn => {
+        const record = await txn.get(key);
+        if (!record || record.expiresAt <= Date.now() || record.message !== body.message) {
+          if (record && record.expiresAt <= Date.now()) await txn.delete(key);
+          return false;
+        }
+        await txn.delete(key);
+        return true;
+      });
+      if (!consumed) return Response.json({ error: 'Challenge unavailable.' }, { status: 409 });
       return Response.json({ consumed: true });
     }
     return Response.json({ error: 'Not found.' }, { status: 404 });
