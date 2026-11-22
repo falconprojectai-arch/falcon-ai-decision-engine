@@ -33,6 +33,19 @@ test('GET and HEAD discovery probes are routed through payment gating, not 404',
   assert.equal(headResponse.headers.get('content-type'), 'application/json');
 });
 
+test('legacy x402 discovery manifest is unavailable while payments are disabled', async () => {
+  const response = await app.fetch(new Request('https://api.example.test/.well-known/x402'), {});
+  assert.equal(response.status, 503);
+  assert.equal((await response.json()).error, 'Payments are disabled pending receiver verification.');
+});
+
+test('legacy x402 discovery manifest is available only after explicit enablement', async () => {
+  const response = await app.fetch(new Request('https://api.example.test/.well-known/x402'), { PAYMENTS_ENABLED: 'true' });
+  assert.equal(response.status, 200);
+  const body = await response.json();
+  assert.equal(body.resources[0].path, '/v1/validate-batch');
+});
+
 test('CDP Bazaar x402 manifest exposes the paid resource and public receiver', async () => {
   const payTo = '0x1111111111111111111111111111111111111111';
   const response = await app.fetch(new Request('https://api.example.test/.well-known/x402.json'), { PAYMENTS_ENABLED: 'true', PAY_TO: payTo });
