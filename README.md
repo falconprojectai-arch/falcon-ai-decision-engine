@@ -30,17 +30,17 @@ A bounded manual service is available for one JSON Schema or documented contract
 
 ## Paid machine API — x402
 
-The JSON Contract Tester also has a live machine-to-machine API for AI agents and automation clients:
+The JSON Contract Tester has a machine-to-machine API intended for AI agents and automation clients. The Worker is deployed, but **paid access is currently disabled** pending independent receiving-wallet ownership verification and end-to-end settlement controls.
 
 - API root: https://json-contract-tester-api.falcon-project-ai.workers.dev/
-- Paid route: `POST /v1/validate-batch`
-- Price: **0.005 USDC per batch** on Base Mainnet (`eip155:8453`) using x402 v2 exact.
+- Intended paid route: `POST /v1/validate-batch`
+- Planned price: **$0.10 USDC per batch** on Base Mainnet (`eip155:8453`); this is not currently purchasable.
 - Health: https://json-contract-tester-api.falcon-project-ai.workers.dev/health
 - Discovery manifest: https://json-contract-tester-api.falcon-project-ai.workers.dev/.well-known/x402
 - OpenAPI: https://json-contract-tester-api.falcon-project-ai.workers.dev/openapi.json
 - No-payment diagnostics: https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester-api/payment-preflight.html
 
-The live unpaid request returns HTTP 402 with a payment challenge; this proves the paywall is active, not that a payment has settled. The API passed its unit/route tests and production health, discovery, OpenAPI, and challenge smoke tests. A PayAPI Market listing was accepted into review on 2026-11-03; it is **not live yet** and its paid canary/settlement receipt is pending. No x402 sales or revenue are currently recorded. The public Agent402 seller index also discovers the API as routable on Base; its execute-via lane is callable, while Smart Order Router dispatch remains gated on settlement proof. [Agent402 seller record](https://agent402.tools/api/index?seller=https%3A%2F%2Fjson-contract-tester-api.falcon-project-ai.workers.dev).
+While `PAYMENTS_ENABLED` is not explicitly set to `true`, both x402 discovery manifests and the paid route must return HTTP 503. A wallet message signature proves control of the configured receiving address only; it does not activate payments or prove settlement. The wallet-authentication implementation is being hardened to require the challenge and verification address to match `PAY_TO`. Production wallet proof, facilitator settlement, order reconciliation, and refund procedures remain unverified. Do not send USDC. No x402 sales or revenue are currently recorded. Directory listings are discovery records, not evidence of successful payment or buyers.
 
 ## Additional verified distribution
 
