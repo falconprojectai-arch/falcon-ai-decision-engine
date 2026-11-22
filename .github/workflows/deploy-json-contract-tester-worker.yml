@@ -2,6 +2,7 @@ name: Deploy JSON Contract Tester Worker
 
 on:
   push:
+    branches: ["main"]
     paths:
       - "products/json-contract-tester-api/**"
       - ".github/workflows/deploy-json-contract-tester-worker.yml"
@@ -54,6 +55,7 @@ jobs:
           echo "POST buyer challenge passed; no payment was sent."
 
   deploy:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:

@@ -1,6 +1,6 @@
 # JSON Contract Tester API (x402 prototype)
 
-A deployed stateless API for AI agents to validate a batch of JSON outputs against the documented JSON Schema subset used by the browser tester. It is available at https://json-contract-tester-api.falcon-project-ai.workers.dev and does not replace the free local browser tool. The API root returns a service summary and endpoint links (HTTP 200); the live health endpoint returns HTTP 200; unpaid GET, HEAD, syntactically valid POST, and empty-body POST probes to the paid route return HTTP 402 with a PAYMENT-REQUIRED challenge for marketplace discovery. Only a POST containing a valid batch performs validation; GET/HEAD are discovery probes, and an empty-body POST is not billable. End-to-end paid settlement has not yet been verified.
+A deployed stateless API for AI agents to validate a batch of JSON outputs against the documented JSON Schema subset used by the browser tester. It is available at https://json-contract-tester-api.falcon-project-ai.workers.dev and does not replace the free local browser tool. The API root returns a service summary and endpoint links (HTTP 200); the live health endpoint returns HTTP 200; when explicitly enabled, unpaid GET, HEAD, syntactically valid POST, and empty-body POST probes to the paid route return HTTP 402 with a PAYMENT-REQUIRED challenge for marketplace discovery. The paid route is fail-closed by default and returns HTTP 503 until operator verification is complete. Only a POST containing a valid batch performs validation; GET/HEAD are discovery probes, and an empty-body POST is not billable. End-to-end paid settlement has not yet been verified.
 
 ## Route
 POST /v1/validate-batch
@@ -32,6 +32,8 @@ A browser-based diagnostic page is available at https://falconprojectai-arch.git
 
 ## Payment
 
+**Fail-closed default:** the x402 receiver manifest and paid validation route return HTTP 503 unless the Cloudflare Worker environment variable `PAYMENTS_ENABLED` is explicitly set to the exact string `true`. Set it only after verifying the destination wallet is controlled by the project operator, matches the documented network and token, and the manual order/reconciliation/refund runbook is operational. `PAY_TO` alone must never activate payments. Keep the flag unset or false while any receiver identity or owner-control check is outstanding.
+
 The route uses x402 exact USDC on Base (eip155:8453) at an experimental price of $0.005 per batch. Malformed JSON and bodies over 64 KiB are rejected before payment. JSON that parses but has an invalid schema or batch shape is validated after x402 payment verification and can return HTTP 400. The @x402/hono middleware settles only after a successful response; therefore, a 4xx response is not a settled sale. Count a payment only when a successful 2xx response carries PAYMENT-RESPONSE and an on-chain receipt. Callers should validate their request against the OpenAPI contract before authorizing payment. This ordering also lets generic x402 marketplace probes receive the actual 402 challenge when they send an empty JSON object.
 
 Set the public receiving address as a Cloudflare Worker secret:
@@ -46,11 +48,11 @@ Designed for Cloudflare Workers Free, within bounded limits: 64 KiB request body
 
 ## Validation scope
 
-This is a documented subset only: type, required, properties, additionalProperties: false, items, enum, const, numeric bounds, string length, and array length. The hosted API rejects the regex pattern keyword to avoid unbounded regex CPU use. It is not full JSON Schema.
+This is a documented subset only: type, required, properties, additionalProperties (boolean true/false only), items (single object schema only), enum, const, numeric bounds, string length, and array length. Annotation-only keywords such as title, description, default, examples, $schema and $comment are ignored. Any other schema keyword or unsupported schema form is rejected with HTTP 400, code `unsupported_schema`, and an `unsupportedKeywords` list containing each keyword and its schemaPath. This includes pattern, format, $ref, oneOf, anyOf, allOf, patternProperties and similar features. Unsupported features are never silently treated as PASS. It is not full JSON Schema.
 
 ## Test
 
-Run npm test. Tests cover the mixed batch (1 PASS / 3 FAIL), nested JSON Pointer diagnostics, batch limits, depth limits, node-budget limits, and pointer escaping. The current production Worker and payment challenge are live; end-to-end paid settlement still requires a wallet signature and an on-chain transaction.
+Run npm test. Tests cover the mixed batch (1 PASS / 3 FAIL), nested JSON Pointer diagnostics, batch limits, depth limits, node-budget limits, and pointer escaping. The production code currently requires the explicit PAYMENTS_ENABLED=true gate before exposing a receiver or accepting paid requests. No paid settlement is claimed or verified.
 
 ## Receiving-address safety note
 

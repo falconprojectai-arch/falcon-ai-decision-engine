@@ -26,7 +26,7 @@ test('health route remains public and reports the service status', async () => {
 test('GET and HEAD discovery probes are routed through payment gating, not 404', async () => {
   const getResponse = await app.fetch(new Request('https://api.example.test/v1/validate-batch'), {});
   assert.equal(getResponse.status, 503);
-  assert.equal((await getResponse.json()).error, 'Payment receiver is not configured.');
+  assert.equal((await getResponse.json()).error, 'Payments are disabled pending receiver verification.');
 
   const headResponse = await app.fetch(new Request('https://api.example.test/v1/validate-batch', { method: 'HEAD' }), {});
   assert.equal(headResponse.status, 503);
@@ -35,7 +35,7 @@ test('GET and HEAD discovery probes are routed through payment gating, not 404',
 
 test('CDP Bazaar x402 manifest exposes the paid resource and public receiver', async () => {
   const payTo = '0x1111111111111111111111111111111111111111';
-  const response = await app.fetch(new Request('https://api.example.test/.well-known/x402.json'), { PAY_TO: payTo });
+  const response = await app.fetch(new Request('https://api.example.test/.well-known/x402.json'), { PAYMENTS_ENABLED: 'true', PAY_TO: payTo });
   assert.equal(response.status, 200);
   const body = await response.json();
   assert.equal(body.x402Version, 2);
@@ -55,7 +55,7 @@ test('CDP Bazaar x402 manifest exposes the paid resource and public receiver', a
 test('empty-body POST marketplace probes reach x402 payment gating', async () => {
   const response = await app.fetch(new Request('https://api.example.test/v1/validate-batch', { method: 'POST' }), {});
   assert.equal(response.status, 503);
-  assert.equal((await response.json()).error, 'Payment receiver is not configured.');
+  assert.equal((await response.json()).error, 'Payments are disabled pending receiver verification.');
 });
 
 test('OpenAPI exposes x-payment-info for x402 discovery registries', async () => {
@@ -67,4 +67,10 @@ test('OpenAPI exposes x-payment-info for x402 discovery registries', async () =>
   assert.equal(operation['x-payment-info'].price.mode, 'fixed');
   assert.equal(operation['x-payment-info'].price.currency, 'USD');
   assert.equal(operation['x-payment-info'].price.amount, '0.005');
+});
+
+test('explicitly enabled payments still fail closed without a valid receiver', async () => {
+  const response = await app.fetch(new Request('https://api.example.test/.well-known/x402.json'), { PAYMENTS_ENABLED: 'true' });
+  assert.equal(response.status, 503);
+  assert.equal((await response.json()).error, 'Payment receiver is not configured.');
 });
