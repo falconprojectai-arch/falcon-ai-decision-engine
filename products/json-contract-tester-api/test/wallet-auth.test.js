@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { NonceStore } from '../src/wallet-auth.js';
+import { NonceStore, registerWalletAuth } from '../src/wallet-auth.js';
+import { Hono } from 'hono';
 
 function makeStore() {
   const values = new Map();
@@ -87,4 +88,37 @@ test('concurrent consume attempts allow exactly one winner', async () => {
   }));
   const responses = await Promise.all([consume(), consume()]);
   assert.deepEqual(responses.map(response => response.status).sort(), [200, 409]);
+});
+
+
+test('wallet challenge refuses addresses other than configured PAY_TO', async () => {
+  const app = new Hono();
+  registerWalletAuth(app);
+  const response = await app.request('/v1/auth/challenge', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ address: '0x1111111111111111111111111111111111111111' })
+  }, { PAY_TO: '0x2222222222222222222222222222222222222222' });
+  assert.equal(response.status, 403);
+  assert.match((await response.json()).error, /configured receiving wallet/);
+});
+
+test('wallet verification refuses an address other than configured PAY_TO before nonce lookup', async () => {
+  const app = new Hono();
+  registerWalletAuth(app);
+  const response = await app.request('/v1/auth/verify', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({
+      address: '0x1111111111111111111111111111111111111111',
+      nonce: 'a'.repeat(32),
+      message: 'irrelevant',
+      signature: '0x' + 'a'.repeat(130)
+    })
+  }, {
+    PAY_TO: '0x2222222222222222222222222222222222222222',
+    NONCE_STORE: { idFromName() { throw new Error('must not access storage'); } }
+  });
+  assert.equal(response.status, 403);
+  assert.match((await response.json()).error, /configured receiving wallet/);
 });
