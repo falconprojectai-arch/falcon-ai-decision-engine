@@ -5,7 +5,7 @@
 
 ## Before paying
 - Endpoint: `POST https://json-contract-tester-api.falcon-project-ai.workers.dev/v1/validate-batch`
-- Price: **0.005 USDC per batch**
+- Price: **0.10 USDC per batch**
 - Network: **Base Mainnet (eip155:8453)**
 - Asset: Circle USD Coin
 - No API key or account; x402 payment is the access mechanism.
