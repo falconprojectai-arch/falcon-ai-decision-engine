@@ -136,7 +136,7 @@ test('wallet proof verifies the configured signer and rejects nonce replay', asy
   const durableObject = new WalletNonceStore({ storage });
   const namespace = {
     idFromName: name => name,
-    get: () => ({ fetch: request => durableObject.fetch(request) })
+    get: () => ({ fetch: (input, init) => durableObject.fetch(input instanceof Request ? input : new Request(input, init)) })
   };
   const env = { PAY_TO: account.address, WALLET_NONCES: namespace };
 
