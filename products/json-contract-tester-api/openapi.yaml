@@ -47,11 +47,9 @@ paths:
     get:
       operationId: getCdpBazaarX402Manifest
       summary: x402 v2 manifest for agent marketplaces
-      description: Public machine-readable manifest including the paid resource URL, Base USDC price, and receiving address.
+      description: Payment discovery is disabled until the receiving wallet is independently verified.
       security: []
       responses:
-        '200':
-          description: x402 v2 resource manifest when payments are enabled
         '503':
           description: Payments are disabled pending receiver verification
   /openapi.json:
@@ -67,50 +65,31 @@ paths:
       operationId: probeValidateBatchGet
       summary: Read-only x402 discovery probe (validation requires POST)
       description: >-
-        Returns HTTP 503 while payments are paused. When explicitly enabled,
-        returns the unpaid x402 challenge for marketplace discovery.
-        GET is not the billable validation operation; use POST with the
-        documented request body. A paid GET attempt returns 405 and is not
-        settled.
+        Payments are currently paused. This read-only discovery route returns
+        HTTP 503 until receiver verification is complete.
       responses:
-        '402':
-          description: x402 v2 discovery challenge when payments are enabled; no validation is performed
         '503':
           description: Payments are disabled pending receiver verification
-        '405':
-          description: Use POST for batch validation; no settlement occurs
-      x-payment-required: true
     head:
       operationId: probeValidateBatchHead
-      summary: Read-only x402 discovery probe (validation requires POST)
+      summary: Read-only discovery probe (validation requires POST)
       description: >-
-        HEAD returns HTTP 503 while payments are paused. When explicitly enabled,
-        it returns the same unpaid x402 challenge for marketplace discovery.
-        The billable validation operation remains POST. A paid HEAD attempt
-        returns 405 and is not settled.
+        Payments are currently paused. This route returns HTTP 503 until
+        receiver verification is complete.
       responses:
-        '402':
-          description: x402 v2 discovery challenge when payments are enabled; no validation is performed
         '503':
           description: Payments are disabled pending receiver verification
-        '405':
-          description: Use POST for batch validation; no settlement occurs
-      x-payment-required: true
     post:
       operationId: validateJsonBatch
       summary: Validate JSON Schema for AI outputs, API responses, and webhooks
       description: >-
         Paid access is currently paused pending receiving-wallet verification.
-        Validate AI-agent outputs, API responses, webhook payloads, and backend
-        JSON data contracts against the documented schema subset. Send one schema
-        and 1–10 JSON samples. A successful response returns
-        per-sample PASS/FAIL diagnostics. The route uses x402 exact USDC on
-        Base Mainnet at 0.005 USDC per request batch. A syntactically valid
-        unpaid request returns HTTP 402 and a PAYMENT-REQUIRED challenge before
-        schema validation. Malformed JSON and bodies over 64 KiB are rejected
-        before payment. Schema-invalid requests are validated after payment and
-        may return a billable 400. Inspect the challenge before authorizing
-        payment. The hosted API does not support the JSON Schema pattern keyword.
+        When access is reopened, this endpoint will validate AI-agent outputs,
+        API responses, webhook payloads, and backend JSON data contracts against
+        the documented schema subset. Send one schema and 1–10 JSON samples.
+        The current production response is HTTP 503; no payment challenge or
+        checkout is available. The hosted API does not support the JSON Schema
+        pattern keyword.
       requestBody:
         required: true
         content:
@@ -141,16 +120,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/BatchResponse'
         '400':
-          description: Malformed JSON (pre-payment) or invalid schema/batch shape (after payment verification; not a successful settlement)
+          description: Malformed JSON or invalid schema/batch shape
           content:
             application/json:
               schema: { $ref: '#/components/schemas/Error' }
-        '402':
-          description: Payment required; includes x402 v2 challenge in PAYMENT-REQUIRED
-          headers:
-            PAYMENT-REQUIRED:
-              description: Base64-encoded x402 payment requirements; inspect before signing
-              schema: { type: string }
         '413':
           description: Request body exceeds 64 KiB; rejected before payment
         '503':
@@ -164,20 +137,6 @@ paths:
         - webhook-validation
         - contract-testing
         - regression-testing
-      x-x402:
-        scheme: exact
-        network: eip155:8453
-        asset: USD Coin
-        price: "0.005"
-        unit: USDC per batch
-      x-payment-info:
-        protocols: [x402]
-        price:
-          mode: fixed
-          currency: USD
-          amount: "0.005"
-        network: eip155:8453
-        asset: 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913
 components:
   schemas:
     BatchRequest:
