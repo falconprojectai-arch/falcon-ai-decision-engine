@@ -3,8 +3,28 @@
   "name": "json-contract-tester-api",
   "main": "src/index.js",
   "compatibility_date": "2026-11-03",
-  "compatibility_flags": ["nodejs_compat"],
-  "observability": { "enabled": true },
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "observability": {
+    "enabled": true
+  },
   "previews": {},
-  "vars": {}
+  "vars": {},
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "WALLET_NONCES",
+        "class_name": "WalletNonceStore"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1-wallet-nonces",
+      "new_sqlite_classes": [
+        "WalletNonceStore"
+      ]
+    }
+  ]
 }
