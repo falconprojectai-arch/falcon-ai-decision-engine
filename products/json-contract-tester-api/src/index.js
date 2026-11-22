@@ -176,12 +176,12 @@ const discoveryManifest = {
     method: 'POST',
     summary: 'JSON Schema validation for AI-agent outputs, API responses, and webhook payloads; batch PASS/FAIL with JSON Pointer diagnostics.',
     tags: ['json-schema-validation', 'json-validation', 'api-response-validation', 'ai-agent-output', 'structured-output', 'webhook-validation', 'contract-testing', 'regression-testing'],
-    price_usd: '0.005',
+    price_usd: '0.10',
     accepts: [{
       scheme: 'exact',
       network: 'eip155:8453',
       asset: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
-      amount: '5000',
+      amount: '100000',
       maxTimeoutSeconds: 60,
       extra: { name: 'USD Coin', version: '2' }
     }],
@@ -292,7 +292,7 @@ app.get('/', c => c.json({
   name: 'JSON Contract Tester API',
   status: 'ok',
   description: 'Batch validation API for JSON outputs against a documented JSON Schema subset. Paid access is currently paused pending receiving-wallet verification.',
-  price: 'Payments paused; $0.005 USDC was an experimental reference price.',
+  price: 'Payments paused; planned launch price is $0.10 USDC per batch.',
   endpoints: {
     health: '/health',
     discovery: '/.well-known/x402',
@@ -356,7 +356,7 @@ app.use('*', async (c, next) => {
   if (c.env.PAYMENTS_ENABLED !== 'true') return c.json({ error: 'Payments are disabled pending receiver verification.' }, 503);
   const payTo = c.env.PAY_TO;
   if (!payTo || !/^0x[a-fA-F0-9]{40}$/.test(payTo)) return c.json({ error: 'Payment receiver is not configured.' }, 503);
-  const accepts = [{ scheme: 'exact', price: '$0.005', network: 'eip155:8453', payTo, maxTimeoutSeconds: 60 }];
+  const accepts = [{ scheme: 'exact', price: '$0.10', network: 'eip155:8453', payTo, maxTimeoutSeconds: 60 }];
   const publicAccepts = [{
     scheme: 'exact',
     network: 'eip155:8453',
