@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { NonceStore, registerWalletAuth } from '../src/wallet-auth.js';
 import { Hono } from 'hono';
+import { privateKeyToAccount } from 'viem/accounts';
 
 function makeStore() {
   const values = new Map();
@@ -121,4 +122,61 @@ test('wallet verification refuses an address other than configured PAY_TO before
   });
   assert.equal(response.status, 403);
   assert.match((await response.json()).error, /configured receiving wallet/);
+});
+
+
+test('wallet auth verifies a real EIP-191 signature and rejects replay', async () => {
+  const account = privateKeyToAccount('0x' + '0'.repeat(63) + '1');
+  const app = new Hono();
+  const store = makeStore();
+  registerWalletAuth(app);
+  const env = {
+    PAY_TO: account.address,
+    NONCE_STORE: {
+      idFromName() { return 'test-wallet'; },
+      get() { return { fetch: request => store.fetch(request) }; }
+    }
+  };
+
+  const challengeResponse = await app.request('/v1/auth/challenge', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ address: account.address })
+  }, env);
+  assert.equal(challengeResponse.status, 200);
+  const challenge = await challengeResponse.json();
+
+  const wrongSignature = await account.signMessage({ message: 'not the issued challenge' });
+  const wrongProof = await app.request('/v1/auth/verify', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({
+      address: challenge.address, nonce: challenge.nonce,
+      message: challenge.message, signature: wrongSignature
+    })
+  }, env);
+  assert.equal(wrongProof.status, 401);
+
+  const signature = await account.signMessage({ message: challenge.message });
+  const proof = {
+    address: challenge.address, nonce: challenge.nonce,
+    message: challenge.message, signature
+  };
+  const verifiedResponse = await app.request('/v1/auth/verify', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(proof)
+  }, env);
+  assert.equal(verifiedResponse.status, 200);
+  const verified = await verifiedResponse.json();
+  assert.equal(verified.verified, true);
+  assert.equal(verified.paymentAuthorized, false);
+  assert.equal(verified.sessionCreated, false);
+
+  const replayResponse = await app.request('/v1/auth/verify', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(proof)
+  }, env);
+  assert.equal(replayResponse.status, 409);
 });
