@@ -285,21 +285,14 @@ jobs:
                   assert await page.title() == "API & Agent Contract Review — Payment"
                   body = await page.locator("body").inner_text()
                   assert "$4 USD" in body
-                  assert "Payments are temporarily not being accepted." in body
-                  assert "no-obligation scope inquiry" in body
-                  assert "Payments are not open checkout." in body
-                  assert "only after you receive a written order reference" in body
-                  assert "order remains pending until a human checks" in body
+                  assert "Payments are paused." in body
+                  assert "does not match the previously documented receiving destination" in body
+                  assert "owner control has not been independently verified" in body
+                  assert "$4 amount is a reference price, not a request for payment." in body
                   assert await page.locator("#receiving-address").count() == 0
-                  assert await page.locator("#tx-form").count() == 1
-                  assert await page.locator("#txid").count() == 1
-                  assert await page.get_by_role("button", name="Prepare payment confirmation").count() == 1
-                  await page.locator("#order-ref").fill("FPA-2026-001")
-                  await page.locator("#tx-email").fill("buyer@example.test")
-                  await page.locator("#tx-amount").fill("4")
-                  await page.locator("#txid").fill("0x" + "a" * 64)
-                  await page.locator("#tx-form button[type=submit]").click()
-                  assert "Opening your email app" in await page.locator("#tx-status").inner_text()
+                  assert await page.locator("#tx-form").count() == 0
+                  assert await page.locator("#txid").count() == 0
+                  assert await page.get_by_role("button", name="Prepare payment confirmation").count() == 0
                   assert await page.locator("#preflight").count() == 1
                   assert await page.locator("#contact-email").count() == 1
                   assert await page.locator("#problem").count() == 1
