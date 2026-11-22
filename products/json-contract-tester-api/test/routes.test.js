@@ -56,7 +56,7 @@ test('CDP Bazaar x402 manifest exposes the paid resource and public receiver', a
   assert.equal(body.resources[0].accepts[0].scheme, 'exact');
   assert.equal(body.resources[0].accepts[0].network, 'eip155:8453');
   assert.equal(body.resources[0].accepts[0].payTo, payTo);
-  assert.equal(body.resources[0].accepts[0].amount, '5000');
+  assert.equal(body.resources[0].accepts[0].amount, '100000');
   assert.equal(body.resources[0].serviceName, 'JSON Contract Tester API');
   assert.ok(body.resources[0].tags.includes('json-schema-validation'));
   assert.equal(body.resources[0].extensions.bazaar.info.input.method, 'POST');
