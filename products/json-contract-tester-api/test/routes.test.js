@@ -71,15 +71,17 @@ test('empty-body POST marketplace probes reach x402 payment gating', async () =>
   assert.equal((await response.json()).error, 'Payments are disabled pending receiver verification.');
 });
 
-test('OpenAPI exposes x-payment-info for x402 discovery registries', async () => {
+test('OpenAPI accurately documents the paused payment state without advertising checkout', async () => {
   const response = await app.fetch(new Request('https://api.example.test/openapi.json'), {});
   assert.equal(response.status, 200);
   const body = await response.json();
-  const operation = body.paths['/v1/validate-batch'].post;
-  assert.deepEqual(operation['x-payment-info'].protocols, ['x402']);
-  assert.equal(operation['x-payment-info'].price.mode, 'fixed');
-  assert.equal(operation['x-payment-info'].price.currency, 'USD');
-  assert.equal(operation['x-payment-info'].price.amount, '0.005');
+  const paths = body.paths['/v1/validate-batch'];
+  assert.equal(paths.get.responses['503'].description, 'Payments are disabled pending receiver verification.');
+  assert.equal(paths.head.responses['503'].description, 'Payments are disabled pending receiver verification.');
+  assert.equal(paths.post.responses['503'].description, 'Payments are disabled pending receiver verification.');
+  assert.equal(paths.post['x-payment-info'], undefined);
+  assert.equal(paths.post['x-payment-required'], undefined);
+  assert.doesNotMatch(JSON.stringify(body), /0\\.005|PAYMENT-REQUIRED|x-payment-info/);
 });
 
 test('explicitly enabled payments still fail closed without a valid receiver', async () => {
