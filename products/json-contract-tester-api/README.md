@@ -1,6 +1,6 @@
 # JSON Contract Tester API (x402 prototype)
 
-A deployed stateless API for AI agents to validate a batch of JSON outputs against the documented JSON Schema subset used by the browser tester. It is available at https://json-contract-tester-api.falcon-project-ai.workers.dev and does not replace the free local browser tool. The API root returns a service summary and endpoint links (HTTP 200); the live health endpoint returns HTTP 200; unpaid GET, HEAD, syntactically valid POST, and empty-body POST probes to the paid route return HTTP 402 with a PAYMENT-REQUIRED challenge for marketplace discovery. Only a POST containing a valid batch performs validation; GET/HEAD are discovery probes, and an empty-body POST is not billable. End-to-end paid settlement has not yet been verified.
+A deployed stateless API for AI agents to validate a batch of JSON outputs against the documented JSON Schema subset used by the browser tester. It is available at https://json-contract-tester-api.falcon-project-ai.workers.dev and does not replace the free local browser tool. The API root returns a service summary and endpoint links (HTTP 200); the live health endpoint returns HTTP 200; when explicitly enabled, unpaid GET, HEAD, syntactically valid POST, and empty-body POST probes to the paid route return HTTP 402 with a PAYMENT-REQUIRED challenge for marketplace discovery. The paid route is fail-closed by default and returns HTTP 503 until operator verification is complete. Only a POST containing a valid batch performs validation; GET/HEAD are discovery probes, and an empty-body POST is not billable. End-to-end paid settlement has not yet been verified.
 
 ## Route
 POST /v1/validate-batch
@@ -52,7 +52,7 @@ This is a documented subset only: type, required, properties, additionalProperti
 
 ## Test
 
-Run npm test. Tests cover the mixed batch (1 PASS / 3 FAIL), nested JSON Pointer diagnostics, batch limits, depth limits, node-budget limits, and pointer escaping. The current production Worker and payment challenge are live; end-to-end paid settlement still requires a wallet signature and an on-chain transaction.
+Run npm test. Tests cover the mixed batch (1 PASS / 3 FAIL), nested JSON Pointer diagnostics, batch limits, depth limits, node-budget limits, and pointer escaping. The production code currently requires the explicit PAYMENTS_ENABLED=true gate before exposing a receiver or accepting paid requests. No paid settlement is claimed or verified.
 
 ## Receiving-address safety note
 
