@@ -7,6 +7,7 @@ info:
     responses, webhook payloads, and backend data contracts. Batch-validate
     1–10 JSON samples against a documented JSON Schema subset and receive
     per-sample PASS/FAIL results with structured JSON Pointer diagnostics.
+    Paid access is currently paused pending receiving-wallet verification.
     Useful for API response validation, AI-agent output checks, webhook
     contract testing, and regression checks. This is not full JSON Schema;
     the pattern keyword is unsupported. A syntactically valid unpaid request
@@ -39,7 +40,9 @@ paths:
       security: []
       responses:
         '200':
-          description: Service and paid-resource discovery metadata
+          description: Service and paid-resource discovery metadata when payments are enabled
+        '503':
+          description: Payments are disabled pending receiver verification
   /.well-known/x402.json:
     get:
       operationId: getCdpBazaarX402Manifest
@@ -48,9 +51,9 @@ paths:
       security: []
       responses:
         '200':
-          description: x402 v2 resource manifest
+          description: x402 v2 resource manifest when payments are enabled
         '503':
-          description: Payment receiver is not configured
+          description: Payments are disabled pending receiver verification
   /openapi.json:
     get:
       operationId: getOpenApiDocument
@@ -64,13 +67,16 @@ paths:
       operationId: probeValidateBatchGet
       summary: Read-only x402 discovery probe (validation requires POST)
       description: >-
-        Returns the same unpaid x402 challenge for marketplace discovery.
+        Returns HTTP 503 while payments are paused. When explicitly enabled,
+        returns the unpaid x402 challenge for marketplace discovery.
         GET is not the billable validation operation; use POST with the
         documented request body. A paid GET attempt returns 405 and is not
         settled.
       responses:
         '402':
-          description: x402 v2 discovery challenge; no validation is performed
+          description: x402 v2 discovery challenge when payments are enabled; no validation is performed
+        '503':
+          description: Payments are disabled pending receiver verification
         '405':
           description: Use POST for batch validation; no settlement occurs
       x-payment-required: true
@@ -78,12 +84,15 @@ paths:
       operationId: probeValidateBatchHead
       summary: Read-only x402 discovery probe (validation requires POST)
       description: >-
-        HEAD returns the same unpaid x402 challenge for marketplace discovery.
+        HEAD returns HTTP 503 while payments are paused. When explicitly enabled,
+        it returns the same unpaid x402 challenge for marketplace discovery.
         The billable validation operation remains POST. A paid HEAD attempt
         returns 405 and is not settled.
       responses:
         '402':
-          description: x402 v2 discovery challenge; no validation is performed
+          description: x402 v2 discovery challenge when payments are enabled; no validation is performed
+        '503':
+          description: Payments are disabled pending receiver verification
         '405':
           description: Use POST for batch validation; no settlement occurs
       x-payment-required: true
@@ -91,6 +100,7 @@ paths:
       operationId: validateJsonBatch
       summary: Validate JSON Schema for AI outputs, API responses, and webhooks
       description: >-
+        Paid access is currently paused pending receiving-wallet verification.
         Validate AI-agent outputs, API responses, webhook payloads, and backend
         JSON data contracts against the documented schema subset. Send one schema
         and 1–10 JSON samples. A successful response returns
@@ -144,7 +154,7 @@ paths:
         '413':
           description: Request body exceeds 64 KiB; rejected before payment
         '503':
-          description: Payment receiver is not configured
+          description: Payments are disabled pending receiver verification or payment receiver is not configured
       tags:
         - json-schema-validation
         - json-validation
