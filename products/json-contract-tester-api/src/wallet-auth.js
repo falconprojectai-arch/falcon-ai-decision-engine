@@ -29,7 +29,8 @@ function challengeMessage({ domain, address, nonce: value, issuedAt, expirationT
 async function nonceStore(env, address, action, payload = {}) {
   const id = env.NONCE_STORE.idFromName(address.toLowerCase());
   const stub = env.NONCE_STORE.get(id);
-  return stub.fetch(new Request(`https://nonce-store.internal/${action}`, {
+  const path = action === 'get' ? `/get?nonce=${encodeURIComponent(payload.nonce)}` : `/${action}`;
+  return stub.fetch(new Request(`https://nonce-store.internal${path}`, {
     method: action === 'get' ? 'GET' : 'POST',
     headers: { 'content-type': 'application/json' },
     body: action === 'get' ? undefined : JSON.stringify(payload)
@@ -44,7 +45,7 @@ export function registerWalletAuth(app) {
       return c.json({ error: 'A valid EVM wallet address is required.' }, 400);
     }
     if (!c.env.NONCE_STORE) return c.json({ error: 'Wallet-auth nonce storage is not configured.' }, 503);
-    const address = body.address;
+    const address = body.address.toLowerCase();
     const issued = new Date();
     const expires = new Date(issued.getTime() + CHALLENGE_TTL_SECONDS * 1000);
     const value = nonce();
