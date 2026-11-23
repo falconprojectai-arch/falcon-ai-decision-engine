@@ -82,9 +82,13 @@ pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#0e1621;padding:14px;
    const addr=$('address').value.trim();
    const message=challenge.message||challenge.challenge?.message;
    const signature=await provider.request({method:'personal_sign',params:[message,addr]});
-   const result=await request('/v1/auth/verify',{address:addr,message,signature});
+   const result=await request('/v1/auth/verify',{address:addr,nonce:challenge.nonce,message,signature});
    challenge=null;$('sign').disabled=true;
-   status('Verification response: '+JSON.stringify(result));
+   if(result.verified===true && result.paymentAuthorized===false){
+    status('Ownership verified for '+result.address+'. No payment was authorized and no session was created.');
+   }else{
+    status('Unexpected verification response: '+JSON.stringify(result));
+   }
   }catch(e){status('Verification failed: '+e.message)}
  };
 })();
