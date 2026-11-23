@@ -38,4 +38,8 @@ test('Worker serves the proof page and bundles its HTML source', async () => {
   assert.match(pageModule, /^export default /);
 });
 
-test('wallet proof page is locked to same-origin API and warns on deceptive-site alerts', () => {\n  assert.match(html, /window\\.location\\.origin/);\n  assert.doesNotMatch(html, /id=\"api\"|API base URL|\\$\\('api'\\)/);\n  assert.match(html, /MetaMask warns that this website may be deceptive/);\n});\n
+test('wallet proof page is locked to same-origin API and warns on deceptive-site alerts', () => {
+  assert.match(html, /window\.location\.origin/);
+  assert.doesNotMatch(html, /id="api"|API base URL|\$\('api'\)/);
+  assert.match(html, /MetaMask warns that this website may be deceptive/);
+});
