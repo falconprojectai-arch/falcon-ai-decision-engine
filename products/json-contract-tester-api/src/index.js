@@ -6,7 +6,7 @@ import { registerExactEvmScheme } from '@x402/evm/exact/server';
 import { bazaarResourceServerExtension } from '@x402/extensions/bazaar';
 import { validateBatch, LIMITS } from './validator.js';
 import { registerWalletAuth, NonceStore } from './wallet-auth.js';
-import walletOwnershipHtml from '../wallet-ownership.html';
+import walletOwnershipHtml from './wallet-ownership-page.js';
 
 const app = new Hono();
 export { NonceStore };
