@@ -6,6 +6,7 @@ import { registerExactEvmScheme } from '@x402/evm/exact/server';
 import { bazaarResourceServerExtension } from '@x402/extensions/bazaar';
 import { validateBatch, LIMITS } from './validator.js';
 import { registerWalletAuth, NonceStore } from './wallet-auth.js';
+import walletOwnershipHtml from './wallet-ownership-page.js';
 
 const app = new Hono();
 export { NonceStore };
@@ -291,6 +292,8 @@ async function readLimitedBody(request, maxBytes) {
   catch { return { error: 'Request body must be valid JSON.' }; }
 }
 
+app.get('/wallet-ownership', c => c.html(walletOwnershipHtml));
+
 app.get('/', c => c.json({
   name: 'JSON Contract Tester API',
   status: 'ok',
@@ -298,6 +301,7 @@ app.get('/', c => c.json({
   price: 'Payments paused; planned launch price is $0.10 USDC per batch.',
   endpoints: {
     health: '/health',
+    walletOwnership: '/wallet-ownership',
     discovery: '/.well-known/x402',
     openapi: '/openapi.json',
     validate: 'POST /v1/validate-batch'

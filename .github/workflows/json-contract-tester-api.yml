@@ -28,4 +28,4 @@ jobs:
         run: npm test
       - name: Check JavaScript syntax
         working-directory: products/json-contract-tester-api
-        run: node --check src/index.js && node --check src/validator.js
+        run: node --check src/index.js && node --check src/validator.js && node --test test/wallet-ownership-ui.test.js

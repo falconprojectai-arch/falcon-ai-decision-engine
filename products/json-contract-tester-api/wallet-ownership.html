@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Receiving wallet ownership verification</title>
+<style>
+:root{color-scheme:dark;font:16px system-ui;background:#10151d;color:#e8edf5}
+body{max-width:760px;margin:40px auto;padding:0 18px}
+main{background:#192230;border:1px solid #344256;border-radius:14px;padding:24px}
+h1{font-size:1.5rem;margin-top:0}p{line-height:1.55;color:#c3cede}
+label{display:block;margin:18px 0 6px}input{box-sizing:border-box;width:100%;padding:12px;border-radius:8px;border:1px solid #53647a;background:#0e1621;color:#fff}
+button{margin:12px 8px 0 0;padding:11px 16px;border:0;border-radius:8px;background:#8ab4ff;color:#102039;font-weight:650;cursor:pointer}
+button:disabled{opacity:.5;cursor:not-allowed}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#0e1621;padding:14px;border-radius:8px;color:#d8e5f7}
+#status{font-weight:650}small{color:#aebdd0}
+</style>
+</head>
+<body>
+<main>
+<h1>Receiving wallet ownership verification</h1>
+<p>This page verifies control of the configured receiving address by signing a one-time message. It does not request or send a transaction, spend tokens, or enable payments.</p>
+<p><strong>Security notice:</strong> If MetaMask warns that this website may be deceptive, stop. Do not connect or sign until the site warning has been independently cleared.</p>
+<label for="address">Receiving wallet address</label>
+<input id="address" placeholder="0x…" autocomplete="off" spellcheck="false">
+<div>
+<button id="connect">Connect wallet</button>
+<button id="challenge" disabled>Request challenge</button>
+<button id="sign" disabled>Sign message</button>
+</div>
+<h2>Message to sign</h2>
+<pre id="message">No challenge requested.</pre>
+<p id="status" role="status">Not verified.</p>
+<small>Only the public address and signature are sent to the API. Never enter a seed phrase or private key.</small>
+</main>
+<script>
+(()=> {
+ const $=id=>document.getElementById(id);
+ let provider=null, challenge=null, account=null;
+ const status=s=>{$('status').textContent=s};
+ const base=()=>window.location.origin;
+ const validAddress=s=>/^0x[a-fA-F0-9]{40}$/.test(s);
+ async function request(path,body){
+  const res=await fetch(base()+path,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body)});
+  const data=await res.json().catch(()=>({}));
+  if(!res.ok) throw new Error(data.detail||data.error||('HTTP '+res.status));
+  return data;
+ }
+ $('connect').onclick=async()=>{
+  try{
+   if(!window.ethereum) throw new Error('No injected wallet found. Open this page in a wallet-enabled browser.');
+   provider=window.ethereum;
+   const accounts=await provider.request({method:'eth_requestAccounts'});
+   account=accounts[0];
+   const chain=await provider.request({method:'eth_chainId'});
+   $('address').value=account;
+   $('challenge').disabled=!validAddress(account);
+   status('Wallet connected: '+account+' (chain '+parseInt(chain,16)+').');
+  }catch(e){status('Connection failed: '+e.message)}
+ };
+ $('address').oninput=()=>{$('challenge').disabled=!validAddress($('address').value.trim())||$('address').value.trim().toLowerCase()!==account?.toLowerCase();challenge=null;$('sign').disabled=true;$('message').textContent='No challenge requested.'};
+ if(window.ethereum){
+  window.ethereum.on?.('accountsChanged',accounts=>{account=accounts[0]||null;challenge=null;$('sign').disabled=true;$('challenge').disabled=!account; if(account)$('address').value=account;status(account?'Wallet account changed. Request a new challenge.':'Wallet disconnected.');});
+  window.ethereum.on?.('chainChanged',chainId=>{challenge=null;$('sign').disabled=true;$('challenge').disabled=true;status('Network changed to chain '+parseInt(chainId,16)+'. Reconnect on Base (8453).');});
+ }
+ $('challenge').onclick=async()=>{
+  try{
+   if(!provider) throw new Error('Connect a wallet first.');
+   const addr=$('address').value.trim();
+   if(!validAddress(addr)) throw new Error('Enter a valid EVM address.');
+   if(addr.toLowerCase()!==account?.toLowerCase()) throw new Error('Address must match the connected wallet.');
+   const chain=await provider.request({method:'eth_chainId'});
+   if(parseInt(chain,16)!==8453) throw new Error('Switch wallet network to Base (chain ID 8453).');
+   challenge=await request('/v1/auth/challenge',{address:addr});
+   const message=challenge.message||challenge.challenge?.message;
+   if(typeof message!=='string'||!message) throw new Error('API response did not include a signable message.');
+   $('message').textContent=message;
+   $('sign').disabled=false;
+   status('Challenge received. Review the message before signing.');
+  }catch(e){challenge=null;$('sign').disabled=true;status('Challenge failed: '+e.message)}
+ };
+ $('sign').onclick=async()=>{
+  try{
+   if(!provider||!challenge) throw new Error('Request a fresh challenge first.');
+   const addr=$('address').value.trim();
+   if(addr.toLowerCase()!==account?.toLowerCase()) throw new Error('Connected wallet changed. Reconnect and request a new challenge.');
+   const chain=await provider.request({method:'eth_chainId'});
+   if(parseInt(chain,16)!==8453) throw new Error('Wallet is no longer on Base (chain ID 8453).');
+   const message=challenge.message||challenge.challenge?.message;
+   const signature=await provider.request({method:'personal_sign',params:[message,addr]});
+   const result=await request('/v1/auth/verify',{address:addr,nonce:challenge.nonce,message,signature});
+   challenge=null;$('sign').disabled=true;
+   if(result.verified===true && result.paymentAuthorized===false && result.sessionCreated===false && result.address?.toLowerCase()===addr.toLowerCase()){
+    status('Ownership verified for '+result.address+'. No payment was authorized and no session was created.');
+   }else{
+    status('Unexpected verification response: '+JSON.stringify(result));
+   }
+  }catch(e){status('Verification failed: '+e.message)}
+ };
+})();
+</script>
+</body>
+</html>
