@@ -32,9 +32,10 @@ test('Worker serves the proof page and bundles its HTML source', async () => {
   const { readFile } = await import('node:fs/promises');
   const index = await readFile(new URL('../src/index.js', import.meta.url), 'utf8');
   const wrangler = await readFile(new URL('../wrangler.jsonc', import.meta.url), 'utf8');
-  assert.match(index, /import walletOwnershipHtml from '\.\.\/wallet-ownership\.html'/);
+  assert.match(index, /import walletOwnershipHtml from '\.\/wallet-ownership-page\.js'/);
   assert.match(index, /app\.get\('\/wallet-ownership', c => c\.html\(walletOwnershipHtml\)\)/);
-  assert.match(wrangler, /"type": "Text", "globs": \["\*\*\/\*\.html"\]/);
+  const pageModule = await readFile(new URL('../src/wallet-ownership-page.js', import.meta.url), 'utf8');
+  assert.match(pageModule, /^export default /);
 });
 
 test('wallet proof page defaults to same-origin API', () => {
