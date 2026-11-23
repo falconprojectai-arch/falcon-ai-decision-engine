@@ -8,5 +8,6 @@
   "previews": {},
   "durable_objects": { "bindings": [{ "name": "NONCE_STORE", "class_name": "NonceStore" }] },
   "migrations": [{ "tag": "v1", "new_sqlite_classes": ["NonceStore"] }],
+  "rules": [{ "type": "Text", "globs": ["**/*.html"] }],
   "vars": {}
 }
