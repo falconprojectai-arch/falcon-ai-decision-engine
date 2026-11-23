@@ -20,8 +20,7 @@ pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#0e1621;padding:14px;
 <main>
 <h1>Receiving wallet ownership verification</h1>
 <p>This page verifies control of the configured receiving address by signing a one-time message. It does not request or send a transaction, spend tokens, or enable payments.</p>
-<label for="api">API base URL</label>
-<input id="api" value="" placeholder="Same-origin API (default)" spellcheck="false">
+<p><strong>Security notice:</strong> If MetaMask warns that this website may be deceptive, stop. Do not connect or sign until the site warning has been independently cleared.</p>
 <label for="address">Receiving wallet address</label>
 <input id="address" placeholder="0x…" autocomplete="off" spellcheck="false">
 <div>
@@ -39,7 +38,7 @@ pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#0e1621;padding:14px;
  const $=id=>document.getElementById(id);
  let provider=null, challenge=null, account=null;
  const status=s=>{$('status').textContent=s};
- const base=()=> $('api').value.trim().replace(/\/$/,'')||window.location.origin;
+ const base=()=>window.location.origin;
  const validAddress=s=>/^0x[a-fA-F0-9]{40}$/.test(s);
  async function request(path,body){
   const res=await fetch(base()+path,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body)});
