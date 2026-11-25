@@ -108,11 +108,13 @@ jobs:
       # PAY_TO is intentionally kept as a Cloudflare Worker secret, not copied into GitHub.
       # The independent public smoke test verifies that the existing payment receiver is configured.
 
-      # This public address is the project's pinned receiver baseline.
-      # The value is public; store it as a Worker secret so PAY_TO cannot silently drift.
-      - name: Pin independently approved receiving wallet
+      # The user-supplied Rabby address is public; keep both Worker values
+      # independently pinned as secrets. Payments remain disabled by default.
+      - name: Set and pin the user-confirmed Base receiving wallet
         working-directory: products/json-contract-tester-api
-        run: printf '%s' "$PAY_TO_EXPECTED" | npx wrangler secret put PAY_TO_EXPECTED --config wrangler.jsonc
+        run: |
+          printf '%s' "$PAY_TO_EXPECTED" | npx wrangler secret put PAY_TO_EXPECTED --config wrangler.jsonc
+          printf '%s' "$PAY_TO_EXPECTED" | npx wrangler secret put PAY_TO --config wrangler.jsonc
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
