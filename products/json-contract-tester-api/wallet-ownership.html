@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Verify Receiving Wallet — JSON Contract Tester</title>
+  <style>
+    :root{color-scheme:dark;font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:#10141d;color:#eef2f8}
+    body{max-width:760px;margin:0 auto;padding:28px 18px;line-height:1.55}
+    main{background:#1a2230;border:1px solid #344154;border-radius:16px;padding:24px}
+    h1{font-size:1.55rem;margin:0 0 8px}p{color:#c4cedc}
+    code{overflow-wrap:anywhere;color:#b9d7ff}
+    button{background:#3478f6;color:white;border:0;border-radius:10px;padding:13px 18px;font-weight:650;font-size:1rem;cursor:pointer}
+    button:disabled{opacity:.55;cursor:wait}
+    #status{margin-top:18px;padding:12px;border-radius:10px;background:#111824;white-space:pre-wrap;overflow-wrap:anywhere}
+    .note{font-size:.92rem;color:#aebaca}
+    ul{padding-left:20px}
+  </style>
+</head>
+<body>
+<main>
+  <h1>Verify the project receiving wallet</h1>
+  <p>This check proves control of the configured Base wallet by signing a one-time message. It does not send a transaction, transfer tokens, or authorize a payment.</p>
+  <p><strong>Expected wallet:</strong><br><code id="wallet">0x6acbaf0e41534b84c60b5b6a1b4de6ad27bf90ab</code></p>
+  <p><strong>Network:</strong> Base Mainnet (Chain ID 8453)</p>
+  <p><strong>What happens:</strong></p>
+  <ul>
+    <li>Connect Rabby or another injected EVM wallet.</li>
+    <li>Confirm that the active account matches the expected address.</li>
+    <li>Sign a one-time ownership message.</li>
+    <li>The API verifies the signature and consumes the nonce.</li>
+  </ul>
+  <p class="note">The message explicitly states that signing proves wallet ownership only. It does not permit spending or moving funds. Never enter or share your recovery phrase or private key.</p>
+  <button id="verify" type="button">Connect wallet and verify ownership</button>
+  <div id="status" role="status" aria-live="polite">Ready. No wallet has been connected.</div>
+</main>
+<script>
+(() => {
+  const EXPECTED = '0x6acbaf0e41534b84c60b5b6a1b4de6ad27bf90ab';
+  const API = 'https://json-contract-tester-api.falcon-project-ai.workers.dev';
+  const button = document.getElementById('verify');
+  const status = document.getElementById('status');
+  const setStatus = value => { status.textContent = value; };
+  const toHex = value => '0x' + Array.from(new TextEncoder().encode(value), b => b.toString(16).padStart(2, '0')).join('');
+  async function request(url, body) {
+    const response = await fetch(API + url, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(data.error || ('API returned HTTP ' + response.status));
+    return data;
+  }
+  async function run() {
+    const providers = window.ethereum?.providers || (window.ethereum ? [window.ethereum] : []);
+    const provider = providers.find(p => p.isRabby) || window.ethereum;
+    if (!provider) throw new Error('No injected wallet found. Open this page in Rabby browser or a browser with Rabby installed.');
+    const accounts = await provider.request({ method: 'eth_requestAccounts' });
+    if (!accounts?.length) throw new Error('No wallet account was selected.');
+    const address = accounts[0];
+    if (address.toLowerCase() !== EXPECTED.toLowerCase()) {
+      throw new Error('The connected account does not match the project receiving wallet. No signature was requested.');
+    }
+    let chainId = await provider.request({ method: 'eth_chainId' });
+    if (Number.parseInt(chainId, 16) !== 8453) {
+      try {
+        await provider.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: '0x2105' }] });
+      } catch (error) {
+        throw new Error('Switch Rabby to Base Mainnet (Chain ID 8453), then retry. ' + (error?.message || ''));
+      }
+      chainId = await provider.request({ method: 'eth_chainId' });
+      if (Number.parseInt(chainId, 16) !== 8453) throw new Error('Wallet is not on Base Mainnet.');
+    }
+    setStatus('Requesting a one-time ownership challenge…');
+    const challenge = await request('/v1/auth/challenge', { address });
+    if (challenge.purpose !== 'wallet_ownership_proof_only' || challenge.paymentAuthorized !== false) {
+      throw new Error('Unexpected challenge purpose. Stopped without signing.');
+    }
+    setStatus('Review the message in Rabby. It proves wallet control only and cannot transfer funds.');
+    const signature = await provider.request({
+      method: 'personal_sign',
+      params: [toHex(challenge.message), address]
+    });
+    setStatus('Verifying the signature…');
+    const result = await request('/v1/auth/verify', {
+      address,
+      nonce: challenge.nonce,
+      message: challenge.message,
+      signature
+    });
+    if (result.verified !== true || result.paymentAuthorized !== false || result.sessionCreated !== false) {
+      throw new Error('The API did not return the expected ownership-only verification result.');
+    }
+    setStatus('SUCCESS — wallet ownership verified. No transaction was sent and no payment was authorized. You can close this page.');
+    button.textContent = 'Ownership verified';
+    button.disabled = true;
+  }
+  button.addEventListener('click', async () => {
+    button.disabled = true;
+    setStatus('Connecting to wallet…');
+    try { await run(); }
+    catch (error) { setStatus('Not verified: ' + (error?.message || String(error))); button.disabled = false; }
+  });
+})();
+</script>
+</body>
+</html>
