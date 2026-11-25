@@ -99,7 +99,8 @@ test('wallet challenge refuses addresses other than configured PAY_TO', async ()
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ address: '0x1111111111111111111111111111111111111111' })
-  }, { PAY_TO: '0x2222222222222222222222222222222222222222' });
+  }, { PAY_TO: '0x2222222222222222222222222222222222222222',
+    PAY_TO_EXPECTED: '0x2222222222222222222222222222222222222222' });
   assert.equal(response.status, 403);
   assert.match((await response.json()).error, /configured receiving wallet/);
 });
@@ -118,6 +119,7 @@ test('wallet verification refuses an address other than configured PAY_TO before
     })
   }, {
     PAY_TO: '0x2222222222222222222222222222222222222222',
+    PAY_TO_EXPECTED: '0x2222222222222222222222222222222222222222',
     NONCE_STORE: { idFromName() { throw new Error('must not access storage'); } }
   });
   assert.equal(response.status, 403);
@@ -132,6 +134,7 @@ test('wallet auth verifies a real EIP-191 signature and rejects replay', async (
   registerWalletAuth(app);
   const env = {
     PAY_TO: account.address,
+    PAY_TO_EXPECTED: account.address,
     NONCE_STORE: {
       idFromName() { return 'test-wallet'; },
       get() { return { fetch: request => store.fetch(request) }; }
