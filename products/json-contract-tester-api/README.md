@@ -32,14 +32,17 @@ A browser-based diagnostic page is available at https://falconprojectai-arch.git
 
 ## Payment
 
-**Fail-closed default:** both x402 discovery manifests and the paid validation route return HTTP 503 unless the Cloudflare Worker environment variable `PAYMENTS_ENABLED` is explicitly set to the exact string `true`. Set it only after verifying the destination wallet is controlled by the project operator, matches the documented network and token, and the manual order/reconciliation/refund runbook is operational. `PAY_TO` alone must never activate payments. Keep the flag unset or false while any receiver identity or owner-control check is outstanding.
+**Fail-closed default:** both x402 discovery manifests and the paid validation route return HTTP 503 unless the Cloudflare Worker environment variable `PAYMENTS_ENABLED` is explicitly set to the exact string `true`. Set it only after verifying the destination wallet is controlled by the project operator, matches the documented network and token, and the manual order/reconciliation/refund runbook is operational. `PAY_TO` alone must never activate payments. The application now also requires `PAY_TO_EXPECTED`, a separately managed Cloudflare Worker secret containing the independently verified receiver address. The route fails closed unless both addresses are valid EVM addresses and match case-insensitively. Never populate `PAY_TO_EXPECTED` by copying the current `PAY_TO` without independently verifying wallet ownership and the intended recipient. Keep the flag unset or false while any receiver identity or owner-control check is outstanding.
 
 If later enabled, the route is designed to use x402 exact USDC on Base (eip155:8453) at an planned launch price of $0.10 USDC per batch. It is not currently available for purchase. Malformed JSON and bodies over 64 KiB are rejected before payment. JSON that parses but has an invalid schema or batch shape is validated after x402 payment verification and can return HTTP 400. The @x402/hono middleware settles only after a successful response; therefore, a 4xx response is not a settled sale. Count a payment only when a successful 2xx response carries PAYMENT-RESPONSE and an on-chain receipt. Callers should validate their request against the OpenAPI contract before authorizing payment. This ordering also lets generic x402 marketplace probes receive the actual 402 challenge when they send an empty JSON object.
 
 Set the public receiving address as a Cloudflare Worker secret:
 ```sh
 npx wrangler secret put PAY_TO
+npx wrangler secret put PAY_TO_EXPECTED
 ```
+
+Set both secrets independently. `PAY_TO_EXPECTED` is the pinned security baseline, not an alias or automatic mirror of `PAY_TO`. Do not set `PAYMENTS_ENABLED=true` until the two values have been compared against independently verified wallet-control evidence and the remaining settlement controls have passed.
 Deploy only after a self-custody wallet has been created and its recovery material safely backed up. No private key belongs in this repository or Worker code. The facilitator is PayAI's public x402 facilitator (`https://facilitator.payai.network`), which supports Base mainnet (`eip155:8453`) and EVM USDC payments. Verify current supported networks at its `/supported` endpoint before changing production configuration.
 
 ## Hosting and privacy

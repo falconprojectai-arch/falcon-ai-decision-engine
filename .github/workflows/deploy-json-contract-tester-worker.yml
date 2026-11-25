@@ -126,9 +126,13 @@ jobs:
           });
 
           const challengeResponse = await post('/v1/auth/challenge', { address: account.address });
-          assert.equal(challengeResponse.status, 403, 'production must reject a non-receiver wallet');
           const challenge = await challengeResponse.json();
-          assert.match(challenge.error, /must match the configured receiving wallet/);
+          if (challengeResponse.status === 503) {
+            assert.match(challenge.error, /independently pinned configured receiving wallet/);
+          } else {
+            assert.equal(challengeResponse.status, 403, 'production must reject a non-receiver wallet');
+            assert.match(challenge.error, /must match the configured receiving wallet/);
+          }
 
           const verifyResponse = await post('/v1/auth/verify', {
             address: account.address,
@@ -136,10 +140,14 @@ jobs:
             message: 'test-only message',
             signature: '0x' + '0'.repeat(130)
           });
-          assert.equal(verifyResponse.status, 403, 'verification must reject a non-receiver before nonce lookup');
           const verification = await verifyResponse.json();
-          assert.match(verification.error, /must match the configured receiving wallet/);
-          console.log('Live receiver binding passed: non-receiver challenge and verification are rejected.');
+          if (verifyResponse.status === 503) {
+            assert.match(verification.error, /independently pinned configured receiving wallet/);
+          } else {
+            assert.equal(verifyResponse.status, 403, 'verification must reject a non-receiver before nonce lookup');
+            assert.match(verification.error, /must match the configured receiving wallet/);
+          }
+          console.log('Live wallet-auth safety check passed: non-receiver access is rejected, or wallet auth remains blocked until the independent receiver pin is configured.');
           NODE
 
       - name: Verify production health and x402 challenge
