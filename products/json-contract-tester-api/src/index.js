@@ -308,6 +308,7 @@ app.get('/', c => c.json({
 app.get('/health', c => c.json({ status: 'ok', service: 'json-contract-tester-api', version: '0.1.0' }));
 app.get('/.well-known/x402', c => {
   if (c.env.PAYMENTS_ENABLED !== 'true') return c.json({ error: 'Payments are disabled pending receiver verification.' }, 503);
+  if (!getVerifiedPayTo(c.env)) return c.json({ error: 'Payment receiver is not independently pinned or does not match the expected wallet.' }, 503);
   return c.json(discoveryManifest);
 });
 // Coinbase CDP Bazaar-compatible x402 v2 manifest. The receiving address is
@@ -358,8 +359,8 @@ app.use('/v1/validate-batch', async (c, next) => {
 app.use('*', async (c, next) => {
   if (c.req.path !== '/v1/validate-batch' || !['GET', 'HEAD', 'POST'].includes(c.req.method)) return next();
   if (c.env.PAYMENTS_ENABLED !== 'true') return c.json({ error: 'Payments are disabled pending receiver verification.' }, 503);
-  const payTo = c.env.PAY_TO;
-  if (!payTo || !/^0x[a-fA-F0-9]{40}$/.test(payTo)) return c.json({ error: 'Payment receiver is not configured.' }, 503);
+  const payTo = getVerifiedPayTo(c.env);
+  if (!payTo) return c.json({ error: 'Payment receiver is not independently pinned or does not match the expected wallet.' }, 503);
   const accepts = [{ scheme: 'exact', price: '$0.10', network: 'eip155:8453', payTo, maxTimeoutSeconds: 60 }];
   const publicAccepts = [{
     scheme: 'exact',
