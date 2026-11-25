@@ -87,10 +87,8 @@ export function registerWalletAuth(app) {
         !SIGNATURE_RE.test(body.signature)) {
       return c.json({ error: 'address, nonce, message, and a 65-byte EVM signature are required.' }, 400);
     }
-    const payTo = c.env.PAY_TO;
-    if (typeof payTo !== 'string' || !ADDRESS_RE.test(payTo)) {
-      return c.json({ error: 'Receiving wallet is not configured.' }, 503);
-    }
+    const payTo = getVerifiedPayTo(c.env);
+    if (!payTo) return c.json({ error: 'Receiving wallet is not independently pinned or does not match the expected wallet.' }, 503);
     if (body.address.toLowerCase() !== payTo.toLowerCase()) {
       return c.json({ error: 'Verification address must match the configured receiving wallet.' }, 403);
     }
