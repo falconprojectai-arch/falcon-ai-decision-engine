@@ -1,4 +1,5 @@
 import { verifyMessage } from 'viem';
+import { getVerifiedPayTo } from './receiver.js';
 
 const ADDRESS_RE = /^0x[a-fA-F0-9]{40}$/;
 const SIGNATURE_RE = /^0x[a-fA-F0-9]{130}$/;
@@ -44,10 +45,8 @@ export function registerWalletAuth(app) {
     if (!body || typeof body.address !== 'string' || !ADDRESS_RE.test(body.address)) {
       return c.json({ error: 'A valid EVM wallet address is required.' }, 400);
     }
-    const payTo = c.env.PAY_TO;
-    if (typeof payTo !== 'string' || !ADDRESS_RE.test(payTo)) {
-      return c.json({ error: 'Receiving wallet is not configured.' }, 503);
-    }
+    const payTo = getVerifiedPayTo(c.env);
+    if (!payTo) return c.json({ error: 'Receiving wallet is not independently pinned or does not match the expected wallet.' }, 503);
     if (body.address.toLowerCase() !== payTo.toLowerCase()) {
       return c.json({ error: 'Challenge address must match the configured receiving wallet.' }, 403);
     }
