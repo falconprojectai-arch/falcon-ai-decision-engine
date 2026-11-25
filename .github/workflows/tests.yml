@@ -25,6 +25,12 @@ jobs:
           node-version: "22"
       - name: Install test runner
         run: python -m pip install --upgrade pip pytest
+      - name: Install JSON Contract Tester API dependencies
+        working-directory: products/json-contract-tester-api
+        run: npm install --no-audit --no-fund
+      - name: Run JSON Contract Tester API tests
+        working-directory: products/json-contract-tester-api
+        run: npm test
       - name: Run Python tests
         id: pytest
         run: python -m pytest -q --junitxml=pytest-results.xml
