@@ -40,7 +40,8 @@ test('legacy x402 discovery manifest is unavailable while payments are disabled'
 });
 
 test('legacy x402 discovery manifest is available only after explicit enablement', async () => {
-  const response = await app.fetch(new Request('https://api.example.test/.well-known/x402'), { PAYMENTS_ENABLED: 'true' });
+  const payTo = '0x1111111111111111111111111111111111111111';
+  const response = await app.fetch(new Request('https://api.example.test/.well-known/x402'), { PAYMENTS_ENABLED: 'true', PAY_TO: payTo, PAY_TO_EXPECTED: payTo });
   assert.equal(response.status, 200);
   const body = await response.json();
   assert.equal(body.resources[0].path, '/v1/validate-batch');
@@ -48,7 +49,7 @@ test('legacy x402 discovery manifest is available only after explicit enablement
 
 test('CDP Bazaar x402 manifest exposes the paid resource and public receiver', async () => {
   const payTo = '0x1111111111111111111111111111111111111111';
-  const response = await app.fetch(new Request('https://api.example.test/.well-known/x402.json'), { PAYMENTS_ENABLED: 'true', PAY_TO: payTo });
+  const response = await app.fetch(new Request('https://api.example.test/.well-known/x402.json'), { PAYMENTS_ENABLED: 'true', PAY_TO: payTo, PAY_TO_EXPECTED: payTo });
   assert.equal(response.status, 200);
   const body = await response.json();
   assert.equal(body.x402Version, 2);
@@ -87,5 +88,28 @@ test('OpenAPI accurately documents the paused payment state without advertising 
 test('explicitly enabled payments still fail closed without a valid receiver', async () => {
   const response = await app.fetch(new Request('https://api.example.test/.well-known/x402.json'), { PAYMENTS_ENABLED: 'true' });
   assert.equal(response.status, 503);
-  assert.equal((await response.json()).error, 'Payment receiver is not configured.');
+  assert.equal((await response.json()).error, 'Payment receiver is not independently pinned or does not match the expected wallet.');
+});
+
+test('enabled legacy discovery fails closed when the independent receiver pin is missing', async () => {
+  const response = await app.fetch(new Request('https://api.example.test/.well-known/x402'), {
+    PAYMENTS_ENABLED: 'true', PAY_TO: '0x1111111111111111111111111111111111111111'
+  });
+  assert.equal(response.status, 503);
+});
+
+test('enabled x402 discovery fails closed when configured and pinned receivers differ', async () => {
+  const response = await app.fetch(new Request('https://api.example.test/.well-known/x402.json'), {
+    PAYMENTS_ENABLED: 'true',
+    PAY_TO: '0x1111111111111111111111111111111111111111',
+    PAY_TO_EXPECTED: '0x2222222222222222222222222222222222222222'
+  });
+  assert.equal(response.status, 503);
+});
+
+test('paid route fails closed when the independent receiver pin is missing', async () => {
+  const response = await app.fetch(new Request('https://api.example.test/v1/validate-batch'), {
+    PAYMENTS_ENABLED: 'true', PAY_TO: '0x1111111111111111111111111111111111111111'
+  });
+  assert.equal(response.status, 503);
 });
