@@ -98,6 +98,7 @@ jobs:
           cp products/dev-agent-toolbox/agent-integration-patterns.html site/products/dev-agent-toolbox/agent-integration-patterns.html
           cp products/dev-agent-toolbox/agent-marketplaces.html site/products/dev-agent-toolbox/agent-marketplaces.html
           cp products/json-contract-tester-api/payment-preflight.html site/products/json-contract-tester-api/payment-preflight.html
+          cp products/json-contract-tester-api/wallet-ownership.html site/products/json-contract-tester-api/wallet-ownership.html
           cp products/index.html site/products/index.html
           cp products/marketplace-hub.html site/products/marketplace-hub.html
           cp products/localbiz-followup/index.html site/products/localbiz-followup/index.html
