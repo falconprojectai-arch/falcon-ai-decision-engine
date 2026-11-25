@@ -108,6 +108,16 @@ jobs:
       # PAY_TO is intentionally kept as a Cloudflare Worker secret, not copied into GitHub.
       # The independent public smoke test verifies that the existing payment receiver is configured.
 
+      # This public address is the project's pinned receiver baseline.
+      # The value is public; store it as a Worker secret so PAY_TO cannot silently drift.
+      - name: Pin independently approved receiving wallet
+        working-directory: products/json-contract-tester-api
+        run: printf '%s' "$PAY_TO_EXPECTED" | npx wrangler secret put PAY_TO_EXPECTED --config wrangler.jsonc
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          PAY_TO_EXPECTED: "0x6acbaf0e41534b84c60b5b6a1b4de6ad27bf90ab"
+
       - name: Verify live receiving-wallet binding
         env:
           WORKER_URL: https://json-contract-tester-api.falcon-project-ai.workers.dev
@@ -127,12 +137,8 @@ jobs:
 
           const challengeResponse = await post('/v1/auth/challenge', { address: account.address });
           const challenge = await challengeResponse.json();
-          if (challengeResponse.status === 503) {
-            assert.match(challenge.error, /independently pinned configured receiving wallet/);
-          } else {
-            assert.equal(challengeResponse.status, 403, 'production must reject a non-receiver wallet');
-            assert.match(challenge.error, /must match the configured receiving wallet/);
-          }
+          assert.equal(challengeResponse.status, 403, 'the independently pinned receiver must be configured and reject a non-receiver wallet');
+          assert.match(challenge.error, /must match the configured receiving wallet/);
 
           const verifyResponse = await post('/v1/auth/verify', {
             address: account.address,
@@ -141,13 +147,9 @@ jobs:
             signature: '0x' + '0'.repeat(130)
           });
           const verification = await verifyResponse.json();
-          if (verifyResponse.status === 503) {
-            assert.match(verification.error, /independently pinned configured receiving wallet/);
-          } else {
-            assert.equal(verifyResponse.status, 403, 'verification must reject a non-receiver before nonce lookup');
-            assert.match(verification.error, /must match the configured receiving wallet/);
-          }
-          console.log('Live wallet-auth safety check passed: non-receiver access is rejected, or wallet auth remains blocked until the independent receiver pin is configured.');
+          assert.equal(verifyResponse.status, 403, 'verification must reject a non-receiver before nonce lookup');
+          assert.match(verification.error, /must match the configured receiving wallet/);
+          console.log('Live wallet-auth safety check passed: independently pinned receiver is active and non-receiver access is rejected.');
           NODE
 
       - name: Verify production health and x402 challenge
