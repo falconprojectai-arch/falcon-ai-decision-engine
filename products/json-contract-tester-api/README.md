@@ -26,6 +26,10 @@ A successful paid response contains valid, a batch summary, per-sample results, 
 - Bazaar-compatible x402 v2 manifest: https://json-contract-tester-api.falcon-project-ai.workers.dev/.well-known/x402.json
 - Live OpenAPI JSON: https://json-contract-tester-api.falcon-project-ai.workers.dev/openapi.json
 
+## Receiving-wallet ownership check
+
+A no-transfer wallet ownership page is available at https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester-api/wallet-ownership.html. It connects an injected EVM wallet, checks the user-confirmed Base address and chain, requests a one-time `personal_sign` signature, and verifies it against the API. The message is ownership-only: it does not authorize payment, create a session, or move funds.
+
 ## No-payment preflight
 
 A browser-based diagnostic page is available at https://falconprojectai-arch.github.io/falcon-ai-decision-engine/products/json-contract-tester-api/payment-preflight.html. It checks health, CORS, malformed-input rejection, and the expected HTTP 503 payment-pause state without connecting a wallet, signing a payment, or spending USDC.
