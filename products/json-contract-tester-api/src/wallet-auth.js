@@ -46,7 +46,7 @@ export function registerWalletAuth(app) {
       return c.json({ error: 'A valid EVM wallet address is required.' }, 400);
     }
     const payTo = getVerifiedPayTo(c.env);
-    if (!payTo) return c.json({ error: 'Receiving wallet is not independently pinned or does not match the expected wallet.' }, 503);
+    if (!payTo) return c.json({ error: 'Receiving wallet must match the independently pinned configured receiving wallet.' }, 503);
     if (body.address.toLowerCase() !== payTo.toLowerCase()) {
       return c.json({ error: 'Challenge address must match the configured receiving wallet.' }, 403);
     }
@@ -88,7 +88,7 @@ export function registerWalletAuth(app) {
       return c.json({ error: 'address, nonce, message, and a 65-byte EVM signature are required.' }, 400);
     }
     const payTo = getVerifiedPayTo(c.env);
-    if (!payTo) return c.json({ error: 'Receiving wallet is not independently pinned or does not match the expected wallet.' }, 503);
+    if (!payTo) return c.json({ error: 'Receiving wallet must match the independently pinned configured receiving wallet.' }, 503);
     if (body.address.toLowerCase() !== payTo.toLowerCase()) {
       return c.json({ error: 'Verification address must match the configured receiving wallet.' }, 403);
     }
