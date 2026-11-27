@@ -34,7 +34,7 @@ The JSON Contract Tester has a machine-to-machine API intended for AI agents and
 
 - API root: https://json-contract-tester-api.falcon-project-ai.workers.dev/
 - Intended paid route: `POST /v1/validate-batch`
-- Planned price: **$0.10 USDC per batch** on Base Mainnet (`eip155:8453`); this is not currently purchasable.
+- Planned price: **$0.005 USDC per batch** on Base Mainnet (`eip155:8453`); this is not currently purchasable.
 - Health: https://json-contract-tester-api.falcon-project-ai.workers.dev/health
 - Discovery manifest: https://json-contract-tester-api.falcon-project-ai.workers.dev/.well-known/x402
 - OpenAPI: https://json-contract-tester-api.falcon-project-ai.workers.dev/openapi.json
