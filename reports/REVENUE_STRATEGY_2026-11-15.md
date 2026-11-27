@@ -281,3 +281,13 @@ First dollar is achieved only when at least $1 equivalent net is independently c
 - PayAPI remains pending_review based on the 2026-11-03 provider email; no canary result or settlement was verified.
 - Payment remains fail-closed pending owner-control/token-network verification and tested order/reconciliation/refund process.
 - No unsolicited distribution or broad campaign activity was performed.
+
+
+## Super Scout run evidence — 2026-11-27 (automation run 6)
+
+- Re-read this strategy and inspected the current default branch plus the latest Golden Desk QC. Golden River remains the only active revenue route; x402 remains maintenance-only and payment remains inquiry-only.
+- Bounded correction made: README.md contained a stale **$0.10 USDC per batch** reference for the secondary x402 API. It was aligned to the current strategy value **$0.005 USDC per batch on Base Mainnet**. Commit: cc7e2bb651c961de0ddf518b2c0cf246c8522253.
+- The correction was a documentation-only change. No payment activation, wallet/network change, transfer, signature, top-up, processor change, listing submission, or owner-only action occurred.
+- Latest GitHub Actions evidence available in this run showed the scheduled market-discovery workflow succeeding on 2026-11-26 for commit 78c64b4e7960124825717a875addd2faba125271. This does not prove a fresh GitHub Pages deployment for the new README commit; public deployment remains unverified.
+- Latest QC evidence: no qualified buyer conversation, preflight request, paid inquiry, accepted scope, completed review, or independently verified net settled revenue. Current net settled revenue remains $0.00.
+- No new buyer-request interaction was performed because no fresh explicit, permitted request was independently verified in this run. No outreach or promotional posting was made.
